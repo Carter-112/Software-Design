@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Data Structures Practice - Singly Linked List</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Singly Linked List Implementation</h1>
+
+    <!-- Block 1: Class Declaration, Fields & Constructor -->
+    <div class="method">
+      <h3>Class Declaration, Fields & Constructor</h3>
+      <p class="hint">// The Node class, head reference, and size field.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('singly-header-solution')">Check Answer</button>
+      <pre id="singly-header-solution"><code>public class SinglyLinkedList&lt;E&gt; {
+    // Node class for SinglyLinkedList
+    private class Node {
+        E data;
+        Node next;
+        
+        Node(E data) {
+            this.data = data;
+            next = null;
+        }
+    }
+    
+    private Node head;
+    private int size;
+    
+    public SinglyLinkedList() {
+        head = null;
+        size = 0;
+    }</code></pre>
+    </div>
+
+    <!-- Block 2: add Method -->
+    <div class="method">
+      <h3>Add Method</h3>
+      <p class="hint">// Add an element to the end of the list.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('singly-add-solution')">Check Answer</button>
+      <pre id="singly-add-solution"><code>public void add(E element) {
+    Node newNode = new Node(element);
+    
+    // If the list is empty, set the new node as head
+    if (head == null) {
+        head = newNode;
+    } else {
+        // Otherwise, traverse to the end and append
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = newNode;
+    }
+    
+    size++;
+}</code></pre>
+    </div>
+
+    <!-- Block 3: addFirst Method -->
+    <div class="method">
+      <h3>Add First Method</h3>
+      <p class="hint">// Add an element to the beginning of the list.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('singly-add-first-solution')">Check Answer</button>
+      <pre id="singly-add-first-solution"><code>public void addFirst(E element) {
+    Node newNode = new Node(element);
+    newNode.next = head;
+    head = newNode;
+    size++;
+}</code></pre>
+    </div>
+
+    <!-- Block 4: remove Method -->
+    <div class="method">
+      <h3>Remove Method</h3>
+      <p class="hint">// Remove the first occurrence of the specified element.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('singly-remove-solution')">Check Answer</button>
+      <pre id="singly-remove-solution"><code>public boolean remove(E element) {
+    if (head == null) return false;
+    
+    // Special case: remove head
+    if (head.data.equals(element)) {
+        head = head.next;
+        size--;
+        return true;
+    }
+    
+    // Look for the element in the rest of the list
+    Node current = head;
+    while (current.next != null && !current.next.data.equals(element)) {
+        current = current.next;
+    }
+    
+    // If found, remove it
+    if (current.next != null) {
+        current.next = current.next.next;
+        size--;
+        return true;
+    }
+    
+    return false;
+}</code></pre>
+    </div>
+
+    <!-- Block 5: get Method -->
+    <div class="method">
+      <h3>Get Method</h3>
+      <p class="hint">// Get the element at the specified index.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('singly-get-solution')">Check Answer</button>
+      <pre id="singly-get-solution"><code>public E get(int index) {
+    if (index < 0 || index >= size) {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+    }
+    
+    Node current = head;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    
+    return current.data;
+}</code></pre>
+    </div>
+
+    <!-- Block 6: contains Method -->
+    <div class="method">
+      <h3>Contains Method</h3>
+      <p class="hint">// Check if the list contains the specified element.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('singly-contains-solution')">Check Answer</button>
+      <pre id="singly-contains-solution"><code>public boolean contains(E element) {
+    Node current = head;
+    
+    while (current != null) {
+        if (current.data.equals(element)) {
+            return true;
+        }
+        current = current.next;
+    }
+    
+    return false;
+}</code></pre>
+    </div>
+
+    <!-- Block 7: size Method -->
+    <div class="method">
+      <h3>Size Method</h3>
+      <p class="hint">// Return the number of elements in the list.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('singly-size-solution')">Check Answer</button>
+      <pre id="singly-size-solution"><code>public int size() {
+    return size;
+}</code></pre>
+    </div>
+
+    <!-- Block 8: isEmpty Method -->
+    <div class="method">
+      <h3>Is Empty Method</h3>
+      <p class="hint">// Check if the list is empty.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('singly-is-empty-solution')">Check Answer</button>
+      <pre id="singly-is-empty-solution"><code>public boolean isEmpty() {
+    return size == 0;
+}</code></pre>
+    </div>
+
+    <!-- Block 9: toString Method -->
+    <div class="method">
+      <h3>toString Method</h3>
+      <p class="hint">// Return a string representation of the list.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('singly-to-string-solution')">Check Answer</button>
+      <pre id="singly-to-string-solution"><code>@Override
+public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    Node current = head;
+    
+    while (current != null) {
+        sb.append(current.data);
+        if (current.next != null) {
+            sb.append(", ");
+        }
+        current = current.next;
+    }
+    
+    sb.append("]");
+    return sb.toString();
+}</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 
+
+
+
+

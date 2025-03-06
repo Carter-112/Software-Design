@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Data Structures Practice - ArrayList</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>ArrayList Implementation</h1>
+
+    <!-- Block 1: Class Declaration, Fields & Constructor -->
+    <div class="method">
+      <h3>Class Declaration, Fields & Constructor</h3>
+      <p class="hint">// The basic structure of the ArrayList class.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('array-list-header-solution')">Check Answer</button>
+      <pre id="array-list-header-solution"><code>public class MyArrayList&lt;E&gt; implements Iterable&lt;E&gt; {
+    // Default capacity when a no-arg constructor is used
+    private static final int DEFAULT_CAPACITY = 10;
+    
+    // Array to store elements
+    private Object[] elements;
+    
+    // Number of elements in the list
+    private int size;
+    
+    // Constructor with initial capacity
+    public MyArrayList(int initialCapacity) {
+        if (initialCapacity < 0) {
+            throw new IllegalArgumentException("Illegal capacity: " + initialCapacity);
+        }
+        this.elements = new Object[initialCapacity];
+        this.size = 0;
+    }
+    
+    // No-arg constructor with default capacity
+    public MyArrayList() {
+        this(DEFAULT_CAPACITY);
+    }</code></pre>
+    </div>
+
+    <!-- Block 2: Add Method -->
+    <div class="method">
+      <h3>Add Method</h3>
+      <p class="hint">// Add an element to the end of the list.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('array-list-add-solution')">Check Answer</button>
+      <pre id="array-list-add-solution"><code>public boolean add(E element) {
+    ensureCapacity(size + 1);
+    elements[size++] = element;
+    return true;
+}
+
+private void ensureCapacity(int minCapacity) {
+    // If we need more capacity, grow the array
+    if (minCapacity > elements.length) {
+        int newCapacity = Math.max(elements.length * 2, minCapacity);
+        // Create a new array and copy elements
+        elements = Arrays.copyOf(elements, newCapacity);
+    }
+}</code></pre>
+    </div>
+
+    <!-- Block 3: Add at Index Method -->
+    <div class="method">
+      <h3>Add at Index Method</h3>
+      <p class="hint">// Add an element at a specific index.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('array-list-add-index-solution')">Check Answer</button>
+      <pre id="array-list-add-index-solution"><code>public void add(int index, E element) {
+    // Check if index is valid
+    if (index < 0 || index > size) {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+    }
+    
+    // Ensure we have enough space
+    ensureCapacity(size + 1);
+    
+    // Shift elements right to make space
+    System.arraycopy(elements, index, elements, index + 1, size - index);
+    
+    // Insert the element and increment size
+    elements[index] = element;
+    size++;
+}</code></pre>
+    </div>
+
+    <!-- Block 4: Get Method -->
+    <div class="method">
+      <h3>Get Method</h3>
+      <p class="hint">// Get an element at a specific index.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('array-list-get-solution')">Check Answer</button>
+      <pre id="array-list-get-solution"><code>@SuppressWarnings("unchecked")
+public E get(int index) {
+    if (index < 0 || index >= size) {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+    }
+    return (E) elements[index];
+}</code></pre>
+    </div>
+
+    <!-- Block 5: Remove Method -->
+    <div class="method">
+      <h3>Remove Method</h3>
+      <p class="hint">// Remove an element at a specific index.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('array-list-remove-solution')">Check Answer</button>
+      <pre id="array-list-remove-solution"><code>@SuppressWarnings("unchecked")
+public E remove(int index) {
+    if (index < 0 || index >= size) {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+    }
+    
+    E oldValue = (E) elements[index];
+    
+    // Shift elements left to fill the gap
+    int numMoved = size - index - 1;
+    if (numMoved > 0) {
+        System.arraycopy(elements, index + 1, elements, index, numMoved);
+    }
+    
+    // Clear the reference to the last element to help with garbage collection
+    elements[--size] = null;
+    
+    return oldValue;
+}</code></pre>
+    </div>
+
+    <!-- Block 6: Remove Element Method -->
+    <div class="method">
+      <h3>Remove Element Method</h3>
+      <p class="hint">// Remove the first occurrence of the specified element.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('array-list-remove-element-solution')">Check Answer</button>
+      <pre id="array-list-remove-element-solution"><code>public boolean remove(Object o) {
+    // Find the index of the element
+    for (int i = 0; i < size; i++) {
+        if (o == null ? elements[i] == null : o.equals(elements[i])) {
+            // Remove the element at the found index
+            remove(i);
+            return true;
+        }
+    }
+    return false;
+}</code></pre>
+    </div>
+
+    <!-- Block 7: Set Method -->
+    <div class="method">
+      <h3>Set Method</h3>
+      <p class="hint">// Replace an element at a specific index.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('array-list-set-solution')">Check Answer</button>
+      <pre id="array-list-set-solution"><code>@SuppressWarnings("unchecked")
+public E set(int index, E element) {
+    if (index < 0 || index >= size) {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+    }
+    
+    E oldValue = (E) elements[index];
+    elements[index] = element;
+    return oldValue;
+}</code></pre>
+    </div>
+
+    <!-- Block 8: Iterator Implementation -->
+    <div class="method">
+      <h3>Iterator Implementation</h3>
+      <p class="hint">// Implement the Iterator interface.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('array-list-iterator-solution')">Check Answer</button>
+      <pre id="array-list-iterator-solution"><code>@Override
+public Iterator&lt;E&gt; iterator() {
+    return new ArrayListIterator();
+}
+
+private class ArrayListIterator implements Iterator&lt;E&gt; {
+    private int cursor = 0;
+    
+    @Override
+    public boolean hasNext() {
+        return cursor < size;
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public E next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        return (E) elements[cursor++];
+    }
+    
+    @Override
+    public void remove() {
+        if (cursor <= 0) {
+            throw new IllegalStateException();
+        }
+        MyArrayList.this.remove(--cursor);
+    }
+}</code></pre>
+    </div>
+
+    <!-- Block 9: Additional Methods -->
+    <div class="method">
+      <h3>Additional Methods (size, isEmpty, clear, contains)</h3>
+      <p class="hint">// Implement utility methods.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('array-list-additional-solution')">Check Answer</button>
+      <pre id="array-list-additional-solution"><code>public int size() {
+    return size;
+}
+
+public boolean isEmpty() {
+    return size == 0;
+}
+
+public void clear() {
+    // Clear references to help GC
+    for (int i = 0; i < size; i++) {
+        elements[i] = null;
+    }
+    size = 0;
+}
+
+public boolean contains(Object o) {
+    return indexOf(o) >= 0;
+}
+
+public int indexOf(Object o) {
+    for (int i = 0; i < size; i++) {
+        if (o == null ? elements[i] == null : o.equals(elements[i])) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+@Override
+public String toString() {
+    if (size == 0) {
+        return "[]";
+    }
+    
+    StringBuilder sb = new StringBuilder("[");
+    for (int i = 0; i < size; i++) {
+        sb.append(elements[i]);
+        if (i < size - 1) {
+            sb.append(", ");
+        }
+    }
+    sb.append("]");
+    return sb.toString();
+}</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 
+
+
+
+

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Data Structures Practice - Doubly Linked List</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Doubly Linked List Implementation</h1>
+
+    <!-- Block 1: Class Declaration, Fields & Constructor -->
+    <div class="method">
+      <h3>Class Declaration, Fields & Constructor</h3>
+      <p class="hint">// The Node class, sentinel nodes, and size field.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('doubly-header-solution')">Check Answer</button>
+      <pre id="doubly-header-solution"><code>public class DoublyLinkedList&lt;E&gt; implements Iterable&lt;E&gt; {
+    // Node class for DoublyLinkedList
+    private static class Node&lt;E&gt; {
+        E data;
+        Node&lt;E&gt; next;
+        Node&lt;E&gt; prev;
+        
+        Node(E data, Node&lt;E&gt; prev, Node&lt;E&gt; next) {
+            this.data = data;
+            this.prev = prev;
+            this.next = next;
+        }
+    }
+    
+    private final Node&lt;E&gt; sentinelHead;
+    private final Node&lt;E&gt; sentinelTail;
+    private int size;
+    
+    public DoublyLinkedList() {
+        // Create sentinel nodes that point to each other
+        sentinelHead = new Node&lt;&gt;(null, null, null);
+        sentinelTail = new Node&lt;&gt;(null, null, null);
+        sentinelHead.next = sentinelTail;
+        sentinelTail.prev = sentinelHead;
+        size = 0;
+    }</code></pre>
+    </div>
+
+    <!-- Block 2: add Method -->
+    <div class="method">
+      <h3>Add Method</h3>
+      <p class="hint">// Add an element to the end of the list.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('doubly-add-solution')">Check Answer</button>
+      <pre id="doubly-add-solution"><code>public void add(E element) {
+    // Add the element right before the sentinel tail
+    addBefore(sentinelTail, element);
+}
+
+// Helper method to insert a new node before the given node
+private void addBefore(Node&lt;E&gt; node, E element) {
+    // Create new node with proper links
+    Node&lt;E&gt; predecessor = node.prev;
+    Node&lt;E&gt; newNode = new Node&lt;&gt;(element, predecessor, node);
+    
+    // Fix links in existing nodes
+    predecessor.next = newNode;
+    node.prev = newNode;
+    size++;
+}</code></pre>
+    </div>
+
+    <!-- Block 3: addFirst Method -->
+    <div class="method">
+      <h3>Add First Method</h3>
+      <p class="hint">// Add an element to the beginning of the list.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('doubly-add-first-solution')">Check Answer</button>
+      <pre id="doubly-add-first-solution"><code>public void addFirst(E element) {
+    // Add right after the sentinel head
+    addBefore(sentinelHead.next, element);
+}</code></pre>
+    </div>
+
+    <!-- Block 4: remove Method -->
+    <div class="method">
+      <h3>Remove Method</h3>
+      <p class="hint">// Remove the first occurrence of the specified element.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('doubly-remove-solution')">Check Answer</button>
+      <pre id="doubly-remove-solution"><code>public boolean remove(E element) {
+    // Find the node with the element
+    Node&lt;E&gt; current = sentinelHead.next;
+    
+    while (current != sentinelTail) {
+        if ((element == null && current.data == null) || 
+            (element != null && element.equals(current.data))) {
+            // Remove the node by adjusting links
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
+            size--;
+            return true;
+        }
+        current = current.next;
+    }
+    
+    return false;
+}</code></pre>
+    </div>
+
+    <!-- Block 5: get Method -->
+    <div class="method">
+      <h3>Get Method</h3>
+      <p class="hint">// Get the element at the specified index.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('doubly-get-solution')">Check Answer</button>
+      <pre id="doubly-get-solution"><code>public E get(int index) {
+    if (index < 0 || index >= size) {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+    }
+    
+    // Determine whether to start from head or tail based on index
+    if (index < size / 2) {
+        // Start from head
+        Node&lt;E&gt; current = sentinelHead.next;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        return current.data;
+    } else {
+        // Start from tail
+        Node&lt;E&gt; current = sentinelTail.prev;
+        for (int i = size - 1; i > index; i--) {
+            current = current.prev;
+        }
+        return current.data;
+    }
+}</code></pre>
+    </div>
+
+    <!-- Block 6: removeAtIndex Method -->
+    <div class="method">
+      <h3>Remove At Index Method</h3>
+      <p class="hint">// Remove and return the element at the specified index.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('doubly-remove-index-solution')">Check Answer</button>
+      <pre id="doubly-remove-index-solution"><code>public E removeAtIndex(int index) {
+    if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+    Node&lt;E&gt; current = sentinelHead.next;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    E removed = current.data;
+    current.prev.next = current.next;
+    current.next.prev = current.prev;
+    size--;
+    return removed;
+}</code></pre>
+    </div>
+
+    <!-- Block 7: Iterator Implementation -->
+    <div class="method">
+      <h3>Iterator Implementation</h3>
+      <p class="hint">// Iterator for DoublyLinkedList.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('doubly-iterator-solution')">Check Answer</button>
+      <pre id="doubly-iterator-solution"><code>@Override
+public Iterator&lt;E&gt; iterator() {
+    return new ListIterator();
+}
+private class ListIterator implements Iterator&lt;E&gt; {
+    private Node&lt;E&gt; current = sentinelHead.next;
+    @Override public boolean hasNext() { return current != sentinelTail; }
+    @Override public E next() {
+        if (!hasNext()) throw new NoSuchElementException();
+        E data = current.data;
+        current = current.next;
+        return data;
+    }
+    @Override public void remove() { throw new UnsupportedOperationException(); }
+}</code></pre>
+    </div>
+
+    <!-- Block 8: Additional Methods -->
+    <div class="method">
+      <h3>Additional Methods (size, isEmpty, toString)</h3>
+      <p class="hint">// Size, isEmpty, and toString methods.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('doubly-additional-solution')">Check Answer</button>
+      <pre id="doubly-additional-solution"><code>public int size() {
+    return size;
+}
+
+public boolean isEmpty() {
+    return size == 0;
+}
+
+@Override
+public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    Node&lt;E&gt; current = sentinelHead.next;
+    
+    while (current != sentinelTail) {
+        sb.append(current.data);
+        if (current.next != sentinelTail) {
+            sb.append(", ");
+        }
+        current = current.next;
+    }
+    
+    sb.append("]");
+    return sb.toString();
+}</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 
+
+
+
+

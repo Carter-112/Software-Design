@@ -1,0 +1,2685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Structures Code Practice</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(-45deg, #ff512f, #f09819, #ff512f, #f09819);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      color: #fff;
+      min-height: 100vh;
+      padding-top: 70px; /* fixed header space */
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* Dropdown Navigation */
+    header {
+      position: fixed;
+      top: 0; 
+      width: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 100;
+    }
+    .navbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropbtn {
+      background: #c0392b;
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .dropbtn:hover {
+      background: #e74c3c;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: rgba(0,0,0,0.9);
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.8);
+      border-radius: 4px;
+    }
+    .dropdown-content a {
+      color: #fff;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s;
+    }
+    .dropdown-content a:hover {
+      background: #e74c3c;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    /* Page & Container */
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+    .page.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    /* Method Block Styles */
+    .method {
+      background: rgba(0,0,0,0.6);
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+      transition: transform 0.3s;
+    }
+    .method:hover { transform: translateY(-5px); }
+    .method h3 { margin-bottom: 10px; text-decoration: underline; }
+    .method p { margin-bottom: 10px; }
+    .hint {
+      background: rgba(255,255,255,0.1);
+      border-left: 4px solid #e67e22;
+      padding: 8px;
+      margin-bottom: 15px;
+      font-family: Consolas, monospace;
+    }
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      font-family: Consolas, monospace;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      resize: vertical;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+    }
+    button.check-btn {
+      background: #27ae60;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+    button.check-btn:hover { background: #2ecc71; }
+    pre.answer {
+      background: #2c3e50;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 10px;
+      display: none;
+      font-family: Consolas, monospace;
+      overflow-x: auto;
+    }
+    /* Random Page Refresh Button */
+    #refresh-btn {
+      background: #2980b9;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-bottom: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #refresh-btn:hover { background: #3498db; }
+  </style>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body>
+  <!-- Header with Dropdown Navigation -->
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="javascript:void(0)" class="nav-link" data-page="home">Home</a>
+          <a href="javascript:void(0)" class="nav-link" data-page="singly">Singly</a>
+          <a href="javascript:void(0)" class="nav-link" data-page="doubly">Doubly</a>
+          <a href="javascript:void(0)" class="nav-link" data-page="arraylist">ArrayList</a>
+          <a href="javascript:void(0)" class="nav-link" data-page="hashmap">HashMap</a>
+          <a href="javascript:void(0)" class="nav-link" data-page="hashset">HashSet</a>
+          <a href="javascript:void(0)" class="nav-link" data-page="bst">BST</a>
+          <a href="javascript:void(0)" class="nav-link" data-page="streams">Streams & Lambdas</a>
+          <a href="javascript:void(0)" class="nav-link" data-page="random">Random</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Pages Container -->
+  <div id="content">
+    <!-- Home Page -->
+    <div id="home" class="page active">
+      <div class="container">
+        <h2>Welcome to the Code Practice Hub</h2>
+        <p>Select a topic from the dropdown above to view full class implementations or try a random snippet!</p>
+      </div>
+    </div>
+
+    <!-- SinglyLinkedList Page -->
+    <div id="singly" class="page">
+      <div class="container">
+        <h2>Singly Linked List (Sentinel) – Full Class</h2>
+        <!-- Block 1: Header, Fields & Constructor -->
+        <div class="method">
+          <h3>Class Declaration, Fields & Constructor</h3>
+          <p class="hint">// The class header, inner Node class, and constructor.</p>
+          <textarea placeholder="Type your code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('singly-header-answer')">Check Answer</button>
+          <pre id="singly-header-answer" class="answer"><code>public class SinglyLinkedList&lt;E&gt; implements Iterable&lt;E&gt; {
+
+    private static class Node&lt;E&gt; {
+        E data;
+        Node&lt;E&gt; next;
+        Node(E data) { this.data = data; }
+    }
+
+    private Node&lt;E&gt; sentinelHead;
+    private int size;
+
+    public SinglyLinkedList() {
+        sentinelHead = new Node&lt;&gt;(null);
+        size = 0;
+    }
+</code></pre>
+        </div>
+        <!-- Block 2: add Method -->
+        <div class="method">
+          <h3>Method: add</h3>
+          <p class="hint">// Append an element to the end.</p>
+          <textarea placeholder="Type your add method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('singly-add-answer')">Check Answer</button>
+          <pre id="singly-add-answer" class="answer"><code>public void add(E element) {
+    Node&lt;E&gt; current = sentinelHead;
+    while (current.next != null) {
+        current = current.next;
+    }
+    current.next = new Node&lt;&gt;(element);
+    size++;
+}
+</code></pre>
+        </div>
+        <!-- Block 3: remove Method -->
+        <div class="method">
+          <h3>Method: remove</h3>
+          <p class="hint">// Remove the first occurrence of the element.</p>
+          <textarea placeholder="Type your remove method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('singly-remove-answer')">Check Answer</button>
+          <pre id="singly-remove-answer" class="answer"><code>public boolean remove(E element) {
+    Node&lt;E&gt; current = sentinelHead;
+    while (current.next != null) {
+        if (current.next.data.equals(element)) {
+            current.next = current.next.next;
+            size--;
+            return true;
+        }
+        current = current.next;
+    }
+    return false;
+}
+</code></pre>
+        </div>
+        <!-- Block 4: addAtIndex Method -->
+        <div class="method">
+          <h3>Method: addAtIndex</h3>
+          <p class="hint">// Insert an element at the specified index.</p>
+          <textarea placeholder="Type your addAtIndex method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('singly-addAtIndex-answer')">Check Answer</button>
+          <pre id="singly-addAtIndex-answer" class="answer"><code>public void addAtIndex(int index, E element) {
+    if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+    Node&lt;E&gt; current = sentinelHead;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    Node&lt;E&gt; newNode = new Node&lt;&gt;(element);
+    newNode.next = current.next;
+    current.next = newNode;
+    size++;
+}
+</code></pre>
+        </div>
+        <!-- Block 5: removeAtIndex Method -->
+        <div class="method">
+          <h3>Method: removeAtIndex</h3>
+          <p class="hint">// Remove and return the element at the specified index.</p>
+          <textarea placeholder="Type your removeAtIndex method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('singly-removeAtIndex-answer')">Check Answer</button>
+          <pre id="singly-removeAtIndex-answer" class="answer"><code>public E removeAtIndex(int index) {
+    if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+    Node&lt;E&gt; current = sentinelHead;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    E removed = current.next.data;
+    current.next = current.next.next;
+    size--;
+    return removed;
+}
+</code></pre>
+        </div>
+        <!-- Block 6: Iterator Implementation -->
+        <div class="method">
+          <h3>Iterator Implementation</h3>
+          <p class="hint">// A basic iterator for the SinglyLinkedList.</p>
+          <textarea placeholder="Type your iterator code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('singly-iterator-full-answer')">Check Answer</button>
+          <pre id="singly-iterator-full-answer" class="answer"><code>@Override
+public Iterator&lt;E&gt; iterator() {
+    return new ListIterator();
+}
+private class ListIterator implements Iterator&lt;E&gt; {
+    private Node&lt;E&gt; current = sentinelHead.next;
+    @Override
+    public boolean hasNext() { return current != null; }
+    @Override
+    public E next() {
+        if (!hasNext()) throw new NoSuchElementException();
+        E data = current.data;
+        current = current.next;
+        return data;
+    }
+    @Override
+    public void remove() { throw new UnsupportedOperationException(); }
+}
+</code></pre>
+        </div>
+        <!-- Block 7: Additional Methods -->
+        <div class="method">
+          <h3>Additional Methods</h3>
+          <p class="hint">// For example, the size() method.</p>
+          <textarea placeholder="Type your size method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('singly-additional-answer')">Check Answer</button>
+          <pre id="singly-additional-answer" class="answer"><code>public int size() {
+    return size;
+}
+</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- DoublyLinkedList Page -->
+    <div id="doubly" class="page">
+      <div class="container">
+        <h2>Doubly Linked List (Sentinel) – Full Class</h2>
+        <!-- Block 1: Class Declaration, Fields & Constructor -->
+        <div class="method">
+          <h3>Class Declaration, Fields & Constructor</h3>
+          <p class="hint">// Declaration with sentinel head and tail nodes.</p>
+          <textarea placeholder="Type your code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('doubly-header-answer')">Check Answer</button>
+          <pre id="doubly-header-answer" class="answer"><code>public class DoublyLinkedList&lt;E&gt; implements Iterable&lt;E&gt; {
+
+    private static class Node&lt;E&gt; {
+        E data;
+        Node&lt;E&gt; prev;
+        Node&lt;E&gt; next;
+        Node(E data) { this.data = data; }
+    }
+
+    private Node&lt;E&gt; sentinelHead;
+    private Node&lt;E&gt; sentinelTail;
+    private int size;
+
+    public DoublyLinkedList() {
+        sentinelHead = new Node&lt;&gt;(null);
+        sentinelTail = new Node&lt;&gt;(null);
+        sentinelHead.next = sentinelTail;
+        sentinelTail.prev = sentinelHead;
+        size = 0;
+    }
+</code></pre>
+        </div>
+        <!-- Block 2: add Method -->
+        <div class="method">
+          <h3>Method: add</h3>
+          <p class="hint">// Append an element to the end.</p>
+          <textarea placeholder="Type your add method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('doubly-add-answer')">Check Answer</button>
+          <pre id="doubly-add-answer" class="answer"><code>public void add(E element) {
+    Node&lt;E&gt; newNode = new Node&lt;&gt;(element);
+    newNode.prev = sentinelTail.prev;
+    newNode.next = sentinelTail;
+    sentinelTail.prev.next = newNode;
+    sentinelTail.prev = newNode;
+    size++;
+}
+</code></pre>
+        </div>
+        <!-- Block 3: remove Method -->
+        <div class="method">
+          <h3>Method: remove</h3>
+          <p class="hint">// Remove the first occurrence of an element.</p>
+          <textarea placeholder="Type your remove method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('doubly-remove-answer')">Check Answer</button>
+          <pre id="doubly-remove-answer" class="answer"><code>public boolean remove(E element) {
+    Node&lt;E&gt; current = sentinelHead.next;
+    while (current != sentinelTail) {
+        if (current.data.equals(element)) {
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
+            size--;
+            return true;
+        }
+        current = current.next;
+    }
+    return false;
+}
+</code></pre>
+        </div>
+        <!-- Block 4: addAtIndex Method -->
+        <div class="method">
+          <h3>Method: addAtIndex</h3>
+          <p class="hint">// Insert an element at the specified index.</p>
+          <textarea placeholder="Type your addAtIndex method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('doubly-addAtIndex-answer')">Check Answer</button>
+          <pre id="doubly-addAtIndex-answer" class="answer"><code>public void addAtIndex(int index, E element) {
+    if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+    Node&lt;E&gt; current = sentinelHead;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    Node&lt;E&gt; newNode = new Node&lt;&gt;(element);
+    newNode.next = current.next;
+    newNode.prev = current;
+    current.next.prev = newNode;
+    current.next = newNode;
+    size++;
+}
+</code></pre>
+        </div>
+        <!-- Block 5: removeAtIndex Method -->
+        <div class="method">
+          <h3>Method: removeAtIndex</h3>
+          <p class="hint">// Remove and return the element at the specified index.</p>
+          <textarea placeholder="Type your removeAtIndex method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('doubly-removeAtIndex-answer')">Check Answer</button>
+          <pre id="doubly-removeAtIndex-answer" class="answer"><code>public E removeAtIndex(int index) {
+    if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+    Node&lt;E&gt; current = sentinelHead.next;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    E removed = current.data;
+    current.prev.next = current.next;
+    current.next.prev = current.prev;
+    size--;
+    return removed;
+}
+</code></pre>
+        </div>
+        <!-- Block 6: Iterator Implementation -->
+        <div class="method">
+          <h3>Iterator Implementation</h3>
+          <p class="hint">// Basic iterator for DoublyLinkedList.</p>
+          <textarea placeholder="Type your iterator code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('doubly-iterator-answer')">Check Answer</button>
+          <pre id="doubly-iterator-answer" class="answer"><code>@Override
+public Iterator&lt;E&gt; iterator() {
+    return new ListIterator();
+}
+private class ListIterator implements Iterator&lt;E&gt; {
+    private Node&lt;E&gt; current = sentinelHead.next;
+    @Override public boolean hasNext() { return current != sentinelTail; }
+    @Override public E next() {
+        if (!hasNext()) throw new NoSuchElementException();
+        E data = current.data;
+        current = current.next;
+        return data;
+    }
+    @Override public void remove() { throw new UnsupportedOperationException(); }
+}
+</code></pre>
+        </div>
+        <!-- Block 7: Additional Methods -->
+        <div class="method">
+          <h3>Additional Methods</h3>
+          <p class="hint">// For example, size().</p>
+          <textarea placeholder="Type your size method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('doubly-additional-answer')">Check Answer</button>
+          <pre id="doubly-additional-answer" class="answer"><code>public int size() {
+    return size;
+}
+</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- MyArrayList Page -->
+    <div id="arraylist" class="page">
+      <div class="container">
+        <h2>Custom ArrayList (MyArrayList) – Full Class</h2>
+        <!-- Block 1: Class Declaration, Fields & Constructor -->
+        <div class="method">
+          <h3>Class Declaration, Fields & Constructor</h3>
+          <p class="hint">// The backing array, size, and default capacity.</p>
+          <textarea placeholder="Type your code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('arraylist-header-answer')">Check Answer</button>
+          <pre id="arraylist-header-answer" class="answer"><code>public class MyArrayList&lt;E&gt; implements Iterable&lt;E&gt; {
+
+    private E[] array;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 10;
+
+    @SuppressWarnings("unchecked")
+    public MyArrayList() {
+        array = (E[]) new Object[DEFAULT_CAPACITY];
+        size = 0;
+    }
+</code></pre>
+        </div>
+        <!-- Block 2: add Method -->
+        <div class="method">
+          <h3>Method: add</h3>
+          <p class="hint">// Append an element to the end.</p>
+          <textarea placeholder="Type your add method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('arraylist-add-answer')">Check Answer</button>
+          <pre id="arraylist-add-answer" class="answer"><code>public void add(E element) {
+    if (size == array.length) {
+        resize();
+    }
+    array[size++] = element;
+}
+</code></pre>
+        </div>
+        <!-- Block 3: remove Method -->
+        <div class="method">
+          <h3>Method: remove</h3>
+          <p class="hint">// Remove the first occurrence.</p>
+          <textarea placeholder="Type your remove method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('arraylist-remove-answer')">Check Answer</button>
+          <pre id="arraylist-remove-answer" class="answer"><code>public boolean remove(E element) {
+    for (int i = 0; i < size; i++) {
+        if (array[i].equals(element)) {
+            for (int j = i; j < size - 1; j++) {
+                array[j] = array[j + 1];
+            }
+            array[--size] = null;
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre>
+        </div>
+        <!-- Block 4: addAtIndex Method -->
+        <div class="method">
+          <h3>Method: addAtIndex</h3>
+          <p class="hint">// Insert an element at the specified index.</p>
+          <textarea placeholder="Type your addAtIndex method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('arraylist-addAtIndex-answer')">Check Answer</button>
+          <pre id="arraylist-addAtIndex-answer" class="answer"><code>public void addAtIndex(int index, E element) {
+    if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+    if (size == array.length) {
+        resize();
+    }
+    for (int i = size; i > index; i--) {
+        array[i] = array[i - 1];
+    }
+    array[index] = element;
+    size++;
+}
+</code></pre>
+        </div>
+        <!-- Block 5: removeAtIndex Method -->
+        <div class="method">
+          <h3>Method: removeAtIndex</h3>
+          <p class="hint">// Remove and return the element at the specified index.</p>
+          <textarea placeholder="Type your removeAtIndex method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('arraylist-removeAtIndex-answer')">Check Answer</button>
+          <pre id="arraylist-removeAtIndex-answer" class="answer"><code>public E removeAtIndex(int index) {
+    if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+    E removed = array[index];
+    for (int i = index; i < size - 1; i++) {
+        array[i] = array[i + 1];
+    }
+    array[--size] = null;
+    return removed;
+}
+</code></pre>
+        </div>
+        <!-- Block 6: Iterator Implementation -->
+        <div class="method">
+          <h3>Iterator Implementation</h3>
+          <p class="hint">// Basic iterator for MyArrayList.</p>
+          <textarea placeholder="Type your iterator code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('arraylist-iterator-full-answer')">Check Answer</button>
+          <pre id="arraylist-iterator-full-answer" class="answer"><code>@Override
+public Iterator&lt;E&gt; iterator() {
+    return new ArrayListIterator();
+}
+private class ArrayListIterator implements Iterator&lt;E&gt; {
+    private int index = 0;
+    @Override public boolean hasNext() { return index < size; }
+    @Override public E next() {
+        if (!hasNext()) throw new NoSuchElementException();
+        return array[index++];
+    }
+    @Override public void remove() { throw new UnsupportedOperationException(); }
+}
+</code></pre>
+        </div>
+        <!-- Block 7: Additional Methods -->
+        <div class="method">
+          <h3>Additional Methods</h3>
+          <p class="hint">// For example, size() and the resize() helper method.</p>
+          <textarea placeholder="Type your additional methods here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('arraylist-additional-answer')">Check Answer</button>
+          <pre id="arraylist-additional-answer" class="answer"><code>public int size() {
+    return size;
+}
+@SuppressWarnings("unchecked")
+private void resize() {
+    E[] newArray = (E[]) new Object[array.length * 2];
+    System.arraycopy(array, 0, newArray, 0, size);
+    array = newArray;
+}
+}
+</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- MyHashMap Page -->
+    <div id="hashmap" class="page">
+      <div class="container">
+        <h2>Custom HashMap (MyHashMap) – Full Class</h2>
+        <!-- Block 1: Class Declaration, Fields & Constructor -->
+        <div class="method">
+          <h3>Class Declaration, Fields & Constructor</h3>
+          <p class="hint">// Default capacity, load factor, and table initialization.</p>
+          <textarea placeholder="Type your code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashmap-header-answer')">Check Answer</button>
+          <pre id="hashmap-header-answer" class="answer"><code>public class MyHashMap&lt;K, V&gt; {
+
+    private static final int DEFAULT_CAPACITY = 16;
+    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    
+    private LinkedList&lt;Node&lt;K, V&gt;&gt;[] table;
+    private int capacity;
+    private float loadFactor;
+    private int size;
+    
+    @SuppressWarnings("unchecked")
+    public MyHashMap() {
+        this.capacity = DEFAULT_CAPACITY;
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
+        table = new LinkedList[capacity];
+        for (int i = 0; i < capacity; i++) {
+            table[i] = new LinkedList&lt;&gt;();
+        }
+        size = 0;
+    }
+</code></pre>
+        </div>
+        <!-- Block 2: put Method -->
+        <div class="method">
+          <h3>Method: put</h3>
+          <p class="hint">// Associates a key with a value.</p>
+          <textarea placeholder="Type your put method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashmap-put-answer')">Check Answer</button>
+          <pre id="hashmap-put-answer" class="answer"><code>public V put(K key, V value) {
+    LinkedList&lt;Node&lt;K, V&gt;&gt; bucket = table[Math.abs(key.hashCode()) % capacity];
+    for (Node&lt;K, V&gt; node : bucket) {
+        if (node.key.equals(key)) {
+            V oldVal = node.value;
+            node.value = value;
+            return oldVal;
+        }
+    }
+    bucket.add(new Node&lt;K, V&gt;(key, value));
+    size++;
+    if ((float) size / capacity >= loadFactor) {
+        rehash();
+    }
+    return null;
+}
+</code></pre>
+        </div>
+        <!-- Block 3: get Method -->
+        <div class="method">
+          <h3>Method: get</h3>
+          <p class="hint">// Retrieve the value for a given key.</p>
+          <textarea placeholder="Type your get method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashmap-get-answer')">Check Answer</button>
+          <pre id="hashmap-get-answer" class="answer"><code>public V get(K key) {
+    LinkedList&lt;Node&lt;K, V&gt;&gt; bucket = table[Math.abs(key.hashCode()) % capacity];
+    for (Node&lt;K, V&gt; node : bucket) {
+        if (node.key.equals(key)) {
+            return node.value;
+        }
+    }
+    return null;
+}
+</code></pre>
+        </div>
+        <!-- Block 4: containsKey Method -->
+        <div class="method">
+          <h3>Method: containsKey</h3>
+          <p class="hint">// Check if the key exists.</p>
+          <textarea placeholder="Type your containsKey method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashmap-containsKey-answer')">Check Answer</button>
+          <pre id="hashmap-containsKey-answer" class="answer"><code>public boolean containsKey(K key) {
+    LinkedList&lt;Node&lt;K, V&gt;&gt; bucket = table[Math.abs(key.hashCode()) % capacity];
+    for (Node&lt;K, V&gt; node : bucket) {
+        if (node.key.equals(key)) {
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre>
+        </div>
+        <!-- Block 5: rehash Method -->
+        <div class="method">
+          <h3>Method: rehash</h3>
+          <p class="hint">// Double the capacity and reinsert all nodes.</p>
+          <textarea placeholder="Type your rehash method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashmap-rehash-answer')">Check Answer</button>
+          <pre id="hashmap-rehash-answer" class="answer"><code>@SuppressWarnings("unchecked")
+private void rehash() {
+    LinkedList&lt;Node&lt;K, V&gt;&gt;[] oldTable = table;
+    capacity *= 2;
+    table = new LinkedList[capacity];
+    for (int i = 0; i < capacity; i++) {
+        table[i] = new LinkedList&lt;&gt;();
+    }
+    size = 0;
+    for (LinkedList&lt;Node&lt;K, V&gt;&gt; bucket : oldTable) {
+        for (Node&lt;K, V&gt; node : bucket) {
+            put(node.key, node.value);
+        }
+    }
+}
+</code></pre>
+        </div>
+        <!-- Block 6: Additional Methods & Helper Class -->
+        <div class="method">
+          <h3>Additional Methods &amp; Helper Class</h3>
+          <p class="hint">// For example, size() and the Node inner class.</p>
+          <textarea placeholder="Type your additional methods here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashmap-additional-answer')">Check Answer</button>
+          <pre id="hashmap-additional-answer" class="answer"><code>public int size() {
+    return size;
+}
+
+private static class Node&lt;K, V&gt; {
+    K key;
+    V value;
+    Node(K key, V value) { this.key = key; this.value = value; }
+}
+}
+</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- MyHashSet Page -->
+    <div id="hashset" class="page">
+      <div class="container">
+        <h2>Custom HashSet (MyHashSet) – Full Class</h2>
+        <!-- Block 1: Class Declaration, Fields & Constructor -->
+        <div class="method">
+          <h3>Class Declaration, Fields &amp; Constructor</h3>
+          <p class="hint">// MyHashSet is backed by a MyHashMap&lt;K, Object&gt;.</p>
+          <textarea placeholder="Type your code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashset-header-answer')">Check Answer</button>
+          <pre id="hashset-header-answer" class="answer"><code>public class MyHashSet&lt;K&gt; implements Iterable&lt;K&gt; {
+
+    private MyHashMap&lt;K, Object&gt; map;
+    private static final Object PRESENT = new Object();
+
+    public MyHashSet() {
+        map = new MyHashMap&lt;&gt;();
+    }
+</code></pre>
+        </div>
+        <!-- Block 2: add Method -->
+        <div class="method">
+          <h3>Method: add</h3>
+          <p class="hint">// Add a key to the set.</p>
+          <textarea placeholder="Type your add method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashset-add-answer')">Check Answer</button>
+          <pre id="hashset-add-answer" class="answer"><code>public boolean add(K key) {
+    return map.put(key, PRESENT) == null;
+}
+</code></pre>
+        </div>
+        <!-- Block 3: remove Method -->
+        <div class="method">
+          <h3>Method: remove</h3>
+          <p class="hint">// Remove a key from the set.</p>
+          <textarea placeholder="Type your remove method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashset-remove-answer')">Check Answer</button>
+          <pre id="hashset-remove-answer" class="answer"><code>public boolean remove(K key) {
+    return map.remove(key) != null;
+}
+</code></pre>
+        </div>
+        <!-- Block 4: contains Method -->
+        <div class="method">
+          <h3>Method: contains</h3>
+          <p class="hint">// Check if the set contains the key.</p>
+          <textarea placeholder="Type your contains method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashset-contains-answer')">Check Answer</button>
+          <pre id="hashset-contains-answer" class="answer"><code>public boolean contains(K key) {
+    return map.containsKey(key);
+}
+</code></pre>
+        </div>
+        <!-- Block 5: Iterator Implementation -->
+        <div class="method">
+          <h3>Iterator Implementation</h3>
+          <p class="hint">// Delegate to MyHashMap's keySet iterator.</p>
+          <textarea placeholder="Type your iterator code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashset-iterator-answer')">Check Answer</button>
+          <pre id="hashset-iterator-answer" class="answer"><code>@Override
+public Iterator&lt;K&gt; iterator() {
+    return map.keySet().iterator();
+}
+</code></pre>
+        </div>
+        <!-- Block 6: Additional Methods -->
+        <div class="method">
+          <h3>Additional Methods</h3>
+          <p class="hint">// For example, size().</p>
+          <textarea placeholder="Type your additional methods here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('hashset-additional-answer')">Check Answer</button>
+          <pre id="hashset-additional-answer" class="answer"><code>public int size() {
+    return map.size();
+}
+</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Streams & Lambdas Page -->
+    <div id="streams" class="page">
+      <div class="container">
+        <h2>Streams & Lambdas – Full Class Example</h2>
+        <!-- Block 1: Basic Streams Example -->
+        <div class="method">
+          <h3>Basic Streams Example</h3>
+          <p class="hint">// Filter and print even numbers.</p>
+          <textarea placeholder="Type your streams example here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('streams-basic-full-answer')">Check Answer</button>
+          <pre id="streams-basic-full-answer" class="answer"><code>import java.util.Arrays;
+import java.util.List;
+public class StreamsAndLambdasExamples {
+    public static void main(String[] args) {
+        List&lt;Integer&gt; numbers = Arrays.asList(1,2,3,4,5,6);
+        numbers.stream()
+               .filter(n -> n % 2 == 0)
+               .forEach(System.out::println);
+    }
+}
+</code></pre>
+        </div>
+        <!-- Block 2: Map & Reduce Example -->
+        <div class="method">
+          <h3>Map & Reduce Example</h3>
+          <p class="hint">// Map each word to its length and sum them.</p>
+          <textarea placeholder="Type your map & reduce example here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('streams-map-reduce-full-answer')">Check Answer</button>
+          <pre id="streams-map-reduce-full-answer" class="answer"><code>import java.util.Arrays;
+import java.util.List;
+public class StreamsAndLambdasExamples {
+    public static void main(String[] args) {
+        List&lt;String&gt; words = Arrays.asList("Hello","World","Lambda","Stream");
+        int totalLength = words.stream()
+                               .map(String::length)
+                               .reduce(0, Integer::sum);
+        System.out.println("Total length = " + totalLength);
+    }
+}
+</code></pre>
+        </div>
+        <!-- Block 3: Parallel Streams Example -->
+        <div class="method">
+          <h3>Parallel Streams Example</h3>
+          <p class="hint">// Sum a large list in parallel.</p>
+          <textarea placeholder="Type your parallel streams example here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('streams-parallel-full-answer')">Check Answer</button>
+          <pre id="streams-parallel-full-answer" class="answer"><code>import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
+public class StreamsAndLambdasExamples {
+    public static void main(String[] args) {
+        List&lt;Long&gt; bigNumbers = LongStream.rangeClosed(1, 10000000)
+                                               .boxed()
+                                               .collect(Collectors.toList());
+        long start = System.currentTimeMillis();
+        long sum = bigNumbers.parallelStream().reduce(0L, Long::sum);
+        long end = System.currentTimeMillis();
+        System.out.println("Sum = " + sum);
+        System.out.println("Time (ms) = " + (end - start));
+    }
+}
+</code></pre>
+        </div>
+        <!-- Block 4: Full Implementation -->
+        <div class="method">
+          <h3>Full Implementation</h3>
+          <p class="hint">// A complete StreamsAndLambdasExamples class integrating all examples.</p>
+          <textarea placeholder="Type your entire class code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('streams-full-answer')">Check Answer</button>
+          <pre id="streams-full-answer" class="answer"><code>import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
+public class StreamsAndLambdasExamples {
+    public static void main(String[] args) {
+        // Basic Streams Example
+        List&lt;Integer&gt; numbers = Arrays.asList(1,2,3,4,5,6);
+        System.out.println("Even numbers:");
+        numbers.stream()
+               .filter(n -> n % 2 == 0)
+               .forEach(System.out::println);
+        // Map & Reduce Example
+        List&lt;String&gt; words = Arrays.asList("Hello","World","Lambda","Stream");
+        int totalLength = words.stream()
+                               .map(String::length)
+                               .reduce(0, Integer::sum);
+        System.out.println("Total length = " + totalLength);
+        // Parallel Streams Example
+        List&lt;Long&gt; bigNumbers = LongStream.rangeClosed(1, 10000000)
+                                          .boxed()
+                                          .collect(Collectors.toList());
+        long start = System.currentTimeMillis();
+        long sum = bigNumbers.parallelStream().reduce(0L, Long::sum);
+        long end = System.currentTimeMillis();
+        System.out.println("Sum = " + sum);
+        System.out.println("Time (ms) = " + (end - start));
+    }
+}
+</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- BST Page -->
+    <div id="bst" class="page">
+      <div class="container">
+        <h2>Binary Search Tree (BST) – Full Class</h2>
+        <!-- Block 1: Class Declaration, Fields & Constructor -->
+        <div class="method">
+          <h3>Class Declaration, Fields & Constructor</h3>
+          <p class="hint">// The class header, Node inner class, and constructor.</p>
+          <textarea placeholder="Type your code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('bst-header-answer')">Check Answer</button>
+          <pre id="bst-header-answer" class="answer"><code>import java.util.Iterator;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
+public class BST&lt;E extends Comparable&lt;E&gt;&gt; implements Iterable&lt;E&gt; {
+
+    // --------------------------------------------------
+    // Node Class Definition
+    // --------------------------------------------------
+    private class Node {
+        E value;
+        Node left, right;
+
+        public Node(E value) {
+            this.value = value;
+            left = right = null;
+        }
+    }
+
+    // Root node of the BST
+    private Node root;
+
+    // --------------------------------------------------
+    // Constructor
+    // --------------------------------------------------
+    public BST() {
+        root = null;
+    }
+</code></pre>
+        </div>
+        <!-- Block 2: add Method -->
+        <div class="method">
+          <h3>Method: add</h3>
+          <p class="hint">// Add a value to the BST.</p>
+          <textarea placeholder="Type your add method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('bst-add-answer')">Check Answer</button>
+          <pre id="bst-add-answer" class="answer"><code>// --------------------------------------------------
+// Add Method (alias for insert)
+// --------------------------------------------------
+public void add(E value) {
+    root = insertRec(root, value);
+}
+
+// Insert a new value into the BST (internal method)
+private Node insertRec(Node node, E value) {
+    if (node == null) {
+        return new Node(value);
+    }
+    if (value.compareTo(node.value) < 0) {
+        node.left = insertRec(node.left, value);
+    } else if (value.compareTo(node.value) > 0) {
+        node.right = insertRec(node.right, value);
+    }
+    // If the value is equal, we do nothing (no duplicates)
+    return node;
+}</code></pre>
+        </div>
+        <!-- Block 3: remove Method -->
+        <div class="method">
+          <h3>Method: remove</h3>
+          <p class="hint">// Remove a value from the BST.</p>
+          <textarea placeholder="Type your remove method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('bst-remove-answer')">Check Answer</button>
+          <pre id="bst-remove-answer" class="answer"><code>// --------------------------------------------------
+// Remove Method (by value)
+// --------------------------------------------------
+public void remove(E value) {
+    root = removeRec(root, value);
+}
+
+// Recursive removal helper method
+private Node removeRec(Node node, E value) {
+    if (node == null) {
+        return null;
+    }
+    int cmp = value.compareTo(node.value);
+    if (cmp < 0) {
+        node.left = removeRec(node.left, value);
+    } else if (cmp > 0) {
+        node.right = removeRec(node.right, value);
+    } else {
+        // Node to be removed found
+        if (node.left == null) {
+            return node.right;
+        } else if (node.right == null) {
+            return node.left;
+        } else {
+            // Node with two children: get the inorder successor (smallest in the right subtree)
+            Node minNode = getMin(node.right);
+            node.value = minNode.value;
+            node.right = removeRec(node.right, minNode.value);
+        }
+    }
+    return node;
+}
+
+// Helper method to find the minimum node in a subtree
+private Node getMin(Node node) {
+    while (node.left != null) {
+        node = node.left;
+    }
+    return node;
+}</code></pre>
+        </div>
+        <!-- Block 4: contains Method -->
+        <div class="method">
+          <h3>Method: contains</h3>
+          <p class="hint">// Check if a value exists in the BST.</p>
+          <textarea placeholder="Type your contains method code here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('bst-contains-answer')">Check Answer</button>
+          <pre id="bst-contains-answer" class="answer"><code>// --------------------------------------------------
+// Contains Method
+// --------------------------------------------------
+public boolean contains(E value) {
+    return containsRec(root, value);
+}
+
+// Recursive helper for contains
+private boolean containsRec(Node node, E value) {
+    if (node == null) {
+        return false;
+    }
+    int cmp = value.compareTo(node.value);
+    if (cmp == 0) {
+        return true;
+    } else if (cmp < 0) {
+        return containsRec(node.left, value);
+    } else {
+        return containsRec(node.right, value);
+    }
+}</code></pre>
+        </div>
+        <!-- Block 5: Normal Traversals -->
+        <div class="method">
+          <h3>Normal Traversals (Recursive)</h3>
+          <p class="hint">// Inorder, Preorder, and Postorder traversals.</p>
+          <textarea placeholder="Type your traversal methods here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('bst-traversals-answer')">Check Answer</button>
+          <pre id="bst-traversals-answer" class="answer"><code>// --------------------------------------------------
+// Section 1: Normal Traversals (Recursive)
+// --------------------------------------------------
+// Inorder Traversal: Left, Root, Right
+public void inorder() {
+    inorderRec(root);
+    System.out.println();
+}
+private void inorderRec(Node node) {
+    if (node != null) {
+        inorderRec(node.left);
+        System.out.print(node.value + " ");
+        inorderRec(node.right);
+    }
+}
+
+// Preorder Traversal: Root, Left, Right
+public void preorder() {
+    preorderRec(root);
+    System.out.println();
+}
+private void preorderRec(Node node) {
+    if (node != null) {
+        System.out.print(node.value + " ");
+        preorderRec(node.left);
+        preorderRec(node.right);
+    }
+}
+
+// Postorder Traversal: Left, Right, Root
+public void postorder() {
+    postorderRec(root);
+    System.out.println();
+}
+private void postorderRec(Node node) {
+    if (node != null) {
+        postorderRec(node.left);
+        postorderRec(node.right);
+        System.out.print(node.value + " ");
+    }
+}</code></pre>
+        </div>
+        <!-- Block 6: Iterator Implementations -->
+        <div class="method">
+          <h3>Iterator Implementations</h3>
+          <p class="hint">// Iterators for inorder, preorder, and postorder traversals.</p>
+          <textarea placeholder="Type your iterator implementations here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('bst-iterators-answer')">Check Answer</button>
+          <pre id="bst-iterators-answer" class="answer"><code>// --------------------------------------------------
+// Section 2: Traversals using for-each Loop (Iterable)
+// --------------------------------------------------
+// These custom iterator classes enable using a for‑each loop on an Iterable.
+// The default iterator (from Iterable) returns the inorder traversal.
+
+// Inorder Iterator (Left, Root, Right)
+private class InorderIterator implements Iterator&lt;E&gt; {
+    private Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+
+    public InorderIterator(Node root) {
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+    }
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    public E next() {
+        Node node = stack.pop();
+        E result = node.value;
+        if (node.right != null) {
+            Node temp = node.right;
+            while (temp != null) {
+                stack.push(temp);
+                temp = temp.left;
+            }
+        }
+        return result;
+    }
+}
+
+// Preorder Iterator (Root, Left, Right)
+private class PreorderIterator implements Iterator&lt;E&gt; {
+    private Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+
+    public PreorderIterator(Node root) {
+        if (root != null) {
+            stack.push(root);
+        }
+    }
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    public E next() {
+        Node node = stack.pop();
+        E result = node.value;
+        // Push right first so that left is processed first
+        if (node.right != null) {
+            stack.push(node.right);
+        }
+        if (node.left != null) {
+            stack.push(node.left);
+        }
+        return result;
+    }
+}
+
+// Postorder Iterator (Left, Right, Root)
+// For simplicity, we precompute the traversal into a list.
+private class PostorderIterator implements Iterator&lt;E&gt; {
+    private List&lt;E&gt; list;
+    private int index;
+
+    public PostorderIterator(Node root) {
+        list = new ArrayList&lt;&gt;();
+        postorderRecList(root, list);
+        index = 0;
+    }
+    private void postorderRecList(Node node, List&lt;E&gt; list) {
+        if (node != null) {
+            postorderRecList(node.left, list);
+            postorderRecList(node.right, list);
+            list.add(node.value);
+        }
+    }
+    public boolean hasNext() {
+        return index < list.size();
+    }
+    public E next() {
+        return list.get(index++);
+    }
+}</code></pre>
+        </div>
+        <!-- Block 7: Iterable Methods -->
+        <div class="method">
+          <h3>Iterable Methods</h3>
+          <p class="hint">// Methods that return Iterable objects for each traversal type.</p>
+          <textarea placeholder="Type your iterable methods here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('bst-iterable-methods-answer')">Check Answer</button>
+          <pre id="bst-iterable-methods-answer" class="answer"><code>// Iterable methods for each traversal order.
+public Iterable&lt;E&gt; getInorderIterable() {
+    return () -> new InorderIterator(root);
+}
+public Iterable&lt;E&gt; getPreorderIterable() {
+    return () -> new PreorderIterator(root);
+}
+public Iterable&lt;E&gt; getPostorderIterable() {
+    return () -> new PostorderIterator(root);
+}
+
+// The default iterator for this BST (used if you iterate over the BST itself)
+// Here, we choose the inorder traversal.
+@Override
+public Iterator&lt;E&gt; iterator() {
+    return new InorderIterator(root);
+}</code></pre>
+        </div>
+        <!-- Block 8: Stream Methods -->
+        <div class="method">
+          <h3>Stream Methods</h3>
+          <p class="hint">// Methods that return Stream objects for different traversal types.</p>
+          <textarea placeholder="Type your stream methods here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('bst-stream-methods-answer')">Check Answer</button>
+          <pre id="bst-stream-methods-answer" class="answer"><code>// --------------------------------------------------
+// Section 3: Traversals using Streams
+// --------------------------------------------------
+// Inorder Stream: Left, Root, Right
+public Stream&lt;E&gt; inorderStream() {
+    List&lt;E&gt; list = new ArrayList&lt;&gt;();
+    inorderRec(root, list);
+    return list.stream();
+}
+private void inorderRec(Node node, List&lt;E&gt; list) {
+    if (node != null) {
+        inorderRec(node.left, list);
+        list.add(node.value);
+        inorderRec(node.right, list);
+    }
+}
+
+// Preorder Stream: Root, Left, Right
+public Stream&lt;E&gt; preorderStream() {
+    List&lt;E&gt; list = new ArrayList&lt;&gt;();
+    preorderRec(root, list);
+    return list.stream();
+}
+private void preorderRec(Node node, List&lt;E&gt; list) {
+    if (node != null) {
+        list.add(node.value);
+        preorderRec(node.left, list);
+        preorderRec(node.right, list);
+    }
+}
+
+// Postorder Stream: Left, Right, Root
+public Stream&lt;E&gt; postorderStream() {
+    List&lt;E&gt; list = new ArrayList&lt;&gt;();
+    postorderRecList(root, list);
+    return list.stream();
+}
+private void postorderRecList(Node node, List&lt;E&gt; list) {
+    if (node != null) {
+        postorderRecList(node.left, list);
+        postorderRecList(node.right, list);
+        list.add(node.value);
+    }
+}</code></pre>
+        </div>
+        <!-- Block 9: Main Method -->
+        <div class="method">
+          <h3>Main Method for Testing</h3>
+          <p class="hint">// A main method demonstrating all the features of the BST.</p>
+          <textarea placeholder="Type your main method here..."></textarea>
+          <button class="check-btn" onclick="toggleAnswer('bst-main-method-answer')">Check Answer</button>
+          <pre id="bst-main-method-answer" class="answer"><code>// --------------------------------------------------
+// Main Method for Testing All Sections
+// --------------------------------------------------
+public static void main(String[] args) {
+    // Create a BST with Integer values
+    BST&lt;Integer&gt; tree = new BST&lt;&gt;();
+
+    // Add values into the BST (using add)
+    tree.add(50);
+    tree.add(30);
+    tree.add(20);
+    tree.add(40);
+    tree.add(70);
+    tree.add(60);
+    tree.add(80);
+
+    // Test contains method
+    System.out.println("Contains 40? " + tree.contains(40)); // should be true
+    System.out.println("Contains 25? " + tree.contains(25)); // should be false
+
+    // Remove a value and test contains again
+    tree.remove(30);
+    System.out.println("After removing 30, contains 30? " + tree.contains(30));
+
+    // ----- Section 1: Normal Traversals (Recursive) -----
+    System.out.println("\nSection 1: Normal Traversals (Recursive):");
+    System.out.print("Preorder: ");
+    tree.preorder();
+    System.out.print("Inorder: ");
+    tree.inorder();
+    System.out.print("Postorder: ");
+    tree.postorder();
+
+    // ----- Section 2: Traversals using for-each Loop (Iterable) -----
+    System.out.println("\nSection 2: Traversals using for-each Loop (Iterable):");
+    System.out.print("Preorder: ");
+    for (Integer value : tree.getPreorderIterable()) {
+        System.out.print(value + " ");
+    }
+    System.out.println();
+    System.out.print("Inorder: ");
+    for (Integer value : tree.getInorderIterable()) {
+        System.out.print(value + " ");
+    }
+    System.out.println();
+    System.out.print("Postorder: ");
+    for (Integer value : tree.getPostorderIterable()) {
+        System.out.print(value + " ");
+    }
+    System.out.println();
+
+    // ----- Section 3: Traversals using Streams -----
+    System.out.println("\nSection 3: Traversals using Streams:");
+    System.out.print("Preorder: ");
+    tree.preorderStream().forEach(value -> System.out.print(value + " "));
+    System.out.println();
+    System.out.print("Inorder: ");
+    tree.inorderStream().forEach(value -> System.out.print(value + " "));
+    System.out.println();
+    System.out.print("Postorder: ");
+    tree.postorderStream().forEach(value -> System.out.print(value + " "));
+    System.out.println();
+}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Random Page -->
+    <div id="random" class="page">
+      <div class="container">
+        <h2>Random Code Snippet Practice</h2>
+        <p>Click "Refresh Snippet" to get a random part from any of the classes below.</p>
+        <button id="refresh-btn" onclick="randomizeSnippet()">Refresh Snippet</button>
+        <div id="random-snippet-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to show the selected page
+    function showPage(pageId) {
+      var pages = document.getElementsByClassName('page');
+      for (var i = 0; i < pages.length; i++) {
+        pages[i].classList.remove('active');
+      }
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo(0, 0);
+      if (pageId === "random") {
+        randomizeSnippet();
+      }
+    }
+
+    // Function to toggle answer visibility for a given code block
+    function toggleAnswer(id) {
+      var answer = document.getElementById(id);
+      answer.style.display = (answer.style.display === "none" || answer.style.display === "") ? "block" : "none";
+    }
+
+    // ---------- RANDOM SNIPPET LOGIC ----------
+    // Array of snippet objects representing every code block from every page
+    var randomSnippets = [
+      // SinglyLinkedList snippets
+      {
+        title: "SinglyLinkedList – Class Declaration, Fields & Constructor",
+        hint: "// The class header, Node inner class, and constructor for SinglyLinkedList.",
+        solution: `public class SinglyLinkedList<E> implements Iterable<E> {
+    private static class Node<E> {
+        E data;
+        Node<E> next;
+        Node(E data) { this.data = data; }
+    }
+    private Node<E> sentinelHead;
+    private int size;
+    public SinglyLinkedList() {
+        sentinelHead = new Node<>(null);
+        size = 0;
+    }`
+      },
+      {
+        title: "SinglyLinkedList – add Method",
+        hint: "// Append an element to the end.",
+        solution: `public void add(E element) {
+    Node<E> current = sentinelHead;
+    while (current.next != null) {
+        current = current.next;
+    }
+    current.next = new Node<>(element);
+    size++;
+}`
+      },
+      {
+        title: "SinglyLinkedList – remove Method",
+        hint: "// Remove the first occurrence of the element.",
+        solution: `public boolean remove(E element) {
+    Node<E> current = sentinelHead;
+    while (current.next != null) {
+        if (current.next.data.equals(element)) {
+            current.next = current.next.next;
+            size--;
+            return true;
+        }
+        current = current.next;
+    }
+    return false;
+}`
+      },
+      {
+        title: "SinglyLinkedList – addAtIndex Method",
+        hint: "// Insert an element at a specified index.",
+        solution: `public void addAtIndex(int index, E element) {
+    if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+    Node<E> current = sentinelHead;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    Node<E> newNode = new Node<>(element);
+    newNode.next = current.next;
+    current.next = newNode;
+    size++;
+}`
+      },
+      {
+        title: "SinglyLinkedList – removeAtIndex Method",
+        hint: "// Remove and return the element at the specified index.",
+        solution: `public E removeAtIndex(int index) {
+    if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+    Node<E> current = sentinelHead;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    E removed = current.next.data;
+    current.next = current.next.next;
+    size--;
+    return removed;
+}`
+      },
+      {
+        title: "SinglyLinkedList – Iterator Implementation",
+        hint: "// Basic iterator for SinglyLinkedList.",
+        solution: `@Override
+public Iterator<E> iterator() {
+    return new ListIterator();
+}
+private class ListIterator implements Iterator<E> {
+    private Node<E> current = sentinelHead.next;
+    @Override public boolean hasNext() { return current != null; }
+    @Override public E next() {
+        if (!hasNext()) throw new NoSuchElementException();
+        E data = current.data;
+        current = current.next;
+        return data;
+    }
+    @Override public void remove() { throw new UnsupportedOperationException(); }
+}`
+      },
+      {
+        title: "SinglyLinkedList – Additional Methods (size)",
+        hint: "// The size() method.",
+        solution: `public int size() {
+    return size;
+}}`
+      },
+      // DoublyLinkedList snippets
+      {
+        title: "DoublyLinkedList – Class Declaration, Fields & Constructor",
+        hint: "// The class header, Node inner class, and constructor with sentinels.",
+        solution: `public class DoublyLinkedList<E> implements Iterable<E> {
+    private static class Node<E> {
+        E data;
+        Node<E> prev;
+        Node<E> next;
+        Node(E data) { this.data = data; }
+    }
+    private Node<E> sentinelHead;
+    private Node<E> sentinelTail;
+    private int size;
+    public DoublyLinkedList() {
+        sentinelHead = new Node<>(null);
+        sentinelTail = new Node<>(null);
+        sentinelHead.next = sentinelTail;
+        sentinelTail.prev = sentinelHead;
+        size = 0;
+    }`
+      },
+      {
+        title: "DoublyLinkedList – add Method",
+        hint: "// Append an element to the end.",
+        solution: `public void add(E element) {
+    Node<E> newNode = new Node<>(element);
+    newNode.prev = sentinelTail.prev;
+    newNode.next = sentinelTail;
+    sentinelTail.prev.next = newNode;
+    sentinelTail.prev = newNode;
+    size++;
+}`
+      },
+      {
+        title: "DoublyLinkedList – remove Method",
+        hint: "// Remove the first occurrence of the element.",
+        solution: `public boolean remove(E element) {
+    Node<E> current = sentinelHead.next;
+    while (current != sentinelTail) {
+        if (current.data.equals(element)) {
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
+            size--;
+            return true;
+        }
+        current = current.next;
+    }
+    return false;
+}`
+      },
+      {
+        title: "DoublyLinkedList – addAtIndex Method",
+        hint: "// Insert an element at the specified index.",
+        solution: `public void addAtIndex(int index, E element) {
+    if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+    Node<E> current = sentinelHead;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    Node<E> newNode = new Node<>(element);
+    newNode.next = current.next;
+    newNode.prev = current;
+    current.next.prev = newNode;
+    current.next = newNode;
+    size++;
+}
+</code></pre>
+      },
+      {
+        title: "DoublyLinkedList – removeAtIndex Method",
+        hint: "// Remove and return the element at the specified index.",
+        solution: `public E removeAtIndex(int index) {
+    if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+    Node<E> current = sentinelHead.next;
+    for (int i = 0; i < index; i++) {
+        current = current.next;
+    }
+    E removed = current.data;
+    current.prev.next = current.next;
+    current.next.prev = current.prev;
+    size--;
+    return removed;
+}`
+      },
+      {
+        title: "DoublyLinkedList – Iterator Implementation",
+        hint: "// Iterator for DoublyLinkedList.",
+        solution: `@Override
+public Iterator<E> iterator() {
+    return new ListIterator();
+}
+private class ListIterator implements Iterator<E> {
+    private Node<E> current = sentinelHead.next;
+    @Override public boolean hasNext() { return current != sentinelTail; }
+    @Override public E next() {
+        if (!hasNext()) throw new NoSuchElementException();
+        E data = current.data;
+        current = current.next;
+        return data;
+    }
+    @Override public void remove() { throw new UnsupportedOperationException(); }
+}
+</code></pre>
+      },
+      {
+        title: "DoublyLinkedList – Additional Methods (size)",
+        hint: "// The size() method.",
+        solution: `public int size() {
+    return size;
+}
+</code></pre>
+      },
+      // MyArrayList snippets
+      {
+        title: "MyArrayList – Class Declaration, Fields & Constructor",
+        hint: "// The backing array, size, and default capacity.",
+        solution: `public class MyArrayList<E> implements Iterable<E> {
+    private E[] array;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 10;
+    @SuppressWarnings("unchecked")
+    public MyArrayList() {
+        array = (E[]) new Object[DEFAULT_CAPACITY];
+        size = 0;
+    }`
+      },
+      {
+        title: "MyArrayList – add Method",
+        hint: "// Append an element to the end.",
+        solution: `public void add(E element) {
+    if (size == array.length) { resize(); }
+    array[size++] = element;
+}`
+      },
+      {
+        title: "MyArrayList – remove Method",
+        hint: "// Remove the first occurrence.",
+        solution: `public boolean remove(E element) {
+    for (int i = 0; i < size; i++) {
+        if (array[i].equals(element)) {
+            for (int j = i; j < size - 1; j++) {
+                array[j] = array[j + 1];
+            }
+            array[--size] = null;
+            return true;
+        }
+    }
+    return false;
+}`
+      },
+      {
+        title: "MyArrayList – addAtIndex Method",
+        hint: "// Insert an element at the specified index.",
+        solution: `public void addAtIndex(int index, E element) {
+    if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+    if (size == array.length) { resize(); }
+    for (int i = size; i > index; i--) {
+        array[i] = array[i - 1];
+    }
+    array[index] = element;
+    size++;
+}
+</code></pre>
+      },
+      {
+        title: "MyArrayList – removeAtIndex Method",
+        hint: "// Remove and return the element at the specified index.",
+        solution: `public E removeAtIndex(int index) {
+    if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+    E removed = array[index];
+    for (int i = index; i < size - 1; i++) {
+        array[i] = array[i + 1];
+    }
+    array[--size] = null;
+    return removed;
+}`
+      },
+      {
+        title: "MyArrayList – Iterator Implementation",
+        hint: "// Basic iterator for MyArrayList.",
+        solution: `@Override
+public Iterator<E> iterator() {
+    return new ArrayListIterator();
+}
+private class ArrayListIterator implements Iterator<E> {
+    private int index = 0;
+    @Override public boolean hasNext() { return index < size; }
+    @Override public E next() {
+        if (!hasNext()) throw new NoSuchElementException();
+        return array[index++];
+    }
+    @Override public void remove() { throw new UnsupportedOperationException(); }
+}
+</code></pre>
+      },
+      {
+        title: "MyArrayList – Additional Methods (size & resize)",
+        hint: "// The size() method and resize() helper.",
+        solution: `public int size() {
+    return size;
+}
+@SuppressWarnings("unchecked")
+private void resize() {
+    E[] newArray = (E[]) new Object[array.length * 2];
+    System.arraycopy(array, 0, newArray, 0, size);
+    array = newArray;
+}
+}
+`
+      },
+      // MyHashMap snippets
+      {
+        title: "MyHashMap – Class Declaration, Fields & Constructor",
+        hint: "// Default capacity, load factor, and table initialization.",
+        solution: `public class MyHashMap<K, V> {
+    private static final int DEFAULT_CAPACITY = 16;
+    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    private LinkedList<Node<K, V>>[] table;
+    private int capacity;
+    private float loadFactor;
+    private int size;
+    @SuppressWarnings("unchecked")
+    public MyHashMap() {
+        this.capacity = DEFAULT_CAPACITY;
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
+        table = new LinkedList[capacity];
+        for (int i = 0; i < capacity; i++) {
+            table[i] = new LinkedList<>();
+        }
+        size = 0;
+    }`
+      },
+      {
+        title: "MyHashMap – put Method",
+        hint: "// Associates a key with a value.",
+        solution: `public V put(K key, V value) {
+    LinkedList<Node<K, V>> bucket = table[Math.abs(key.hashCode()) % capacity];
+    for (Node<K, V> node : bucket) {
+        if (node.key.equals(key)) {
+            V oldVal = node.value;
+            node.value = value;
+            return oldVal;
+        }
+    }
+    bucket.add(new Node<>(key, value));
+    size++;
+    if ((float) size / capacity >= loadFactor) {
+        rehash();
+    }
+    return null;
+}
+</code></pre>
+      },
+      {
+        title: "MyHashMap – get Method",
+        hint: "// Retrieve the value for a given key.",
+        solution: `public V get(K key) {
+    LinkedList<Node<K, V>> bucket = table[Math.abs(key.hashCode()) % capacity];
+    for (Node<K, V> node : bucket) {
+        if (node.key.equals(key)) {
+            return node.value;
+        }
+    }
+    return null;
+}
+</code></pre>
+      },
+      {
+        title: "MyHashMap – containsKey Method",
+        hint: "// Check if the key exists.",
+        solution: `public boolean containsKey(K key) {
+    LinkedList<Node<K, V>> bucket = table[Math.abs(key.hashCode()) % capacity];
+    for (Node<K, V> node : bucket) {
+        if (node.key.equals(key)) {
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre>
+      },
+      {
+        title: "MyHashMap – rehash Method",
+        hint: "// Double the capacity and reinsert all nodes.",
+        solution: `@SuppressWarnings("unchecked")
+private void rehash() {
+    LinkedList<Node<K, V>>[] oldTable = table;
+    capacity *= 2;
+    table = new LinkedList[capacity];
+    for (int i = 0; i < capacity; i++) {
+        table[i] = new LinkedList<>();
+    }
+    size = 0;
+    for (LinkedList<Node<K, V>> bucket : oldTable) {
+        for (Node<K, V> node : bucket) {
+            put(node.key, node.value);
+        }
+    }
+}
+</code></pre>
+      },
+      {
+        title: "MyHashMap – Additional Methods & Helper Class",
+        hint: "// The size() method and the Node inner class.",
+        solution: `public int size() {
+    return size;
+}
+private static class Node<K, V> {
+    K key;
+    V value;
+    Node(K key, V value) { this.key = key; this.value = value; }
+}
+}`
+      },
+      // MyHashSet snippets
+      {
+        title: "MyHashSet – Class Declaration, Fields & Constructor",
+        hint: "// MyHashSet is backed by a MyHashMap&lt;K, Object&gt;.",
+        solution: `public class MyHashSet<K> implements Iterable<K> {
+    private MyHashMap<K, Object> map;
+    private static final Object PRESENT = new Object();
+    public MyHashSet() {
+        map = new MyHashMap<>();
+    }`
+      },
+      {
+        title: "MyHashSet – add Method",
+        hint: "// Add a key to the set.",
+        solution: `public boolean add(K key) {
+    return map.put(key, PRESENT) == null;
+}`
+      },
+      {
+        title: "MyHashSet – remove Method",
+        hint: "// Remove a key from the set.",
+        solution: `public boolean remove(K key) {
+    return map.remove(key) != null;
+}`
+      },
+      {
+        title: "MyHashSet – contains Method",
+        hint: "// Check if the set contains the key.",
+        solution: `public boolean contains(K key) {
+    return map.containsKey(key);
+}`
+      },
+      {
+        title: "MyHashSet – Iterator Implementation",
+        hint: "// Delegate to the MyHashMap keySet iterator.",
+        solution: `@Override
+public Iterator<K> iterator() {
+    return map.keySet().iterator();
+}`
+      },
+      {
+        title: "MyHashSet – Additional Methods (size)",
+        hint: "// The size() method.",
+        solution: `public int size() {
+    return map.size();
+}
+`
+      },
+      // Streams & Lambdas snippets
+      {
+        title: "Streams & Lambdas – Basic Example",
+        hint: "// Filter even numbers and print them.",
+        solution: `List<Integer> numbers = Arrays.asList(1,2,3,4,5,6);
+numbers.stream()
+       .filter(n -> n % 2 == 0)
+       .forEach(System.out::println);`
+      },
+      {
+        title: "Streams & Lambdas – Map & Reduce Example",
+        hint: "// Map each word to its length and sum them.",
+        solution: `List<String> words = Arrays.asList("Hello","World","Lambda","Stream");
+int totalLength = words.stream()
+                       .map(String::length)
+                       .reduce(0, Integer::sum);
+System.out.println("Total length = " + totalLength);`
+      },
+      {
+        title: "Streams & Lambdas – Parallel Streams Example",
+        hint: "// Sum a large list in parallel.",
+        solution: `List<Long> bigNumbers = LongStream.rangeClosed(1, 10000000)
+                                         .boxed()
+                                         .collect(Collectors.toList());
+long start = System.currentTimeMillis();
+long sum = bigNumbers.parallelStream().reduce(0L, Long::sum);
+long end = System.currentTimeMillis();
+System.out.println("Sum = " + sum);
+System.out.println("Time (ms) = " + (end - start));`
+      },
+      {
+        title: "Streams & Lambdas – Full Implementation",
+        hint: "// A complete StreamsAndLambdasExamples class integrating all examples.",
+        solution: `import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
+public class StreamsAndLambdasExamples {
+    public static void main(String[] args) {
+        // Basic Streams Example
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5,6);
+        System.out.println("Even numbers:");
+        numbers.stream()
+               .filter(n -> n % 2 == 0)
+               .forEach(System.out::println);
+        // Map & Reduce Example
+        List<String> words = Arrays.asList("Hello","World","Lambda","Stream");
+        int totalLength = words.stream()
+                               .map(String::length)
+                               .reduce(0, Integer::sum);
+        System.out.println("Total length = " + totalLength);
+        // Parallel Streams Example
+        List<Long> bigNumbers = LongStream.rangeClosed(1, 10000000)
+                                          .boxed()
+                                          .collect(Collectors.toList());
+        long start = System.currentTimeMillis();
+        long sum = bigNumbers.parallelStream().reduce(0L, Long::sum);
+        long end = System.currentTimeMillis();
+        System.out.println("Sum = " + sum);
+        System.out.println("Time (ms) = " + (end - start));
+    }
+}`
+      },
+      {
+        title: "BST – Class Declaration, Fields & Constructor",
+        hint: "// The class header, Node inner class, and constructor.",
+        solution: `import java.util.Iterator;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
+public class BST&lt;E extends Comparable&lt;E&gt;&gt; implements Iterable&lt;E&gt; {
+
+    // --------------------------------------------------
+    // Node Class Definition
+    // --------------------------------------------------
+    private class Node {
+        E value;
+        Node left, right;
+
+        public Node(E value) {
+            this.value = value;
+            left = right = null;
+        }
+    }
+
+    // Root node of the BST
+    private Node root;
+
+    // --------------------------------------------------
+    // Constructor
+    // --------------------------------------------------
+    public BST() {
+        root = null;
+    }
+</code></pre>
+      },
+      {
+        title: "BST – add Method",
+        hint: "// Add a value to the BST.",
+        solution: `// --------------------------------------------------
+// Add Method (alias for insert)
+// --------------------------------------------------
+public void add(E value) {
+    root = insertRec(root, value);
+}
+
+// Insert a new value into the BST (internal method)
+private Node insertRec(Node node, E value) {
+    if (node == null) {
+        return new Node(value);
+    }
+    if (value.compareTo(node.value) < 0) {
+        node.left = insertRec(node.left, value);
+    } else if (value.compareTo(node.value) > 0) {
+        node.right = insertRec(node.right, value);
+    }
+    // If the value is equal, we do nothing (no duplicates)
+    return node;
+}`
+      },
+      {
+        title: "BST – remove Method",
+        hint: "// Remove a value from the BST.",
+        solution: `// --------------------------------------------------
+// Remove Method (by value)
+// --------------------------------------------------
+public void remove(E value) {
+    root = removeRec(root, value);
+}
+
+// Recursive removal helper method
+private Node removeRec(Node node, E value) {
+    if (node == null) {
+        return null;
+    }
+    int cmp = value.compareTo(node.value);
+    if (cmp < 0) {
+        node.left = removeRec(node.left, value);
+    } else if (cmp > 0) {
+        node.right = removeRec(node.right, value);
+    } else {
+        // Node to be removed found
+        if (node.left == null) {
+            return node.right;
+        } else if (node.right == null) {
+            return node.left;
+        } else {
+            // Node with two children: get the inorder successor (smallest in the right subtree)
+            Node minNode = getMin(node.right);
+            node.value = minNode.value;
+            node.right = removeRec(node.right, minNode.value);
+        }
+    }
+    return node;
+}
+
+// Helper method to find the minimum node in a subtree
+private Node getMin(Node node) {
+    while (node.left != null) {
+        node = node.left;
+    }
+    return node;
+}`
+      },
+      {
+        title: "BST – contains Method",
+        hint: "// Check if a value exists in the BST.",
+        solution: `// --------------------------------------------------
+// Contains Method
+// --------------------------------------------------
+public boolean contains(E value) {
+    return containsRec(root, value);
+}
+
+// Recursive helper for contains
+private boolean containsRec(Node node, E value) {
+    if (node == null) {
+        return false;
+    }
+    int cmp = value.compareTo(node.value);
+    if (cmp == 0) {
+        return true;
+    } else if (cmp < 0) {
+        return containsRec(node.left, value);
+    } else {
+        return containsRec(node.right, value);
+    }
+}`
+      },
+      {
+        title: "BST – Normal Traversals (Recursive)",
+        hint: "// Inorder, Preorder, and Postorder traversals.",
+        solution: `// --------------------------------------------------
+// Section 1: Normal Traversals (Recursive)
+// --------------------------------------------------
+// Inorder Traversal: Left, Root, Right
+public void inorder() {
+    inorderRec(root);
+    System.out.println();
+}
+private void inorderRec(Node node) {
+    if (node != null) {
+        inorderRec(node.left);
+        System.out.print(node.value + " ");
+        inorderRec(node.right);
+    }
+}
+
+// Preorder Traversal: Root, Left, Right
+public void preorder() {
+    preorderRec(root);
+    System.out.println();
+}
+private void preorderRec(Node node) {
+    if (node != null) {
+        System.out.print(node.value + " ");
+        preorderRec(node.left);
+        preorderRec(node.right);
+    }
+}
+
+// Postorder Traversal: Left, Right, Root
+public void postorder() {
+    postorderRec(root);
+    System.out.println();
+}
+private void postorderRec(Node node) {
+    if (node != null) {
+        postorderRec(node.left);
+        postorderRec(node.right);
+        System.out.print(node.value + " ");
+    }
+}`
+      },
+      {
+        title: "BST – Iterator Implementations",
+        hint: "// Iterators for inorder, preorder, and postorder traversals.",
+        solution: `// --------------------------------------------------
+// Section 2: Traversals using for-each Loop (Iterable)
+// --------------------------------------------------
+// These custom iterator classes enable using a for‑each loop on an Iterable.
+// The default iterator (from Iterable) returns the inorder traversal.
+
+// Inorder Iterator (Left, Root, Right)
+private class InorderIterator implements Iterator&lt;E&gt; {
+    private Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+
+    public InorderIterator(Node root) {
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+    }
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    public E next() {
+        Node node = stack.pop();
+        E result = node.value;
+        if (node.right != null) {
+            Node temp = node.right;
+            while (temp != null) {
+                stack.push(temp);
+                temp = temp.left;
+            }
+        }
+        return result;
+    }
+}
+
+// Preorder Iterator (Root, Left, Right)
+private class PreorderIterator implements Iterator&lt;E&gt; {
+    private Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+
+    public PreorderIterator(Node root) {
+        if (root != null) {
+            stack.push(root);
+        }
+    }
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    public E next() {
+        Node node = stack.pop();
+        E result = node.value;
+        // Push right first so that left is processed first
+        if (node.right != null) {
+            stack.push(node.right);
+        }
+        if (node.left != null) {
+            stack.push(node.left);
+        }
+        return result;
+    }
+}
+
+// Postorder Iterator (Left, Right, Root)
+// For simplicity, we precompute the traversal into a list.
+private class PostorderIterator implements Iterator&lt;E&gt; {
+    private List&lt;E&gt; list;
+    private int index;
+
+    public PostorderIterator(Node root) {
+        list = new ArrayList&lt;&gt;();
+        postorderRecList(root, list);
+        index = 0;
+    }
+    private void postorderRecList(Node node, List&lt;E&gt; list) {
+        if (node != null) {
+            postorderRecList(node.left, list);
+            postorderRecList(node.right, list);
+            list.add(node.value);
+        }
+    }
+    public boolean hasNext() {
+        return index < list.size();
+    }
+    public E next() {
+        return list.get(index++);
+    }
+}</code></pre>
+      },
+      {
+        title: "BST – Iterable Methods",
+        hint: "// Iterable methods for each traversal order.",
+        solution: `// Iterable methods for each traversal order.
+public Iterable&lt;E&gt; getInorderIterable() {
+    return () -> new InorderIterator(root);
+}
+public Iterable&lt;E&gt; getPreorderIterable() {
+    return () -> new PreorderIterator(root);
+}
+public Iterable&lt;E&gt; getPostorderIterable() {
+    return () -> new PostorderIterator(root);
+}
+
+// The default iterator for this BST (used if you iterate over the BST itself)
+// Here, we choose the inorder traversal.
+@Override
+public Iterator&lt;E&gt; iterator() {
+    return new InorderIterator(root);
+}</code></pre>
+      },
+      {
+        title: "BST – Stream Methods",
+        hint: "// Stream methods for each traversal order.",
+        solution: `// Stream methods for each traversal order.
+public Stream&lt;E&gt; inorderStream() {
+    List&lt;E&gt; list = new ArrayList&lt;&gt;();
+    inorderRec(root, list);
+    return list.stream();
+}
+private void inorderRec(Node node, List&lt;E&gt; list) {
+    if (node != null) {
+        inorderRec(node.left, list);
+        list.add(node.value);
+        inorderRec(node.right, list);
+    }
+}
+
+public Stream&lt;E&gt; preorderStream() {
+    List&lt;E&gt; list = new ArrayList&lt;&gt;();
+    preorderRec(root, list);
+    return list.stream();
+}
+private void preorderRec(Node node, List&lt;E&gt; list) {
+    if (node != null) {
+        list.add(node.value);
+        preorderRec(node.left, list);
+        preorderRec(node.right, list);
+    }
+}
+
+public Stream&lt;E&gt; postorderStream() {
+    List&lt;E&gt; list = new ArrayList&lt;&gt;();
+    postorderRecList(root, list);
+    return list.stream();
+}
+private void postorderRecList(Node node, List&lt;E&gt; list) {
+    if (node != null) {
+        postorderRecList(node.left, list);
+        postorderRecList(node.right, list);
+        list.add(node.value);
+    }
+}`
+      },
+      {
+        title: "BST – Main Method",
+        hint: "// A main method demonstrating all the features of the BST.",
+        solution: `// --------------------------------------------------
+// Main Method for Testing All Sections
+// --------------------------------------------------
+public static void main(String[] args) {
+    // Create a BST with Integer values
+    BST&lt;Integer&gt; tree = new BST&lt;&gt;();
+
+    // Add values into the BST (using add)
+    tree.add(50);
+    tree.add(30);
+    tree.add(20);
+    tree.add(40);
+    tree.add(70);
+    tree.add(60);
+    tree.add(80);
+
+    // Test contains method
+    System.out.println("Contains 40? " + tree.contains(40)); // should be true
+    System.out.println("Contains 25? " + tree.contains(25)); // should be false
+
+    // Remove a value and test contains again
+    tree.remove(30);
+    System.out.println("After removing 30, contains 30? " + tree.contains(30));
+
+    // ----- Section 1: Normal Traversals (Recursive) -----
+    System.out.println("\nSection 1: Normal Traversals (Recursive):");
+    System.out.print("Preorder: ");
+    tree.preorder();
+    System.out.print("Inorder: ");
+    tree.inorder();
+    System.out.print("Postorder: ");
+    tree.postorder();
+
+    // ----- Section 2: Traversals using for-each Loop (Iterable) -----
+    System.out.println("\nSection 2: Traversals using for-each Loop (Iterable):");
+    System.out.print("Preorder: ");
+    for (Integer value : tree.getPreorderIterable()) {
+        System.out.print(value + " ");
+    }
+    System.out.println();
+    System.out.print("Inorder: ");
+    for (Integer value : tree.getInorderIterable()) {
+        System.out.print(value + " ");
+    }
+    System.out.println();
+    System.out.print("Postorder: ");
+    for (Integer value : tree.getPostorderIterable()) {
+        System.out.print(value + " ");
+    }
+    System.out.println();
+
+    // ----- Section 3: Traversals using Streams -----
+    System.out.println("\nSection 3: Traversals using Streams:");
+    System.out.print("Preorder: ");
+    tree.preorderStream().forEach(value -> System.out.print(value + " "));
+    System.out.println();
+    System.out.print("Inorder: ");
+    tree.inorderStream().forEach(value -> System.out.print(value + " "));
+    System.out.println();
+    System.out.print("Postorder: ");
+    tree.postorderStream().forEach(value -> System.out.print(value + " "));
+    System.out.println();
+}
+}`
+      },
+      // BST Snippets
+      {
+        title: "BST – Class Declaration",
+        hint: "// The class header, Node inner class, and constructor.",
+        solution: `import java.util.Iterator;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
+public class BST<E extends Comparable<E>> implements Iterable<E> {
+
+    // Node Class Definition
+    private class Node {
+        E value;
+        Node left, right;
+
+        public Node(E value) {
+            this.value = value;
+            left = right = null;
+        }
+    }
+
+    // Root node of the BST
+    private Node root;
+
+    // Constructor
+    public BST() {
+        root = null;
+    }`
+      },
+      {
+        title: "BST – add Method",
+        hint: "// Add a value to the BST.",
+        solution: `public void add(E value) {
+    root = insertRec(root, value);
+}
+
+// Insert a new value into the BST (internal method)
+private Node insertRec(Node node, E value) {
+    if (node == null) {
+        return new Node(value);
+    }
+    if (value.compareTo(node.value) < 0) {
+        node.left = insertRec(node.left, value);
+    } else if (value.compareTo(node.value) > 0) {
+        node.right = insertRec(node.right, value);
+    }
+    // If the value is equal, we do nothing (no duplicates)
+    return node;
+}`
+      },
+      {
+        title: "BST – remove Method",
+        hint: "// Remove a value from the BST.",
+        solution: `public void remove(E value) {
+    root = removeRec(root, value);
+}
+
+// Recursive removal helper method
+private Node removeRec(Node node, E value) {
+    if (node == null) {
+        return null;
+    }
+    int cmp = value.compareTo(node.value);
+    if (cmp < 0) {
+        node.left = removeRec(node.left, value);
+    } else if (cmp > 0) {
+        node.right = removeRec(node.right, value);
+    } else {
+        // Node to be removed found
+        if (node.left == null) {
+            return node.right;
+        } else if (node.right == null) {
+            return node.left;
+        } else {
+            // Node with two children: get the inorder successor
+            Node minNode = getMin(node.right);
+            node.value = minNode.value;
+            node.right = removeRec(node.right, minNode.value);
+        }
+    }
+    return node;
+}
+
+// Helper method to find the minimum node in a subtree
+private Node getMin(Node node) {
+    while (node.left != null) {
+        node = node.left;
+    }
+    return node;
+}`
+      },
+      {
+        title: "BST – contains Method",
+        hint: "// Check if a value exists in the BST.",
+        solution: `public boolean contains(E value) {
+    return containsRec(root, value);
+}
+
+// Recursive helper for contains
+private boolean containsRec(Node node, E value) {
+    if (node == null) {
+        return false;
+    }
+    int cmp = value.compareTo(node.value);
+    if (cmp == 0) {
+        return true;
+    } else if (cmp < 0) {
+        return containsRec(node.left, value);
+    } else {
+        return containsRec(node.right, value);
+    }
+}`
+      },
+      {
+        title: "BST – Normal Traversals",
+        hint: "// Inorder, Preorder, and Postorder traversals.",
+        solution: `// Inorder Traversal: Left, Root, Right
+public void inorder() {
+    inorderRec(root);
+    System.out.println();
+}
+private void inorderRec(Node node) {
+    if (node != null) {
+        inorderRec(node.left);
+        System.out.print(node.value + " ");
+        inorderRec(node.right);
+    }
+}
+
+// Preorder Traversal: Root, Left, Right
+public void preorder() {
+    preorderRec(root);
+    System.out.println();
+}
+private void preorderRec(Node node) {
+    if (node != null) {
+        System.out.print(node.value + " ");
+        preorderRec(node.left);
+        preorderRec(node.right);
+    }
+}
+
+// Postorder Traversal: Left, Right, Root
+public void postorder() {
+    postorderRec(root);
+    System.out.println();
+}
+private void postorderRec(Node node) {
+    if (node != null) {
+        postorderRec(node.left);
+        postorderRec(node.right);
+        System.out.print(node.value + " ");
+    }
+}`
+      },
+      {
+        title: "BST – Inorder Iterator",
+        hint: "// Iterator for inorder traversal.",
+        solution: `private class InorderIterator implements Iterator<E> {
+    private Stack<Node> stack = new Stack<>();
+
+    public InorderIterator(Node root) {
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+    }
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    public E next() {
+        Node node = stack.pop();
+        E result = node.value;
+        if (node.right != null) {
+            Node temp = node.right;
+            while (temp != null) {
+                stack.push(temp);
+                temp = temp.left;
+            }
+        }
+        return result;
+    }
+}`
+      },
+      {
+        title: "BST – Preorder Iterator",
+        hint: "// Iterator for preorder traversal.",
+        solution: `private class PreorderIterator implements Iterator<E> {
+    private Stack<Node> stack = new Stack<>();
+
+    public PreorderIterator(Node root) {
+        if (root != null) {
+            stack.push(root);
+        }
+    }
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    public E next() {
+        Node node = stack.pop();
+        E result = node.value;
+        // Push right first so that left is processed first
+        if (node.right != null) {
+            stack.push(node.right);
+        }
+        if (node.left != null) {
+            stack.push(node.left);
+        }
+        return result;
+    }
+}`
+      },
+      {
+        title: "BST – Postorder Iterator",
+        hint: "// Iterator for postorder traversal.",
+        solution: `private class PostorderIterator implements Iterator<E> {
+    private List<E> list;
+    private int index;
+
+    public PostorderIterator(Node root) {
+        list = new ArrayList<>();
+        postorderRecList(root, list);
+        index = 0;
+    }
+    private void postorderRecList(Node node, List<E> list) {
+        if (node != null) {
+            postorderRecList(node.left, list);
+            postorderRecList(node.right, list);
+            list.add(node.value);
+        }
+    }
+    public boolean hasNext() {
+        return index < list.size();
+    }
+    public E next() {
+        return list.get(index++);
+    }
+}`
+      },
+      {
+        title: "BST – Iterable Methods",
+        hint: "// Methods that return Iterable objects for traversals.",
+        solution: `// Iterable methods for each traversal order
+public Iterable<E> getInorderIterable() {
+    return () -> new InorderIterator(root);
+}
+public Iterable<E> getPreorderIterable() {
+    return () -> new PreorderIterator(root);
+}
+public Iterable<E> getPostorderIterable() {
+    return () -> new PostorderIterator(root);
+}
+
+@Override
+public Iterator<E> iterator() {
+    return new InorderIterator(root);
+}`
+      },
+      {
+        title: "BST – Stream Methods",
+        hint: "// Methods that return Stream objects for traversals.",
+        solution: `// Inorder Stream: Left, Root, Right
+public Stream<E> inorderStream() {
+    List<E> list = new ArrayList<>();
+    inorderRec(root, list);
+    return list.stream();
+}
+private void inorderRec(Node node, List<E> list) {
+    if (node != null) {
+        inorderRec(node.left, list);
+        list.add(node.value);
+        inorderRec(node.right, list);
+    }
+}
+
+// Preorder Stream: Root, Left, Right
+public Stream<E> preorderStream() {
+    List<E> list = new ArrayList<>();
+    preorderRec(root, list);
+    return list.stream();
+}
+private void preorderRec(Node node, List<E> list) {
+    if (node != null) {
+        list.add(node.value);
+        preorderRec(node.left, list);
+        preorderRec(node.right, list);
+    }
+}
+
+// Postorder Stream: Left, Right, Root
+public Stream<E> postorderStream() {
+    List<E> list = new ArrayList<>();
+    postorderRecList(root, list);
+    return list.stream();
+}
+private void postorderRecList(Node node, List<E> list) {
+    if (node != null) {
+        postorderRecList(node.left, list);
+        postorderRecList(node.right, list);
+        list.add(node.value);
+    }
+}`
+      }
+    ];
+
+    // Function to randomize and display a snippet from the array
+    function randomizeSnippet() {
+      var index = Math.floor(Math.random() * randomSnippets.length);
+      var snippet = randomSnippets[index];
+      var container = document.getElementById('random-snippet-container');
+      container.innerHTML = `
+        <div class="method">
+          <h3>${snippet.title}</h3>
+          <p class="hint">${snippet.hint}</p>
+          <textarea placeholder="Type your answer here..."></textarea>
+          <br>
+          <button class="check-btn" onclick="toggleRandomAnswer()">Check Answer</button>
+          <pre id="random-solution" class="answer"><code>${snippet.solution}</code></pre>
+        </div>
+      `;
+    }
+
+    // Function to toggle random snippet answer visibility
+    function toggleRandomAnswer() {
+      var answer = document.getElementById('random-solution');
+      answer.style.display = (answer.style.display === "none" || answer.style.display === "") ? "block" : "none";
+    }
+
+    // Initialize when document is ready
+    document.addEventListener("DOMContentLoaded", function() {
+      // Show home page by default
+      showPage('home');
+      
+      // Add click event listeners to all navigation links
+      var navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          var pageId = this.getAttribute('data-page');
+          showPage(pageId);
+        });
+      });
+    });
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html>
+
+
+
+

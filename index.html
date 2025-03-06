@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="description" content="Practice Java data structures with interactive code snippets">
+  <title>Java Data Structures Practice</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <!-- Add service worker registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful');
+          })
+          .catch(error => {
+            console.log('ServiceWorker registration failed:', error);
+          });
+      });
+    }
+    
+    // Ensure solution labels don't get cut off when scrolling
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to fix solution display
+      function fixSolutionDisplay() {
+        // Get all check answer buttons
+        var buttons = document.querySelectorAll('.check-btn');
+        
+        buttons.forEach(function(button) {
+          button.addEventListener('click', function() {
+            // Get the associated solution element
+            var solutionId = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+            var solution = document.getElementById(solutionId);
+            
+            // When solution is shown, scroll to ensure label is visible
+            if (solution && solution.style.display === 'block') {
+              // Reset scroll position to top
+              solution.scrollTop = 0;
+            }
+          });
+        });
+      }
+      
+      // Run on page load
+      fixSolutionDisplay();
+    });
+  </script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body class="index-page">
+  <div class="stars"></div>
+  <div class="color-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+          <a href="javabasics.html">Java Basics</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Java Data Structures Practice</h1>
+    <p>Welcome to the Java Data Structures Practice page. This site is designed to help you practice implementing various data structures in Java. Each page contains code snippets for a specific data structure, with text areas where you can practice writing the code yourself. Click "Check Answer" to reveal the solution.</p>
+    
+    <h2>Choose a Data Structure to Practice:</h2>
+    
+    <div class="card-container">
+      <div class="card">
+        <h3>Singly Linked List</h3>
+        <p>A linear collection of nodes, each containing data and a reference to the next node in the sequence.</p>
+        <a href="singly.html">Practice</a>
+      </div>
+      
+      <div class="card">
+        <h3>Doubly Linked List</h3>
+        <p>Similar to a singly linked list, but each node also contains a reference to the previous node.</p>
+        <a href="doubly.html">Practice</a>
+      </div>
+      
+      <div class="card">
+        <h3>ArrayList</h3>
+        <p>A resizable array implementation that provides dynamic capacity and fast random access.</p>
+        <a href="arraylist.html">Practice</a>
+      </div>
+      
+      <div class="card">
+        <h3>HashMap</h3>
+        <p>An implementation of the Map interface using a hash table with linked lists to handle collisions.</p>
+        <a href="hashmap.html">Practice</a>
+      </div>
+      
+      <div class="card">
+        <h3>HashSet</h3>
+        <p>An implementation of the Set interface backed by a HashMap for fast access and uniqueness.</p>
+        <a href="hashset.html">Practice</a>
+      </div>
+      
+      <div class="card">
+        <h3>Binary Search Tree</h3>
+        <p>A tree data structure where each node has at most two children, with specific ordering properties.</p>
+        <a href="bst.html">Practice</a>
+      </div>
+      
+      <div class="card">
+        <h3>Streams & Lambdas</h3>
+        <p>Modern Java features for functional-style operations on collections and other data sources.</p>
+        <a href="streams.html">Practice</a>
+      </div>
+      
+      <div class="card">
+        <h3>Random Practice</h3>
+        <p>Get a random code snippet from any data structure for broader practice.</p>
+        <a href="random.html">Practice</a>
+      </div>
+      
+      <div class="card">
+        <h3>Java Basics</h3>
+        <p>Learn fundamental Java concepts with detailed, well-commented code examples and explanations.</p>
+        <a href="javabasics.html">Practice</a>
+      </div>
+    </div>
+  </div>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 
+
+

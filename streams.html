@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Data Structures Practice - Streams & Lambdas</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Java Streams & Lambdas</h1>
+
+    <!-- Block 1: Basic Stream Creation -->
+    <div class="method">
+      <h3>Creating Streams</h3>
+      <p class="hint">// Different ways to create streams from collections and arrays.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('stream-creation-solution')">Check Answer</button>
+      <pre id="stream-creation-solution"><code>// Creating a stream from a collection
+List&lt;String&gt; names = Arrays.asList("Alice", "Bob", "Charlie", "David");
+Stream&lt;String&gt; namesStream = names.stream();
+
+// Creating a stream from an array
+String[] namesArray = {"Alice", "Bob", "Charlie", "David"};
+Stream&lt;String&gt; arrayStream = Arrays.stream(namesArray);
+
+// Creating a stream directly
+Stream&lt;String&gt; directStream = Stream.of("Alice", "Bob", "Charlie", "David");
+
+// Creating an infinite stream
+Stream&lt;Integer&gt; infiniteStream = Stream.iterate(0, n -> n + 1);
+Stream&lt;Double&gt; randomStream = Stream.generate(Math::random);
+
+// Creating an empty stream
+Stream&lt;String&gt; emptyStream = Stream.empty();</code></pre>
+    </div>
+
+    <!-- Block 2: Basic Lambda Expressions -->
+    <div class="method">
+      <h3>Lambda Expressions</h3>
+      <p class="hint">// Writing and using lambda expressions.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lambda-expressions-solution')">Check Answer</button>
+      <pre id="lambda-expressions-solution"><code>// Lambda for Comparator
+Comparator&lt;String&gt; byLength = (s1, s2) -> Integer.compare(s1.length(), s2.length());
+names.sort(byLength);
+
+// Lambda for Predicate
+Predicate&lt;String&gt; startsWithA = s -> s.startsWith("A");
+boolean hasAName = names.stream().anyMatch(startsWithA);
+
+// Lambda for Function
+Function&lt;String, Integer&gt; getLength = s -> s.length();
+List&lt;Integer&gt; nameLengths = names.stream().map(getLength).collect(Collectors.toList());
+
+// Lambda for Consumer
+Consumer&lt;String&gt; printer = s -> System.out.println(s);
+names.forEach(printer);
+
+// Lambda for Supplier
+Supplier&lt;Double&gt; randomSupplier = () -> Math.random();
+Double randomValue = randomSupplier.get();</code></pre>
+    </div>
+
+    <!-- Block 3: Intermediate Stream Operations -->
+    <div class="method">
+      <h3>Intermediate Stream Operations</h3>
+      <p class="hint">// Operations that transform a stream into another stream.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('intermediate-ops-solution')">Check Answer</button>
+      <pre id="intermediate-ops-solution"><code>List&lt;String&gt; names = Arrays.asList("Alice", "Bob", "Charlie", "David", "Alice");
+
+// filter - only elements matching a predicate
+Stream&lt;String&gt; longNames = names.stream()
+    .filter(name -> name.length() > 4);
+
+// map - transform each element
+Stream&lt;Integer&gt; nameLengths = names.stream()
+    .map(String::length);
+
+// flatMap - flatten nested streams
+List&lt;List&lt;String&gt;&gt; nestedList = Arrays.asList(
+    Arrays.asList("a", "b"), 
+    Arrays.asList("c", "d")
+);
+Stream&lt;String&gt; flatStream = nestedList.stream()
+    .flatMap(Collection::stream);
+
+// distinct - remove duplicates
+Stream&lt;String&gt; uniqueNames = names.stream()
+    .distinct();
+
+// sorted - sort elements
+Stream&lt;String&gt; sortedNames = names.stream()
+    .sorted();
+Stream&lt;String&gt; customSortedNames = names.stream()
+    .sorted(Comparator.comparing(String::length));
+
+// peek - perform action on each element without modifying the stream
+Stream&lt;String&gt; debuggedStream = names.stream()
+    .peek(name -> System.out.println("Processing: " + name));
+
+// limit - truncate stream to specified size
+Stream&lt;String&gt; firstThreeNames = names.stream()
+    .limit(3);
+
+// skip - discard first n elements
+Stream&lt;String&gt; afterFirstTwo = names.stream()
+    .skip(2);</code></pre>
+    </div>
+
+    <!-- Block 4: Terminal Stream Operations -->
+    <div class="method">
+      <h3>Terminal Stream Operations</h3>
+      <p class="hint">// Operations that produce a result or side effect.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('terminal-ops-solution')">Check Answer</button>
+      <pre id="terminal-ops-solution"><code>List&lt;String&gt; names = Arrays.asList("Alice", "Bob", "Charlie", "David");
+
+// forEach - perform action on each element
+names.stream().forEach(System.out::println);
+
+// collect - transform stream into a collection
+List&lt;String&gt; namesList = names.stream().collect(Collectors.toList());
+Set&lt;String&gt; namesSet = names.stream().collect(Collectors.toSet());
+String joined = names.stream().collect(Collectors.joining(", "));
+
+// reduce - combine elements
+Optional&lt;String&gt; concatenated = names.stream()
+    .reduce((a, b) -> a + ", " + b);
+int totalLength = names.stream()
+    .mapToInt(String::length)
+    .reduce(0, Integer::sum);
+
+// count - count elements
+long count = names.stream().count();
+
+// anyMatch, allMatch, noneMatch - check conditions
+boolean anyStartWithA = names.stream().anyMatch(s -> s.startsWith("A"));
+boolean allLongerThan2 = names.stream().allMatch(s -> s.length() > 2);
+boolean noneStartWithZ = names.stream().noneMatch(s -> s.startsWith("Z"));
+
+// findFirst, findAny - find elements
+Optional&lt;String&gt; first = names.stream().findFirst();
+Optional&lt;String&gt; any = names.stream().findAny();
+
+// min, max - find extremes
+Optional&lt;String&gt; shortest = names.stream()
+    .min(Comparator.comparing(String::length));
+Optional&lt;String&gt; longest = names.stream()
+    .max(Comparator.comparing(String::length));
+
+// toArray - convert to array
+String[] namesArray = names.stream().toArray(String[]::new);</code></pre>
+    </div>
+
+    <!-- Block 5: Collectors -->
+    <div class="method">
+      <h3>Using Collectors</h3>
+      <p class="hint">// Advanced collection operations with Collectors.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('collectors-solution')">Check Answer</button>
+      <pre id="collectors-solution"><code>List&lt;Person&gt; people = Arrays.asList(
+    new Person("Alice", 25),
+    new Person("Bob", 30),
+    new Person("Charlie", 25),
+    new Person("David", 40)
+);
+
+// Collecting to collections
+List&lt;Person&gt; personList = people.stream().collect(Collectors.toList());
+Set&lt;Person&gt; personSet = people.stream().collect(Collectors.toSet());
+
+// Joining strings
+String names = people.stream()
+    .map(Person::getName)
+    .collect(Collectors.joining(", "));
+
+// Grouping
+Map&lt;Integer, List&lt;Person&gt;&gt; byAge = people.stream()
+    .collect(Collectors.groupingBy(Person::getAge));
+
+// Partitioning
+Map&lt;Boolean, List&lt;Person&gt;&gt; olderThan30 = people.stream()
+    .collect(Collectors.partitioningBy(p -> p.getAge() > 30));
+
+// Counting
+Map&lt;Integer, Long&gt; countByAge = people.stream()
+    .collect(Collectors.groupingBy(Person::getAge, Collectors.counting()));
+
+// Summing
+int totalAge = people.stream()
+    .collect(Collectors.summingInt(Person::getAge));
+
+// Statistics
+IntSummaryStatistics ageStats = people.stream()
+    .collect(Collectors.summarizingInt(Person::getAge));
+
+// Mapping within collectors
+Map&lt;Integer, Set&lt;String&gt;&gt; namesByAge = people.stream()
+    .collect(Collectors.groupingBy(
+        Person::getAge,
+        Collectors.mapping(Person::getName, Collectors.toSet())
+    ));</code></pre>
+    </div>
+
+    <!-- Block 6: Parallel Streams -->
+    <div class="method">
+      <h3>Parallel Streams</h3>
+      <p class="hint">// Using parallel streams for concurrent processing.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('parallel-streams-solution')">Check Answer</button>
+      <pre id="parallel-streams-solution"><code>List&lt;Integer&gt; numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+// Creating a parallel stream
+Stream&lt;Integer&gt; parallelStream = numbers.parallelStream();
+
+// Converting sequential to parallel
+Stream&lt;Integer&gt; parallelConverted = numbers.stream().parallel();
+
+// Parallel computation example
+long sum = numbers.parallelStream()
+    .mapToLong(i -> {
+        // Simulate heavy computation
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return i * i;
+    })
+    .sum();
+
+// Using with reduction operations
+int product = numbers.parallelStream()
+    .reduce(1, (a, b) -> a * b);
+
+// Considerations for parallel streams
+// - Non-interference: don't modify data source during execution
+// - Stateless operations: prefer operations that don't rely on state
+// - Associativity: use operations where order doesn't matter</code></pre>
+    </div>
+
+    <!-- Block 7: Method References -->
+    <div class="method">
+      <h3>Method References</h3>
+      <p class="hint">// Shorthand for lambdas calling a specific method.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('method-references-solution')">Check Answer</button>
+      <pre id="method-references-solution"><code>List&lt;String&gt; names = Arrays.asList("Alice", "Bob", "Charlie", "David");
+
+// Static method reference
+names.stream()
+    .map(String::toUpperCase)  // equivalent to s -> s.toUpperCase()
+    .forEach(System.out::println);  // equivalent to s -> System.out.println(s)
+
+// Instance method reference on specific object
+StringBuilder sb = new StringBuilder();
+names.forEach(sb::append);  // equivalent to s -> sb.append(s)
+
+// Instance method reference on arbitrary object of a type
+List&lt;Person&gt; people = getExamplePeople();
+people.stream()
+    .map(Person::getName)  // equivalent to p -> p.getName()
+    .forEach(System.out::println);
+
+// Constructor reference
+Stream&lt;Person&gt; personStream = names.stream()
+    .map(Person::new);  // equivalent to name -> new Person(name)
+
+// Using with functional interfaces
+Comparator&lt;String&gt; comp = String::compareToIgnoreCase;  // equivalent to (s1, s2) -> s1.compareToIgnoreCase(s2)
+names.sort(comp);</code></pre>
+    </div>
+
+    <!-- Block 8: Practical Examples -->
+    <div class="method">
+      <h3>Practical Stream Examples</h3>
+      <p class="hint">// Real-world examples of using streams.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('practical-examples-solution')">Check Answer</button>
+      <pre id="practical-examples-solution"><code>// Reading file lines as a stream
+try (Stream&lt;String&gt; lines = Files.lines(Paths.get("file.txt"))) {
+    lines.filter(line -> line.contains("important"))
+         .map(String::trim)
+         .forEach(System.out::println);
+}
+
+// Process a directory of files
+try (Stream&lt;Path&gt; paths = Files.walk(Paths.get("documents"))) {
+    paths.filter(Files::isRegularFile)
+         .filter(p -> p.toString().endsWith(".txt"))
+         .forEach(System.out::println);
+}
+
+// Working with numeric streams
+int[] numbers = {1, 2, 3, 4, 5};
+double average = IntStream.of(numbers).average().orElse(0);
+int max = IntStream.of(numbers).max().orElse(0);
+int sum = IntStream.of(numbers).sum();
+
+// Generate a range of integers
+IntStream.rangeClosed(1, 10).forEach(System.out::println);
+
+// String processing
+String text = "The quick brown fox jumps over the lazy dog";
+long wordCount = Arrays.stream(text.split("\\s+")).count();
+List&lt;String&gt; uniqueWords = Arrays.stream(text.split("\\s+"))
+                                  .distinct()
+                                  .sorted()
+                                  .collect(Collectors.toList());
+
+// Custom class example
+class Order {
+    private List&lt;OrderItem&gt; items;
+    
+    public List&lt;OrderItem&gt; getItems() { return items; }
+    public double getTotal() {
+        return items.stream()
+                   .mapToDouble(item -> item.getPrice() * item.getQuantity())
+                   .sum();
+    }
+    
+    public List&lt;String&gt; getUniqueProductNames() {
+        return items.stream()
+                   .map(OrderItem::getProductName)
+                   .distinct()
+                   .collect(Collectors.toList());
+    }
+}</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 
+
+
+
+

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "template": {
+    "type": "AdaptiveCard",
+    "version": "1.5",
+    "body": [
+      {
+        "type": "Container",
+        "style": "emphasis",
+        "items": [
+          {
+            "type": "TextBlock",
+            "size": "Medium",
+            "weight": "Bolder",
+            "text": "Java Data Structures Practice",
+            "wrap": true
+          },
+          {
+            "type": "TextBlock",
+            "text": "Start practicing Java data structures now",
+            "wrap": true
+          }
+        ]
+      },
+      {
+        "type": "Container",
+        "spacing": "Medium",
+        "items": [
+          {
+            "type": "ActionSet",
+            "actions": [
+              {
+                "type": "Action.OpenUrl",
+                "title": "Random Practice",
+                "url": "https://carter-112.github.io/CS-Practice/random.html"
+              },
+              {
+                "type": "Action.OpenUrl",
+                "title": "Linked Lists",
+                "url": "https://carter-112.github.io/CS-Practice/singly.html"
+              },
+              {
+                "type": "Action.OpenUrl",
+                "title": "HashMaps",
+                "url": "https://carter-112.github.io/CS-Practice/hashmap.html"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+} 
