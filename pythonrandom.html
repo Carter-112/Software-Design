@@ -38,145 +38,43 @@
           
           <!-- Random Practice -->
           <div class="nav-category">Random Practice</div>
-          <a href="random.html">Java Random</a>
-          <a href="pythonrandom.html">Python Random</a>
-          <a href="sqlrandom.html">SQL Random</a>
-          <a href="webrandom.html">Web Dev Random</a>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
         </div>
       </div>
     </div>
   </header>
 
   <div id="content">
-    <h1>Python Random Practice Challenges</h1>
-    <p>Test your Python programming skills with these randomly generated code challenges.</p>
+    <h1>Python Random Practice</h1>
+    <p>Test your Python programming skills with randomly generated coding challenges. Try to solve them before revealing the solution.</p>
     
-    <button id="randomSnippetButton" onclick="handleRandomSnippet()">Get Random Python Challenge</button>
-    
-    <div id="snippetContainer" style="display: none;">
-      <h3 id="snippetTitle">Challenge Title</h3>
-      <p id="snippetDescription">Description of the challenge.</p>
-      
-      <div class="code-container">
-        <pre id="snippetCode" class="code-area"></pre>
-      </div>
-      
-      <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
-      
-      <div id="solutionContainer" style="display: none; position: relative; z-index: 999;">
-        <h3>Solution:</h3>
-        <div class="code-container">
-          <pre id="solutionCode" class="code-area"></pre>
-        </div>
-      </div>
+    <div class="placeholder-content">
+      <h3>Coming Soon</h3>
+      <p>Python random practice challenges are currently in development. Check back soon for:</p>
+      <ul>
+        <li>Data manipulation challenges</li>
+        <li>Algorithm implementations</li>
+        <li>Object-oriented Python challenges</li>
+        <li>File processing tasks</li>
+        <li>Data science mini-projects</li>
+      </ul>
     </div>
   </div>
 
   <script>
-    // Python code snippets and solutions
-    const pythonSnippets = [
-      {
-        title: "Reverse a String",
-        description: "Implement a function to reverse a string without using built-in reverse methods.",
-        code: "def reverse_string(s):\n    # Your code here\n    pass\n\n# Test your function\nprint(reverse_string('Hello World'))",
-        solution: "def reverse_string(s):\n    # Method 1: Using slicing\n    return s[::-1]\n    \n    # Method 2: Manual reversal\n    # result = ''\n    # for char in s:\n    #     result = char + result\n    # return result\n\n# Test your function\nprint(reverse_string('Hello World'))"
-      },
-      {
-        title: "List Comprehension Challenge",
-        description: "Use a list comprehension to create a list of squares of even numbers from 1 to 20.",
-        code: "# Write a single line of code using list comprehension\n# to create a list of squares of even numbers from 1 to 20\n\nsquares_of_evens = # Your code here\n\nprint(squares_of_evens)",
-        solution: "# Write a single line of code using list comprehension\n# to create a list of squares of even numbers from 1 to 20\n\nsquares_of_evens = [x**2 for x in range(1, 21) if x % 2 == 0]\n\nprint(squares_of_evens)"
-      },
-      {
-        title: "Check for Palindrome",
-        description: "Create a function that checks if a string is a palindrome (reads the same forward and backward).",
-        code: "def is_palindrome(text):\n    # Your code here\n    pass\n\n# Test cases\nprint(is_palindrome('racecar'))  # Should return True\nprint(is_palindrome('hello'))    # Should return False\nprint(is_palindrome('A man, a plan, a canal, Panama'))  # Should return True (ignore case and non-alphanumeric)",
-        solution: "def is_palindrome(text):\n    # Convert to lowercase and remove non-alphanumeric characters\n    cleaned_text = ''.join(char.lower() for char in text if char.isalnum())\n    \n    # Check if the cleaned string equals its reverse\n    return cleaned_text == cleaned_text[::-1]\n\n# Test cases\nprint(is_palindrome('racecar'))  # Should return True\nprint(is_palindrome('hello'))    # Should return False\nprint(is_palindrome('A man, a plan, a canal, Panama'))  # Should return True"
-      },
-      {
-        title: "Dictionary Manipulation",
-        description: "Create a function that counts the frequency of words in a string and returns a dictionary where keys are words and values are their counts.",
-        code: "def word_frequency(text):\n    # Your code here\n    pass\n\n# Test case\nsample_text = \"The quick brown fox jumps over the lazy dog. The dog was not amused.\"\nprint(word_frequency(sample_text))",
-        solution: "def word_frequency(text):\n    # Remove punctuation and convert to lowercase\n    for char in '.,!?;:':\n        text = text.replace(char, '')\n    text = text.lower()\n    \n    # Split into words and count frequency\n    words = text.split()\n    frequency = {}\n    \n    for word in words:\n        if word in frequency:\n            frequency[word] += 1\n        else:\n            frequency[word] = 1\n    \n    return frequency\n\n# Test case\nsample_text = \"The quick brown fox jumps over the lazy dog. The dog was not amused.\"\nprint(word_frequency(sample_text))\n\n# Alternative using collections.Counter:\n# from collections import Counter\n# def word_frequency(text):\n#     for char in '.,!?;:':\n#         text = text.replace(char, '')\n#     return Counter(text.lower().split())"
-      }
-    ];
-    
-    let currentSnippetIndex = -1;
-    
-    // Handle random snippet button click
-    function handleRandomSnippet() {
-      // Get a random index (different from current)
-      let randomIndex;
-      do {
-        randomIndex = Math.floor(Math.random() * pythonSnippets.length);
-      } while (randomIndex === currentSnippetIndex && pythonSnippets.length > 1);
-      
-      currentSnippetIndex = randomIndex;
-      const snippet = pythonSnippets[currentSnippetIndex];
-      
-      // Update the DOM
-      document.getElementById('snippetTitle').textContent = snippet.title;
-      document.getElementById('snippetDescription').textContent = snippet.description;
-      document.getElementById('snippetCode').textContent = snippet.code;
-      document.getElementById('solutionCode').textContent = snippet.solution;
-      
-      // Show snippet, hide solution
-      document.getElementById('snippetContainer').style.display = 'block';
-      document.getElementById('solutionContainer').style.display = 'none';
-      document.getElementById('toggleAnswerButton').textContent = 'Show Solution';
-      
-      // Scroll to snippet
-      document.getElementById('snippetContainer').scrollIntoView({
-        behavior: 'smooth', 
-        block: 'start'
-      });
-    }
-
-    // Toggle the solution visibility
-    function toggleRandomAnswer() {
-      const solutionContainer = document.getElementById('solutionContainer');
-      const toggleButton = document.getElementById('toggleAnswerButton');
-      
-      // Remove any existing orange solution buttons
-      const orangeButtons = document.querySelectorAll('.orange-solution');
-      orangeButtons.forEach(btn => btn.remove());
-      
-      // Check for and remove any elements with the text "Solution" that might be orange
-      const allElements = document.querySelectorAll('*');
-      allElements.forEach(el => {
-        if (el.textContent.includes('Solution') && 
-            window.getComputedStyle(el).getPropertyValue('border').includes('orange')) {
-          el.remove();
-        }
-      });
-      
-      if (solutionContainer.style.display === 'none') {
-        solutionContainer.style.display = 'block';
-        toggleButton.textContent = 'Hide Solution';
-      } else {
-        solutionContainer.style.display = 'none';
-        toggleButton.textContent = 'Show Solution';
-      }
-    }
-    
     // Remove any orange solution buttons when the page loads
     window.onload = function() {
       // Give DOM time to fully render before removing elements
       setTimeout(() => {
         const orangeButtons = document.querySelectorAll('.orange-solution');
         orangeButtons.forEach(btn => btn.remove());
-        
-        // Also check for any elements with the text "Solution" that might be orange
-        const allElements = document.querySelectorAll('*');
-        allElements.forEach(el => {
-          if (el.textContent.includes('Solution') && 
-              (window.getComputedStyle(el).getPropertyValue('border').includes('orange') ||
-               window.getComputedStyle(el).getPropertyValue('background').includes('orange'))) {
-            el.remove();
-          }
-        });
       }, 500);
     };
   </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
 </body>
 </html> 

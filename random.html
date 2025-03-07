@@ -38,42 +38,115 @@
           
           <!-- Random Practice -->
           <div class="nav-category">Random Practice</div>
-          <a href="random.html">Java Random</a>
-          <a href="pythonrandom.html">Python Random</a>
-          <a href="sqlrandom.html">SQL Random</a>
-          <a href="webrandom.html">Web Dev Random</a>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
         </div>
       </div>
     </div>
   </header>
 
   <div id="content">
-    <h1>Java Random Practice Challenges</h1>
-    <p>Test your Java programming skills with these randomly generated code challenges. Try to solve them before revealing the solution.</p>
+    <h1>Random Practice Challenges</h1>
+    <p>Test your programming skills with these randomly generated code challenges across different languages.</p>
     
-    <button id="randomSnippetButton" onclick="handleRandomSnippet()">Get Random Java Challenge</button>
+    <div class="language-selector">
+      <button class="language-btn active" onclick="selectLanguage('java')">Java</button>
+      <button class="language-btn" onclick="selectLanguage('python')">Python</button>
+      <button class="language-btn" onclick="selectLanguage('sql')">SQL</button>
+      <button class="language-btn" onclick="selectLanguage('web')">HTML/CSS/JS</button>
+    </div>
     
-    <div id="snippetContainer" style="display: none;">
-      <h3 id="snippetTitle">Challenge Title</h3>
-      <p id="snippetDescription">Description of the challenge.</p>
+    <!-- Java Random Practice Section (Original Content) -->
+    <div id="java-practice" class="language-section">
+      <h2>Java Random Practice</h2>
+      <p>Click the button below to get a random Java coding challenge. Try to solve it before revealing the solution.</p>
       
-      <div class="code-container">
-        <pre id="snippetCode" class="code-area"></pre>
-      </div>
+      <button id="randomSnippetButton" onclick="handleRandomSnippet()">Get Random Java Challenge</button>
       
-      <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
-      
-      <div id="solutionContainer" style="display: none; position: relative; z-index: 999;">
-        <h3>Solution:</h3>
+      <div id="snippetContainer" style="display: none;">
+        <h3 id="snippetTitle">Challenge Title</h3>
+        <p id="snippetDescription">Description of the challenge.</p>
+        
         <div class="code-container">
-          <pre id="solutionCode" class="code-area"></pre>
+          <pre id="snippetCode" class="code-area"></pre>
         </div>
+        
+        <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
+        
+        <div id="solutionContainer" style="display: none; position: relative; z-index: 999;">
+          <h3>Solution:</h3>
+          <div class="code-container">
+            <pre id="solutionCode" class="code-area"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Python Random Practice Section (Placeholder) -->
+    <div id="python-practice" class="language-section" style="display: none;">
+      <h2>Python Random Practice</h2>
+      <p>Click the button below to get a random Python coding challenge. Try to solve it before revealing the solution.</p>
+      
+      <button onclick="alert('Python challenges will be available soon!')">Get Random Python Challenge</button>
+      
+      <div class="placeholder-content">
+        <h3>Coming Soon</h3>
+        <p>Python random practice challenges are currently in development. Check back soon for:</p>
+        <ul>
+          <li>Data manipulation challenges</li>
+          <li>Algorithm implementations</li>
+          <li>Object-oriented Python challenges</li>
+          <li>File processing tasks</li>
+          <li>Data science mini-projects</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- SQL Random Practice Section (Placeholder) -->
+    <div id="sql-practice" class="language-section" style="display: none;">
+      <h2>SQL Random Practice</h2>
+      <p>Click the button below to get a random SQL challenge. Try to solve it before revealing the solution.</p>
+      
+      <button onclick="alert('SQL challenges will be available soon!')">Get Random SQL Challenge</button>
+      
+      <div class="placeholder-content">
+        <h3>Coming Soon</h3>
+        <p>SQL random practice challenges are currently in development. Check back soon for:</p>
+        <ul>
+          <li>Query challenges with complex JOINs</li>
+          <li>Data aggregation problems</li>
+          <li>Database schema design</li>
+          <li>Performance optimization tasks</li>
+          <li>Data analysis scenarios</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Web Development Random Practice Section (Placeholder) -->
+    <div id="web-practice" class="language-section" style="display: none;">
+      <h2>Web Development Random Practice</h2>
+      <p>Click the button below to get a random web development challenge. Try to solve it before revealing the solution.</p>
+      
+      <button onclick="alert('Web development challenges will be available soon!')">Get Random Web Challenge</button>
+      
+      <div class="placeholder-content">
+        <h3>Coming Soon</h3>
+        <p>Web development random practice challenges are currently in development. Check back soon for:</p>
+        <ul>
+          <li>Responsive design challenges</li>
+          <li>JavaScript DOM manipulation tasks</li>
+          <li>CSS layout problems</li>
+          <li>Form validation exercises</li>
+          <li>Interactive UI components</li>
+        </ul>
       </div>
     </div>
   </div>
 
   <script>
-    // Java code snippets and solutions
+    // Java code snippets and solutions (original content)
     const javaSnippets = [
       {
         title: "Reverse a String",
@@ -92,24 +165,37 @@
         description: "Create a method that checks if a string is a palindrome (reads the same forward and backward).",
         code: "public class PalindromeChecker {\n  public static boolean isPalindrome(String str) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(isPalindrome(\"racecar\"));\n    System.out.println(isPalindrome(\"hello\"));\n  }\n}",
         solution: "public class PalindromeChecker {\n  public static boolean isPalindrome(String str) {\n    if (str == null) {\n      return false;\n    }\n    \n    str = str.toLowerCase().replaceAll(\"[^a-z0-9]\", \"\");\n    int left = 0;\n    int right = str.length() - 1;\n    \n    while (left < right) {\n      if (str.charAt(left) != str.charAt(right)) {\n        return false;\n      }\n      left++;\n      right--;\n    }\n    \n    return true;\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(isPalindrome(\"racecar\"));\n    System.out.println(isPalindrome(\"hello\"));\n  }\n}"
-      },
-      {
-        title: "Fibonacci Sequence",
-        description: "Write a method to generate the nth Fibonacci number. The Fibonacci sequence starts with 0 and 1, and each subsequent number is the sum of the two preceding ones (0, 1, 1, 2, 3, 5, 8, ...).",
-        code: "public class Fibonacci {\n  public static int fibonacci(int n) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    // Test with different values\n    System.out.println(fibonacci(0));  // Should return 0\n    System.out.println(fibonacci(1));  // Should return 1\n    System.out.println(fibonacci(2));  // Should return 1\n    System.out.println(fibonacci(5));  // Should return 5\n    System.out.println(fibonacci(10)); // Should return 55\n  }\n}",
-        solution: "public class Fibonacci {\n  // Iterative implementation\n  public static int fibonacci(int n) {\n    if (n < 0) {\n      throw new IllegalArgumentException(\"Input must be non-negative\");\n    }\n    \n    if (n <= 1) {\n      return n;\n    }\n    \n    int prev = 0;\n    int current = 1;\n    \n    for (int i = 2; i <= n; i++) {\n      int next = prev + current;\n      prev = current;\n      current = next;\n    }\n    \n    return current;\n  }\n  \n  /* Recursive implementation (less efficient)\n  public static int fibonacci(int n) {\n    if (n <= 1) {\n      return n;\n    }\n    return fibonacci(n - 1) + fibonacci(n - 2);\n  }\n  */\n  \n  public static void main(String[] args) {\n    // Test with different values\n    System.out.println(fibonacci(0));  // Should return 0\n    System.out.println(fibonacci(1));  // Should return 1\n    System.out.println(fibonacci(2));  // Should return 1\n    System.out.println(fibonacci(5));  // Should return 5\n    System.out.println(fibonacci(10)); // Should return 55\n  }\n}"
-      },
-      {
-        title: "Array Rotation",
-        description: "Implement a method to rotate an array to the right by k steps. For example, with array [1,2,3,4,5,6,7] and k = 3, the result would be [5,6,7,1,2,3,4].",
-        code: "public class ArrayRotation {\n  public static void rotate(int[] nums, int k) {\n    // Your code here\n  }\n  \n  // Helper method to print an array\n  public static void printArray(int[] arr) {\n    System.out.print(\"[\");\n    for (int i = 0; i < arr.length; i++) {\n      System.out.print(arr[i]);\n      if (i < arr.length - 1) {\n        System.out.print(\", \");\n      }\n    }\n    System.out.println(\"]\");\n  }\n  \n  public static void main(String[] args) {\n    int[] nums = {1, 2, 3, 4, 5, 6, 7};\n    rotate(nums, 3);\n    printArray(nums); // Should print [5, 6, 7, 1, 2, 3, 4]\n  }\n}",
-        solution: "public class ArrayRotation {\n  // Approach 1: Using extra array\n  public static void rotate(int[] nums, int k) {\n    if (nums == null || nums.length == 0) {\n      return;\n    }\n    \n    int n = nums.length;\n    k = k % n; // Handle cases where k > length\n    \n    if (k == 0) {\n      return; // No rotation needed\n    }\n    \n    int[] temp = new int[n];\n    \n    // Copy elements to temp array with rotation\n    for (int i = 0; i < n; i++) {\n      temp[(i + k) % n] = nums[i];\n    }\n    \n    // Copy back to original array\n    for (int i = 0; i < n; i++) {\n      nums[i] = temp[i];\n    }\n  }\n  \n  /* Approach 2: Reversing parts of the array\n  public static void rotate(int[] nums, int k) {\n    if (nums == null || nums.length == 0) {\n      return;\n    }\n    \n    int n = nums.length;\n    k = k % n; // Handle cases where k > length\n    \n    if (k == 0) {\n      return; // No rotation needed\n    }\n    \n    // Reverse the entire array\n    reverse(nums, 0, n - 1);\n    // Reverse the first k elements\n    reverse(nums, 0, k - 1);\n    // Reverse the remaining elements\n    reverse(nums, k, n - 1);\n  }\n  \n  private static void reverse(int[] nums, int start, int end) {\n    while (start < end) {\n      int temp = nums[start];\n      nums[start] = nums[end];\n      nums[end] = temp;\n      start++;\n      end--;\n    }\n  }\n  */\n  \n  // Helper method to print an array\n  public static void printArray(int[] arr) {\n    System.out.print(\"[\");\n    for (int i = 0; i < arr.length; i++) {\n      System.out.print(arr[i]);\n      if (i < arr.length - 1) {\n        System.out.print(\", \");\n      }\n    }\n    System.out.println(\"]\");\n  }\n  \n  public static void main(String[] args) {\n    int[] nums = {1, 2, 3, 4, 5, 6, 7};\n    rotate(nums, 3);\n    printArray(nums); // Should print [5, 6, 7, 1, 2, 3, 4]\n  }\n}"
       }
     ];
     
     let currentSnippetIndex = -1;
     
-    // Handle random snippet button click
+    // Language selection handling
+    function selectLanguage(language) {
+      // Hide all language sections
+      const sections = document.querySelectorAll('.language-section');
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Show the selected language section
+      document.getElementById(language + '-practice').style.display = 'block';
+      
+      // Update active button styling
+      const buttons = document.querySelectorAll('.language-btn');
+      buttons.forEach(button => {
+        button.classList.remove('active');
+      });
+      const activeButton = document.querySelector(`.language-btn[onclick*="${language}"]`);
+      if (activeButton) {
+        activeButton.classList.add('active');
+      }
+      
+      // Reset snippet display if changing language
+      document.getElementById('snippetContainer').style.display = 'none';
+    }
+
+    // Handle random snippet button for Java (original functionality)
     function handleRandomSnippet() {
       // Get a random index (different from current)
       let randomIndex;
@@ -147,15 +233,6 @@
       const orangeButtons = document.querySelectorAll('.orange-solution');
       orangeButtons.forEach(btn => btn.remove());
       
-      // Check for and remove any elements with the text "Solution" that might be orange
-      const allElements = document.querySelectorAll('*');
-      allElements.forEach(el => {
-        if (el.textContent.includes('Solution') && 
-            window.getComputedStyle(el).getPropertyValue('border').includes('orange')) {
-          el.remove();
-        }
-      });
-      
       if (solutionContainer.style.display === 'none') {
         solutionContainer.style.display = 'block';
         toggleButton.textContent = 'Hide Solution';
@@ -165,23 +242,9 @@
       }
     }
     
-    // Remove any orange solution buttons when the page loads
+    // Initialize with Java practice selected
     window.onload = function() {
-      // Give DOM time to fully render before removing elements
-      setTimeout(() => {
-        const orangeButtons = document.querySelectorAll('.orange-solution');
-        orangeButtons.forEach(btn => btn.remove());
-        
-        // Also check for any elements with the text "Solution" that might be orange
-        const allElements = document.querySelectorAll('*');
-        allElements.forEach(el => {
-          if (el.textContent.includes('Solution') && 
-              (window.getComputedStyle(el).getPropertyValue('border').includes('orange') ||
-               window.getComputedStyle(el).getPropertyValue('background').includes('orange'))) {
-            el.remove();
-          }
-        });
-      }, 500);
+      selectLanguage('java');
     };
   </script>
   <!-- AdSense Integration -->
