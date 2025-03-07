@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Random Practice - Coding Challenges</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="external-link-handler.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random</a>
+          <a href="pythonrandom.html">Python Random</a>
+          <a href="sqlrandom.html">SQL Random</a>
+          <a href="webrandom.html">Web Dev Random</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="content">
+    <h1>SQL Random Practice Challenges</h1>
+    <p>Test your SQL skills with these randomly generated database challenges.</p>
+    
+    <button id="randomSnippetButton" onclick="handleRandomSnippet()">Get Random SQL Challenge</button>
+    
+    <div id="snippetContainer" style="display: none;">
+      <h3 id="snippetTitle">Challenge Title</h3>
+      <p id="snippetDescription">Description of the challenge.</p>
+      
+      <div id="schemaContainer" class="code-container">
+        <h4>Database Schema:</h4>
+        <pre id="schemaCode" class="code-area"></pre>
+      </div>
+      
+      <div class="code-container">
+        <pre id="snippetCode" class="code-area"></pre>
+      </div>
+      
+      <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
+      
+      <div id="solutionContainer" style="display: none; position: relative; z-index: 999;">
+        <h3>Solution:</h3>
+        <div class="code-container">
+          <pre id="solutionCode" class="code-area"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // SQL code snippets and solutions
+    const sqlSnippets = [
+      {
+        title: "Basic SELECT Query",
+        description: "Write a query to select all employees who earn more than $50,000 and work in the 'IT' department, sorted by their salary in descending order.",
+        schema: "-- employees table structure\nCREATE TABLE employees (\n  employee_id INT PRIMARY KEY,\n  first_name VARCHAR(50),\n  last_name VARCHAR(50),\n  department VARCHAR(50),\n  salary DECIMAL(10, 2),\n  hire_date DATE\n);\n\n-- Sample data\nINSERT INTO employees VALUES\n(1, 'John', 'Smith', 'IT', 60000.00, '2020-01-15'),\n(2, 'Mary', 'Johnson', 'HR', 55000.00, '2019-05-20'),\n(3, 'David', 'Williams', 'IT', 48000.00, '2021-03-10'),\n(4, 'Sarah', 'Brown', 'Finance', 62000.00, '2018-11-08'),\n(5, 'Michael', 'Jones', 'IT', 72000.00, '2017-06-30');",
+        code: "-- Write your SQL query here\n\n\n\n",
+        solution: "-- Select employees from the IT department with salary > 50000\nSELECT *\nFROM employees\nWHERE department = 'IT'\nAND salary > 50000\nORDER BY salary DESC;"
+      },
+      {
+        title: "JOIN Operations",
+        description: "Write a query to list all customers and their orders. Include customers who have not placed any orders yet. Display customer name and order date.",
+        schema: "-- customers table\nCREATE TABLE customers (\n  customer_id INT PRIMARY KEY,\n  customer_name VARCHAR(100),\n  email VARCHAR(100),\n  registration_date DATE\n);\n\n-- orders table\nCREATE TABLE orders (\n  order_id INT PRIMARY KEY,\n  customer_id INT,\n  order_date DATE,\n  total_amount DECIMAL(10, 2),\n  FOREIGN KEY (customer_id) REFERENCES customers(customer_id)\n);\n\n-- Sample data\nINSERT INTO customers VALUES\n(1, 'John Smith', 'john@example.com', '2020-01-10'),\n(2, 'Mary Johnson', 'mary@example.com', '2020-02-15'),\n(3, 'David Williams', 'david@example.com', '2020-03-20'),\n(4, 'Sarah Brown', 'sarah@example.com', '2020-04-25');\n\nINSERT INTO orders VALUES\n(101, 1, '2020-05-05', 150.75),\n(102, 1, '2020-06-10', 89.50),\n(103, 2, '2020-05-15', 210.25),\n(104, 3, '2020-07-20', 45.80);",
+        code: "-- Write your SQL query here\n\n\n\n",
+        solution: "-- LEFT JOIN to include all customers including those without orders\nSELECT c.customer_name, o.order_date\nFROM customers c\nLEFT JOIN orders o ON c.customer_id = o.customer_id\nORDER BY c.customer_name, o.order_date;"
+      },
+      {
+        title: "Aggregation and GROUP BY",
+        description: "Write a query to find the total sales amount per category and month in 2023. Only include categories with total sales over $1000.",
+        schema: "-- Product categories table\nCREATE TABLE categories (\n  category_id INT PRIMARY KEY,\n  category_name VARCHAR(50)\n);\n\n-- Sales table\nCREATE TABLE sales (\n  sale_id INT PRIMARY KEY,\n  product_id INT,\n  category_id INT,\n  sale_date DATE,\n  amount DECIMAL(10, 2)\n);\n\n-- Sample data\nINSERT INTO categories VALUES\n(1, 'Electronics'),\n(2, 'Clothing'),\n(3, 'Books'),\n(4, 'Home & Kitchen');\n\nINSERT INTO sales VALUES\n(1, 101, 1, '2023-01-15', 500.00),\n(2, 102, 1, '2023-01-20', 700.50),\n(3, 201, 2, '2023-01-25', 350.75),\n(4, 301, 3, '2023-02-05', 125.99),\n(5, 103, 1, '2023-02-10', 899.99),\n(6, 202, 2, '2023-02-15', 450.25),\n(7, 203, 2, '2023-02-20', 550.50),\n(8, 401, 4, '2023-02-25', 275.75);",
+        code: "-- Write your SQL query here\n\n\n\n",
+        solution: "-- Find total sales by category and month in 2023\nSELECT \n  c.category_name,\n  EXTRACT(MONTH FROM s.sale_date) AS month,\n  SUM(s.amount) AS total_sales\nFROM sales s\nJOIN categories c ON s.category_id = c.category_id\nWHERE EXTRACT(YEAR FROM s.sale_date) = 2023\nGROUP BY c.category_name, EXTRACT(MONTH FROM s.sale_date)\nHAVING SUM(s.amount) > 1000\nORDER BY month, total_sales DESC;"
+      },
+      {
+        title: "Subqueries",
+        description: "Write a query to find all employees who earn more than the average salary in their department.",
+        schema: "-- employees table with department and salary information\nCREATE TABLE employees (\n  employee_id INT PRIMARY KEY,\n  first_name VARCHAR(50),\n  last_name VARCHAR(50),\n  department VARCHAR(50),\n  salary DECIMAL(10, 2)\n);\n\n-- Sample data\nINSERT INTO employees VALUES\n(1, 'John', 'Smith', 'IT', 75000.00),\n(2, 'Maria', 'Garcia', 'IT', 85000.00),\n(3, 'Robert', 'Johnson', 'IT', 65000.00),\n(4, 'Lisa', 'Brown', 'HR', 65000.00),\n(5, 'Michael', 'Davis', 'HR', 55000.00),\n(6, 'Sarah', 'Wilson', 'Finance', 90000.00),\n(7, 'James', 'Taylor', 'Finance', 78000.00),\n(8, 'Patricia', 'Miller', 'Finance', 82000.00);",
+        code: "-- Write your SQL query here\n\n\n\n",
+        solution: "-- Find employees with salary higher than their department average\nSELECT e1.employee_id, e1.first_name, e1.last_name, e1.department, e1.salary\nFROM employees e1\nWHERE e1.salary > (\n  SELECT AVG(e2.salary)\n  FROM employees e2\n  WHERE e2.department = e1.department\n)\nORDER BY e1.department, e1.salary DESC;"
+      }
+    ];
+    
+    let currentSnippetIndex = -1;
+    
+    // Handle random snippet button click
+    function handleRandomSnippet() {
+      // Get a random index (different from current)
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * sqlSnippets.length);
+      } while (randomIndex === currentSnippetIndex && sqlSnippets.length > 1);
+      
+      currentSnippetIndex = randomIndex;
+      const snippet = sqlSnippets[currentSnippetIndex];
+      
+      // Update the DOM
+      document.getElementById('snippetTitle').textContent = snippet.title;
+      document.getElementById('snippetDescription').textContent = snippet.description;
+      document.getElementById('schemaCode').textContent = snippet.schema;
+      document.getElementById('snippetCode').textContent = snippet.code;
+      document.getElementById('solutionCode').textContent = snippet.solution;
+      
+      // Show snippet, hide solution
+      document.getElementById('snippetContainer').style.display = 'block';
+      document.getElementById('solutionContainer').style.display = 'none';
+      document.getElementById('toggleAnswerButton').textContent = 'Show Solution';
+      
+      // Scroll to snippet
+      document.getElementById('snippetContainer').scrollIntoView({
+        behavior: 'smooth', 
+        block: 'start'
+      });
+    }
+
+    // Toggle the solution visibility
+    function toggleRandomAnswer() {
+      const solutionContainer = document.getElementById('solutionContainer');
+      const toggleButton = document.getElementById('toggleAnswerButton');
+      
+      // Remove any existing orange solution buttons
+      const orangeButtons = document.querySelectorAll('.orange-solution');
+      orangeButtons.forEach(btn => btn.remove());
+      
+      // Check for and remove any elements with the text "Solution" that might be orange
+      const allElements = document.querySelectorAll('*');
+      allElements.forEach(el => {
+        if (el.textContent.includes('Solution') && 
+            window.getComputedStyle(el).getPropertyValue('border').includes('orange')) {
+          el.remove();
+        }
+      });
+      
+      if (solutionContainer.style.display === 'none') {
+        solutionContainer.style.display = 'block';
+        toggleButton.textContent = 'Hide Solution';
+      } else {
+        solutionContainer.style.display = 'none';
+        toggleButton.textContent = 'Show Solution';
+      }
+    }
+    
+    // Remove any orange solution buttons when the page loads
+    window.onload = function() {
+      // Give DOM time to fully render before removing elements
+      setTimeout(() => {
+        const orangeButtons = document.querySelectorAll('.orange-solution');
+        orangeButtons.forEach(btn => btn.remove());
+        
+        // Also check for any elements with the text "Solution" that might be orange
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+          if (el.textContent.includes('Solution') && 
+              (window.getComputedStyle(el).getPropertyValue('border').includes('orange') ||
+               window.getComputedStyle(el).getPropertyValue('background').includes('orange'))) {
+            el.remove();
+          }
+        });
+      }, 500);
+    };
+  </script>
+</body>
+</html> 

@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Basics - Learning Guide</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="external-link-handler.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>SQL Basics Learning Guide</h1>
+    <p>Learn the fundamentals of SQL (Structured Query Language) for managing and querying relational databases.</p>
+    
+    <div class="section-navigation">
+      <button onclick="toggleSection('sql-intro')">SQL Introduction</button>
+      <button onclick="toggleSection('sql-select')">SELECT Queries</button>
+      <button onclick="toggleSection('sql-crud')">CRUD Operations</button>
+      <button onclick="toggleSection('sql-joins')">JOINs & Relationships</button>
+      <button onclick="toggleSection('sql-advanced')">Advanced SQL</button>
+      <button onclick="toggleSection('sql-security')">SQL Security</button>
+      <button onclick="toggleSection('sql-practice-section')">SQL Practice Problems</button>
+    </div>
+    
+    <!-- Section placeholders - will be filled with content later -->
+    <div id="sql-intro" class="sql-section">
+      <h2>Introduction to SQL</h2>
+      <p>SQL (Structured Query Language) is a standard language for storing, manipulating, and retrieving data in relational database management systems. SQL allows you to create databases, tables, store data, and perform various operations on the stored data.</p>
+      
+      <h3>What is a Database?</h3>
+      <p>A database is an organized collection of structured data. The most common type of database is a relational database, which stores data in tables with rows and columns. Other types include NoSQL databases, which use different data models.</p>
+      
+      <h3>Relational Database Concepts</h3>
+      <ul>
+        <li><strong>Tables</strong>: Data is organized into tables (like spreadsheets)</li>
+        <li><strong>Rows</strong>: Each row (or record) contains data about a specific instance</li>
+        <li><strong>Columns</strong>: Each column defines a specific attribute or property</li>
+        <li><strong>Primary Keys</strong>: Unique identifiers for each row</li>
+        <li><strong>Foreign Keys</strong>: References between tables, creating relationships</li>
+        <li><strong>Indexes</strong>: Special lookup tables that improve query performance</li>
+      </ul>
+      
+      <h3>Popular Database Management Systems</h3>
+      <ul>
+        <li><strong>MySQL</strong>: Open-source, widely used for web applications</li>
+        <li><strong>PostgreSQL</strong>: Feature-rich, extensible open-source database</li>
+        <li><strong>SQLite</strong>: Lightweight, serverless database engine</li>
+        <li><strong>Microsoft SQL Server</strong>: Commercial database by Microsoft</li>
+        <li><strong>Oracle Database</strong>: Commercial enterprise database system</li>
+      </ul>
+      
+      <h3>Creating Database and Tables</h3>
+      <p>Let's see how to create a database and tables using SQL:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+-- Creating a new database
+CREATE DATABASE school;
+
+-- Using the created database
+USE school;
+
+-- Creating a table for students
+CREATE TABLE students (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    date_of_birth DATE,
+    email VARCHAR(100) UNIQUE,
+    enrollment_date DATE DEFAULT CURRENT_DATE,
+    active BOOLEAN DEFAULT TRUE
+);
+
+-- Creating a table for courses
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY AUTO_INCREMENT,
+    course_name VARCHAR(100) NOT NULL,
+    department VARCHAR(50),
+    credits INT CHECK (credits > 0),
+    description TEXT
+);
+
+-- Creating a table for student enrollments (with foreign keys)
+CREATE TABLE enrollments (
+    enrollment_id INT PRIMARY KEY AUTO_INCREMENT,
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    grade CHAR(1),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+        </textarea>
+      </div>
+      
+      <h3>Data Types in SQL</h3>
+      <p>SQL supports various data types for different kinds of data. While the specifics may vary between different database systems, here are common data types:</p>
+      
+      <table class="data-table">
+        <tr>
+          <th>Category</th>
+          <th>Data Types</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>Numeric</td>
+          <td>INT, BIGINT, TINYINT, DECIMAL, FLOAT</td>
+          <td>For storing whole or decimal numbers</td>
+        </tr>
+        <tr>
+          <td>String</td>
+          <td>CHAR, VARCHAR, TEXT</td>
+          <td>For storing text data</td>
+        </tr>
+        <tr>
+          <td>Date & Time</td>
+          <td>DATE, TIME, DATETIME, TIMESTAMP</td>
+          <td>For storing date and time values</td>
+        </tr>
+        <tr>
+          <td>Boolean</td>
+          <td>BOOLEAN, BIT</td>
+          <td>For storing true/false values</td>
+        </tr>
+        <tr>
+          <td>Binary</td>
+          <td>BLOB, BINARY</td>
+          <td>For storing binary data like files</td>
+        </tr>
+      </table>
+      
+      <h3>SQL Commands Categories</h3>
+      <p>SQL commands can be categorized into several types based on their functions:</p>
+      
+      <ol>
+        <li><strong>Data Definition Language (DDL)</strong>: Used to define data structures
+          <ul>
+            <li>CREATE: Create objects like databases, tables, etc.</li>
+            <li>ALTER: Modify existing database objects</li>
+            <li>DROP: Delete objects from the database</li>
+            <li>TRUNCATE: Remove all records from a table</li>
+          </ul>
+        </li>
+        <li><strong>Data Manipulation Language (DML)</strong>: Used to manipulate data
+          <ul>
+            <li>SELECT: Retrieve data from database</li>
+            <li>INSERT: Add new records</li>
+            <li>UPDATE: Modify existing records</li>
+            <li>DELETE: Remove records</li>
+          </ul>
+        </li>
+        <li><strong>Data Control Language (DCL)</strong>: Used for access control
+          <ul>
+            <li>GRANT: Give privileges to users</li>
+            <li>REVOKE: Take away privileges</li>
+          </ul>
+        </li>
+        <li><strong>Transaction Control Language (TCL)</strong>: Manage transactions
+          <ul>
+            <li>COMMIT: Save changes permanently</li>
+            <li>ROLLBACK: Undo changes</li>
+            <li>SAVEPOINT: Set points to rollback to</li>
+          </ul>
+        </li>
+      </ol>
+      
+      <h3>Basic SQL Syntax Rules</h3>
+      <ul>
+        <li>SQL is not case-sensitive (SELECT is the same as select)</li>
+        <li>SQL statements end with a semicolon (;)</li>
+        <li>SQL comments start with -- (single line) or /* ... */ (multi-line)</li>
+        <li>Table and column names can be enclosed in backticks (`) or square brackets ([]) depending on the database system</li>
+        <li>String values are enclosed in single quotes (')</li>
+      </ul>
+      
+      <div class="practice-container">
+        <h3>Practice: SQL Introduction</h3>
+        <p>Write SQL statements to create a table named <code>products</code> with the following columns: product_id (integer, primary key), product_name (varchar, not null), price (decimal), category (varchar), and in_stock (boolean).</p>
+        <textarea id="sql-intro-practice" class="practice-area" rows="10" placeholder="Write your SQL code here..."></textarea>
+        <button onclick="checkAnswer('sql-intro-practice')">Check Answer</button>
+        <div id="sql-intro-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+    
+    <div id="sql-select" class="sql-section" style="display: none;">
+      <h2>SELECT Queries</h2>
+      <p>The SELECT statement is used to query data from a database, filtering and organizing results. It is one of the most commonly used SQL commands and is the foundation of data retrieval.</p>
+      
+      <h3>Basic SELECT Statement</h3>
+      <p>The simplest form of a SELECT statement retrieves all rows and columns from a table:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="6" readonly>
+-- Retrieve all columns from the students table
+SELECT * FROM students;
+
+-- Retrieve specific columns
+SELECT first_name, last_name, email FROM students;
+        </textarea>
+      </div>
+      
+      <h3>Filtering Data with WHERE</h3>
+      <p>The WHERE clause allows you to filter records based on specified conditions:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="20" readonly>
+-- Students with a specific last name
+SELECT * FROM students
+WHERE last_name = 'Smith';
+
+-- Students older than 20 years
+SELECT first_name, last_name 
+FROM students
+WHERE date_of_birth < '2003-01-01';
+
+-- Multiple conditions with AND
+SELECT * FROM students
+WHERE date_of_birth > '2000-01-01' AND active = TRUE;
+
+-- Multiple conditions with OR
+SELECT * FROM students
+WHERE last_name = 'Smith' OR last_name = 'Johnson';
+
+-- Using BETWEEN for a range
+SELECT * FROM students
+WHERE date_of_birth BETWEEN '2000-01-01' AND '2005-12-31';
+
+-- Using IN for multiple possible values
+SELECT * FROM students
+WHERE last_name IN ('Smith', 'Johnson', 'Williams');
+        </textarea>
+      </div>
+      
+      <h3>Sorting Results with ORDER BY</h3>
+      <p>ORDER BY allows you to sort the result set in ascending (ASC) or descending (DESC) order:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="12" readonly>
+-- Sort students by last name (ascending is default)
+SELECT * FROM students
+ORDER BY last_name;
+
+-- Sort students by enrollment date (newest first)
+SELECT * FROM students
+ORDER BY enrollment_date DESC;
+
+-- Multiple sort criteria
+SELECT * FROM students
+ORDER BY last_name ASC, first_name ASC;
+        </textarea>
+      </div>
+      
+      <h3>Limiting Results</h3>
+      <p>You can limit the number of rows returned by a query:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="12" readonly>
+-- MySQL, PostgreSQL, SQLite syntax
+SELECT * FROM students
+LIMIT 10;
+
+-- SQL Server syntax
+SELECT TOP 10 * FROM students;
+
+-- Oracle syntax
+SELECT * FROM students
+WHERE ROWNUM <= 10;
+        </textarea>
+      </div>
+      
+      <h3>Using Wildcard Searches with LIKE</h3>
+      <p>The LIKE operator is used for pattern matching with wildcards:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="16" readonly>
+-- Names that start with 'J'
+SELECT * FROM students
+WHERE first_name LIKE 'J%';
+
+-- Names that end with 'son'
+SELECT * FROM students
+WHERE last_name LIKE '%son';
+
+-- Names that contain 'an' anywhere
+SELECT * FROM students
+WHERE first_name LIKE '%an%';
+
+-- Names with exactly 5 characters (underscore represents a single character)
+SELECT * FROM students
+WHERE first_name LIKE '_____';
+        </textarea>
+      </div>
+      
+      <h3>Aggregating Data with GROUP BY</h3>
+      <p>GROUP BY groups rows that have the same values in specified columns, often used with aggregate functions:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="24" readonly>
+-- Count students in each department
+SELECT department, COUNT(*) AS student_count
+FROM students
+GROUP BY department;
+
+-- Average age by department
+SELECT department, AVG(YEAR(CURRENT_DATE) - YEAR(date_of_birth)) AS avg_age
+FROM students
+GROUP BY department;
+
+-- Common aggregate functions
+SELECT 
+    COUNT(*) AS total_students,
+    MIN(date_of_birth) AS oldest_student_dob,
+    MAX(date_of_birth) AS youngest_student_dob,
+    AVG(YEAR(CURRENT_DATE) - YEAR(date_of_birth)) AS avg_age,
+    SUM(credits) AS total_credits
+FROM students;
+
+-- Filtering grouped data with HAVING
+SELECT department, COUNT(*) AS student_count
+FROM students
+GROUP BY department
+HAVING COUNT(*) > 10;
+        </textarea>
+      </div>
+      
+      <h3>Handling NULL Values</h3>
+      <p>NULL represents a missing or unknown value. You need special operators to work with NULL values:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="12" readonly>
+-- Find students with no email
+SELECT * FROM students
+WHERE email IS NULL;
+
+-- Find students with email
+SELECT * FROM students
+WHERE email IS NOT NULL;
+
+-- Using COALESCE to provide a default for NULL values
+SELECT first_name, last_name, COALESCE(email, 'No email provided') AS contact
+FROM students;
+        </textarea>
+      </div>
+      
+      <h3>DISTINCT Keyword for Unique Values</h3>
+      <p>The DISTINCT keyword removes duplicate values from the result set:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="8" readonly>
+-- Get unique last names
+SELECT DISTINCT last_name FROM students;
+
+-- Get unique department-grade combinations
+SELECT DISTINCT department, grade FROM enrollments
+JOIN students ON enrollments.student_id = students.student_id;
+        </textarea>
+      </div>
+      
+      <h3>Using Calculated Fields</h3>
+      <p>You can perform calculations and transformations in your SELECT statement:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="16" readonly>
+-- Concatenate first and last names
+SELECT CONCAT(first_name, ' ', last_name) AS full_name
+FROM students;
+
+-- Calculate age
+SELECT 
+    first_name,
+    last_name,
+    date_of_birth,
+    YEAR(CURRENT_DATE) - YEAR(date_of_birth) AS approximate_age
+FROM students;
+
+-- Price with tax calculation
+SELECT 
+    product_name,
+    price,
+    price * 1.08 AS price_with_tax
+FROM products;
+        </textarea>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Practice: SELECT Queries</h3>
+        <p>Write a SELECT query to find all products in the 'Electronics' category with a price greater than $100, sorted by price in descending order. Include the product_name, price, and in_stock columns in your results.</p>
+        <textarea id="sql-select-practice" class="practice-area" rows="10" placeholder="Write your SQL code here..."></textarea>
+        <button onclick="checkAnswer('sql-select-practice')">Check Answer</button>
+        <div id="sql-select-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+    
+    <div id="sql-crud" class="sql-section" style="display: none;">
+      <h2>CRUD Operations</h2>
+      <p>CRUD stands for Create, Read, Update, and Delete - the four basic functions for managing data in database applications.</p>
+      
+      <h3>CREATE (INSERT) Operations</h3>
+      <p>The INSERT statement is used to add new records to a table:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="20" readonly>
+-- Basic INSERT statement
+INSERT INTO students (first_name, last_name, email, date_of_birth)
+VALUES ('John', 'Smith', 'john.smith@example.com', '2000-01-15');
+
+-- INSERT multiple rows at once
+INSERT INTO students (first_name, last_name, email, date_of_birth)
+VALUES 
+    ('Emily', 'Johnson', 'emily.j@example.com', '2001-05-20'),
+    ('Michael', 'Williams', 'michael.w@example.com', '1999-11-08'),
+    ('Sarah', 'Brown', 'sarah.b@example.com', '2002-03-12');
+
+-- INSERT with SELECT statement (inserting data from another table)
+INSERT INTO inactive_students (student_id, first_name, last_name, email)
+SELECT student_id, first_name, last_name, email
+FROM students
+WHERE active = FALSE;
+
+-- INSERT IGNORE (MySQL syntax) - silently ignores errors
+INSERT IGNORE INTO students (student_id, first_name, last_name, email)
+VALUES (1, 'Duplicate', 'Student', 'duplicate@example.com');
+        </textarea>
+      </div>
+      
+      <h3>READ (SELECT) Operations</h3>
+      <p>The SELECT statement is used to retrieve records from a table (covered in more detail in the SELECT Queries section):</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="8" readonly>
+-- Basic SELECT statement
+SELECT * FROM students WHERE student_id = 101;
+
+-- SELECT specific columns
+SELECT first_name, last_name, email FROM students WHERE active = TRUE;
+        </textarea>
+      </div>
+      
+      <h3>UPDATE Operations</h3>
+      <p>The UPDATE statement is used to modify existing records:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="22" readonly>
+-- Basic UPDATE statement
+UPDATE students
+SET email = 'new.email@example.com'
+WHERE student_id = 101;
+
+-- Update multiple columns at once
+UPDATE students
+SET 
+    last_name = 'Johnson-Smith',
+    enrollment_date = '2022-09-01',
+    active = TRUE
+WHERE student_id = 101;
+
+-- Update multiple rows at once
+UPDATE students
+SET active = FALSE
+WHERE enrollment_date < '2020-01-01';
+
+-- Update with data from another table
+UPDATE courses c
+SET credits = s.recommended_credits
+FROM subject_standards s
+WHERE c.subject = s.subject_name;
+
+-- Update with limit (MySQL syntax)
+UPDATE students SET active = FALSE ORDER BY enrollment_date LIMIT 5;
+        </textarea>
+      </div>
+      
+      <h3>DELETE Operations</h3>
+      <p>The DELETE statement is used to remove records from a table:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="20" readonly>
+-- Basic DELETE statement
+DELETE FROM students 
+WHERE student_id = 101;
+
+-- Delete multiple rows based on a condition
+DELETE FROM students
+WHERE active = FALSE;
+
+-- Delete with JOIN (MySQL syntax)
+DELETE s
+FROM students s
+JOIN enrollments e ON s.student_id = e.student_id
+WHERE e.grade = 'F';
+
+-- Delete with subquery
+DELETE FROM students
+WHERE student_id IN (
+    SELECT student_id 
+    FROM enrollments 
+    WHERE grade = 'F'
+);
+
+-- Delete with limit (MySQL syntax)
+DELETE FROM inactive_students ORDER BY last_active_date LIMIT 10;
+        </textarea>
+      </div>
+      
+      <h3>TRUNCATE Operations</h3>
+      <p>The TRUNCATE statement is used to delete all rows from a table more efficiently than DELETE:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="6" readonly>
+-- TRUNCATE is faster than DELETE but removes all data
+TRUNCATE TABLE old_records;
+
+-- You cannot use WHERE clause with TRUNCATE
+        </textarea>
+      </div>
+      
+      <h3>Transaction Management</h3>
+      <p>Transactions ensure that a series of SQL operations are executed as a single unit of work:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="18" readonly>
+-- Start a transaction
+BEGIN TRANSACTION;
+
+-- Perform multiple operations that should be atomic
+UPDATE accounts SET balance = balance - 100 WHERE account_id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE account_id = 2;
+
+-- If everything is OK, commit the changes
+COMMIT;
+
+-- If there's a problem, roll back all changes
+-- ROLLBACK;
+
+-- Using savepoints for partial rollbacks
+BEGIN TRANSACTION;
+UPDATE products SET price = price * 1.05;
+SAVEPOINT price_update;
+DELETE FROM products WHERE stock = 0;
+-- If we decide to keep the price update but not the deletion:
+ROLLBACK TO SAVEPOINT price_update;
+COMMIT;
+        </textarea>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Practice: CRUD Operations</h3>
+        <p>Write SQL statements to:</p>
+        <ol>
+          <li>Insert a new product with name 'Smartphone', price 699.99, category 'Electronics', and in_stock TRUE.</li>
+          <li>Update the price of all products in the 'Electronics' category to increase by 10%.</li>
+          <li>Delete all products that are not in stock.</li>
+        </ol>
+        <textarea id="sql-crud-practice" class="practice-area" rows="15" placeholder="Write your SQL code here..."></textarea>
+        <button onclick="checkAnswer('sql-crud-practice')">Check Answer</button>
+        <div id="sql-crud-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+    
+    <!-- Add placeholder for SQL practice section -->
+    <div id="sql-practice-section" style="display: none;">
+      <h2>SQL Practice Problems</h2>
+      
+      <div class="practice-container">
+        <h3>Basic SQL Practice</h3>
+        <p>These exercises cover SQL fundamentals like simple queries and basic data manipulation.</p>
+        <ul class="practice-list">
+          <li><a href="#" onclick="loadSqlPractice('sql-select-basic')">Basic SELECT Queries</a></li>
+          <li><a href="#" onclick="loadSqlPractice('sql-where-filters')">WHERE Clause Filters</a></li>
+          <li><a href="#" onclick="loadSqlPractice('sql-order-by')">Sorting with ORDER BY</a></li>
+          <li><a href="#" onclick="loadSqlPractice('sql-insert-basic')">Basic INSERT Operations</a></li>
+        </ul>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Intermediate SQL Practice</h3>
+        <p>These exercises focus on joins, aggregations, and more complex queries.</p>
+        <ul class="practice-list">
+          <li><a href="#" onclick="loadSqlPractice('sql-inner-join')">INNER JOIN Operations</a></li>
+          <li><a href="#" onclick="loadSqlPractice('sql-outer-joins')">LEFT/RIGHT/FULL JOINs</a></li>
+          <li><a href="#" onclick="loadSqlPractice('sql-group-by')">GROUP BY Aggregations</a></li>
+          <li><a href="#" onclick="loadSqlPractice('sql-subqueries')">Subqueries</a></li>
+        </ul>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Advanced SQL Practice</h3>
+        <p>These exercises cover advanced SQL concepts like window functions, CTEs, and optimization.</p>
+        <ul class="practice-list">
+          <li><a href="#" onclick="loadSqlPractice('sql-window-functions')">Window Functions</a></li>
+          <li><a href="#" onclick="loadSqlPractice('sql-ctes')">Common Table Expressions</a></li>
+          <li><a href="#" onclick="loadSqlPractice('sql-transactions')">Transactions & Error Handling</a></li>
+          <li><a href="#" onclick="loadSqlPractice('sql-optimization')">Query Optimization</a></li>
+        </ul>
+      </div>
+      
+      <div id="sql-practice-problem-container" style="display: none;">
+        <h3 id="sql-practice-title">Problem Title</h3>
+        <p id="sql-practice-description">Problem description will appear here.</p>
+        <div id="sql-practice-schema" class="code-container">
+          <h4>Database Schema</h4>
+          <textarea class="code-area" rows="10" readonly>Database schema will appear here.</textarea>
+        </div>
+        <textarea id="sql-practice-area" class="practice-area" rows="15" placeholder="Write your SQL solution here..."></textarea>
+        <button onclick="checkSqlPracticeSolution()">Check Solution</button>
+        <div id="sql-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+    
+    <div id="sql-joins" class="sql-section" style="display: none;">
+      <h2>JOINs & Relationships</h2>
+      <p>JOINs are used to combine rows from two or more tables based on a related column.</p>
+      
+      <!-- Placeholder for future content -->
+    </div>
+    
+    <div id="sql-advanced" class="sql-section" style="display: none;">
+      <h2>Advanced SQL</h2>
+      <p>Advanced SQL features include subqueries, views, stored procedures, and transactions.</p>
+      
+      <!-- Placeholder for future content -->
+    </div>
+    
+    <div id="sql-security" class="sql-section" style="display: none;">
+      <h2>SQL Security Best Practices</h2>
+      <p>SQL security is a critical aspect of database management. Following security best practices helps protect your data from unauthorized access and SQL injection attacks.</p>
+      
+      <h3>Understanding SQL Injection</h3>
+      <p>SQL injection is a code injection technique where malicious SQL statements are inserted into entry fields for execution:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="15" readonly>
+-- Vulnerable code (in pseudocode)
+query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
+
+-- If a user enters the following as username:
+-- admin' --
+-- The resulting query becomes:
+SELECT * FROM users WHERE username = 'admin' --' AND password = 'anything'
+
+-- The -- makes the rest of the query a comment, effectively bypassing password verification
+        </textarea>
+      </div>
+      
+      <h3>Using Parameterized Queries</h3>
+      <p>Parameterized queries (prepared statements) are the most effective way to prevent SQL injection:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+-- SQL Server example
+DECLARE @sql nvarchar(1000);
+DECLARE @username nvarchar(50);
+DECLARE @password nvarchar(50);
+
+-- Unsafe approach (vulnerable to SQL injection)
+SET @username = 'admin';
+SET @password = 'password';
+SET @sql = 'SELECT * FROM users WHERE username = ''' + @username + ''' AND password = ''' + @password + '''';
+EXEC(@sql);
+
+-- Safe approach using parameterized query
+-- In SQL Server
+DECLARE @username nvarchar(50) = 'admin';
+DECLARE @password nvarchar(50) = 'password';
+EXEC sp_executesql N'SELECT * FROM users WHERE username = @u AND password = @p',
+  N'@u nvarchar(50), @p nvarchar(50)',
+  @u = @username, @p = @password;
+
+-- In application code (examples in different languages)
+-- Python with sqlite3:
+cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
+
+-- Java with JDBC:
+PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
+stmt.setString(1, username);
+stmt.setString(2, password);
+ResultSet rs = stmt.executeQuery();
+        </textarea>
+      </div>
+      
+      <h3>Principle of Least Privilege</h3>
+      <p>Limit database user permissions to only what is necessary for their function:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="20" readonly>
+-- Create a user with limited permissions
+CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'password';
+
+-- Grant only the necessary permissions
+GRANT SELECT, INSERT, UPDATE ON database_name.table_name TO 'app_user'@'localhost';
+
+-- Don't grant administrative privileges to application users
+-- AVOID: GRANT ALL PRIVILEGES ON *.* TO 'app_user'@'localhost';
+
+-- Regularly review and revoke unnecessary permissions
+SHOW GRANTS FOR 'app_user'@'localhost';
+REVOKE INSERT ON database_name.table_name FROM 'app_user'@'localhost';
+
+-- Create different users for different roles
+CREATE USER 'read_only_user'@'localhost' IDENTIFIED BY 'password';
+GRANT SELECT ON database_name.* TO 'read_only_user'@'localhost';
+        </textarea>
+      </div>
+      
+      <h3>Input Validation</h3>
+      <p>Always validate and sanitize user input before using it in SQL queries:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="15" readonly>
+-- Server-side validation (pseudocode examples)
+
+-- Data type validation
+IF NOT ISNUMERIC(@user_id) THEN
+    RAISE ERROR 'Invalid input: user_id must be numeric';
+END IF;
+
+-- Length validation
+IF LENGTH(@username) > 50 THEN
+    RAISE ERROR 'Username too long';
+END IF;
+
+-- Pattern matching (for emails, etc.)
+IF NOT @email ~ '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$' THEN
+    RAISE ERROR 'Invalid email format';
+END IF;
+        </textarea>
+      </div>
+      
+      <h3>Sensitive Data Encryption</h3>
+      <p>Encrypt sensitive data in your database to protect it even if unauthorized access occurs:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="20" readonly>
+-- SQL Server encryption example
+-- Create a master key and certificate
+CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'ComplexPassword123!';
+CREATE CERTIFICATE MyCertificate WITH SUBJECT = 'Data Protection Certificate';
+
+-- Create a symmetric key for data encryption
+CREATE SYMMETRIC KEY MySymmetricKey 
+WITH ALGORITHM = AES_256
+ENCRYPTION BY CERTIFICATE MyCertificate;
+
+-- Encrypt data when inserting
+OPEN SYMMETRIC KEY MySymmetricKey DECRYPTION BY CERTIFICATE MyCertificate;
+
+INSERT INTO customers (customer_name, credit_card)
+VALUES ('John Smith', EncryptByKey(Key_GUID('MySymmetricKey'), '1234-5678-9012-3456'));
+
+-- Decrypt data when selecting
+SELECT 
+    customer_name,
+    CONVERT(varchar(50), DecryptByKey(credit_card)) AS decrypted_credit_card
+FROM customers;
+
+CLOSE SYMMETRIC KEY MySymmetricKey;
+        </textarea>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Practice: SQL Security</h3>
+        <p>Identify the security issue in the following code and rewrite it to be secure against SQL injection:</p>
+        <pre>
+// JavaScript code with SQL vulnerability
+function getUserData(userId) {
+  const query = "SELECT * FROM users WHERE user_id = " + userId;
+  return executeQuery(query);
+}
+        </pre>
+        <textarea id="sql-security-practice" class="practice-area" rows="10" placeholder="Write your solution here..."></textarea>
+        <button onclick="checkAnswer('sql-security-practice')">Check Answer</button>
+        <div id="sql-security-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle visibility of sections
+    function toggleSection(sectionId) {
+      const sections = document.querySelectorAll('.sql-section');
+      
+      // Hide all sections
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Show the selected section
+      document.getElementById(sectionId).style.display = 'block';
+      
+      // Scroll to the section
+      document.getElementById(sectionId).scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+    
+    // Function to check answers and display solutions
+    function checkAnswer(practiceId) {
+      console.log("Checking answer for: " + practiceId);
+      
+      // Check if solution already exists and is visible
+      let solutionId = practiceId + "-solution";
+      let solution = document.getElementById(solutionId);
+      
+      if (solution) {
+        // If solution exists, toggle it
+        if (solution.style.display === 'block') {
+          solution.style.display = 'none';
+          return;
+        } else {
+          solution.style.display = 'block';
+          solution.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+      }
+      
+      // Get solution content based on practice ID
+      let solutionContent = "";
+      
+      switch(practiceId) {
+        case 'sql-intro-practice':
+          solutionContent = `-- Create the products table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2),
+    category VARCHAR(50),
+    in_stock BOOLEAN
+);`;
+          break;
+        case 'sql-select-practice':
+          solutionContent = `-- Find electronics products over $100, sorted by price
+SELECT product_name, price, in_stock
+FROM products
+WHERE category = 'Electronics' AND price > 100
+ORDER BY price DESC;`;
+          break;
+        case 'sql-crud-practice':
+          solutionContent = `-- Insert a new product
+INSERT INTO products (product_name, price, category, in_stock)
+VALUES ('Smartphone', 699.99, 'Electronics', TRUE);
+
+-- Update the price of all products in the 'Electronics' category to increase by 10%
+UPDATE products
+SET price = price * 1.10
+WHERE category = 'Electronics';
+
+-- Delete all products that are not in stock
+DELETE FROM products
+WHERE in_stock = FALSE;`;
+          break;
+        case 'sql-security-practice':
+          solutionContent = `// Secure JavaScript code using parameterized queries
+function getUserData(userId) {
+  // Use parameterized query with placeholder
+  const query = "SELECT * FROM users WHERE user_id = ?";
+  
+  // Pass the parameter separately from the query
+  return executeQuery(query, [userId]);
+  
+  // Or with named parameters (depending on your database library)
+  // return executeQuery("SELECT * FROM users WHERE user_id = :id", { id: userId });
+}
+
+/* 
+Security issue in original code:
+The original code directly concatenates user input into the SQL query,
+which makes it vulnerable to SQL injection attacks. If userId contains
+malicious SQL code (like "1 OR 1=1"), it would alter the query's behavior.
+
+The fix uses parameterized queries where the parameter is sent separately
+from the SQL command, preventing SQL injection.
+*/`;
+          break;
+        // Add more cases for other practice exercises
+        default:
+          solutionContent = "No solution available for this practice.";
+      }
+      
+      // Create solution element with high z-index styling
+      solution = document.createElement('div');
+      solution.id = solutionId;
+      solution.className = 'solution-container';
+      solution.style.position = 'relative';
+      solution.style.zIndex = '9999';
+      
+      // Set HTML with site theme styling
+      solution.innerHTML = `
+        <div style="
+          margin-top: 20px;
+          padding: 15px;
+          border: 1px solid #444;
+          border-radius: 5px;
+          background-color: #1a1a1a;
+          color: #ddd;
+          position: relative;
+          z-index: 9999;
+        ">
+          <h3 style="
+            color: #ccc; 
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 18px;
+            position: relative;
+            z-index: 9999;
+          ">Solution:</h3>
+          <pre style="
+            display: block;
+            background-color: #111;
+            color: #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            overflow: auto;
+            font-family: monospace;
+            margin: 0;
+            border: 1px solid #333;
+            position: relative;
+            z-index: 9999;
+          ">${solutionContent}</pre>
+        </div>
+      `;
+      
+      // Find the practice textarea
+      const textarea = document.getElementById(practiceId);
+      
+      // Add solution element after the textarea's parent (the practice-container)
+      textarea.parentNode.appendChild(solution);
+      
+      // Scroll to solution
+      solution.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      console.log("Solution displayed for: " + practiceId);
+    }
+    
+    // Initialize the page
+    window.onload = function() {
+      // Default to showing the first section
+      document.getElementById('sql-intro').style.display = 'block';
+    };
+  </script>
+</body>
+</html> 

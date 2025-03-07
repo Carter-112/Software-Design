@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Java Data Structures Practice - Random Snippets</title>
+  <title>Java Random Practice - Coding Challenges</title>
   <link rel="stylesheet" href="styles.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
   <!-- Fire/Lava Mouse Trail Effect -->
   <script src="mouse-trail.js"></script>
+  <script src="diagnostic.js"></script>
   <script src="external-link-handler.js"></script>
 </head>
 <body>
@@ -17,1320 +18,170 @@
         <button class="dropbtn">Navigation ▼</button>
         <div class="dropdown-content">
           <a href="index.html">Home</a>
-          <a href="singly.html">Singly</a>
-          <a href="doubly.html">Doubly</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
           <a href="arraylist.html">ArrayList</a>
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
-          <a href="bst.html">BST</a>
+          <a href="bst.html">Binary Search Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
-          <a href="random.html">Random</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
           <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random</a>
+          <a href="pythonrandom.html">Python Random</a>
+          <a href="sqlrandom.html">SQL Random</a>
+          <a href="webrandom.html">Web Dev Random</a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Page Content -->
   <div id="content">
-    <h1>Random Code Snippet Practice</h1>
-    <p>Click "Refresh Snippet" to get a random part from any of the data structures.</p>
-    <button id="refresh-btn" onclick="randomizeSnippet()">Refresh Snippet</button>
+    <h1>Java Random Practice Challenges</h1>
+    <p>Test your Java programming skills with these randomly generated code challenges. Try to solve them before revealing the solution.</p>
     
-    <div id="random-snippet-container"></div>
+    <button id="randomSnippetButton" onclick="handleRandomSnippet()">Get Random Java Challenge</button>
+    
+    <div id="snippetContainer" style="display: none;">
+      <h3 id="snippetTitle">Challenge Title</h3>
+      <p id="snippetDescription">Description of the challenge.</p>
+      
+      <div class="code-container">
+        <pre id="snippetCode" class="code-area"></pre>
+      </div>
+      
+      <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
+      
+      <div id="solutionContainer" style="display: none; position: relative; z-index: 999;">
+        <h3>Solution:</h3>
+        <div class="code-container">
+          <pre id="solutionCode" class="code-area"></pre>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Define the array of random snippets
-    const randomSnippets = [
-      // SinglyLinkedList snippets
+    // Java code snippets and solutions
+    const javaSnippets = [
       {
-        title: "SinglyLinkedList – Class Declaration, Fields & Constructor",
-        description: "Create a SinglyLinkedList class with Node inner class, head reference, and size field.",
-        hint: "// The Node class, head reference, and size field.",
-        challenge: "// Write a SinglyLinkedList implementation that includes:\n// 1. A Node inner class with data and next reference\n// 2. A head reference\n// 3. A size field\n// 4. A constructor",
-        solution: `public class SinglyLinkedList<E> {
-    // Node class for SinglyLinkedList
-    private class Node {
-        E data;
-        Node next;
-        
-        Node(E data) {
-            this.data = data;
-            next = null;
-        }
-    }
-    
-    private Node head;
-    private int size;
-    
-    public SinglyLinkedList() {
-        head = null;
-        size = 0;
-    }`
+        title: "Reverse a String",
+        description: "Implement a function to reverse a string without using built-in reverse methods.",
+        code: "public class StringReversal {\n  public static String reverse(String str) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(reverse(\"Hello World\"));\n  }\n}",
+        solution: "public class StringReversal {\n  public static String reverse(String str) {\n    char[] characters = str.toCharArray();\n    int left = 0;\n    int right = str.length() - 1;\n    \n    while (left < right) {\n      char temp = characters[left];\n      characters[left] = characters[right];\n      characters[right] = temp;\n      left++;\n      right--;\n    }\n    \n    return new String(characters);\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(reverse(\"Hello World\"));\n  }\n}"
       },
       {
-        title: "SinglyLinkedList – addFirst Method",
-        description: "Implement a method to add an element at the beginning of the list.",
-        hint: "// Add an element to the beginning of the list.",
-        challenge: "// Implement the addFirst method for a SinglyLinkedList\n// The method should:\n// 1. Create a new node with the provided data\n// 2. Set the new node's next reference to the current head\n// 3. Update the head reference\n// 4. Increment the size",
-        solution: `public void addFirst(E data) {
-    Node newNode = new Node(data);
-    newNode.next = head;
-    head = newNode;
-    size++;
-}`
+        title: "Find Maximum in Array",
+        description: "Write a method to find the maximum value in an integer array.",
+        code: "public class MaxFinder {\n  public static int findMax(int[] arr) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    int[] numbers = {5, 9, 2, 6, 3, 8};\n    System.out.println(findMax(numbers));\n  }\n}",
+        solution: "public class MaxFinder {\n  public static int findMax(int[] arr) {\n    if (arr == null || arr.length == 0) {\n      throw new IllegalArgumentException(\"Array cannot be empty or null\");\n    }\n    \n    int max = arr[0];\n    for (int i = 1; i < arr.length; i++) {\n      if (arr[i] > max) {\n        max = arr[i];\n      }\n    }\n    \n    return max;\n  }\n  \n  public static void main(String[] args) {\n    int[] numbers = {5, 9, 2, 6, 3, 8};\n    System.out.println(findMax(numbers));\n  }\n}"
       },
       {
-        title: "SinglyLinkedList – addLast Method",
-        description: "Implement a method to add an element at the end of the list.",
-        hint: "// Add an element to the end of the list.",
-        challenge: "// Implement the addLast method for a SinglyLinkedList\n// The method should:\n// 1. Create a new node with the provided data\n// 2. If the list is empty, set the head to the new node\n// 3. Otherwise, traverse to the end and add the new node\n// 4. Increment the size",
-        solution: `public void addLast(E data) {
-    Node newNode = new Node(data);
-    
-    if (head == null) {
-        head = newNode;
-    } else {
-        Node current = head;
-        while (current.next != null) {
-            current = current.next;
-        }
-        current.next = newNode;
-    }
-    
-    size++;
-}`
+        title: "Check for Palindrome",
+        description: "Create a method that checks if a string is a palindrome (reads the same forward and backward).",
+        code: "public class PalindromeChecker {\n  public static boolean isPalindrome(String str) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(isPalindrome(\"racecar\"));\n    System.out.println(isPalindrome(\"hello\"));\n  }\n}",
+        solution: "public class PalindromeChecker {\n  public static boolean isPalindrome(String str) {\n    if (str == null) {\n      return false;\n    }\n    \n    str = str.toLowerCase().replaceAll(\"[^a-z0-9]\", \"\");\n    int left = 0;\n    int right = str.length() - 1;\n    \n    while (left < right) {\n      if (str.charAt(left) != str.charAt(right)) {\n        return false;\n      }\n      left++;\n      right--;\n    }\n    \n    return true;\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(isPalindrome(\"racecar\"));\n    System.out.println(isPalindrome(\"hello\"));\n  }\n}"
       },
       {
-        title: "SinglyLinkedList – removeFirst Method",
-        hint: "// Remove and return the first element from the list.",
-        solution: `public E removeFirst() {
-    if (isEmpty()) {
-        throw new NoSuchElementException("List is empty");
-    }
-    
-    E data = head.data;
-    head = head.next;
-    size--;
-    
-    return data;
-}`
+        title: "Fibonacci Sequence",
+        description: "Write a method to generate the nth Fibonacci number. The Fibonacci sequence starts with 0 and 1, and each subsequent number is the sum of the two preceding ones (0, 1, 1, 2, 3, 5, 8, ...).",
+        code: "public class Fibonacci {\n  public static int fibonacci(int n) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    // Test with different values\n    System.out.println(fibonacci(0));  // Should return 0\n    System.out.println(fibonacci(1));  // Should return 1\n    System.out.println(fibonacci(2));  // Should return 1\n    System.out.println(fibonacci(5));  // Should return 5\n    System.out.println(fibonacci(10)); // Should return 55\n  }\n}",
+        solution: "public class Fibonacci {\n  // Iterative implementation\n  public static int fibonacci(int n) {\n    if (n < 0) {\n      throw new IllegalArgumentException(\"Input must be non-negative\");\n    }\n    \n    if (n <= 1) {\n      return n;\n    }\n    \n    int prev = 0;\n    int current = 1;\n    \n    for (int i = 2; i <= n; i++) {\n      int next = prev + current;\n      prev = current;\n      current = next;\n    }\n    \n    return current;\n  }\n  \n  /* Recursive implementation (less efficient)\n  public static int fibonacci(int n) {\n    if (n <= 1) {\n      return n;\n    }\n    return fibonacci(n - 1) + fibonacci(n - 2);\n  }\n  */\n  \n  public static void main(String[] args) {\n    // Test with different values\n    System.out.println(fibonacci(0));  // Should return 0\n    System.out.println(fibonacci(1));  // Should return 1\n    System.out.println(fibonacci(2));  // Should return 1\n    System.out.println(fibonacci(5));  // Should return 5\n    System.out.println(fibonacci(10)); // Should return 55\n  }\n}"
       },
       {
-        title: "SinglyLinkedList – removeLast Method",
-        hint: "// Remove and return the last element from the list.",
-        solution: `public E removeLast() {
-    if (isEmpty()) {
-        throw new NoSuchElementException("List is empty");
-    }
-    
-    // Special case: one element in list
-    if (head.next == null) {
-        E data = head.data;
-        head = null;
-        size--;
-        return data;
-    }
-    
-    // Find the second-to-last node
-    Node current = head;
-    while (current.next.next != null) {
-        current = current.next;
-    }
-    
-    E data = current.next.data;
-    current.next = null;
-    size--;
-    
-    return data;
-}`
-      },
-      {
-        title: "SinglyLinkedList – contains Method",
-        hint: "// Check if an element is in the list.",
-        solution: `public boolean contains(E data) {
-    Node current = head;
-    
-    while (current != null) {
-        if (current.data.equals(data)) {
-            return true;
-        }
-        current = current.next;
-    }
-    
-    return false;
-}`
-      },
-      {
-        title: "SinglyLinkedList – get Method",
-        hint: "// Get the element at the specified index.",
-        solution: `public E get(int index) {
-    if (index < 0 || index >= size) {
-        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-    }
-    
-    Node current = head;
-    for (int i = 0; i < index; i++) {
-        current = current.next;
-    }
-    
-    return current.data;
-}`
-      },
-      {
-        title: "SinglyLinkedList – Utility Methods",
-        hint: "// Size, isEmpty, and clear methods.",
-        solution: `public int size() {
-    return size;
-}
-
-public boolean isEmpty() {
-    return size == 0;
-}
-
-public void clear() {
-    head = null;
-    size = 0;
-}`
-      },
-      {
-        title: "SinglyLinkedList – toString Method",
-        hint: "// Convert the list to a string for display.",
-        solution: `@Override
-public String toString() {
-    StringBuilder sb = new StringBuilder("[");
-    Node current = head;
-    
-    while (current != null) {
-        sb.append(current.data);
-        if (current.next != null) {
-            sb.append(", ");
-        }
-        current = current.next;
-    }
-    
-    sb.append("]");
-    return sb.toString();
-}`
-      },
-      
-      // DoublyLinkedList snippets
-      {
-        title: "DoublyLinkedList – Class Declaration, Fields & Constructor",
-        hint: "// The Node class, sentinel nodes, and size field.",
-        solution: `public class DoublyLinkedList<E> implements Iterable<E> {
-    // Node class for DoublyLinkedList
-    private static class Node<E> {
-        E data;
-        Node<E> next;
-        Node<E> prev;
-        
-        Node(E data, Node<E> prev, Node<E> next) {
-            this.data = data;
-            this.prev = prev;
-            this.next = next;
-        }
-    }
-    
-    private final Node<E> sentinelHead;
-    private final Node<E> sentinelTail;
-    private int size;
-    
-    public DoublyLinkedList() {
-        // Create sentinel nodes that point to each other
-        sentinelHead = new Node<>(null, null, null);
-        sentinelTail = new Node<>(null, null, null);
-        sentinelHead.next = sentinelTail;
-        sentinelTail.prev = sentinelHead;
-        size = 0;
-    }`
-      },
-      {
-        title: "DoublyLinkedList – addFirst Method",
-        hint: "// Add an element to the beginning of the list.",
-        solution: `public void addFirst(E data) {
-    Node<E> newNode = new Node<>(data, sentinelHead, sentinelHead.next);
-    sentinelHead.next.prev = newNode;
-    sentinelHead.next = newNode;
-    size++;
-}`
-      },
-      {
-        title: "DoublyLinkedList – addLast Method",
-        hint: "// Add an element to the end of the list.",
-        solution: `public void addLast(E data) {
-    Node<E> newNode = new Node<>(data, sentinelTail.prev, sentinelTail);
-    sentinelTail.prev.next = newNode;
-    sentinelTail.prev = newNode;
-    size++;
-}`
-      },
-      {
-        title: "DoublyLinkedList – removeFirst Method",
-        hint: "// Remove and return the first element from the list.",
-        solution: `public E removeFirst() {
-    if (isEmpty()) {
-        throw new NoSuchElementException("List is empty");
-    }
-    
-    Node<E> nodeToRemove = sentinelHead.next;
-    E data = nodeToRemove.data;
-    
-    sentinelHead.next = nodeToRemove.next;
-    nodeToRemove.next.prev = sentinelHead;
-    
-    // Help GC
-    nodeToRemove.next = null;
-    nodeToRemove.prev = null;
-    
-    size--;
-    return data;
-}`
-      },
-      {
-        title: "DoublyLinkedList – removeLast Method",
-        hint: "// Remove and return the last element from the list.",
-        solution: `public E removeLast() {
-    if (isEmpty()) {
-        throw new NoSuchElementException("List is empty");
-    }
-    
-    Node<E> nodeToRemove = sentinelTail.prev;
-    E data = nodeToRemove.data;
-    
-    sentinelTail.prev = nodeToRemove.prev;
-    nodeToRemove.prev.next = sentinelTail;
-    
-    // Help GC
-    nodeToRemove.next = null;
-    nodeToRemove.prev = null;
-    
-    size--;
-    return data;
-}`
-      },
-      {
-        title: "DoublyLinkedList – Iterator Method",
-        hint: "// Implement the Iterator interface.",
-        solution: `@Override
-public Iterator<E> iterator() {
-    return new Iterator<E>() {
-        private Node<E> current = sentinelHead.next;
-        
-        @Override
-        public boolean hasNext() {
-            return current != sentinelTail;
-        }
-        
-        @Override
-        public E next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            
-            E data = current.data;
-            current = current.next;
-            return data;
-        }
-    };
-}`
-      },
-      {
-        title: "DoublyLinkedList – Utility Methods",
-        hint: "// Size, isEmpty, and clear methods.",
-        solution: `public int size() {
-    return size;
-}
-
-public boolean isEmpty() {
-    return size == 0;
-}
-
-public void clear() {
-    sentinelHead.next = sentinelTail;
-    sentinelTail.prev = sentinelHead;
-    size = 0;
-}`
-      },
-      
-      // ArrayList snippets
-      {
-        title: "MyArrayList – Class Declaration, Fields & Constructor",
-        hint: "// The backing array, size, and default capacity.",
-        solution: `public class MyArrayList<E> implements Iterable<E> {
-    private E[] array;
-    private int size;
-    private static final int DEFAULT_CAPACITY = 10;
-    
-    @SuppressWarnings("unchecked")
-    public MyArrayList() {
-        array = (E[]) new Object[DEFAULT_CAPACITY];
-        size = 0;
-    }`
-      },
-      {
-        title: "MyArrayList – add Method",
-        hint: "// Add an element to the end of the list.",
-        solution: `public boolean add(E element) {
-    ensureCapacity(size + 1);
-    array[size++] = element;
-    return true;
-}
-
-private void ensureCapacity(int minCapacity) {
-    if (minCapacity > array.length) {
-        int newCapacity = Math.max(array.length * 2, minCapacity);
-        grow(newCapacity);
-    }
-}
-
-@SuppressWarnings("unchecked")
-private void grow(int newCapacity) {
-    E[] newArray = (E[]) new Object[newCapacity];
-    for (int i = 0; i < size; i++) {
-        newArray[i] = array[i];
-    }
-    array = newArray;
-}`
-      },
-      {
-        title: "MyArrayList – add at Index Method",
-        hint: "// Add an element at the specified index.",
-        solution: `public void add(int index, E element) {
-    if (index < 0 || index > size) {
-        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-    }
-    
-    ensureCapacity(size + 1);
-    
-    // Shift elements to make room
-    for (int i = size; i > index; i--) {
-        array[i] = array[i - 1];
-    }
-    
-    array[index] = element;
-    size++;
-}`
-      },
-      {
-        title: "MyArrayList – remove Method",
-        hint: "// Remove the element at the specified index.",
-        solution: `public E remove(int index) {
-    if (index < 0 || index >= size) {
-        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-    }
-    
-    E removedElement = array[index];
-    
-    // Shift elements to fill the gap
-    for (int i = index; i < size - 1; i++) {
-        array[i] = array[i + 1];
-    }
-    
-    // Clear the last element and decrement size
-    array[size - 1] = null;
-    size--;
-    
-    return removedElement;
-}`
-      },
-      {
-        title: "MyArrayList – get Method",
-        hint: "// Get the element at the specified index.",
-        solution: `public E get(int index) {
-    if (index < 0 || index >= size) {
-        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-    }
-    
-    return array[index];
-}`
-      },
-      {
-        title: "MyArrayList – set Method",
-        hint: "// Replace the element at the specified index.",
-        solution: `public E set(int index, E element) {
-    if (index < 0 || index >= size) {
-        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-    }
-    
-    E oldValue = array[index];
-    array[index] = element;
-    return oldValue;
-}`
-      },
-      {
-        title: "MyArrayList – Iterator Implementation",
-        hint: "// Implement the Iterator interface.",
-        solution: `@Override
-public Iterator<E> iterator() {
-    return new Iterator<E>() {
-        private int cursor = 0;
-        
-        @Override
-        public boolean hasNext() {
-            return cursor < size;
-        }
-        
-        @Override
-        public E next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            
-            return array[cursor++];
-        }
-    };
-}`
-      },
-      
-      // HashMap snippets
-      {
-        title: "MyHashMap – Class Declaration, Fields & Constructor",
-        hint: "// Default capacity, load factor, and table initialization.",
-        solution: `public class MyHashMap<K, V> {
-    private static final int DEFAULT_CAPACITY = 16;
-    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-    private LinkedList<Node<K, V>>[] table;
-    private int capacity;
-    private float loadFactor;
-    private int size;
-    
-    @SuppressWarnings("unchecked")
-    public MyHashMap() {
-        this.capacity = DEFAULT_CAPACITY;
-        this.loadFactor = DEFAULT_LOAD_FACTOR;
-        table = new LinkedList[capacity];
-        for (int i = 0; i < capacity; i++) {
-            table[i] = new LinkedList<>();
-        }
-        size = 0;
-    }`
-      },
-      {
-        title: "MyHashMap – Node Inner Class",
-        hint: "// The Node class for storing key-value pairs.",
-        solution: `private static class Node<K, V> {
-    final K key;
-    V value;
-    
-    Node(K key, V value) {
-        this.key = key;
-        this.value = value;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        
-        Node<?, ?> node = (Node<?, ?>) obj;
-        return Objects.equals(key, node.key);
-    }
-    
-    @Override
-    public int hashCode() {
-        return key != null ? key.hashCode() : 0;
-    }
-}`
-      },
-      {
-        title: "MyHashMap – hash Method",
-        hint: "// Calculate the index in the table for a key.",
-        solution: `private int hash(K key) {
-    if (key == null) {
-        return 0;
-    }
-    
-    int h = key.hashCode();
-    return (h ^ (h >>> 16)) & (capacity - 1);
-}`
-      },
-      {
-        title: "MyHashMap – put Method",
-        hint: "// Add or update a key-value pair.",
-        solution: `public V put(K key, V value) {
-    int index = hash(key);
-    LinkedList<Node<K, V>> bucket = table[index];
-    
-    // Check if key already exists
-    for (Node<K, V> node : bucket) {
-        if (Objects.equals(key, node.key)) {
-            V oldValue = node.value;
-            node.value = value;
-            return oldValue;
-        }
-    }
-    
-    // Add new node
-    bucket.add(new Node<>(key, value));
-    size++;
-    
-    // Check if rehashing is needed
-    if ((float) size / capacity > loadFactor) {
-        rehash();
-    }
-    
-    return null;
-}`
-      },
-      {
-        title: "MyHashMap – get Method",
-        hint: "// Retrieve the value for a key.",
-        solution: `public V get(K key) {
-    int index = hash(key);
-    LinkedList<Node<K, V>> bucket = table[index];
-    
-    for (Node<K, V> node : bucket) {
-        if (Objects.equals(key, node.key)) {
-            return node.value;
-        }
-    }
-    
-    return null;
-}`
-      },
-      {
-        title: "MyHashMap – remove Method",
-        hint: "// Remove a key-value pair.",
-        solution: `public V remove(K key) {
-    int index = hash(key);
-    LinkedList<Node<K, V>> bucket = table[index];
-    
-    for (Node<K, V> node : bucket) {
-        if (Objects.equals(key, node.key)) {
-            V oldValue = node.value;
-            bucket.remove(node);
-            size--;
-            return oldValue;
-        }
-    }
-    
-    return null;
-}`
-      },
-      {
-        title: "MyHashMap – rehash Method",
-        hint: "// Double the capacity and redistribute the elements.",
-        solution: `@SuppressWarnings("unchecked")
-private void rehash() {
-    int oldCapacity = capacity;
-    capacity *= 2;
-    
-    LinkedList<Node<K, V>>[] oldTable = table;
-    table = new LinkedList[capacity];
-    
-    for (int i = 0; i < capacity; i++) {
-        table[i] = new LinkedList<>();
-    }
-    
-    // Reinsert all entries
-    for (int i = 0; i < oldCapacity; i++) {
-        for (Node<K, V> node : oldTable[i]) {
-            int newIndex = hash(node.key);
-            table[newIndex].add(node);
-        }
-    }
-}`
-      },
-      
-      // HashSet snippets
-      {
-        title: "MyHashSet – Class Declaration, Fields & Constructor",
-        hint: "// MyHashSet is backed by a MyHashMap<K, Object>.",
-        solution: `public class MyHashSet<K> implements Iterable<K> {
-    private MyHashMap<K, Object> map;
-    private static final Object PRESENT = new Object();
-    
-    public MyHashSet() {
-        map = new MyHashMap<>();
-    }`
-      },
-      {
-        title: "MyHashSet – add Method",
-        hint: "// Add an element to the set.",
-        solution: `public boolean add(K element) {
-    return map.put(element, PRESENT) == null;
-}`
-      },
-      {
-        title: "MyHashSet – remove Method",
-        hint: "// Remove an element from the set.",
-        solution: `public boolean remove(K element) {
-    return map.remove(element) != null;
-}`
-      },
-      {
-        title: "MyHashSet – contains Method",
-        hint: "// Check if an element is in the set.",
-        solution: `public boolean contains(K element) {
-    return map.get(element) != null;
-}`
-      },
-      {
-        title: "MyHashSet – size and isEmpty Methods",
-        hint: "// Get the size and check if empty.",
-        solution: `public int size() {
-    return map.size();
-}
-
-public boolean isEmpty() {
-    return map.isEmpty();
-}`
-      },
-      
-      // BST snippets
-      {
-        title: "BST – Class Declaration",
-        hint: "// The class header, Node inner class, and constructor.",
-        solution: `import java.util.Iterator;
-import java.util.Stack;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.stream.Stream;
-
-public class BST<E extends Comparable<E>> implements Iterable<E> {
-    private class Node {
-        E value;
-        Node left, right;
-        
-        public Node(E value) {
-            this.value = value;
-            left = right = null;
-        }
-    }
-    
-    private Node root;
-    
-    public BST() {
-        root = null;
-    }`
-      },
-      {
-        title: "BST – add Method",
-        hint: "// Add a value to the BST.",
-        solution: `public boolean add(E value) {
-    if (contains(value)) {
-        return false; // Value already exists
-    }
-    
-    root = addRecursive(root, value);
-    return true;
-}
-
-private Node addRecursive(Node current, E value) {
-    if (current == null) {
-        return new Node(value);
-    }
-    
-    int compareResult = value.compareTo(current.value);
-    
-    if (compareResult < 0) {
-        current.left = addRecursive(current.left, value);
-    } else if (compareResult > 0) {
-        current.right = addRecursive(current.right, value);
-    }
-    
-    return current;
-}`
-      },
-      {
-        title: "BST – contains Method",
-        hint: "// Check if a value exists in the BST.",
-        solution: `public boolean contains(E value) {
-    return containsRecursive(root, value);
-}
-
-private boolean containsRecursive(Node current, E value) {
-    if (current == null) {
-        return false;
-    }
-    
-    int compareResult = value.compareTo(current.value);
-    
-    if (compareResult == 0) {
-        return true;
-    } else if (compareResult < 0) {
-        return containsRecursive(current.left, value);
-    } else {
-        return containsRecursive(current.right, value);
-    }
-}`
-      },
-      {
-        title: "BST – remove Method",
-        hint: "// Remove a value from the BST.",
-        solution: `public boolean remove(E value) {
-    if (!contains(value)) {
-        return false;
-    }
-    
-    root = removeRecursive(root, value);
-    return true;
-}
-
-private Node removeRecursive(Node current, E value) {
-    if (current == null) {
-        return null;
-    }
-    
-    int compareResult = value.compareTo(current.value);
-    
-    if (compareResult < 0) {
-        current.left = removeRecursive(current.left, value);
-    } else if (compareResult > 0) {
-        current.right = removeRecursive(current.right, value);
-    } else {
-        // Node to remove found
-        
-        // Case 1: No children
-        if (current.left == null && current.right == null) {
-            return null;
-        }
-        
-        // Case 2: Only one child
-        if (current.right == null) {
-            return current.left;
-        }
-        
-        if (current.left == null) {
-            return current.right;
-        }
-        
-        // Case 3: Two children
-        current.value = findMinValue(current.right);
-        current.right = removeRecursive(current.right, current.value);
-    }
-    
-    return current;
-}
-
-private E findMinValue(Node node) {
-    return node.left == null ? node.value : findMinValue(node.left);
-}`
-      },
-      {
-        title: "BST – Traversal Methods",
-        hint: "// Inorder, preorder, and postorder traversal.",
-        solution: `public List<E> inorderTraversal() {
-    List<E> result = new ArrayList<>();
-    inorderTraversal(root, result);
-    return result;
-}
-
-private void inorderTraversal(Node node, List<E> result) {
-    if (node != null) {
-        inorderTraversal(node.left, result);
-        result.add(node.value);
-        inorderTraversal(node.right, result);
-    }
-}
-
-public List<E> preorderTraversal() {
-    List<E> result = new ArrayList<>();
-    preorderTraversal(root, result);
-    return result;
-}
-
-private void preorderTraversal(Node node, List<E> result) {
-    if (node != null) {
-        result.add(node.value);
-        preorderTraversal(node.left, result);
-        preorderTraversal(node.right, result);
-    }
-}
-
-public List<E> postorderTraversal() {
-    List<E> result = new ArrayList<>();
-    postorderTraversal(root, result);
-    return result;
-}
-
-private void postorderTraversal(Node node, List<E> result) {
-    if (node != null) {
-        postorderTraversal(node.left, result);
-        postorderTraversal(node.right, result);
-        result.add(node.value);
-    }
-}`
-      },
-      {
-        title: "BST – Height and Size Methods",
-        hint: "// Calculate the height and size of the tree.",
-        solution: `public int height() {
-    return height(root);
-}
-
-private int height(Node node) {
-    if (node == null) {
-        return -1;
-    }
-    
-    return 1 + Math.max(height(node.left), height(node.right));
-}
-
-public int size() {
-    return size(root);
-}
-
-private int size(Node node) {
-    if (node == null) {
-        return 0;
-    }
-    
-    return 1 + size(node.left) + size(node.right);
-}`
-      },
-      {
-        title: "BST – Iterator Implementation",
-        hint: "// Implement the Iterator interface using inorder traversal.",
-        solution: `@Override
-public Iterator<E> iterator() {
-    return new Iterator<E>() {
-        private Stack<Node> stack = new Stack<>();
-        private Node current = root;
-        
-        @Override
-        public boolean hasNext() {
-            return !stack.isEmpty() || current != null;
-        }
-        
-        @Override
-        public E next() {
-            while (current != null) {
-                stack.push(current);
-                current = current.left;
-            }
-            
-            if (stack.isEmpty()) {
-                throw new NoSuchElementException();
-            }
-            
-            Node node = stack.pop();
-            current = node.right;
-            return node.value;
-        }
-    };
-}`
-      },
-
-      // Streams & Lambda snippets
-      {
-        title: "Streams & Lambdas – Basic Example",
-        hint: "// Filter even numbers and print them.",
-        solution: `List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-numbers.stream()
-       .filter(n -> n % 2 == 0)
-       .forEach(System.out::println);`
-      },
-      {
-        title: "Streams & Lambdas – Map Operation",
-        hint: "// Transform each element using map.",
-        solution: `List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
-List<Integer> nameLengths = names.stream()
-                                .map(String::length)
-                                .collect(Collectors.toList());
-// Result: [5, 3, 7]`
-      },
-      {
-        title: "Streams & Lambdas – Collect Operation",
-        hint: "// Collect stream results into different collections.",
-        solution: `List<String> words = Arrays.asList("apple", "banana", "cherry", "date");
-
-// Collect to List
-List<String> filteredList = words.stream()
-                               .filter(s -> s.length() > 5)
-                               .collect(Collectors.toList());
-
-// Collect to Set
-Set<String> uniqueWords = words.stream()
-                             .collect(Collectors.toSet());
-
-// Collect to Map
-Map<String, Integer> wordLengths = words.stream()
-                                     .collect(Collectors.toMap(
-                                         w -> w,      // key mapper
-                                         String::length // value mapper
-                                     ));`
-      },
-      {
-        title: "Streams & Lambdas – Reduce Operation",
-        hint: "// Combine stream elements using reduce.",
-        solution: `List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
-
-// Sum using reduce
-int sum = numbers.stream()
-                .reduce(0, (a, b) -> a + b);
-// or
-int sum2 = numbers.stream()
-                 .reduce(0, Integer::sum);
-
-// Concatenate strings
-String concatenated = Stream.of("a", "b", "c")
-                          .reduce("", (a, b) -> a + b);
-// Result: "abc"`
-      },
-      {
-        title: "Streams & Lambdas – Sorting Operations",
-        hint: "// Sort elements in a stream.",
-        solution: `List<String> names = Arrays.asList("Charlie", "Alice", "Bob");
-
-// Natural order sorting
-List<String> sortedNames = names.stream()
-                              .sorted()
-                              .collect(Collectors.toList());
-// Result: ["Alice", "Bob", "Charlie"]
-
-// Custom comparator
-List<String> sortedByLength = names.stream()
-                                .sorted(Comparator.comparing(String::length))
-                                .collect(Collectors.toList());
-// Result: ["Bob", "Alice", "Charlie"]`
-      },
-      {
-        title: "Streams & Lambdas – Parallel Streams",
-        hint: "// Process elements in parallel for better performance.",
-        solution: `List<Integer> numbers = IntStream.rangeClosed(1, 1000000)
-                                      .boxed()
-                                      .collect(Collectors.toList());
-
-// Sequential processing
-long sequentialTime = System.currentTimeMillis();
-long sequentialSum = numbers.stream()
-                          .reduce(0, Integer::sum);
-sequentialTime = System.currentTimeMillis() - sequentialTime;
-
-// Parallel processing
-long parallelTime = System.currentTimeMillis();
-long parallelSum = numbers.parallelStream()
-                        .reduce(0, Integer::sum);
-parallelTime = System.currentTimeMillis() - parallelTime;
-
-System.out.println("Sequential time: " + sequentialTime + "ms");
-System.out.println("Parallel time: " + parallelTime + "ms");`
-      },
-      {
-        title: "Streams & Lambdas – Method References",
-        hint: "// Use method references for cleaner code.",
-        solution: `List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
-
-// Instead of: names.forEach(name -> System.out.println(name));
-names.forEach(System.out::println);
-
-List<String> upperCaseNames = names.stream()
-                                 // Instead of: .map(name -> name.toUpperCase())
-                                 .map(String::toUpperCase)
-                                 .collect(Collectors.toList());`
-      },
-      {
-        title: "Streams & Lambdas – Grouping and Partitioning",
-        hint: "// Group or partition stream elements.",
-        solution: `List<Person> people = Arrays.asList(
-    new Person("Alice", 25),
-    new Person("Bob", 30),
-    new Person("Charlie", 25),
-    new Person("David", 40)
-);
-
-// Group by age
-Map<Integer, List<Person>> peopleByAge = people.stream()
-    .collect(Collectors.groupingBy(Person::getAge));
-
-// Partition by age > 30
-Map<Boolean, List<Person>> partitionedByAge = people.stream()
-    .collect(Collectors.partitioningBy(p -> p.getAge() > 30));`
+        title: "Array Rotation",
+        description: "Implement a method to rotate an array to the right by k steps. For example, with array [1,2,3,4,5,6,7] and k = 3, the result would be [5,6,7,1,2,3,4].",
+        code: "public class ArrayRotation {\n  public static void rotate(int[] nums, int k) {\n    // Your code here\n  }\n  \n  // Helper method to print an array\n  public static void printArray(int[] arr) {\n    System.out.print(\"[\");\n    for (int i = 0; i < arr.length; i++) {\n      System.out.print(arr[i]);\n      if (i < arr.length - 1) {\n        System.out.print(\", \");\n      }\n    }\n    System.out.println(\"]\");\n  }\n  \n  public static void main(String[] args) {\n    int[] nums = {1, 2, 3, 4, 5, 6, 7};\n    rotate(nums, 3);\n    printArray(nums); // Should print [5, 6, 7, 1, 2, 3, 4]\n  }\n}",
+        solution: "public class ArrayRotation {\n  // Approach 1: Using extra array\n  public static void rotate(int[] nums, int k) {\n    if (nums == null || nums.length == 0) {\n      return;\n    }\n    \n    int n = nums.length;\n    k = k % n; // Handle cases where k > length\n    \n    if (k == 0) {\n      return; // No rotation needed\n    }\n    \n    int[] temp = new int[n];\n    \n    // Copy elements to temp array with rotation\n    for (int i = 0; i < n; i++) {\n      temp[(i + k) % n] = nums[i];\n    }\n    \n    // Copy back to original array\n    for (int i = 0; i < n; i++) {\n      nums[i] = temp[i];\n    }\n  }\n  \n  /* Approach 2: Reversing parts of the array\n  public static void rotate(int[] nums, int k) {\n    if (nums == null || nums.length == 0) {\n      return;\n    }\n    \n    int n = nums.length;\n    k = k % n; // Handle cases where k > length\n    \n    if (k == 0) {\n      return; // No rotation needed\n    }\n    \n    // Reverse the entire array\n    reverse(nums, 0, n - 1);\n    // Reverse the first k elements\n    reverse(nums, 0, k - 1);\n    // Reverse the remaining elements\n    reverse(nums, k, n - 1);\n  }\n  \n  private static void reverse(int[] nums, int start, int end) {\n    while (start < end) {\n      int temp = nums[start];\n      nums[start] = nums[end];\n      nums[end] = temp;\n      start++;\n      end--;\n    }\n  }\n  */\n  \n  // Helper method to print an array\n  public static void printArray(int[] arr) {\n    System.out.print(\"[\");\n    for (int i = 0; i < arr.length; i++) {\n      System.out.print(arr[i]);\n      if (i < arr.length - 1) {\n        System.out.print(\", \");\n      }\n    }\n    System.out.println(\"]\");\n  }\n  \n  public static void main(String[] args) {\n    int[] nums = {1, 2, 3, 4, 5, 6, 7};\n    rotate(nums, 3);\n    printArray(nums); // Should print [5, 6, 7, 1, 2, 3, 4]\n  }\n}"
       }
     ];
-
-    // Track the current snippet index
-    let currentSnippetIndex = 0;
     
-    // Function to display a snippet
-    function displayRandomSnippet(snippet) {
-      const container = document.getElementById('random-snippet-container');
+    let currentSnippetIndex = -1;
+    
+    // Handle random snippet button click
+    function handleRandomSnippet() {
+      // Get a random index (different from current)
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * javaSnippets.length);
+      } while (randomIndex === currentSnippetIndex && javaSnippets.length > 1);
       
-      // Create the full HTML content without a pre-created solution div
-      container.innerHTML = `
-        <div class="method">
-          <h3>${snippet.title}</h3>
-          <p>${snippet.description || ''}</p>
-          ${snippet.hint ? `<div class="hint"><p><strong>Hint:</strong> ${snippet.hint}</p></div>` : ''}
-          <pre><code>${snippet.challenge || ''}</code></pre>
-          <textarea class="practice-area" rows="12" placeholder="Write your solution here..."></textarea>
-          <button class="check-btn" onclick="toggleRandomAnswer()">Check Answer</button>
-        </div>
-      `;
+      currentSnippetIndex = randomIndex;
+      const snippet = javaSnippets[currentSnippetIndex];
+      
+      // Update the DOM
+      document.getElementById('snippetTitle').textContent = snippet.title;
+      document.getElementById('snippetDescription').textContent = snippet.description;
+      document.getElementById('snippetCode').textContent = snippet.code;
+      document.getElementById('solutionCode').textContent = snippet.solution;
+      
+      // Show snippet, hide solution
+      document.getElementById('snippetContainer').style.display = 'block';
+      document.getElementById('solutionContainer').style.display = 'none';
+      document.getElementById('toggleAnswerButton').textContent = 'Show Solution';
+      
+      // Scroll to snippet
+      document.getElementById('snippetContainer').scrollIntoView({
+        behavior: 'smooth', 
+        block: 'start'
+      });
     }
 
-    // Function to get a random snippet
-    function randomizeSnippet() {
-      // If there's a stored external snippet, clear it when user clicks Refresh
-      localStorage.removeItem('external_snippet');
-      localStorage.removeItem('external_snippet_source');
-      
-      // Load weights
-      loadWeights();
-      
-      // Select a random snippet based on weights
-      currentSnippetIndex = selectWeightedRandom();
-      const snippet = randomSnippets[currentSnippetIndex];
-      
-      // Update weights
-      updateWeights(currentSnippetIndex);
-      
-      // Display the snippet
-      displayRandomSnippet(snippet);
-      
-      // First, get references to both elements
-      const refreshBtn = document.getElementById('refresh-btn');
-      const snippetContainer = document.getElementById('random-snippet-container');
-      
-      if (refreshBtn && snippetContainer) {
-        // Scroll to position the view just above the refresh button
-        // This way the user can see the new problem and easily hit refresh again if desired
-        window.scrollTo({
-          top: refreshBtn.offsetTop - 20, // Position just above the refresh button
-          behavior: 'smooth'
-        });
-      }
-    }
-    
-    // Weight system for snippets
-    let weights = [];
-    
-    // Initialize weights to equal values
-    function initializeWeights() {
-      weights = Array(randomSnippets.length).fill(1);
-      localStorage.setItem('snippet_weights', JSON.stringify(weights));
-    }
-    
-    // Load weights from localStorage
-    function loadWeights() {
-      const storedWeights = localStorage.getItem('snippet_weights');
-      if (storedWeights) {
-        weights = JSON.parse(storedWeights);
-        // Ensure weights array matches current snippet count
-        if (weights.length !== randomSnippets.length) {
-          initializeWeights();
-        }
-      } else {
-        initializeWeights();
-      }
-    }
-    
-    // Update weights after a snippet is shown
-    function updateWeights(index) {
-      // Reduce weight of shown snippet
-      weights[index] = Math.max(0.1, weights[index] * 0.7);
-      
-      // Slightly increase weights of other snippets
-      for (let i = 0; i < weights.length; i++) {
-        if (i !== index) {
-          weights[i] = weights[i] * 1.01;
-        }
-      }
-      
-      // Store weights
-      localStorage.setItem('snippet_weights', JSON.stringify(weights));
-    }
-    
-    // Select a random snippet based on weights
-    function selectWeightedRandom() {
-      const totalWeight = weights.reduce((acc, w) => acc + w, 0);
-      let randomValue = Math.random() * totalWeight;
-      
-      for (let i = 0; i < weights.length; i++) {
-        randomValue -= weights[i];
-        if (randomValue <= 0) {
-          return i;
-        }
-      }
-      
-      // Fallback
-      return Math.floor(Math.random() * randomSnippets.length);
-    }
-    
-    // Check for external snippet from URL or localStorage
-    function checkForExternalSnippet() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const isExternal = urlParams.get('external') === 'true';
-      
-      if (isExternal) {
-        const externalSnippet = localStorage.getItem('external_snippet');
-        const source = localStorage.getItem('external_snippet_source');
-        
-        if (externalSnippet) {
-          // Display the external snippet
-          const snippetContainer = document.getElementById('random-snippet-container');
-          snippetContainer.innerHTML = `
-            <div class="external-snippet-info" style="background-color: rgba(255, 100, 0, 0.1); border-left: 4px solid #ff6400; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-              <strong>External Snippet:</strong> From <a href="${source}" target="_blank">${source}</a>
-            </div>
-            <div class="code-section">
-              <h2>External Code Snippet</h2>
-              <div class="code-snippet">
-                <pre>${externalSnippet}</pre>
-              </div>
-              <button class="check-btn" onclick="toggleExternalAnswer()">Check Answer</button>
-              <div class="solution" id="external-solution" style="display: none;">
-                <pre>${externalSnippet}</pre>
-              </div>
-            </div>
-          `;
-          return true;
-        }
-      }
-      return false;
-    }
-    
-    // Toggle answer for external snippet
-    function toggleExternalAnswer() {
-      const solutionDiv = document.getElementById('external-solution');
-      if (solutionDiv) {
-        if (solutionDiv.style.display === 'none') {
-          solutionDiv.style.display = 'block';
-        } else {
-          solutionDiv.style.display = 'none';
-        }
-      }
-    }
-    
-    // Toggle the visibility of the answer
+    // Toggle the solution visibility
     function toggleRandomAnswer() {
-      console.log("toggleRandomAnswer called");
+      const solutionContainer = document.getElementById('solutionContainer');
+      const toggleButton = document.getElementById('toggleAnswerButton');
       
-      try {
-        // Get current snippet
-        const currentSnippet = randomSnippets[currentSnippetIndex];
-        if (!currentSnippet || !currentSnippet.solution) {
-          console.error("No solution found for current snippet");
-          return;
+      // Remove any existing orange solution buttons
+      const orangeButtons = document.querySelectorAll('.orange-solution');
+      orangeButtons.forEach(btn => btn.remove());
+      
+      // Check for and remove any elements with the text "Solution" that might be orange
+      const allElements = document.querySelectorAll('*');
+      allElements.forEach(el => {
+        if (el.textContent.includes('Solution') && 
+            window.getComputedStyle(el).getPropertyValue('border').includes('orange')) {
+          el.remove();
         }
-        
-        console.log("Current snippet:", currentSnippet.title);
-        
-        // Check if any solution is already visible - if so, remove it completely
-        const existingSolution = document.getElementById('random-solution-container');
-        if (existingSolution) {
-          console.log("Removing existing solution");
-          existingSolution.remove();
-          return;
-        }
-        
-        
-        
-        console.log("Creating solution display");
-        
-        // Find the check button
-        const checkButton = document.querySelector('.check-btn');
-        if (!checkButton) {
-          console.error("Could not find check button");
-          return;
-        }
-        
-        // Escape HTML entities in the solution code
-        const escapedSolution = currentSnippet.solution
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
-        
-        // Create a completely new solution container with all styles inline
-        const solutionContainer = document.createElement('div');
-        solutionContainer.id = 'random-solution-container';
-        // Add extremely high z-index to ensure it appears above everything except mouse effect
-        solutionContainer.style.position = 'relative';
-        solutionContainer.style.zIndex = '9999';
-        
-        // Set HTML with site theme styling (dark theme)
-        solutionContainer.innerHTML = `
-          <div style="
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #444;
-            border-radius: 5px;
-            background-color: #1a1a1a;
-            color: #ddd;
-            position: relative;
-            z-index: 9999;
-          ">
-            <h3 style="
-              color: #FF5349; 
-              margin-top: 0;
-              margin-bottom: 10px;
-              font-size: 18px;
-              position: relative;
-              z-index: 9999;
-            ">Solution:</h3>
-            <pre style="
-              display: block;
-              background-color: #111;
-              color: #ddd;
-              padding: 15px;
-              border-radius: 5px;
-              white-space: pre-wrap;
-              overflow: auto;
-              font-family: monospace;
-              margin: 0;
-              border: 1px solid #333;
-              position: relative;
-              z-index: 9999;
-            ">${escapedSolution}</pre>
-          </div>
-        `;
-        
-        // Insert after the check button
-        checkButton.parentNode.insertBefore(solutionContainer, checkButton.nextSibling);
-        
-        // Log solution content for debugging
-        console.log("Solution HTML created with length:", escapedSolution.length);
-        
-        // Scroll to solution
-        solutionContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        console.log("Solution display complete");
-      } catch (error) {
-        console.error("Error in toggleRandomAnswer:", error);
-        alert("An error occurred displaying the solution. Please check the console for details.");
+      });
+      
+      if (solutionContainer.style.display === 'none') {
+        solutionContainer.style.display = 'block';
+        toggleButton.textContent = 'Hide Solution';
+      } else {
+        solutionContainer.style.display = 'none';
+        toggleButton.textContent = 'Show Solution';
       }
     }
     
-    // Add reset button
-    function addResetButton() {
-      const refreshBtn = document.getElementById('refresh-btn');
-      const resetBtn = document.createElement('button');
-      resetBtn.id = 'reset-btn';
-      resetBtn.innerText = 'Reset All Weights';
-      resetBtn.onclick = function() {
-        initializeWeights();
-        alert('All snippet weights have been reset to equal values.');
-      };
-      resetBtn.style.marginLeft = '10px';
-      refreshBtn.parentNode.insertBefore(resetBtn, refreshBtn.nextSibling);
-    }
-    
+    // Remove any orange solution buttons when the page loads
     window.onload = function() {
-      try {
-        const hasExternal = checkForExternalSnippet();
+      // Give DOM time to fully render before removing elements
+      setTimeout(() => {
+        const orangeButtons = document.querySelectorAll('.orange-solution');
+        orangeButtons.forEach(btn => btn.remove());
         
-        if (!hasExternal) {
-          // If no external snippet, show a random one
-          randomizeSnippet();
-        }
-        
-        // Add the reset button
-        addResetButton();
-        
-      } catch (error) {
-        console.error("Error initializing page:", error);
-        // Fallback for initialization errors
-        const container = document.getElementById('random-snippet-container');
-        container.innerHTML = `
-          <div class="method">
-            <h3>Error Loading Snippet</h3>
-            <p>There was a problem loading a snippet. Please try refreshing the page or clicking the refresh button.</p>
-            <button onclick="randomizeSnippet()">Try Again</button>
-          </div>
-        `;
-      }
+        // Also check for any elements with the text "Solution" that might be orange
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+          if (el.textContent.includes('Solution') && 
+              (window.getComputedStyle(el).getPropertyValue('border').includes('orange') ||
+               window.getComputedStyle(el).getPropertyValue('background').includes('orange'))) {
+            el.remove();
+          }
+        });
+      }, 500);
     };
   </script>
   <!-- AdSense Integration -->

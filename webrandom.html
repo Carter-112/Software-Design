@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Random Practice - Coding Challenges</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="external-link-handler.js"></script>
+  <style>
+    .web-section {
+      margin-top: 30px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: #1a1a1a;
+    }
+    
+    .web-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #444;
+    }
+    
+    .web-tab {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px 5px 0 0;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    
+    .web-tab.active {
+      background-color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    .live-preview {
+      margin-top: 20px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: white;
+      color: black;
+      min-height: 200px;
+    }
+    
+    .code-editor-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random</a>
+          <a href="pythonrandom.html">Python Random</a>
+          <a href="sqlrandom.html">SQL Random</a>
+          <a href="webrandom.html">Web Dev Random</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="content">
+    <h1>Web Development Random Practice Challenges</h1>
+    <p>Test your web development skills with these randomly generated challenges for HTML, CSS, and JavaScript.</p>
+    
+    <div class="web-tabs">
+      <button class="web-tab active" onclick="switchWebSection('html-practice')">HTML Challenges</button>
+      <button class="web-tab" onclick="switchWebSection('css-practice')">CSS Challenges</button>
+      <button class="web-tab" onclick="switchWebSection('js-practice')">JavaScript Challenges</button>
+    </div>
+    
+    <!-- HTML Section -->
+    <div id="html-practice" class="tab-content active">
+      <h2>HTML Random Practice</h2>
+      <p>Click the button below to get a random HTML coding challenge. Try to solve it before revealing the solution.</p>
+      
+      <button onclick="getRandomHtmlChallenge()">Get Random HTML Challenge</button>
+      
+      <div id="html-snippet-container" class="web-section" style="display: none;">
+        <h3 id="html-snippet-title">Challenge Title</h3>
+        <p id="html-snippet-description">Description of the challenge.</p>
+        
+        <div class="code-container">
+          <pre id="html-snippet-code" class="code-area"></pre>
+        </div>
+        
+        <button id="html-toggle-button" onclick="toggleHtmlSolution()">Show Solution</button>
+        
+        <div id="html-solution-container" style="display: none; position: relative; z-index: 999;">
+          <h3>Solution:</h3>
+          <div class="code-container">
+            <pre id="html-solution-code" class="code-area"></pre>
+          </div>
+          <button onclick="previewHtmlSolution()">Preview Solution</button>
+          <div id="html-preview" class="live-preview"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CSS Section -->
+    <div id="css-practice" class="tab-content">
+      <h2>CSS Random Practice</h2>
+      <p>Click the button below to get a random CSS styling challenge. Try to solve it before revealing the solution.</p>
+      
+      <button onclick="getRandomCssChallenge()">Get Random CSS Challenge</button>
+      
+      <div id="css-snippet-container" class="web-section" style="display: none;">
+        <h3 id="css-snippet-title">Challenge Title</h3>
+        <p id="css-snippet-description">Description of the challenge.</p>
+        
+        <div class="code-editor-group">
+          <div class="code-container">
+            <h4>HTML Structure (Given):</h4>
+            <pre id="css-html-code" class="code-area"></pre>
+          </div>
+          
+          <div class="code-container">
+            <h4>Your CSS Solution:</h4>
+            <pre id="css-snippet-code" class="code-area"></pre>
+          </div>
+        </div>
+        
+        <button id="css-toggle-button" onclick="toggleCssSolution()">Show Solution</button>
+        
+        <div id="css-solution-container" style="display: none; position: relative; z-index: 999;">
+          <h3>Solution:</h3>
+          <div class="code-container">
+            <pre id="css-solution-code" class="code-area"></pre>
+          </div>
+          <button onclick="previewCssSolution()">Preview Solution</button>
+          <div id="css-preview" class="live-preview"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- JavaScript Section -->
+    <div id="js-practice" class="tab-content">
+      <h2>JavaScript Random Practice</h2>
+      <p>Click the button below to get a random JavaScript programming challenge. Try to solve it before revealing the solution.</p>
+      
+      <button onclick="getRandomJsChallenge()">Get Random JavaScript Challenge</button>
+      
+      <div id="js-snippet-container" class="web-section" style="display: none;">
+        <h3 id="js-snippet-title">Challenge Title</h3>
+        <p id="js-snippet-description">Description of the challenge.</p>
+        
+        <div class="code-container">
+          <pre id="js-snippet-code" class="code-area"></pre>
+        </div>
+        
+        <button id="js-toggle-button" onclick="toggleJsSolution()">Show Solution</button>
+        
+        <div id="js-solution-container" style="display: none; position: relative; z-index: 999;">
+          <h3>Solution:</h3>
+          <div class="code-container">
+            <pre id="js-solution-code" class="code-area"></pre>
+          </div>
+          <button onclick="runJsSolution()">Run Solution</button>
+          <div id="js-output" class="live-preview"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // HTML code snippets and solutions
+    const htmlSnippets = [
+      {
+        title: "Semantic Navigation Bar",
+        description: "Create a semantic navigation bar with at least 3 links. Use appropriate HTML5 semantic elements.",
+        code: "<!-- Create your semantic navigation bar here -->\n\n\n",
+        solution: "<nav>\n  <ul>\n    <li><a href=\"#home\">Home</a></li>\n    <li><a href=\"#about\">About</a></li>\n    <li><a href=\"#services\">Services</a></li>\n    <li><a href=\"#contact\">Contact</a></li>\n  </ul>\n</nav>"
+      },
+      {
+        title: "Contact Form",
+        description: "Create a contact form with fields for name, email, subject, and message. Include appropriate input types, labels and a submit button.",
+        code: "<!-- Create your contact form here -->\n\n\n",
+        solution: "<form action=\"submit.php\" method=\"post\">\n  <div>\n    <label for=\"name\">Name:</label>\n    <input type=\"text\" id=\"name\" name=\"name\" required>\n  </div>\n  <div>\n    <label for=\"email\">Email:</label>\n    <input type=\"email\" id=\"email\" name=\"email\" required>\n  </div>\n  <div>\n    <label for=\"subject\">Subject:</label>\n    <input type=\"text\" id=\"subject\" name=\"subject\">\n  </div>\n  <div>\n    <label for=\"message\">Message:</label>\n    <textarea id=\"message\" name=\"message\" rows=\"5\" required></textarea>\n  </div>\n  <div>\n    <button type=\"submit\">Send Message</button>\n  </div>\n</form>"
+      },
+      {
+        title: "Article With Sections",
+        description: "Create an HTML5 article with a header, multiple sections, and a footer. Use proper semantic elements and include at least one figure with caption.",
+        code: "<!-- Create your article structure here -->\n\n\n",
+        solution: "<article>\n  <header>\n    <h1>Exploring Web Development</h1>\n    <p>Published on <time datetime=\"2023-05-15\">May 15, 2023</time> by John Smith</p>\n  </header>\n  \n  <section>\n    <h2>Frontend Technologies</h2>\n    <p>Modern frontend development encompasses various technologies...</p>\n    <figure>\n      <img src=\"frontend.jpg\" alt=\"Frontend technologies\">\n      <figcaption>Popular frontend frameworks in 2023</figcaption>\n    </figure>\n  </section>\n  \n  <section>\n    <h2>Backend Development</h2>\n    <p>Backend development focuses on servers, databases, and application logic...</p>\n  </section>\n  \n  <footer>\n    <p>Tags: <a href=\"#web\">Web Development</a>, <a href=\"#tech\">Technology</a></p>\n  </footer>\n</article>"
+      }
+    ];
+    
+    // CSS code snippets and solutions
+    const cssSnippets = [
+      {
+        title: "Responsive Card Layout",
+        description: "Create a responsive card layout that displays 3 cards in a row on desktop, 2 in a row on tablets, and 1 per row on mobile. Style them with a shadow, rounded corners, and a hover effect.",
+        html: "<div class=\"card-container\">\n  <div class=\"card\">\n    <h3>Card 1</h3>\n    <p>This is the content for card 1.</p>\n  </div>\n  <div class=\"card\">\n    <h3>Card 2</h3>\n    <p>This is the content for card 2.</p>\n  </div>\n  <div class=\"card\">\n    <h3>Card 3</h3>\n    <p>This is the content for card 3.</p>\n  </div>\n  <div class=\"card\">\n    <h3>Card 4</h3>\n    <p>This is the content for card 4.</p>\n  </div>\n  <div class=\"card\">\n    <h3>Card 5</h3>\n    <p>This is the content for card 5.</p>\n  </div>\n  <div class=\"card\">\n    <h3>Card 6</h3>\n    <p>This is the content for card 6.</p>\n  </div>\n</div>",
+        code: "/* Write your CSS styles here */\n\n\n",
+        solution: ".card-container {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 20px;\n  justify-content: center;\n}\n\n.card {\n  background-color: white;\n  border-radius: 8px;\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n  padding: 20px;\n  transition: transform 0.3s ease, box-shadow 0.3s ease;\n  width: calc(33.33% - 20px);\n  box-sizing: border-box;\n}\n\n.card:hover {\n  transform: translateY(-5px);\n  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);\n}\n\n/* Tablet styles */\n@media screen and (max-width: 768px) {\n  .card {\n    width: calc(50% - 20px);\n  }\n}\n\n/* Mobile styles */\n@media screen and (max-width: 480px) {\n  .card {\n    width: 100%;\n  }\n}"
+      },
+      {
+        title: "Custom Navigation Menu",
+        description: "Style a horizontal navigation menu with hover effects and a highlight for the active item. Make it collapse into a hamburger menu on mobile devices.",
+        html: "<nav class=\"main-nav\">\n  <button class=\"menu-toggle\">☰</button>\n  <ul class=\"nav-list\">\n    <li><a href=\"#\" class=\"active\">Home</a></li>\n    <li><a href=\"#\">About</a></li>\n    <li><a href=\"#\">Services</a></li>\n    <li><a href=\"#\">Portfolio</a></li>\n    <li><a href=\"#\">Contact</a></li>\n  </ul>\n</nav>",
+        code: "/* Write your CSS styles here */\n\n\n",
+        solution: ".main-nav {\n  background-color: #333;\n  padding: 0 20px;\n  position: relative;\n}\n\n.nav-list {\n  display: flex;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.nav-list li {\n  margin: 0;\n  padding: 0;\n}\n\n.nav-list a {\n  color: white;\n  display: block;\n  padding: 15px 20px;\n  text-decoration: none;\n  transition: background-color 0.3s;\n}\n\n.nav-list a:hover {\n  background-color: #555;\n}\n\n.nav-list a.active {\n  background-color: #4CAF50;\n}\n\n.menu-toggle {\n  background: none;\n  border: none;\n  color: white;\n  cursor: pointer;\n  display: none;\n  font-size: 24px;\n  padding: 15px 0;\n}\n\n@media screen and (max-width: 768px) {\n  .menu-toggle {\n    display: block;\n  }\n  \n  .nav-list {\n    display: none;\n    flex-direction: column;\n    width: 100%;\n  }\n  \n  .nav-list.show {\n    display: flex;\n  }\n  \n  /* Add JavaScript to toggle .show class */\n}"
+      }
+    ];
+    
+    // JavaScript code snippets and solutions
+    const jsSnippets = [
+      {
+        title: "DOM Manipulation",
+        description: "Write a JavaScript function that adds a new item to a list when a button is clicked. The content for the new item should come from an input field, which is cleared after adding the item.",
+        code: "// HTML structure is already in place:\n// <input type=\"text\" id=\"itemInput\" placeholder=\"Enter item\">\n// <button id=\"addButton\">Add Item</button>\n// <ul id=\"itemList\"></ul>\n\n// Write your JavaScript function here\n\n\n",
+        solution: "// DOM manipulation function to add items to a list\n\nfunction setupItemList() {\n  const itemInput = document.getElementById('itemInput');\n  const addButton = document.getElementById('addButton');\n  const itemList = document.getElementById('itemList');\n  \n  // Add click event to the button\n  addButton.addEventListener('click', function() {\n    // Get input value\n    const newItemText = itemInput.value.trim();\n    \n    // Validate input\n    if (newItemText === '') {\n      alert('Please enter an item');\n      return;\n    }\n    \n    // Create new list item\n    const newItem = document.createElement('li');\n    newItem.textContent = newItemText;\n    \n    // Add item to list\n    itemList.appendChild(newItem);\n    \n    // Clear the input field\n    itemInput.value = '';\n    \n    // Focus the input for next entry\n    itemInput.focus();\n  });\n  \n  // Allow pressing Enter to add item\n  itemInput.addEventListener('keypress', function(e) {\n    if (e.key === 'Enter') {\n      addButton.click();\n    }\n  });\n}\n\n// Initialize when DOM is loaded\ndocument.addEventListener('DOMContentLoaded', setupItemList);"
+      },
+      {
+        title: "Form Validation",
+        description: "Create a JavaScript function that validates a registration form before submission. Check that the username is at least 5 characters, the email is valid, and passwords match.",
+        code: "// HTML structure is already in place:\n// <form id=\"registrationForm\">\n//   <input type=\"text\" id=\"username\" placeholder=\"Username\">\n//   <input type=\"email\" id=\"email\" placeholder=\"Email\">\n//   <input type=\"password\" id=\"password\" placeholder=\"Password\">\n//   <input type=\"password\" id=\"confirmPassword\" placeholder=\"Confirm Password\">\n//   <button type=\"submit\">Register</button>\n// </form>\n// <div id=\"formErrors\"></div>\n\n// Write your validation function here\n\n\n",
+        solution: "// Form validation function\n\nfunction validateRegistrationForm() {\n  const form = document.getElementById('registrationForm');\n  const errorsDiv = document.getElementById('formErrors');\n  \n  form.addEventListener('submit', function(e) {\n    // Prevent form from submitting\n    e.preventDefault();\n    \n    // Clear previous error messages\n    errorsDiv.innerHTML = '';\n    const errors = [];\n    \n    // Get form values\n    const username = document.getElementById('username').value.trim();\n    const email = document.getElementById('email').value.trim();\n    const password = document.getElementById('password').value;\n    const confirmPassword = document.getElementById('confirmPassword').value;\n    \n    // Validate username\n    if (username.length < 5) {\n      errors.push('Username must be at least 5 characters long');\n    }\n    \n    // Validate email format with regex\n    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n    if (!emailRegex.test(email)) {\n      errors.push('Please enter a valid email address');\n    }\n    \n    // Validate password\n    if (password.length < 8) {\n      errors.push('Password must be at least 8 characters long');\n    }\n    \n    // Check if passwords match\n    if (password !== confirmPassword) {\n      errors.push('Passwords do not match');\n    }\n    \n    // Display errors or submit form\n    if (errors.length > 0) {\n      // Create error list\n      const errorList = document.createElement('ul');\n      errorList.style.color = 'red';\n      \n      errors.forEach(function(error) {\n        const listItem = document.createElement('li');\n        listItem.textContent = error;\n        errorList.appendChild(listItem);\n      });\n      \n      errorsDiv.appendChild(errorList);\n    } else {\n      // Form is valid, could submit it\n      alert('Registration successful!');\n      form.reset();\n    }\n  });\n}\n\n// Initialize when DOM is loaded\ndocument.addEventListener('DOMContentLoaded', validateRegistrationForm);"
+      }
+    ];
+    
+    // Variables to track current challenges
+    let currentHtmlIndex = -1;
+    let currentCssIndex = -1;
+    let currentJsIndex = -1;
+    
+    // Function to switch between HTML, CSS, and JS sections
+    function switchWebSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.tab-content');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Show selected section
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Update tab styling
+      const tabs = document.querySelectorAll('.web-tab');
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      event.currentTarget.classList.add('active');
+    }
+    
+    // HTML Challenge functions
+    function getRandomHtmlChallenge() {
+      // Get a random index (different from current)
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * htmlSnippets.length);
+      } while (randomIndex === currentHtmlIndex && htmlSnippets.length > 1);
+      
+      currentHtmlIndex = randomIndex;
+      const snippet = htmlSnippets[currentHtmlIndex];
+      
+      // Update the DOM
+      document.getElementById('html-snippet-title').textContent = snippet.title;
+      document.getElementById('html-snippet-description').textContent = snippet.description;
+      document.getElementById('html-snippet-code').textContent = snippet.code;
+      document.getElementById('html-solution-code').textContent = snippet.solution;
+      
+      // Show snippet, hide solution
+      document.getElementById('html-snippet-container').style.display = 'block';
+      document.getElementById('html-solution-container').style.display = 'none';
+      document.getElementById('html-toggle-button').textContent = 'Show Solution';
+      document.getElementById('html-preview').innerHTML = '';
+      
+      // Scroll to snippet
+      document.getElementById('html-snippet-container').scrollIntoView({
+        behavior: 'smooth', 
+        block: 'start'
+      });
+    }
+    
+    function toggleHtmlSolution() {
+      const solutionContainer = document.getElementById('html-solution-container');
+      const toggleButton = document.getElementById('html-toggle-button');
+      
+      if (solutionContainer.style.display === 'none') {
+        solutionContainer.style.display = 'block';
+        toggleButton.textContent = 'Hide Solution';
+      } else {
+        solutionContainer.style.display = 'none';
+        toggleButton.textContent = 'Show Solution';
+      }
+    }
+    
+    function previewHtmlSolution() {
+      const htmlSolution = document.getElementById('html-solution-code').textContent;
+      const preview = document.getElementById('html-preview');
+      
+      preview.innerHTML = htmlSolution;
+    }
+    
+    // CSS Challenge functions
+    function getRandomCssChallenge() {
+      // Get a random index (different from current)
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * cssSnippets.length);
+      } while (randomIndex === currentCssIndex && cssSnippets.length > 1);
+      
+      currentCssIndex = randomIndex;
+      const snippet = cssSnippets[currentCssIndex];
+      
+      // Update the DOM
+      document.getElementById('css-snippet-title').textContent = snippet.title;
+      document.getElementById('css-snippet-description').textContent = snippet.description;
+      document.getElementById('css-html-code').textContent = snippet.html;
+      document.getElementById('css-snippet-code').textContent = snippet.code;
+      document.getElementById('css-solution-code').textContent = snippet.solution;
+      
+      // Show snippet, hide solution
+      document.getElementById('css-snippet-container').style.display = 'block';
+      document.getElementById('css-solution-container').style.display = 'none';
+      document.getElementById('css-toggle-button').textContent = 'Show Solution';
+      document.getElementById('css-preview').innerHTML = '';
+      
+      // Scroll to snippet
+      document.getElementById('css-snippet-container').scrollIntoView({
+        behavior: 'smooth', 
+        block: 'start'
+      });
+    }
+    
+    function toggleCssSolution() {
+      const solutionContainer = document.getElementById('css-solution-container');
+      const toggleButton = document.getElementById('css-toggle-button');
+      
+      if (solutionContainer.style.display === 'none') {
+        solutionContainer.style.display = 'block';
+        toggleButton.textContent = 'Hide Solution';
+      } else {
+        solutionContainer.style.display = 'none';
+        toggleButton.textContent = 'Show Solution';
+      }
+    }
+    
+    function previewCssSolution() {
+      const htmlCode = document.getElementById('css-html-code').textContent;
+      const cssCode = document.getElementById('css-solution-code').textContent;
+      const preview = document.getElementById('css-preview');
+      
+      preview.innerHTML = `
+        <style>${cssCode}</style>
+        ${htmlCode}
+      `;
+    }
+    
+    // JavaScript Challenge functions
+    function getRandomJsChallenge() {
+      // Get a random index (different from current)
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * jsSnippets.length);
+      } while (randomIndex === currentJsIndex && jsSnippets.length > 1);
+      
+      currentJsIndex = randomIndex;
+      const snippet = jsSnippets[currentJsIndex];
+      
+      // Update the DOM
+      document.getElementById('js-snippet-title').textContent = snippet.title;
+      document.getElementById('js-snippet-description').textContent = snippet.description;
+      document.getElementById('js-snippet-code').textContent = snippet.code;
+      document.getElementById('js-solution-code').textContent = snippet.solution;
+      
+      // Show snippet, hide solution
+      document.getElementById('js-snippet-container').style.display = 'block';
+      document.getElementById('js-solution-container').style.display = 'none';
+      document.getElementById('js-toggle-button').textContent = 'Show Solution';
+      document.getElementById('js-output').innerHTML = '';
+      
+      // Scroll to snippet
+      document.getElementById('js-snippet-container').scrollIntoView({
+        behavior: 'smooth', 
+        block: 'start'
+      });
+    }
+    
+    function toggleJsSolution() {
+      const solutionContainer = document.getElementById('js-solution-container');
+      const toggleButton = document.getElementById('js-toggle-button');
+      
+      if (solutionContainer.style.display === 'none') {
+        solutionContainer.style.display = 'block';
+        toggleButton.textContent = 'Hide Solution';
+      } else {
+        solutionContainer.style.display = 'none';
+        toggleButton.textContent = 'Show Solution';
+      }
+    }
+    
+    function runJsSolution() {
+      const jsOutput = document.getElementById('js-output');
+      jsOutput.innerHTML = '<div style="padding: 10px; background-color: #f5f5f5;">' +
+                           '<p>To see the JavaScript solution in action, please open your browser\'s console ' +
+                           '(Press F12 and select Console) and copy-paste the solution code.</p>' +
+                           '<p>For DOM manipulation examples, create an HTML file with the required elements.</p>' +
+                           '</div>';
+    }
+    
+    // Initialize - remove any orange solution buttons when the page loads
+    window.onload = function() {
+      // Give DOM time to fully render before removing elements
+      setTimeout(() => {
+        const orangeButtons = document.querySelectorAll('.orange-solution');
+        orangeButtons.forEach(btn => btn.remove());
+        
+        // Also check for any elements with the text "Solution" that might be orange
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+          if (el.textContent.includes('Solution') && 
+              (window.getComputedStyle(el).getPropertyValue('border').includes('orange') ||
+               window.getComputedStyle(el).getPropertyValue('background').includes('orange'))) {
+            el.remove();
+          }
+        });
+      }, 500);
+    };
+  </script>
+</body>
+</html> 

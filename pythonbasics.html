@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Basics - Learning Guide</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="external-link-handler.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Python Basics Learning Guide</h1>
+    <p>This page provides a comprehensive introduction to Python programming with heavily commented examples.</p>
+    
+    <div class="section-navigation">
+      <button onclick="toggleSection('python-intro')">Python Introduction</button>
+      <button onclick="toggleSection('python-syntax')">Syntax & Data Types</button>
+      <button onclick="toggleSection('python-control')">Control Flow</button>
+      <button onclick="toggleSection('python-functions')">Functions</button>
+      <button onclick="toggleSection('python-oop')">Object-Oriented Python</button>
+    </div>
+    
+    <!-- Section placeholders - will be filled with content later -->
+    <div id="python-intro" class="python-section">
+      <h2>Introduction to Python</h2>
+      <p>Python is a high-level, interpreted programming language known for its simplicity, readability, and versatility. Created by Guido van Rossum and first released in 1991, Python has become one of the most popular programming languages worldwide for applications ranging from web development to data science and artificial intelligence.</p>
+      
+      <h3>Key Features of Python</h3>
+      <ul>
+        <li><strong>Easy to Learn and Read:</strong> Python's syntax emphasizes readability with its use of indentation and English-like commands.</li>
+        <li><strong>Interpreted Language:</strong> Python code is executed line by line, making debugging easier.</li>
+        <li><strong>Dynamically Typed:</strong> No need to declare variable types, as Python determines them at runtime.</li>
+        <li><strong>Extensive Libraries:</strong> Python's standard library and third-party packages provide tools for nearly every task.</li>
+        <li><strong>Cross-Platform:</strong> Python runs on Windows, macOS, Linux, and many other platforms.</li>
+        <li><strong>Multi-Paradigm:</strong> Supports procedural, object-oriented, and functional programming styles.</li>
+      </ul>
+      
+      <h3>Your First Python Program</h3>
+      <p>The traditional first program in any language is "Hello, World!" In Python, this is remarkably simple:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="15" readonly>
+# This is a comment in Python, indicated by the '#' symbol
+# Comments are ignored by the Python interpreter
+
+# The print() function displays text to the console
+print("Hello, World!")
+
+# You can also use variables to store and display data
+message = "Welcome to Python programming!"
+print(message)
+
+# Python supports string concatenation with the '+' operator
+first_name = "Python"
+last_name = "Programmer"
+greeting = "Hello, " + first_name + " " + last_name + "!"
+print(greeting)
+
+# Python 3.6+ supports f-strings for easy string formatting
+formatted_greeting = f"Hello, {first_name} {last_name}!"
+print(formatted_greeting)  # This is cleaner and more readable
+        </textarea>
+      </div>
+      
+      <h3>Python Versions</h3>
+      <p>There are two major Python versions in use today:</p>
+      <ul>
+        <li><strong>Python 3.x:</strong> The current and recommended version. All new Python projects should use Python 3.</li>
+        <li><strong>Python 2.x:</strong> Legacy version that officially reached end-of-life on January 1, 2020. Avoid using it for new projects.</li>
+      </ul>
+      
+      <h3>Running Python Code</h3>
+      <p>There are several ways to run Python code:</p>
+      <ol>
+        <li><strong>Interactive Shell:</strong> Type <code>python</code> or <code>python3</code> in your terminal/command prompt.</li>
+        <li><strong>Script Files:</strong> Create a <code>.py</code> file and run it with <code>python filename.py</code>.</li>
+        <li><strong>IDEs and Text Editors:</strong> Use environments like VSCode, PyCharm, or Jupyter Notebooks.</li>
+        <li><strong>Online Environments:</strong> Try Python in browsers using platforms like Repl.it or Google Colab.</li>
+      </ol>
+      
+      <div class="practice-container">
+        <h3>Practice: Hello Python</h3>
+        <p>Write a Python program that prints a personalized greeting using your name and includes the current year.</p>
+        <textarea class="practice-area" rows="10" placeholder="Write your code here..."></textarea>
+        <button onclick="checkAnswer('hello-python')">Check Answer</button>
+        <div id="hello-python-feedback" class="feedback"></div>
+      </div>
+    </div>
+    
+    <div id="python-syntax" class="python-section" style="display: none;">
+      <h2>Python Syntax & Data Types</h2>
+      <p>Python has a clean, easy-to-read syntax that uses indentation rather than braces or keywords to define code blocks. This enforced indentation makes Python code consistent and readable across different projects.</p>
+      
+      <h3>Basic Syntax Rules</h3>
+      <ul>
+        <li><strong>Indentation:</strong> Python uses 4 spaces (or a tab) to indicate code blocks. Consistent indentation is crucial.</li>
+        <li><strong>Line Endings:</strong> Statements typically end with a newline (no semicolons needed).</li>
+        <li><strong>Comments:</strong> Single-line comments start with #, multi-line comments use triple quotes (''' or """).</li>
+        <li><strong>Case Sensitivity:</strong> Python is case-sensitive, so <code>variable</code> and <code>Variable</code> are different.</li>
+      </ul>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="15" readonly>
+# Basic syntax example
+if True:
+    print("This is indented")  # 4 spaces before print
+    # More indented code...
+print("This is not indented")  # Back to no indentation
+
+# Multiple statements on one line (using semicolons)
+x = 5; y = 10; print(x + y)  # Works but not recommended for readability
+
+# Multi-line statement (using backslash)
+total = 1 + 2 + 3 + \
+        4 + 5 + 6   # Line continuation
+
+# Multi-line strings or comments
+'''
+This is a multi-line comment
+or string that spans multiple lines
+'''
+        </textarea>
+      </div>
+      
+      <h3>Variables and Assignment</h3>
+      <p>Variables in Python don't require explicit declaration or type specification. They are created when you first assign a value.</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="14" readonly>
+# Variable assignment
+name = "Python"  # A string variable
+age = 32         # An integer variable
+pi = 3.14159     # A floating-point variable
+is_awesome = True  # A boolean variable
+
+# Multiple assignment
+x, y, z = 10, "Hello", True
+
+# Python allows variable name re-assignment with different types
+var = 10       # var is an integer
+print(var)
+var = "string"  # Now var is a string
+print(var)
+
+# Naming conventions
+snake_case_variable = "This is the Python convention"
+camelCaseVariable = "Used sometimes, but not preferred in Python"
+        </textarea>
+      </div>
+      
+      <h3>Basic Data Types</h3>
+      <p>Python has several built-in data types that you'll use frequently:</p>
+      
+      <h4>1. Numeric Types</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="16" readonly>
+# Integer - whole numbers
+count = 10
+negative = -5
+
+# Float - decimal numbers
+pi = 3.14159
+e = 2.71828
+
+# Complex numbers
+complex_num = 3 + 4j
+print(complex_num.real)  # 3.0
+print(complex_num.imag)  # 4.0
+
+# Numeric operations
+addition = 10 + 5        # 15
+subtraction = 10 - 5     # 5
+multiplication = 10 * 5  # 50
+division = 10 / 5        # 2.0 (note: returns float)
+integer_division = 10 // 3  # 3 (truncated division)
+modulo = 10 % 3          # 1 (remainder)
+exponent = 10 ** 2       # 100 (10 squared)
+        </textarea>
+      </div>
+      
+      <h4>2. String Type</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="24" readonly>
+# String creation
+single_quoted = 'Hello'
+double_quoted = "Hello"  # Both work the same
+triple_quoted = '''This is a multi-line
+string that can span multiple lines'''
+
+# String operations
+greeting = "Hello"
+name = "Python"
+
+# Concatenation
+full_greeting = greeting + " " + name  # "Hello Python"
+
+# String repetition
+repeated = "Python! " * 3  # "Python! Python! Python! "
+
+# String indexing (starts at 0)
+first_char = greeting[0]  # "H"
+last_char = greeting[-1]  # "o"
+
+# String slicing [start:end:step]
+substring = greeting[1:4]  # "ell" (end index is exclusive)
+reverse = greeting[::-1]   # "olleH" (negative step reverses)
+
+# String methods
+print(greeting.upper())     # "HELLO"
+print(greeting.lower())     # "hello"
+print("  spaces  ".strip()) # "spaces"
+print(greeting.replace("H", "J"))  # "Jello"
+print(", ".join(["A", "B", "C"]))  # "A, B, C"
+print("Hello World".split(" "))    # ["Hello", "World"]
+print("Python".startswith("Py"))   # True
+print("Python".endswith("on"))     # True
+        </textarea>
+      </div>
+      
+      <h4>3. Boolean Type</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="18" readonly>
+# Boolean values
+is_true = True
+is_false = False
+
+# Comparison operators return boolean values
+x = 10
+y = 20
+
+equal = x == y        # False
+not_equal = x != y    # True
+greater = x > y       # False
+less = x < y          # True
+greater_equal = x >= y  # False
+less_equal = x <= y     # True
+
+# Logical operators
+and_result = True and False  # False
+or_result = True or False    # True
+not_result = not True        # False
+
+# Truthy and Falsy values
+# Empty sequences/collections, 0, None are considered False
+if 0:
+    print("This won't print")
+if []:
+    print("Neither will this")
+        </textarea>
+      </div>
+      
+      <h4>4. Collection Types</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="40" readonly>
+# Lists - ordered, mutable collections (like arrays in other languages)
+fruits = ["apple", "banana", "cherry"]
+mixed_list = [1, "hello", True, 3.14]
+
+# List operations
+fruits.append("orange")     # Add to end: ["apple", "banana", "cherry", "orange"]
+fruits.insert(1, "mango")   # Insert at index: ["apple", "mango", "banana", "cherry", "orange"]
+fruits.remove("banana")     # Remove item: ["apple", "mango", "cherry", "orange"]
+popped = fruits.pop()       # Remove & return last item: "orange", fruits is now ["apple", "mango", "cherry"]
+fruits.sort()               # Sort in place: ["apple", "cherry", "mango"]
+fruits_length = len(fruits) # 3
+
+# List slicing works like strings
+first_two = fruits[0:2]     # ["apple", "cherry"]
+
+# Tuples - ordered, immutable collections
+coordinates = (10, 20)
+person = ("John", 30, "New York")
+
+# Tuple operations (limited because they're immutable)
+x, y = coordinates  # Unpacking
+name, age, city = person
+tuple_length = len(person)  # 3
+
+# Dictionaries - key-value pairs (like hashmaps or objects)
+person = {
+    "name": "John",
+    "age": 30,
+    "city": "New York"
+}
+
+# Dictionary operations
+person["email"] = "john@example.com"  # Add new key-value
+person["age"] = 31                   # Modify existing value
+person.pop("city")                   # Remove key-value pair
+has_name = "name" in person          # Check if key exists: True
+
+# Dict methods
+keys = person.keys()         # dict_keys(['name', 'age', 'email'])
+values = person.values()     # dict_values(['John', 31, 'john@example.com'])
+items = person.items()       # dict_items([('name', 'John'), ('age', 31), ('email', 'john@example.com')])
+age = person.get("age", 0)   # Get value with default if key doesn't exist
+
+# Sets - unordered collections of unique items
+fruits_set = {"apple", "banana", "cherry", "apple"}  # Note: duplicates are removed
+print(fruits_set)  # {'cherry', 'banana', 'apple'}
+
+# Set operations
+fruits_set.add("orange")     # Add item
+fruits_set.remove("banana")  # Remove item (raises error if not found)
+fruits_set.discard("kiwi")   # Remove if present (no error if not found)
+
+# Set operations (mathematical)
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+union = set1 | set2          # {1, 2, 3, 4, 5}
+intersection = set1 & set2   # {3}
+difference = set1 - set2     # {1, 2}
+        </textarea>
+      </div>
+      
+      <h3>Type Conversion</h3>
+      <p>Python allows conversion between different data types:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="18" readonly>
+# Type conversion examples
+str_num = "42"
+num = int(str_num)    # Convert string to integer: 42
+float_num = float(str_num)  # Convert string to float: 42.0
+str_float = "3.14"
+pi = float(str_float)  # 3.14
+
+# Number to string
+age = 30
+age_str = str(age)    # "30"
+
+# Collections conversions
+my_list = [1, 2, 3, 2, 1]
+my_tuple = tuple(my_list)  # (1, 2, 3, 2, 1)
+my_set = set(my_list)      # {1, 2, 3} (duplicates removed)
+
+# Check the type of a variable
+print(type(age))       # <class 'int'>
+print(type(age_str))   # <class 'str'>
+print(type(my_list))   # <class 'list'>
+print(type(my_tuple))  # <class 'tuple'>
+        </textarea>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Practice: Data Types</h3>
+        <p>Create a program that demonstrates at least three different Python data types, performs operations with them, and prints the results.</p>
+        <textarea id="data-types-practice" class="practice-area" rows="10" placeholder="Write your code here..."></textarea>
+        <button onclick="checkAnswer('data-types-practice')">Check Answer</button>
+        <div id="data-types-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+    
+    <div id="python-control" class="python-section" style="display: none;">
+      <h2>Control Flow in Python</h2>
+      <p>Control flow statements determine the order in which a program's code executes. Python provides several structures for controlling program flow, including conditionals, loops, and exception handling.</p>
+      
+      <h3>Conditional Statements</h3>
+      <p>Conditional statements let your program make decisions based on conditions.</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+# if, elif, else statements
+x = 10
+
+if x > 20:
+    print("x is greater than 20")
+elif x > 5:
+    print("x is greater than 5 but not greater than 20")
+else:
+    print("x is 5 or less")
+    
+# Nested if statements
+y = 5
+if x > 5:
+    print("x is greater than 5")
+    if y > 5:
+        print("y is also greater than 5")
+    else:
+        print("but y is not greater than 5")
+
+# Conditional expressions (ternary operator)
+age = 20
+status = "adult" if age >= 18 else "minor"
+print(status)  # "adult"
+
+# Combining conditions with logical operators
+if x > 5 and y < 10:
+    print("Both conditions are true")
+    
+if x > 20 or y > 3:
+    print("At least one condition is true")
+        </textarea>
+      </div>
+      
+      <h3>Loops</h3>
+      <p>Loops allow you to execute a block of code multiple times.</p>
+      
+      <h4>1. For Loops</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="28" readonly>
+# Basic for loop with a list
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# For loop with range
+for i in range(5):  # 0, 1, 2, 3, 4
+    print(i)
+    
+# Range with start, stop, step
+for i in range(2, 10, 2):  # 2, 4, 6, 8
+    print(i)
+    
+# Looping through a string (characters)
+for char in "Python":
+    print(char)
+    
+# Enumerate for getting index and value
+for index, fruit in enumerate(fruits):
+    print(f"Index {index}: {fruit}")
+    
+# Looping through a dictionary
+person = {"name": "John", "age": 30, "city": "New York"}
+
+# Keys only
+for key in person:
+    print(key)
+    
+# Values only
+for value in person.values():
+    print(value)
+    
+# Both keys and values
+for key, value in person.items():
+    print(f"{key}: {value}")
+        </textarea>
+      </div>
+      
+      <h4>2. While Loops</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="22" readonly>
+# Basic while loop
+count = 0
+while count < 5:
+    print(count)
+    count += 1  # Don't forget to increment!
+
+# While loop with break
+number = 0
+while True:
+    print(number)
+    number += 1
+    if number >= 5:
+        break  # Exit the loop when number reaches 5
+
+# While loop with continue
+number = 0
+while number < 10:
+    number += 1
+    if number % 2 == 0:  # If number is even
+        continue  # Skip the rest of this iteration
+    print(number)  # Only prints odd numbers
+
+# Using else with while
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+else:
+    print("Count is now", count)  # Executes when the condition becomes false
+        </textarea>
+      </div>
+      
+      <h4>3. Loop Control Statements</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="22" readonly>
+# break - exits the loop
+fruits = ["apple", "banana", "cherry", "date", "elderberry"]
+for fruit in fruits:
+    if fruit == "cherry":
+        print("Found cherry! Breaking loop.")
+        break
+    print(fruit)
+# Prints: apple, banana, Found cherry! Breaking loop.
+
+# continue - skips the current iteration
+for fruit in fruits:
+    if fruit == "cherry":
+        print("Skipping cherry")
+        continue
+    print(fruit)
+# Prints: apple, banana, Skipping cherry, date, elderberry
+
+# else clause with for loop (executes when loop completes normally)
+for fruit in fruits:
+    print(fruit)
+    if fruit == "dragon fruit":  # Not in the list
+        break
+else:
+    print("No dragon fruit found")  # This will execute
+
+# Nested loops
+for i in range(3):
+    for j in range(2):
+        print(f"i={i}, j={j}")
+        </textarea>
+      </div>
+      
+      <h3>List Comprehensions</h3>
+      <p>A concise way to create lists based on existing lists or other iterables.</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="20" readonly>
+# Basic list comprehension
+numbers = [1, 2, 3, 4, 5]
+squares = [n**2 for n in numbers]
+print(squares)  # [1, 4, 9, 16, 25]
+
+# List comprehension with condition
+even_squares = [n**2 for n in numbers if n % 2 == 0]
+print(even_squares)  # [4, 16]
+
+# Nested list comprehension
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flattened = [num for row in matrix for num in row]
+print(flattened)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Dictionary comprehension
+squares_dict = {n: n**2 for n in range(1, 6)}
+print(squares_dict)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+# Set comprehension
+unique_lengths = {len(fruit) for fruit in ["apple", "banana", "cherry", "date"]}
+print(unique_lengths)  # {4, 5, 6}
+        </textarea>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Practice: Control Flow</h3>
+        <p>Write a program that uses a loop to print all numbers from 1 to 20, but:</p>
+        <ul>
+          <li>If the number is divisible by 3, print "Fizz" instead of the number</li>
+          <li>If the number is divisible by 5, print "Buzz" instead of the number</li>
+          <li>If the number is divisible by both 3 and 5, print "FizzBuzz"</li>
+        </ul>
+        <textarea id="control-flow-practice" class="practice-area" rows="10" placeholder="Write your code here..."></textarea>
+        <button onclick="checkAnswer('control-flow-practice')">Check Answer</button>
+        <div id="control-flow-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+    
+    <div id="python-functions" class="python-section" style="display: none;">
+      <h2>Python Functions</h2>
+      <p>Functions are reusable blocks of code that perform specific tasks. They help organize code, promote reusability, and make programs easier to understand and maintain.</p>
+      
+      <h3>Defining Functions</h3>
+      <p>In Python, functions are defined using the <code>def</code> keyword, followed by the function name and parentheses.</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="15" readonly>
+# Basic function definition
+def greet():
+    """This is a docstring - used to describe what the function does."""
+    print("Hello, world!")
+
+# Function call
+greet()  # Output: Hello, world!
+
+# Function with parameters
+def greet_person(name):
+    print(f"Hello, {name}!")
+
+# Calling with an argument
+greet_person("Alice")  # Output: Hello, Alice!
+        </textarea>
+      </div>
+      
+      <h3>Return Values</h3>
+      <p>Functions can return values using the <code>return</code> statement. A function can return a single value, multiple values, or nothing (None).</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="22" readonly>
+# Function that returns a value
+def square(number):
+    return number * number
+
+result = square(5)
+print(result)  # Output: 25
+
+# Function that returns multiple values
+def get_min_max(numbers):
+    return min(numbers), max(numbers)
+
+# Multiple return values are returned as a tuple
+min_val, max_val = get_min_max([5, 3, 8, 1, 7])
+print(f"Min: {min_val}, Max: {max_val}")  # Output: Min: 1, Max: 8
+
+# Function with early return
+def absolute_value(number):
+    if number >= 0:
+        return number
+    else:
+        return -number
+    
+    # Code here will never execute (unreachable)
+    print("This won't print")
+
+# Function that doesn't explicitly return anything
+def print_info(name, age):
+    print(f"{name} is {age} years old")
+    # No return statement, implicitly returns None
+
+result = print_info("Bob", 30)  # Prints: Bob is 30 years old
+print(result)  # Output: None
+        </textarea>
+      </div>
+      
+      <h3>Parameters and Arguments</h3>
+      <p>Python offers different ways to pass arguments to functions.</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="32" readonly>
+# Default parameter values
+def greet(name, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+greet("Alice")          # Output: Hello, Alice!
+greet("Bob", "Hi")      # Output: Hi, Bob!
+
+# Keyword arguments (order doesn't matter)
+def describe_person(name, age, city):
+    print(f"{name} is {age} years old and lives in {city}")
+
+describe_person(name="Alice", city="New York", age=30)
+# Output: Alice is 30 years old and lives in New York
+
+# Variable number of positional arguments (*args)
+def calculate_sum(*numbers):
+    """Sum any number of arguments."""
+    total = 0
+    for num in numbers:
+        total += num
+    return total
+
+print(calculate_sum(1, 2))          # Output: 3
+print(calculate_sum(1, 2, 3, 4, 5)) # Output: 15
+
+# Variable number of keyword arguments (**kwargs)
+def print_key_values(**kwargs):
+    """Print all key-value pairs."""
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_key_values(name="Alice", age=30, city="New York")
+# Output:
+# name: Alice
+# age: 30
+# city: New York
+
+# Combining different types of parameters
+def function_with_all_types(pos1, pos2, /, pos_or_kw, *, kw1, kw2):
+    # pos1, pos2: positional-only (before /)
+    # pos_or_kw: positional or keyword
+    # kw1, kw2: keyword-only (after *)
+    print(f"Positional only: {pos1}, {pos2}")
+    print(f"Positional or keyword: {pos_or_kw}")
+    print(f"Keyword only: {kw1}, {kw2}")
+
+# Valid call
+function_with_all_types(1, 2, 3, kw1=4, kw2=5)
+        </textarea>
+      </div>
+      
+      <h3>Scope and Lifetime</h3>
+      <p>Variables defined inside a function have local scope, while variables defined outside have global scope.</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="30" readonly>
+# Global and local scope example
+x = 10  # Global variable
+
+def print_value():
+    print(x)  # Accessing global variable
+
+print_value()  # Output: 10
+
+def change_local_value():
+    x = 20  # Creates a new local variable, doesn't affect global x
+    print(f"Local x: {x}")
+
+change_local_value()  # Output: Local x: 20
+print(f"Global x is still: {x}")  # Output: Global x is still: 10
+
+def change_global_value():
+    global x  # Tell Python we want to modify the global variable
+    x = 30
+    print(f"Changed global x to: {x}")
+
+change_global_value()  # Output: Changed global x to: 30
+print(f"Global x is now: {x}")  # Output: Global x is now: 30
+
+# Nested functions and nonlocal variables
+def outer_function():
+    y = 5  # Variable in outer function's scope
+    
+    def inner_function():
+        print(f"Inner can access y: {y}")  # Can access outer scope
+    
+    inner_function()
+    
+outer_function()  # Output: Inner can access y: 5
+
+def counter_function():
+    count = 0
+    
+    def increment():
+        nonlocal count  # Access the outer function's variable
+        count += 1
+        return count
+    
+    return increment  # Return the inner function
+
+counter = counter_function()  # counter is now the increment function
+print(counter())  # Output: 1
+print(counter())  # Output: 2
+print(counter())  # Output: 3
+        </textarea>
+      </div>
+      
+      <h3>Lambda Functions</h3>
+      <p>Lambda functions are small anonymous functions defined with the <code>lambda</code> keyword.</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="18" readonly>
+# Basic lambda function
+square = lambda x: x * x
+print(square(5))  # Output: 25
+
+# Using lambda with higher-order functions
+numbers = [1, 2, 3, 4, 5]
+
+# map applies a function to all items in an iterable
+squared = list(map(lambda x: x * x, numbers))
+print(squared)  # Output: [1, 4, 9, 16, 25]
+
+# filter selects items based on a function
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+print(even_numbers)  # Output: [2, 4]
+
+# sorted with a key function
+students = [
+    {"name": "Alice", "grade": 85},
+    {"name": "Bob", "grade": 92},
+    {"name": "Charlie", "grade": 78}
+]
+
+# Sort students by grade (highest first)
+sorted_students = sorted(students, key=lambda s: s["grade"], reverse=True)
+print([s["name"] for s in sorted_students])  # Output: ['Bob', 'Alice', 'Charlie']
+        </textarea>
+      </div>
+      
+      <h3>Special Methods (Magic Methods)</h3>
+      <p>Python has special methods (also called dunder or magic methods) that let you define how objects behave with built-in functions and operators:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="35" readonly>
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    # String representation for print()
+    def __str__(self):
+        return f"Vector({self.x}, {self.y})"
+    
+    # More detailed representation for debugging
+    def __repr__(self):
+        return f"Vector(x={self.x}, y={self.y})"
+    
+    # Addition operator (+)
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+    
+    # Subtraction operator (-)
+    def __sub__(self, other):
+        return Vector(self.x - other.x, self.y - other.y)
+    
+    # Multiplication operator (*)
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+    
+    # Length function (len())
+    def __len__(self):
+        return int((self.x**2 + self.y**2) ** 0.5)
+    
+    # Equality operator (==)
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+    
+    # Greater than operator (>)
+    def __gt__(self, other):
+        return len(self) > len(other)
+
+# Using the Vector class
+v1 = Vector(3, 4)
+v2 = Vector(1, 2)
+
+print(v1)              # Output: Vector(3, 4)
+print(repr(v2))        # Output: Vector(x=1, y=2)
+print(v1 + v2)         # Output: Vector(4, 6)
+print(v1 - v2)         # Output: Vector(2, 2)
+print(v1 * 2)          # Output: Vector(6, 8)
+print(len(v1))         # Output: 5 (the magnitude of the vector)
+print(v1 == Vector(3, 4))  # Output: True
+print(v1 > v2)         # Output: True (because length of v1 > length of v2)
+        </textarea>
+      </div>
+      
+      <h3>Decorators</h3>
+      <p>Decorators are a powerful feature in Python that allows you to modify or extend the behavior of functions or methods without directly changing their source code:</p>
+      
+      <div class="code-container">
+        <textarea class="code-area" rows="40" readonly>
+# Basic decorator example - functions that modify other functions
+import time
+import functools
+
+# Simple decorator to measure execution time
+def timer(func):
+    @functools.wraps(func)  # Preserves the original function's metadata
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print(f"Function {func.__name__} took {end_time - start_time:.6f} seconds to run")
+        return result
+    return wrapper
+
+# Using the decorator with @ syntax
+@timer
+def calculate_sum(n):
+    return sum(range(n))
+
+# Equivalent to: calculate_sum = timer(calculate_sum)
+
+# Decorator with arguments
+def repeat(n=1):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            results = []
+            for _ in range(n):
+                results.append(func(*args, **kwargs))
+            return results
+        return wrapper
+    return decorator
+
+@repeat(n=3)
+def greet(name):
+    return f"Hello, {name}!"
+
+# Class-based decorators
+class CountCalls:
+    def __init__(self, func):
+        functools.update_wrapper(self, func)
+        self.func = func
+        self.num_calls = 0
+    
+    def __call__(self, *args, **kwargs):
+        self.num_calls += 1
+        print(f"Call {self.num_calls} of {self.func.__name__!r}")
+        return self.func(*args, **kwargs)
+
+@CountCalls
+def say_hello(name):
+    return f"Hello, {name}!"
+
+# Applied decorators examples
+result = calculate_sum(1000000)
+# Output (time will vary): Function calculate_sum took 0.034998 seconds to run
+print(f"Sum: {result}")
+
+greetings = greet("Alice")
+print(greetings)  # Output: ['Hello, Alice!', 'Hello, Alice!', 'Hello, Alice!']
+
+print(say_hello("Bob"))  # Output: Call 1 of 'say_hello'
+                         #         Hello, Bob!
+print(say_hello("Charlie"))  # Output: Call 2 of 'say_hello'
+                             #         Hello, Charlie!
+        </textarea>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Practice: Classes and Inheritance</h3>
+        <p>Create a <code>Shape</code> class with an <code>area()</code> method, and two subclasses: <code>Rectangle</code> and <code>Circle</code>. Each subclass should override the <code>area()</code> method to calculate the appropriate area for that shape.</p>
+        <textarea id="oop-practice" class="practice-area" rows="15" placeholder="Write your code here..."></textarea>
+        <button onclick="checkAnswer('oop-practice')">Check Answer</button>
+        <div id="oop-practice-feedback" class="feedback"></div>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Practice: Decorators</h3>
+        <p>Create a decorator called <code>validate_types</code> that checks if the arguments passed to a function match the type annotations. If they don't, raise a TypeError with an appropriate message.</p>
+        <textarea id="decorators-practice" class="practice-area" rows="15" placeholder="Write your code here..."></textarea>
+        <button onclick="checkAnswer('decorators-practice')">Check Answer</button>
+        <div id="decorators-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+    
+    <!-- Add placeholders for Python practice sections -->
+    <div id="python-practice-section" style="display: none;">
+      <h2>Python Practice Problems</h2>
+      
+      <div class="practice-container">
+        <h3>Basic Python Practice</h3>
+        <p>These exercises cover Python fundamentals like variables, data types, and control flow.</p>
+        <ul class="practice-list">
+          <li><a href="#" onclick="loadPractice('python-strings')">String Manipulation</a></li>
+          <li><a href="#" onclick="loadPractice('python-lists')">List Processing</a></li>
+          <li><a href="#" onclick="loadPractice('python-dicts')">Dictionary Operations</a></li>
+          <li><a href="#" onclick="loadPractice('python-loops')">Loop Challenges</a></li>
+        </ul>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Intermediate Python Practice</h3>
+        <p>These exercises focus on functions, modules, and file handling.</p>
+        <ul class="practice-list">
+          <li><a href="#" onclick="loadPractice('python-functions-practice')">Advanced Functions</a></li>
+          <li><a href="#" onclick="loadPractice('python-modules')">Working with Modules</a></li>
+          <li><a href="#" onclick="loadPractice('python-files')">File I/O Operations</a></li>
+          <li><a href="#" onclick="loadPractice('python-exceptions')">Exception Handling</a></li>
+        </ul>
+      </div>
+      
+      <div class="practice-container">
+        <h3>Advanced Python Practice</h3>
+        <p>These exercises cover advanced Python concepts like OOP, generators, and decorators.</p>
+        <ul class="practice-list">
+          <li><a href="#" onclick="loadPractice('python-classes')">Class Design Patterns</a></li>
+          <li><a href="#" onclick="loadPractice('python-iterators')">Iterators and Generators</a></li>
+          <li><a href="#" onclick="loadPractice('python-decorators-practice')">Advanced Decorators</a></li>
+          <li><a href="#" onclick="loadPractice('python-algorithms')">Algorithm Implementation</a></li>
+        </ul>
+      </div>
+      
+      <div id="practice-problem-container" style="display: none;">
+        <h3 id="practice-title">Problem Title</h3>
+        <p id="practice-description">Problem description will appear here.</p>
+        <textarea id="python-practice-area" class="practice-area" rows="15" placeholder="Write your solution here..."></textarea>
+        <button onclick="checkPracticeSolution()">Check Solution</button>
+        <div id="practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle visibility of sections
+    function toggleSection(sectionId) {
+      const sections = document.querySelectorAll('.python-section');
+      
+      // Hide all sections
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Show the selected section
+      document.getElementById(sectionId).style.display = 'block';
+      
+      // Scroll to the section
+      document.getElementById(sectionId).scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+    
+    // Function to check answers and display solutions
+    function checkAnswer(practiceId) {
+      console.log("Checking answer for: " + practiceId);
+      
+      // Check if solution already exists and is visible
+      let solutionId = practiceId + "-solution";
+      let solution = document.getElementById(solutionId);
+      
+      if (solution) {
+        // If solution exists, toggle it
+        if (solution.style.display === 'block') {
+          solution.style.display = 'none';
+          return;
+        } else {
+          solution.style.display = 'block';
+          solution.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+      }
+      
+      // Get solution content based on practice ID
+      let solutionContent = "";
+      
+      switch(practiceId) {
+        case 'hello-python':
+          solutionContent = `# Get current year with datetime module
+from datetime import datetime
+
+# Get current year
+current_year = datetime.now().year
+
+# Create personalized greeting
+name = "Your Name"  # Change to your actual name
+greeting = f"Hello, {name}! Welcome to Python in {current_year}."
+
+# Print the greeting
+print(greeting)`;
+          break;
+        case 'data-types-practice':
+          solutionContent = `# Integer data type
+age = 25
+print(f"Age: {age}, Type: {type(age)}")
+print(f"Age in 5 years: {age + 5}")
+
+# String data type
+name = "Python Programmer"
+print(f"Name: {name}, Type: {type(name)}")
+print(f"Uppercase: {name.upper()}")
+print(f"Contains 'gram': {'gram' in name}")
+
+# List data type
+scores = [85, 92, 78, 90, 88]
+print(f"Scores: {scores}, Type: {type(scores)}")
+print(f"Average score: {sum(scores) / len(scores)}")
+print(f"Highest score: {max(scores)}")
+
+# Dictionary data type
+student = {
+    "name": "Alex",
+    "age": 20,
+    "courses": ["Python", "Data Science", "Machine Learning"]
+}
+print(f"Student: {student}, Type: {type(student)}")
+print(f"Student name: {student['name']}")
+print(f"Number of courses: {len(student['courses'])}")`;
+          break;
+        case 'control-flow-practice':
+          solutionContent = `# FizzBuzz implementation
+for num in range(1, 21):
+    if num % 3 == 0 and num % 5 == 0:
+        print("FizzBuzz")
+    elif num % 3 == 0:
+        print("Fizz")
+    elif num % 5 == 0:
+        print("Buzz")
+    else:
+        print(num)`;
+          break;
+        case 'functions-practice':
+          solutionContent = `def is_palindrome(s):
+    # Convert the string to lowercase and remove non-alphanumeric characters
+    cleaned = ''.join(char.lower() for char in s if char.isalnum())
+    # Check if the cleaned string is equal to its reverse
+    return cleaned == cleaned[::-1]
+
+# Test cases
+print(is_palindrome("racecar"))  # True
+print(is_palindrome("hello"))    # False
+print(is_palindrome("A man, a plan, a canal: Panama"))  # True
+print(is_palindrome("12321"))      # True
+print(is_palindrome("12345"))      # False`;
+          break;
+        case 'oop-practice':
+          solutionContent = `# Shape class
+class Shape:
+    def area(self):
+        raise NotImplementedError("Subclass must implement this method")
+
+# Rectangle class inheriting from Shape
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+
+# Circle class inheriting from Shape
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def area(self):
+        return 3.14 * self.radius**2
+
+# Rectangle instance
+rect = Rectangle(5, 10)
+print(rect.area())  # Output: 50
+
+# Circle instance
+circle = Circle(7)
+print(circle.area())  # Output: 153.86`;
+          break;
+        case 'decorators-practice':
+          solutionContent = `def validate_types(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        # Get the expected types from the function's annotations
+        expected_types = functools.signature(func).parameters.values()
+        for arg, expected_type in zip(args, expected_types):
+            if not isinstance(arg, expected_type):
+                raise TypeError(f"Expected {expected_type}, got {type(arg)}")
+        return func(*args, **kwargs)
+    return wrapper
+
+@validate_types
+def add(a, b):
+    return a + b
+
+# Test cases
+print(add(1, 2))  # Output: 3
+print(add("1", 2))  # Raises TypeError
+        `;
+          break;
+        default:
+          solutionContent = "No solution available for this practice.";
+      }
+      
+      // Create solution element with high z-index styling
+      solution = document.createElement('div');
+      solution.id = solutionId;
+      solution.className = 'solution-container';
+      solution.style.position = 'relative';
+      solution.style.zIndex = '9999';
+      
+      // Set HTML with site theme styling
+      solution.innerHTML = `
+        <div style="
+          margin-top: 20px;
+          padding: 15px;
+          border: 1px solid #444;
+          border-radius: 5px;
+          background-color: #1a1a1a;
+          color: #ddd;
+          position: relative;
+          z-index: 9999;
+        ">
+          <h3 style="
+            color: #ccc; 
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 18px;
+            position: relative;
+            z-index: 9999;
+          ">Solution:</h3>
+          <pre style="
+            display: block;
+            background-color: #111;
+            color: #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            overflow: auto;
+            font-family: monospace;
+            margin: 0;
+            border: 1px solid #333;
+            position: relative;
+            z-index: 9999;
+          ">${solutionContent}</pre>
+        </div>
+      `;
+      
+      // Find the practice textarea
+      const textarea = document.getElementById(practiceId);
+      
+      // Add solution element after the textarea's parent (the practice-container)
+      textarea.parentNode.appendChild(solution);
+      
+      // Scroll to solution
+      solution.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      console.log("Solution displayed for: " + practiceId);
+    }
+    
+    // Initialize the page
+    window.onload = function() {
+      // Default to showing the first section
+      document.getElementById('python-intro').style.display = 'block';
+    };
+  </script>
+</body>
+</html> 
