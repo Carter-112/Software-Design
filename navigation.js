@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.insertBefore(header, document.body.firstChild);
         }
 
+        // Get the current page filename
+        const currentPage = window.location.pathname.split('/').pop();
+
         // Clear existing header content to avoid duplicates
         header.innerHTML = '';
 
@@ -76,6 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const homeLink = document.createElement('a');
         homeLink.href = 'index.html';
         homeLink.textContent = 'Home';
+        if (currentPage === 'index.html' || currentPage === '') {
+            homeLink.className = 'active-page';
+        }
         dropdownContent.appendChild(homeLink);
 
         // Add category links
@@ -91,6 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const link = document.createElement('a');
                 link.href = item.url;
                 link.textContent = item.name;
+                // Highlight current page
+                if (currentPage === item.url) {
+                    link.className = 'active-page';
+                }
                 dropdownContent.appendChild(link);
             });
         }
@@ -100,6 +110,43 @@ document.addEventListener('DOMContentLoaded', function() {
         dropdown.appendChild(dropdownContent);
         navbar.appendChild(dropdown);
         header.appendChild(navbar);
+
+        // Add some hover effects for better UX
+        const navLinks = document.querySelectorAll('.dropdown-content a');
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('active-page')) {
+                    this.style.backgroundColor = '#555';
+                }
+            });
+            link.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('active-page')) {
+                    this.style.backgroundColor = '';
+                }
+            });
+        });
+
+        // Add style for active page
+        const style = document.createElement('style');
+        style.textContent = `
+            .active-page {
+                background-color: #4CAF50 !important;
+                color: white !important;
+                font-weight: bold;
+            }
+            .nav-category {
+                background-color: #333;
+                color: white;
+                padding: 8px 16px;
+                font-weight: bold;
+                border-bottom: 1px solid #555;
+            }
+            .dropdown-content {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+        `;
+        document.head.appendChild(style);
     }
 
     // Build the navigation when the page loads
