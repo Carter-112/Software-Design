@@ -12,33 +12,67 @@
   <script src="external-link-handler.js"></script>
   <script src="navigation.js"></script>
   <style>
+    body {
+      background-color: #5a2b0c;
+      color: #fff;
+    }
+    
+    #content {
+      background-color: #5a2b0c;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    
+    .code-container {
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    
+    .code-area {
+      background-color: #f9f9f9;
+      color: #333;
+      padding: 10px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+    
     .code-input {
       width: 100%;
       min-height: 150px;
       font-family: monospace;
       padding: 10px;
       margin: 10px 0;
-      border: 1px solid #ccc;
+      border: 2px solid #e78c11;
       border-radius: 4px;
       background-color: #f9f9f9;
+      color: #333;
     }
     
     .hint-container {
-      background-color: #f0f8ff;
-      border-left: 4px solid #4CAF50;
-      padding: 10px;
-      margin: 10px 0;
-      display: none;
+      background-color: #7a3b0c;
+      border-left: 4px solid #e78c11;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 5px 5px 0;
+      color: #fff;
     }
     
     #solutionContainer {
       background-color: #f9f9f9;
-      border: 1px solid #ddd;
+      border: 2px solid #e78c11;
       border-radius: 5px;
       padding: 15px;
       margin-top: 20px;
       z-index: 999;
       position: relative;
+      color: #333;
+    }
+    
+    #solutionContainer h3 {
+      color: #e78c11;
+      margin-top: 0;
     }
     
     .button-row {
@@ -49,7 +83,7 @@
     
     button {
       padding: 10px 15px;
-      background-color: #4CAF50;
+      background-color: #e78c11;
       color: white;
       border: none;
       border-radius: 4px;
@@ -58,7 +92,22 @@
     }
     
     button:hover {
-      background-color: #45a049;
+      background-color: #d67b01;
+    }
+    
+    h1, h2, h3, h4, h5 {
+      color: #e78c11;
+    }
+    
+    #snippetTitle {
+      color: #e78c11;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    
+    #snippetDescription {
+      color: #fff;
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -145,7 +194,6 @@
       <textarea id="userCodeInput" class="code-input" placeholder="Write your code solution here..."></textarea>
       
       <div class="button-row">
-        <button id="showHintButton" onclick="toggleHint()">Show Hint</button>
         <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
       </div>
       
@@ -380,32 +428,16 @@
       document.getElementById('solutionCode').textContent = currentSnippet.solution;
       document.getElementById('userCodeInput').value = currentSnippet.code;
       
-      // Show snippet, hide solution and hint
+      // Show snippet
       document.getElementById('snippetContainer').style.display = 'block';
       document.getElementById('solutionContainer').style.display = 'none';
-      document.getElementById('hintContainer').style.display = 'none';
       document.getElementById('toggleAnswerButton').textContent = 'Show Solution';
-      document.getElementById('showHintButton').textContent = 'Show Hint';
       
       // Scroll to snippet
       document.getElementById('snippetContainer').scrollIntoView({
         behavior: 'smooth', 
         block: 'start'
       });
-    }
-    
-    // Toggle hint visibility
-    function toggleHint() {
-      const hintContainer = document.getElementById('hintContainer');
-      const hintButton = document.getElementById('showHintButton');
-      
-      if (hintContainer.style.display === 'none') {
-        hintContainer.style.display = 'block';
-        hintButton.textContent = 'Hide Hint';
-      } else {
-        hintContainer.style.display = 'none';
-        hintButton.textContent = 'Show Hint';
-      }
     }
     
     // Toggle solution visibility
@@ -435,14 +467,14 @@
       }
     }
     
-    // Remove any orange solution buttons when the page loads
+    // Remove any orange solution buttons and load first challenge when the page loads
     window.onload = function() {
       // Give DOM time to fully render before removing elements
       setTimeout(() => {
         const orangeButtons = document.querySelectorAll('.orange-solution');
         orangeButtons.forEach(btn => btn.remove());
         
-        // Also check for any elements with the text "Solution" that might be orange
+        // Also check for and remove any elements with the text "Solution" that might be orange
         const allElements = document.querySelectorAll('*');
         allElements.forEach(el => {
           if (el.textContent.includes('Solution') && 
@@ -451,6 +483,9 @@
             el.remove();
           }
         });
+        
+        // Load the first challenge automatically
+        getRandomSnippet();
       }, 500);
     };
   </script>
