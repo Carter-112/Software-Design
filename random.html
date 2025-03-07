@@ -13,29 +13,31 @@
   <script src="navigation.js"></script>
   <style>
     body {
-      background-color: #5a2b0c;
+      background-color: #222;
       color: #fff;
     }
     
     #content {
-      background-color: #5a2b0c;
+      background-color: #222;
       padding: 20px;
       border-radius: 8px;
     }
     
     .code-container {
-      background-color: #f9f9f9;
+      background-color: #333;
       border-radius: 5px;
       padding: 10px;
       margin: 10px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     
     .code-area {
-      background-color: #f9f9f9;
-      color: #333;
+      background-color: #333;
+      color: #eee;
       padding: 10px;
       border-radius: 5px;
       white-space: pre-wrap;
+      font-family: monospace;
     }
     
     .code-input {
@@ -46,28 +48,36 @@
       margin: 10px 0;
       border: 2px solid #e78c11;
       border-radius: 4px;
-      background-color: #f9f9f9;
-      color: #333;
+      background-color: #333;
+      color: #eee;
     }
     
     .hint-container {
-      background-color: #7a3b0c;
+      background-color: #333;
       border-left: 4px solid #e78c11;
       padding: 15px;
-      margin: 15px 0;
+      margin: 0 0 15px 0;
       border-radius: 0 5px 5px 0;
       color: #fff;
     }
     
     #solutionContainer {
-      background-color: #f9f9f9;
+      background-color: #333;
       border: 2px solid #e78c11;
       border-radius: 5px;
       padding: 15px;
       margin-top: 20px;
       z-index: 999;
       position: relative;
-      color: #333;
+      color: #eee;
+    }
+    
+    #solutionCode {
+      color: #eee;
+      background-color: #333;
+      display: block;
+      width: 100%;
+      white-space: pre-wrap;
     }
     
     #solutionContainer h3 {
@@ -89,10 +99,11 @@
       border-radius: 4px;
       cursor: pointer;
       transition: background-color 0.3s;
+      font-weight: bold;
     }
     
     button:hover {
-      background-color: #d67b01;
+      background-color: #f39c21;
     }
     
     h1, h2, h3, h4, h5 {
@@ -108,6 +119,17 @@
     #snippetDescription {
       color: #fff;
       margin-bottom: 20px;
+    }
+    
+    /* Fix for solution display */
+    #snippetContainer {
+      position: relative;
+    }
+    
+    /* No gap between hint and solution */
+    h4 {
+      margin-top: 0;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -199,7 +221,7 @@
       
       <div id="solutionContainer" style="display: none;">
         <h3>Solution:</h3>
-        <div class="code-container">
+        <div class="code-container" style="margin-bottom: 20px;">
           <pre id="solutionCode" class="code-area"></pre>
         </div>
       </div>
@@ -458,9 +480,23 @@
         }
       });
       
-      if (solutionContainer.style.display === 'none') {
+      // Force solution to be visible and properly formatted
+      if (solutionContainer.style.display === 'none' || solutionContainer.style.display === '') {
         solutionContainer.style.display = 'block';
         toggleButton.textContent = 'Hide Solution';
+        
+        // Make sure solution code is properly set
+        if (currentSnippet) {
+          document.getElementById('solutionCode').textContent = currentSnippet.solution;
+        }
+        
+        // Ensure solution is visible
+        setTimeout(() => {
+          solutionContainer.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }, 100);
       } else {
         solutionContainer.style.display = 'none';
         toggleButton.textContent = 'Show Solution';
