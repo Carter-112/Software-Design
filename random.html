@@ -10,6 +10,7 @@
   <script src="mouse-trail.js"></script>
   <script src="diagnostic.js"></script>
   <script src="external-link-handler.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body>
   <header>
@@ -28,6 +29,30 @@
           <a href="hashset.html">HashSet</a>
           <a href="bst.html">Binary Search Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
           
           <!-- Language Fundamentals -->
           <div class="nav-category">Language Fundamentals</div>
@@ -48,169 +73,225 @@
   </header>
 
   <div id="content">
-    <h1>Random Practice Challenges</h1>
-    <p>Test your programming skills with these randomly generated code challenges across different languages.</p>
+    <h1>Java Random Practice</h1>
+    <p>Test your Java programming skills with these randomly selected challenges from various Java implementations.</p>
     
-    <div class="language-selector">
-      <button class="language-btn active" onclick="selectLanguage('java')">Java</button>
-      <button class="language-btn" onclick="selectLanguage('python')">Python</button>
-      <button class="language-btn" onclick="selectLanguage('sql')">SQL</button>
-      <button class="language-btn" onclick="selectLanguage('web')">HTML/CSS/JS</button>
-    </div>
+    <button id="randomSnippetButton" onclick="getRandomSnippet()">Get Random Challenge</button>
     
-    <!-- Java Random Practice Section (Original Content) -->
-    <div id="java-practice" class="language-section">
-      <h2>Java Random Practice</h2>
-      <p>Click the button below to get a random Java coding challenge. Try to solve it before revealing the solution.</p>
+    <div id="snippetContainer" style="display: none;">
+      <h3 id="snippetTitle">Challenge Title</h3>
+      <p id="snippetDescription">Description of the challenge.</p>
       
-      <button id="randomSnippetButton" onclick="handleRandomSnippet()">Get Random Java Challenge</button>
+      <div class="code-container">
+        <pre id="snippetCode" class="code-area"></pre>
+      </div>
       
-      <div id="snippetContainer" style="display: none;">
-        <h3 id="snippetTitle">Challenge Title</h3>
-        <p id="snippetDescription">Description of the challenge.</p>
-        
+      <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
+      
+      <div id="solutionContainer" style="display: none; position: relative; z-index: 999;">
+        <h3>Solution:</h3>
         <div class="code-container">
-          <pre id="snippetCode" class="code-area"></pre>
+          <pre id="solutionCode" class="code-area"></pre>
         </div>
-        
-        <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
-        
-        <div id="solutionContainer" style="display: none; position: relative; z-index: 999;">
-          <h3>Solution:</h3>
-          <div class="code-container">
-            <pre id="solutionCode" class="code-area"></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Python Random Practice Section (Placeholder) -->
-    <div id="python-practice" class="language-section" style="display: none;">
-      <h2>Python Random Practice</h2>
-      <p>Click the button below to get a random Python coding challenge. Try to solve it before revealing the solution.</p>
-      
-      <button onclick="alert('Python challenges will be available soon!')">Get Random Python Challenge</button>
-      
-      <div class="placeholder-content">
-        <h3>Coming Soon</h3>
-        <p>Python random practice challenges are currently in development. Check back soon for:</p>
-        <ul>
-          <li>Data manipulation challenges</li>
-          <li>Algorithm implementations</li>
-          <li>Object-oriented Python challenges</li>
-          <li>File processing tasks</li>
-          <li>Data science mini-projects</li>
-        </ul>
-      </div>
-    </div>
-    
-    <!-- SQL Random Practice Section (Placeholder) -->
-    <div id="sql-practice" class="language-section" style="display: none;">
-      <h2>SQL Random Practice</h2>
-      <p>Click the button below to get a random SQL challenge. Try to solve it before revealing the solution.</p>
-      
-      <button onclick="alert('SQL challenges will be available soon!')">Get Random SQL Challenge</button>
-      
-      <div class="placeholder-content">
-        <h3>Coming Soon</h3>
-        <p>SQL random practice challenges are currently in development. Check back soon for:</p>
-        <ul>
-          <li>Query challenges with complex JOINs</li>
-          <li>Data aggregation problems</li>
-          <li>Database schema design</li>
-          <li>Performance optimization tasks</li>
-          <li>Data analysis scenarios</li>
-        </ul>
-      </div>
-    </div>
-    
-    <!-- Web Development Random Practice Section (Placeholder) -->
-    <div id="web-practice" class="language-section" style="display: none;">
-      <h2>Web Development Random Practice</h2>
-      <p>Click the button below to get a random web development challenge. Try to solve it before revealing the solution.</p>
-      
-      <button onclick="alert('Web development challenges will be available soon!')">Get Random Web Challenge</button>
-      
-      <div class="placeholder-content">
-        <h3>Coming Soon</h3>
-        <p>Web development random practice challenges are currently in development. Check back soon for:</p>
-        <ul>
-          <li>Responsive design challenges</li>
-          <li>JavaScript DOM manipulation tasks</li>
-          <li>CSS layout problems</li>
-          <li>Form validation exercises</li>
-          <li>Interactive UI components</li>
-        </ul>
       </div>
     </div>
   </div>
 
   <script>
-    // Java code snippets and solutions (original content)
+    // Collection of code snippets from different Java implementations
     const javaSnippets = [
+      // Singly Linked List snippets
       {
-        title: "Reverse a String",
-        description: "Implement a function to reverse a string without using built-in reverse methods.",
-        code: "public class StringReversal {\n  public static String reverse(String str) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(reverse(\"Hello World\"));\n  }\n}",
-        solution: "public class StringReversal {\n  public static String reverse(String str) {\n    char[] characters = str.toCharArray();\n    int left = 0;\n    int right = str.length() - 1;\n    \n    while (left < right) {\n      char temp = characters[left];\n      characters[left] = characters[right];\n      characters[right] = temp;\n      left++;\n      right--;\n    }\n    \n    return new String(characters);\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(reverse(\"Hello World\"));\n  }\n}"
+        title: "Singly Linked List - Node Class",
+        description: "Implement the Node class for a singly linked list.",
+        source: "singly",
+        code: "private class Node {\n    // Add fields and constructor\n    \n}",
+        solution: "private class Node {\n    E data;\n    Node next;\n    \n    public Node(E data) {\n        this.data = data;\n        this.next = null;\n    }\n}"
       },
       {
-        title: "Find Maximum in Array",
-        description: "Write a method to find the maximum value in an integer array.",
-        code: "public class MaxFinder {\n  public static int findMax(int[] arr) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    int[] numbers = {5, 9, 2, 6, 3, 8};\n    System.out.println(findMax(numbers));\n  }\n}",
-        solution: "public class MaxFinder {\n  public static int findMax(int[] arr) {\n    if (arr == null || arr.length == 0) {\n      throw new IllegalArgumentException(\"Array cannot be empty or null\");\n    }\n    \n    int max = arr[0];\n    for (int i = 1; i < arr.length; i++) {\n      if (arr[i] > max) {\n        max = arr[i];\n      }\n    }\n    \n    return max;\n  }\n  \n  public static void main(String[] args) {\n    int[] numbers = {5, 9, 2, 6, 3, 8};\n    System.out.println(findMax(numbers));\n  }\n}"
+        title: "Singly Linked List - Add First Method",
+        description: "Implement the addFirst method for a singly linked list.",
+        source: "singly",
+        code: "public void addFirst(E data) {\n    // Your code here\n    \n}",
+        solution: "public void addFirst(E data) {\n    Node newNode = new Node(data);\n    newNode.next = head;\n    head = newNode;\n    size++;\n}"
       },
       {
-        title: "Check for Palindrome",
-        description: "Create a method that checks if a string is a palindrome (reads the same forward and backward).",
-        code: "public class PalindromeChecker {\n  public static boolean isPalindrome(String str) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(isPalindrome(\"racecar\"));\n    System.out.println(isPalindrome(\"hello\"));\n  }\n}",
-        solution: "public class PalindromeChecker {\n  public static boolean isPalindrome(String str) {\n    if (str == null) {\n      return false;\n    }\n    \n    str = str.toLowerCase().replaceAll(\"[^a-z0-9]\", \"\");\n    int left = 0;\n    int right = str.length() - 1;\n    \n    while (left < right) {\n      if (str.charAt(left) != str.charAt(right)) {\n        return false;\n      }\n      left++;\n      right--;\n    }\n    \n    return true;\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(isPalindrome(\"racecar\"));\n    System.out.println(isPalindrome(\"hello\"));\n  }\n}"
+        title: "Singly Linked List - Add Last Method",
+        description: "Implement the addLast method for a singly linked list.",
+        source: "singly",
+        code: "public void addLast(E data) {\n    // Your code here\n    \n}",
+        solution: "public void addLast(E data) {\n    Node newNode = new Node(data);\n    \n    if (head == null) {\n        head = newNode;\n    } else {\n        Node current = head;\n        while (current.next != null) {\n            current = current.next;\n        }\n        current.next = newNode;\n    }\n    size++;\n}"
+      },
+      {
+        title: "Singly Linked List - Get Method",
+        description: "Implement the get method for a singly linked list.",
+        source: "singly",
+        code: "public E get(int index) {\n    // Your code here\n    \n}",
+        solution: "public E get(int index) {\n    if (index < 0 || index >= size) {\n        throw new IndexOutOfBoundsException(\"Index: \" + index + \", Size: \" + size);\n    }\n    \n    Node current = head;\n    for (int i = 0; i < index; i++) {\n        current = current.next;\n    }\n    \n    return current.data;\n}"
+      },
+      {
+        title: "Singly Linked List - Remove Method",
+        description: "Implement the remove method for a singly linked list.",
+        source: "singly",
+        code: "public E remove(int index) {\n    // Your code here\n    \n}",
+        solution: "public E remove(int index) {\n    if (index < 0 || index >= size) {\n        throw new IndexOutOfBoundsException(\"Index: \" + index + \", Size: \" + size);\n    }\n    \n    E removedData;\n    if (index == 0) {\n        removedData = head.data;\n        head = head.next;\n    } else {\n        Node current = head;\n        for (int i = 0; i < index - 1; i++) {\n            current = current.next;\n        }\n        removedData = current.next.data;\n        current.next = current.next.next;\n    }\n    \n    size--;\n    return removedData;\n}"
+      },
+      
+      // Doubly Linked List snippets
+      {
+        title: "Doubly Linked List - Node Class",
+        description: "Implement the Node class for a doubly linked list.",
+        source: "doubly",
+        code: "private class Node {\n    // Add fields and constructor\n    \n}",
+        solution: "private class Node {\n    E data;\n    Node next;\n    Node prev;\n    \n    public Node(E data) {\n        this.data = data;\n        this.next = null;\n        this.prev = null;\n    }\n}"
+      },
+      {
+        title: "Doubly Linked List - Add First Method",
+        description: "Implement the addFirst method for a doubly linked list.",
+        source: "doubly",
+        code: "public void addFirst(E data) {\n    // Your code here\n    \n}",
+        solution: "public void addFirst(E data) {\n    Node newNode = new Node(data);\n    \n    if (head == null) {\n        head = tail = newNode;\n    } else {\n        newNode.next = head;\n        head.prev = newNode;\n        head = newNode;\n    }\n    \n    size++;\n}"
+      },
+      {
+        title: "Doubly Linked List - Add Last Method",
+        description: "Implement the addLast method for a doubly linked list.",
+        source: "doubly",
+        code: "public void addLast(E data) {\n    // Your code here\n    \n}",
+        solution: "public void addLast(E data) {\n    Node newNode = new Node(data);\n    \n    if (tail == null) {\n        head = tail = newNode;\n    } else {\n        tail.next = newNode;\n        newNode.prev = tail;\n        tail = newNode;\n    }\n    \n    size++;\n}"
+      },
+      {
+        title: "Doubly Linked List - Remove First Method",
+        description: "Implement the removeFirst method for a doubly linked list.",
+        source: "doubly",
+        code: "public E removeFirst() {\n    // Your code here\n    \n}",
+        solution: "public E removeFirst() {\n    if (head == null) {\n        throw new NoSuchElementException(\"List is empty\");\n    }\n    \n    E removedData = head.data;\n    \n    if (head == tail) {\n        head = tail = null;\n    } else {\n        head = head.next;\n        head.prev = null;\n    }\n    \n    size--;\n    return removedData;\n}"
+      },
+      {
+        title: "Doubly Linked List - Remove Last Method",
+        description: "Implement the removeLast method for a doubly linked list.",
+        source: "doubly",
+        code: "public E removeLast() {\n    // Your code here\n    \n}",
+        solution: "public E removeLast() {\n    if (tail == null) {\n        throw new NoSuchElementException(\"List is empty\");\n    }\n    \n    E removedData = tail.data;\n    \n    if (head == tail) {\n        head = tail = null;\n    } else {\n        tail = tail.prev;\n        tail.next = null;\n    }\n    \n    size--;\n    return removedData;\n}"
+      },
+      
+      // ArrayList snippets
+      {
+        title: "ArrayList - Constructor",
+        description: "Implement the constructors for an ArrayList.",
+        source: "arraylist",
+        code: "public class ArrayList<E> {\n    private static final int DEFAULT_CAPACITY = 10;\n    private Object[] elements;\n    private int size;\n    \n    // Implement constructors\n    \n}",
+        solution: "public class ArrayList<E> {\n    private static final int DEFAULT_CAPACITY = 10;\n    private Object[] elements;\n    private int size;\n    \n    // Default constructor\n    public ArrayList() {\n        elements = new Object[DEFAULT_CAPACITY];\n        size = 0;\n    }\n    \n    // Constructor with initial capacity\n    public ArrayList(int initialCapacity) {\n        if (initialCapacity >= 0) {\n            elements = new Object[initialCapacity];\n        } else {\n            throw new IllegalArgumentException(\"Illegal Capacity: \" + initialCapacity);\n        }\n        size = 0;\n    }\n}"
+      },
+      {
+        title: "ArrayList - Add Method",
+        description: "Implement the add method for an ArrayList.",
+        source: "arraylist",
+        code: "public boolean add(E element) {\n    // Your code here\n    \n}",
+        solution: "public boolean add(E element) {\n    ensureCapacity(size + 1);\n    elements[size++] = element;\n    return true;\n}\n\nprivate void ensureCapacity(int minCapacity) {\n    if (minCapacity > elements.length) {\n        int newCapacity = Math.max(elements.length * 2, minCapacity);\n        elements = Arrays.copyOf(elements, newCapacity);\n    }\n}"
+      },
+      {
+        title: "ArrayList - Get Method",
+        description: "Implement the get method for an ArrayList.",
+        source: "arraylist",
+        code: "public E get(int index) {\n    // Your code here\n    \n}",
+        solution: "public E get(int index) {\n    if (index < 0 || index >= size) {\n        throw new IndexOutOfBoundsException(\"Index: \" + index + \", Size: \" + size);\n    }\n    \n    @SuppressWarnings(\"unchecked\")\n    E element = (E) elements[index];\n    return element;\n}"
+      },
+      {
+        title: "ArrayList - Remove Method",
+        description: "Implement the remove method for an ArrayList.",
+        source: "arraylist",
+        code: "public E remove(int index) {\n    // Your code here\n    \n}",
+        solution: "public E remove(int index) {\n    if (index < 0 || index >= size) {\n        throw new IndexOutOfBoundsException(\"Index: \" + index + \", Size: \" + size);\n    }\n    \n    @SuppressWarnings(\"unchecked\")\n    E oldValue = (E) elements[index];\n    \n    int numMoved = size - index - 1;\n    if (numMoved > 0) {\n        System.arraycopy(elements, index + 1, elements, index, numMoved);\n    }\n    elements[--size] = null; // Let GC do its work\n    \n    return oldValue;\n}"
+      },
+      {
+        title: "ArrayList - Contains Method",
+        description: "Implement the contains method for an ArrayList.",
+        source: "arraylist",
+        code: "public boolean contains(Object o) {\n    // Your code here\n    \n}",
+        solution: "public boolean contains(Object o) {\n    return indexOf(o) >= 0;\n}\n\npublic int indexOf(Object o) {\n    if (o == null) {\n        for (int i = 0; i < size; i++) {\n            if (elements[i] == null) {\n                return i;\n            }\n        }\n    } else {\n        for (int i = 0; i < size; i++) {\n            if (o.equals(elements[i])) {\n                return i;\n            }\n        }\n    }\n    return -1;\n}"
+      },
+      
+      // HashMap snippets
+      {
+        title: "HashMap - Entry Class",
+        description: "Implement the Entry class for a HashMap.",
+        source: "hashmap",
+        code: "private static class Entry<K, V> {\n    // Add fields and constructor\n    \n}",
+        solution: "private static class Entry<K, V> {\n    final K key;\n    V value;\n    Entry<K, V> next;\n    final int hash;\n    \n    Entry(K key, V value, Entry<K, V> next, int hash) {\n        this.key = key;\n        this.value = value;\n        this.next = next;\n        this.hash = hash;\n    }\n}"
+      },
+      {
+        title: "HashMap - Put Method",
+        description: "Implement the put method for a HashMap.",
+        source: "hashmap",
+        code: "public V put(K key, V value) {\n    // Your code here\n    \n}",
+        solution: "public V put(K key, V value) {\n    if (key == null) {\n        return putForNullKey(value);\n    }\n    \n    int hash = hash(key.hashCode());\n    int index = indexFor(hash, table.length);\n    \n    for (Entry<K, V> e = table[index]; e != null; e = e.next) {\n        if (e.hash == hash && (key == e.key || key.equals(e.key))) {\n            V oldValue = e.value;\n            e.value = value;\n            return oldValue;\n        }\n    }\n    \n    addEntry(hash, key, value, index);\n    return null;\n}\n\nprivate void addEntry(int hash, K key, V value, int bucketIndex) {\n    if ((size >= threshold) && (null != table[bucketIndex])) {\n        resize(2 * table.length);\n        hash = (null != key) ? hash(key.hashCode()) : 0;\n        bucketIndex = indexFor(hash, table.length);\n    }\n    \n    createEntry(hash, key, value, bucketIndex);\n}\n\nprivate void createEntry(int hash, K key, V value, int bucketIndex) {\n    Entry<K, V> e = table[bucketIndex];\n    table[bucketIndex] = new Entry<K, V>(key, value, e, hash);\n    size++;\n}"
+      },
+      {
+        title: "HashMap - Get Method",
+        description: "Implement the get method for a HashMap.",
+        source: "hashmap",
+        code: "public V get(Object key) {\n    // Your code here\n    \n}",
+        solution: "public V get(Object key) {\n    if (key == null) {\n        return getForNullKey();\n    }\n    \n    int hash = hash(key.hashCode());\n    for (Entry<K, V> e = table[indexFor(hash, table.length)]; e != null; e = e.next) {\n        Object k;\n        if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {\n            return e.value;\n        }\n    }\n    \n    return null;\n}\n\nprivate V getForNullKey() {\n    for (Entry<K, V> e = table[0]; e != null; e = e.next) {\n        if (e.key == null) {\n            return e.value;\n        }\n    }\n    return null;\n}"
+      },
+      {
+        title: "HashMap - Remove Method",
+        description: "Implement the remove method for a HashMap.",
+        source: "hashmap",
+        code: "public V remove(Object key) {\n    // Your code here\n    \n}",
+        solution: "public V remove(Object key) {\n    Entry<K, V> e = removeEntryForKey(key);\n    return (e == null ? null : e.value);\n}\n\nprivate Entry<K, V> removeEntryForKey(Object key) {\n    if (size == 0) {\n        return null;\n    }\n    \n    int hash = (key == null) ? 0 : hash(key.hashCode());\n    int i = indexFor(hash, table.length);\n    \n    Entry<K, V> prev = table[i];\n    Entry<K, V> e = prev;\n    \n    while (e != null) {\n        Entry<K, V> next = e.next;\n        Object k;\n        \n        if (e.hash == hash && ((k = e.key) == key || (key != null && key.equals(k)))) {\n            size--;\n            if (prev == e) {\n                table[i] = next;\n            } else {\n                prev.next = next;\n            }\n            return e;\n        }\n        \n        prev = e;\n        e = next;\n    }\n    \n    return e;\n}"
+      },
+      
+      // BST snippets
+      {
+        title: "Binary Search Tree - Node Class",
+        description: "Implement the Node class for a Binary Search Tree.",
+        source: "bst",
+        code: "private class Node {\n    // Add fields and constructor\n    \n}",
+        solution: "private class Node {\n    E data;\n    Node left;\n    Node right;\n    \n    public Node(E data) {\n        this.data = data;\n        left = null;\n        right = null;\n    }\n}"
+      },
+      {
+        title: "Binary Search Tree - Add Method",
+        description: "Implement the add method for a Binary Search Tree.",
+        source: "bst",
+        code: "public boolean add(E data) {\n    // Your code here\n    \n}",
+        solution: "public boolean add(E data) {\n    if (data == null) {\n        throw new NullPointerException(\"Cannot add null data to the tree\");\n    }\n    \n    if (root == null) {\n        root = new Node(data);\n        size++;\n        return true;\n    }\n    \n    return addRecursive(root, data);\n}\n\nprivate boolean addRecursive(Node current, E data) {\n    int compareResult = data.compareTo(current.data);\n    \n    if (compareResult == 0) {\n        // Element already exists\n        return false;\n    }\n    \n    if (compareResult < 0) {\n        // Insert in the left subtree\n        if (current.left == null) {\n            current.left = new Node(data);\n            size++;\n            return true;\n        }\n        return addRecursive(current.left, data);\n    } else {\n        // Insert in the right subtree\n        if (current.right == null) {\n            current.right = new Node(data);\n            size++;\n            return true;\n        }\n        return addRecursive(current.right, data);\n    }\n}"
+      },
+      {
+        title: "Binary Search Tree - Contains Method",
+        description: "Implement the contains method for a Binary Search Tree.",
+        source: "bst",
+        code: "public boolean contains(E data) {\n    // Your code here\n    \n}",
+        solution: "public boolean contains(E data) {\n    if (data == null) {\n        throw new NullPointerException(\"Cannot search for null data\");\n    }\n    \n    return containsRecursive(root, data);\n}\n\nprivate boolean containsRecursive(Node current, E data) {\n    if (current == null) {\n        return false;\n    }\n    \n    int compareResult = data.compareTo(current.data);\n    \n    if (compareResult == 0) {\n        return true;\n    }\n    \n    return compareResult < 0\n        ? containsRecursive(current.left, data)\n        : containsRecursive(current.right, data);\n}"
+      },
+      {
+        title: "Binary Search Tree - In-Order Traversal",
+        description: "Implement the in-order traversal method for a Binary Search Tree.",
+        source: "bst",
+        code: "public List<E> inOrderTraversal() {\n    // Your code here\n    \n}",
+        solution: "public List<E> inOrderTraversal() {\n    List<E> result = new ArrayList<>();\n    inOrderTraversal(root, result);\n    return result;\n}\n\nprivate void inOrderTraversal(Node node, List<E> result) {\n    if (node != null) {\n        inOrderTraversal(node.left, result);\n        result.add(node.data);\n        inOrderTraversal(node.right, result);\n    }\n}"
+      },
+      {
+        title: "Binary Search Tree - Height Method",
+        description: "Implement the height method for a Binary Search Tree.",
+        source: "bst",
+        code: "public int height() {\n    // Your code here\n    \n}",
+        solution: "public int height() {\n    return heightRecursive(root);\n}\n\nprivate int heightRecursive(Node node) {\n    if (node == null) {\n        return -1; // Height of an empty tree is -1\n    }\n    \n    int leftHeight = heightRecursive(node.left);\n    int rightHeight = heightRecursive(node.right);\n    \n    return 1 + Math.max(leftHeight, rightHeight);\n}"
       }
     ];
     
-    let currentSnippetIndex = -1;
+    // Keep track of the current snippet
+    let currentSnippet = null;
     
-    // Language selection handling
-    function selectLanguage(language) {
-      // Hide all language sections
-      const sections = document.querySelectorAll('.language-section');
-      sections.forEach(section => {
-        section.style.display = 'none';
-      });
-      
-      // Show the selected language section
-      document.getElementById(language + '-practice').style.display = 'block';
-      
-      // Update active button styling
-      const buttons = document.querySelectorAll('.language-btn');
-      buttons.forEach(button => {
-        button.classList.remove('active');
-      });
-      const activeButton = document.querySelector(`.language-btn[onclick*="${language}"]`);
-      if (activeButton) {
-        activeButton.classList.add('active');
-      }
-      
-      // Reset snippet display if changing language
-      document.getElementById('snippetContainer').style.display = 'none';
-    }
-
-    // Handle random snippet button for Java (original functionality)
-    function handleRandomSnippet() {
-      // Get a random index (different from current)
-      let randomIndex;
-      do {
-        randomIndex = Math.floor(Math.random() * javaSnippets.length);
-      } while (randomIndex === currentSnippetIndex && javaSnippets.length > 1);
-      
-      currentSnippetIndex = randomIndex;
-      const snippet = javaSnippets[currentSnippetIndex];
+    // Get a random snippet
+    function getRandomSnippet() {
+      // Select a random snippet
+      currentSnippet = javaSnippets[Math.floor(Math.random() * javaSnippets.length)];
       
       // Update the DOM
-      document.getElementById('snippetTitle').textContent = snippet.title;
-      document.getElementById('snippetDescription').textContent = snippet.description;
-      document.getElementById('snippetCode').textContent = snippet.code;
-      document.getElementById('solutionCode').textContent = snippet.solution;
+      document.getElementById('snippetTitle').textContent = currentSnippet.title;
+      document.getElementById('snippetDescription').textContent = currentSnippet.description;
+      document.getElementById('snippetCode').textContent = currentSnippet.code;
+      document.getElementById('solutionCode').textContent = currentSnippet.solution;
       
       // Show snippet, hide solution
       document.getElementById('snippetContainer').style.display = 'block';
@@ -223,8 +304,8 @@
         block: 'start'
       });
     }
-
-    // Toggle the solution visibility
+    
+    // Toggle solution visibility
     function toggleRandomAnswer() {
       const solutionContainer = document.getElementById('solutionContainer');
       const toggleButton = document.getElementById('toggleAnswerButton');
@@ -232,6 +313,15 @@
       // Remove any existing orange solution buttons
       const orangeButtons = document.querySelectorAll('.orange-solution');
       orangeButtons.forEach(btn => btn.remove());
+      
+      // Check for and remove any elements with the text "Solution" that might be orange
+      const allElements = document.querySelectorAll('*');
+      allElements.forEach(el => {
+        if (el.textContent.includes('Solution') && 
+            window.getComputedStyle(el).getPropertyValue('border').includes('orange')) {
+          el.remove();
+        }
+      });
       
       if (solutionContainer.style.display === 'none') {
         solutionContainer.style.display = 'block';
@@ -242,11 +332,26 @@
       }
     }
     
-    // Initialize with Java practice selected
+    // Remove any orange solution buttons when the page loads
     window.onload = function() {
-      selectLanguage('java');
+      // Give DOM time to fully render before removing elements
+      setTimeout(() => {
+        const orangeButtons = document.querySelectorAll('.orange-solution');
+        orangeButtons.forEach(btn => btn.remove());
+        
+        // Also check for any elements with the text "Solution" that might be orange
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+          if (el.textContent.includes('Solution') && 
+              (window.getComputedStyle(el).getPropertyValue('border').includes('orange') ||
+               window.getComputedStyle(el).getPropertyValue('background').includes('orange'))) {
+            el.remove();
+          }
+        });
+      }, 500);
     };
   </script>
+  
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
