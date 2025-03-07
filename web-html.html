@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Practice - HTML Structure</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <style>
+    .preview-box {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      color: #333;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>HTML Structure and Semantics</h1>
+
+    <!-- Block 1: Basic HTML Document Structure -->
+    <div class="method">
+      <h3>Basic HTML Document Structure</h3>
+      <p class="hint">// Write the basic structure of an HTML document</p>
+      <textarea placeholder="Type your HTML code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('html-basic-structure')">Check Answer</button>
+      <pre id="html-basic-structure"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;My Web Page&lt;/title&gt;
+  &lt;meta name="description" content="A description of my web page"&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt;
+  &lt;script src="script.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;My Website&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  
+  &lt;main&gt;
+    &lt;h2&gt;Welcome to My Website&lt;/h2&gt;
+    &lt;p&gt;This is the main content of my web page.&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;footer&gt;
+    &lt;p&gt;&copy; 2023 My Website. All rights reserved.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      <button onclick="previewHTML('html-basic-structure')">Preview Solution</button>
+      <div id="preview-html-basic-structure" class="preview-box"></div>
+    </div>
+
+    <!-- Block 2: Semantic HTML Elements -->
+    <div class="method">
+      <h3>Semantic HTML Elements</h3>
+      <p class="hint">// Create a webpage structure using semantic HTML5 elements</p>
+      <textarea placeholder="Type your HTML code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('html-semantic')">Check Answer</button>
+      <pre id="html-semantic"><code>&lt;!-- Article with semantic elements --&gt;
+&lt;article&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Understanding Semantic HTML&lt;/h1&gt;
+    &lt;p&gt;Published on &lt;time datetime="2023-06-15"&gt;June 15, 2023&lt;/time&gt; by &lt;author&gt;Jane Smith&lt;/author&gt;&lt;/p&gt;
+  &lt;/header&gt;
+  
+  &lt;section&gt;
+    &lt;h2&gt;Introduction to Semantics&lt;/h2&gt;
+    &lt;p&gt;Semantic HTML elements clearly describe their meaning to both browsers and developers.&lt;/p&gt;
+    
+    &lt;figure&gt;
+      &lt;img src="semantic-elements.jpg" alt="Diagram of semantic HTML elements"&gt;
+      &lt;figcaption&gt;Common semantic elements in HTML5&lt;/figcaption&gt;
+    &lt;/figure&gt;
+  &lt;/section&gt;
+  
+  &lt;section&gt;
+    &lt;h2&gt;Benefits of Semantic HTML&lt;/h2&gt;
+    &lt;p&gt;Using semantic HTML provides numerous benefits:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Improved accessibility&lt;/li&gt;
+      &lt;li&gt;Better SEO performance&lt;/li&gt;
+      &lt;li&gt;More readable code&lt;/li&gt;
+      &lt;li&gt;Easier maintenance&lt;/li&gt;
+    &lt;/ul&gt;
+    
+    &lt;aside&gt;
+      &lt;h3&gt;Did You Know?&lt;/h3&gt;
+      &lt;p&gt;HTML5 introduced many new semantic elements like &lt;code&gt;section&lt;/code&gt;, &lt;code&gt;article&lt;/code&gt;, and &lt;code&gt;nav&lt;/code&gt;.&lt;/p&gt;
+    &lt;/aside&gt;
+  &lt;/section&gt;
+  
+  &lt;footer&gt;
+    &lt;h3&gt;Related Articles&lt;/h3&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Getting Started with HTML5&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Web Accessibility Basics&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/footer&gt;
+&lt;/article&gt;</code></pre>
+      <button onclick="previewHTML('html-semantic')">Preview Solution</button>
+      <div id="preview-html-semantic" class="preview-box"></div>
+    </div>
+
+    <!-- Block 3: HTML Forms -->
+    <div class="method">
+      <h3>HTML Forms</h3>
+      <p class="hint">// Create a fully functional HTML form with various form controls</p>
+      <textarea placeholder="Type your HTML code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('html-forms')">Check Answer</button>
+      <pre id="html-forms"><code>&lt;form action="/submit-form" method="post"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Personal Information&lt;/legend&gt;
+    
+    &lt;div class="form-group"&gt;
+      &lt;label for="name"&gt;Full Name:&lt;/label&gt;
+      &lt;input type="text" id="name" name="name" required&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="form-group"&gt;
+      &lt;label for="email"&gt;Email Address:&lt;/label&gt;
+      &lt;input type="email" id="email" name="email" required&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="form-group"&gt;
+      &lt;label for="dob"&gt;Date of Birth:&lt;/label&gt;
+      &lt;input type="date" id="dob" name="dob"&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="form-group"&gt;
+      &lt;label for="phone"&gt;Phone Number:&lt;/label&gt;
+      &lt;input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890"&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+  
+  &lt;fieldset&gt;
+    &lt;legend&gt;Account Preferences&lt;/legend&gt;
+    
+    &lt;div class="form-group"&gt;
+      &lt;label for="username"&gt;Username:&lt;/label&gt;
+      &lt;input type="text" id="username" name="username" minlength="4" maxlength="20" required&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="form-group"&gt;
+      &lt;label for="password"&gt;Password:&lt;/label&gt;
+      &lt;input type="password" id="password" name="password" minlength="8" required&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="form-group"&gt;
+      &lt;label for="role"&gt;Account Type:&lt;/label&gt;
+      &lt;select id="role" name="role"&gt;
+        &lt;option value="user"&gt;Standard User&lt;/option&gt;
+        &lt;option value="editor"&gt;Content Editor&lt;/option&gt;
+        &lt;option value="admin"&gt;Administrator&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+  
+  &lt;fieldset&gt;
+    &lt;legend&gt;Preferences&lt;/legend&gt;
+    
+    &lt;div class="form-group"&gt;
+      &lt;p&gt;Subscribe to newsletters:&lt;/p&gt;
+      &lt;div class="checkbox-group"&gt;
+        &lt;input type="checkbox" id="news-tech" name="newsletters" value="tech"&gt;
+        &lt;label for="news-tech"&gt;Technology&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="checkbox-group"&gt;
+        &lt;input type="checkbox" id="news-business" name="newsletters" value="business"&gt;
+        &lt;label for="news-business"&gt;Business&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="checkbox-group"&gt;
+        &lt;input type="checkbox" id="news-science" name="newsletters" value="science"&gt;
+        &lt;label for="news-science"&gt;Science&lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="form-group"&gt;
+      &lt;p&gt;How did you hear about us?&lt;/p&gt;
+      &lt;div class="radio-group"&gt;
+        &lt;input type="radio" id="source-search" name="source" value="search"&gt;
+        &lt;label for="source-search"&gt;Search Engine&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="radio-group"&gt;
+        &lt;input type="radio" id="source-social" name="source" value="social"&gt;
+        &lt;label for="source-social"&gt;Social Media&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="radio-group"&gt;
+        &lt;input type="radio" id="source-friend" name="source" value="friend"&gt;
+        &lt;label for="source-friend"&gt;Friend&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="radio-group"&gt;
+        &lt;input type="radio" id="source-other" name="source" value="other"&gt;
+        &lt;label for="source-other"&gt;Other&lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+  
+  &lt;div class="form-group"&gt;
+    &lt;label for="comments"&gt;Additional Comments:&lt;/label&gt;
+    &lt;textarea id="comments" name="comments" rows="4" cols="50"&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="form-actions"&gt;
+    &lt;button type="reset"&gt;Reset Form&lt;/button&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</code></pre>
+      <button onclick="previewHTML('html-forms')">Preview Solution</button>
+      <div id="preview-html-forms" class="preview-box"></div>
+    </div>
+
+    <!-- Block 4: Tables -->
+    <div class="method">
+      <h3>HTML Tables</h3>
+      <p class="hint">// Create a structured HTML table with semantic elements</p>
+      <textarea placeholder="Type your HTML code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('html-tables')">Check Answer</button>
+      <pre id="html-tables"><code>&lt;table&gt;
+  &lt;caption&gt;Quarterly Sales by Department (Q1 2023)&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Department&lt;/th&gt;
+      &lt;th scope="col"&gt;January&lt;/th&gt;
+      &lt;th scope="col"&gt;February&lt;/th&gt;
+      &lt;th scope="col"&gt;March&lt;/th&gt;
+      &lt;th scope="col"&gt;Total&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Electronics&lt;/th&gt;
+      &lt;td&gt;$45,000&lt;/td&gt;
+      &lt;td&gt;$52,300&lt;/td&gt;
+      &lt;td&gt;$61,800&lt;/td&gt;
+      &lt;td&gt;$159,100&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Clothing&lt;/th&gt;
+      &lt;td&gt;$38,600&lt;/td&gt;
+      &lt;td&gt;$35,200&lt;/td&gt;
+      &lt;td&gt;$42,100&lt;/td&gt;
+      &lt;td&gt;$115,900&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Home Goods&lt;/th&gt;
+      &lt;td&gt;$29,400&lt;/td&gt;
+      &lt;td&gt;$33,500&lt;/td&gt;
+      &lt;td&gt;$38,200&lt;/td&gt;
+      &lt;td&gt;$101,100&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Groceries&lt;/th&gt;
+      &lt;td&gt;$62,500&lt;/td&gt;
+      &lt;td&gt;$59,800&lt;/td&gt;
+      &lt;td&gt;$65,300&lt;/td&gt;
+      &lt;td&gt;$187,600&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Monthly Totals&lt;/th&gt;
+      &lt;td&gt;$175,500&lt;/td&gt;
+      &lt;td&gt;$180,800&lt;/td&gt;
+      &lt;td&gt;$207,400&lt;/td&gt;
+      &lt;td&gt;$563,700&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;
+
+&lt;!-- Table with rowspan and colspan --&gt;
+&lt;table&gt;
+  &lt;caption&gt;Employee Schedule&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Employee&lt;/th&gt;
+      &lt;th scope="col"&gt;Monday&lt;/th&gt;
+      &lt;th scope="col"&gt;Tuesday&lt;/th&gt;
+      &lt;th scope="col"&gt;Wednesday&lt;/th&gt;
+      &lt;th scope="col"&gt;Thursday&lt;/th&gt;
+      &lt;th scope="col"&gt;Friday&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;John Smith&lt;/th&gt;
+      &lt;td colspan="2"&gt;Training&lt;/td&gt;
+      &lt;td&gt;Office&lt;/td&gt;
+      &lt;td&gt;Office&lt;/td&gt;
+      &lt;td&gt;Office&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Jane Doe&lt;/th&gt;
+      &lt;td&gt;Office&lt;/td&gt;
+      &lt;td&gt;Office&lt;/td&gt;
+      &lt;td rowspan="2"&gt;Conference&lt;/td&gt;
+      &lt;td&gt;Office&lt;/td&gt;
+      &lt;td&gt;Remote&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Bob Johnson&lt;/th&gt;
+      &lt;td&gt;Remote&lt;/td&gt;
+      &lt;td&gt;Office&lt;/td&gt;
+      &lt;!-- Conference (covered by rowspan) --&gt;
+      &lt;td&gt;Office&lt;/td&gt;
+      &lt;td&gt;Office&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+      <button onclick="previewHTML('html-tables')">Preview Solution</button>
+      <div id="preview-html-tables" class="preview-box"></div>
+    </div>
+
+    <!-- Block 5: Media and Embedding -->
+    <div class="method">
+      <h3>Media and Embedding</h3>
+      <p class="hint">// Embedding images, videos, audio, and other content in HTML</p>
+      <textarea placeholder="Type your HTML code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('html-media')">Check Answer</button>
+      <pre id="html-media"><code>&lt;!-- Responsive image --&gt;
+&lt;figure&gt;
+  &lt;img src="sample-image.jpg" 
+       alt="A scenic mountain landscape at sunset" 
+       width="800" 
+       height="500" 
+       loading="lazy"&gt;
+  &lt;figcaption&gt;Mountain landscape at sunset, taken by Jane Doe&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;!-- Picture element for responsive images --&gt;
+&lt;picture&gt;
+  &lt;source media="(max-width: 600px)" srcset="small-image.jpg"&gt;
+  &lt;source media="(max-width: 1200px)" srcset="medium-image.jpg"&gt;
+  &lt;img src="large-image.jpg" alt="Adaptive image based on screen size"&gt;
+&lt;/picture&gt;
+
+&lt;!-- SVG embedding --&gt;
+&lt;svg width="100" height="100" viewBox="0 0 100 100"&gt;
+  &lt;circle cx="50" cy="50" r="40" stroke="black" stroke-width="2" fill="red" /&gt;
+&lt;/svg&gt;
+
+&lt;!-- Audio element --&gt;
+&lt;figure&gt;
+  &lt;figcaption&gt;Listen to the T-Rex:&lt;/figcaption&gt;
+  &lt;audio controls&gt;
+    &lt;source src="trex-roar.mp3" type="audio/mpeg"&gt;
+    &lt;source src="trex-roar.ogg" type="audio/ogg"&gt;
+    Your browser does not support the audio element.
+  &lt;/audio&gt;
+&lt;/figure&gt;
+
+&lt;!-- Video element --&gt;
+&lt;figure&gt;
+  &lt;figcaption&gt;Watch the tutorial:&lt;/figcaption&gt;
+  &lt;video width="640" height="360" controls poster="video-thumbnail.jpg"&gt;
+    &lt;source src="tutorial.mp4" type="video/mp4"&gt;
+    &lt;source src="tutorial.webm" type="video/webm"&gt;
+    Your browser does not support the video element.
+    &lt;track src="subtitles_en.vtt" kind="subtitles" srclang="en" label="English"&gt;
+  &lt;/video&gt;
+&lt;/figure&gt;
+
+&lt;!-- YouTube embedding --&gt;
+&lt;figure&gt;
+  &lt;figcaption&gt;Embedded YouTube Video:&lt;/figcaption&gt;
+  &lt;iframe width="560" 
+          height="315" 
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/figure&gt;
+
+&lt;!-- Google Maps embedding --&gt;
+&lt;figure&gt;
+  &lt;figcaption&gt;Our Office Location:&lt;/figcaption&gt;
+  &lt;iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937965!2d2.2922926153568974!3d48.858370079287475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sEiffel%20Tower!5e0!3m2!1sen!2sus!4v1653480101980!5m2!1sen!2sus" 
+          width="600" 
+          height="450" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade"&gt;
+  &lt;/iframe&gt;
+&lt;/figure&gt;</code></pre>
+      <button onclick="previewHTML('html-media')">Preview Solution</button>
+      <div id="preview-html-media" class="preview-box"></div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      if (solutionElement.style.display === 'block') {
+        solutionElement.style.display = 'none';
+      } else {
+        solutionElement.style.display = 'block';
+      }
+    }
+    
+    function previewHTML(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      const previewElement = document.getElementById('preview-' + solutionId);
+      
+      if (solutionElement && previewElement) {
+        // Get the HTML code from the pre element, without the code tags
+        const htmlCode = solutionElement.querySelector('code').innerText;
+        
+        // Set the HTML content of the preview div
+        previewElement.innerHTML = htmlCode;
+      }
+    }
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

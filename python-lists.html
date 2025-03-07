@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Data Structures Practice - Lists</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Python Lists Implementation</h1>
+
+    <!-- Block 1: List Creation & Basic Operations -->
+    <div class="method">
+      <h3>List Creation & Basic Operations</h3>
+      <p class="hint">// Creating lists and performing basic operations</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-lists-creation')">Check Answer</button>
+      <pre id="python-lists-creation"><code># Creating a list
+numbers = [1, 2, 3, 4, 5]
+fruits = ['apple', 'banana', 'orange']
+mixed = [1, 'hello', True, 3.14]
+
+# Basic operations
+numbers.append(6)       # Add element to end
+numbers.insert(0, 0)    # Insert at specific index
+numbers.remove(3)       # Remove specific value
+popped = numbers.pop()  # Remove and return last element
+numbers.extend([7, 8])  # Add multiple elements
+
+print(numbers)          # Output: [0, 1, 2, 4, 5, 7, 8]
+print(len(numbers))     # Output: 7
+print(3 in numbers)     # Output: False (we removed 3)
+</code></pre>
+    </div>
+
+    <!-- Block 2: Accessing & Slicing -->
+    <div class="method">
+      <h3>Accessing & Slicing Lists</h3>
+      <p class="hint">// How to access elements and slice lists</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-lists-slicing')">Check Answer</button>
+      <pre id="python-lists-slicing"><code># List for examples
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+
+# Accessing elements (0-indexed)
+first = letters[0]      # 'a'
+last = letters[-1]      # 'g'
+
+# Slicing [start:end:step]
+subset = letters[1:4]   # ['b', 'c', 'd'] (end index not included)
+first_three = letters[:3]     # ['a', 'b', 'c']
+last_three = letters[-3:]     # ['e', 'f', 'g']
+every_second = letters[::2]   # ['a', 'c', 'e', 'g']
+reversed_list = letters[::-1] # ['g', 'f', 'e', 'd', 'c', 'b', 'a']
+
+print(first, last)
+print(subset)
+print(first_three)
+print(last_three)
+print(every_second)
+print(reversed_list)
+</code></pre>
+    </div>
+
+    <!-- Block 3: List Comprehensions -->
+    <div class="method">
+      <h3>List Comprehensions</h3>
+      <p class="hint">// Creating lists with comprehensions</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-lists-comprehensions')">Check Answer</button>
+      <pre id="python-lists-comprehensions"><code># Basic list comprehension
+squares = [x**2 for x in range(1, 6)]
+# Equivalent to:
+# squares = []
+# for x in range(1, 6):
+#     squares.append(x**2)
+
+# List comprehension with condition
+even_squares = [x**2 for x in range(1, 11) if x % 2 == 0]
+
+# Nested list comprehension
+matrix = [[i*j for j in range(1, 4)] for i in range(1, 4)]
+
+# List comprehension with multiple conditions
+filtered = [x for x in range(20) if x % 2 == 0 if x % 3 == 0]
+
+print(squares)       # [1, 4, 9, 16, 25]
+print(even_squares)  # [4, 16, 36, 64, 100]
+print(matrix)        # [[1, 2, 3], [2, 4, 6], [3, 6, 9]]
+print(filtered)      # [0, 6, 12, 18]
+</code></pre>
+    </div>
+
+    <!-- Block 4: Sorting & Manipulation -->
+    <div class="method">
+      <h3>Sorting & List Manipulation</h3>
+      <p class="hint">// How to sort and manipulate lists</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-lists-sorting')">Check Answer</button>
+      <pre id="python-lists-sorting"><code>numbers = [4, 2, 9, 7, 1, 3]
+fruits = ['orange', 'apple', 'banana', 'kiwi']
+
+# Sorting methods
+numbers.sort()              # Sorts in-place
+print(numbers)              # [1, 2, 3, 4, 7, 9]
+
+sorted_fruits = sorted(fruits)  # Returns a new sorted list
+print("Original:", fruits)      # Original: ['orange', 'apple', 'banana', 'kiwi']
+print("Sorted:", sorted_fruits) # Sorted: ['apple', 'banana', 'kiwi', 'orange']
+
+# Reverse
+numbers.reverse()           # Reverses in-place
+print(numbers)              # [9, 7, 4, 3, 2, 1]
+
+# Sort with custom key
+fruits.sort(key=len)        # Sort by length
+print(fruits)               # ['kiwi', 'apple', 'orange', 'banana']
+
+# Sort in reverse order
+numbers.sort(reverse=True)
+print(numbers)              # [9, 7, 4, 3, 2, 1]
+</code></pre>
+    </div>
+
+    <!-- Block 5: Advanced Operations -->
+    <div class="method">
+      <h3>Advanced List Operations</h3>
+      <p class="hint">// More complex list operations and techniques</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-lists-advanced')">Check Answer</button>
+      <pre id="python-lists-advanced"><code># List unpacking
+first, second, *rest = [1, 2, 3, 4, 5]
+print(first, second, rest)  # 1 2 [3, 4, 5]
+
+# Using map and filter with lists
+numbers = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x**2, numbers))
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+
+print(squared)  # [1, 4, 9, 16, 25]
+print(evens)    # [2, 4]
+
+# List as a stack (Last-In, First-Out)
+stack = []
+stack.append(1)    # Push
+stack.append(2)
+stack.append(3)
+print(stack.pop()) # Pop - returns 3
+print(stack)       # [1, 2]
+
+# List as a queue (First-In, First-Out)
+from collections import deque
+queue = deque(["Eric", "John", "Michael"])
+queue.append("Terry")
+print(queue.popleft())  # Eric
+print(queue)           # deque(['John', 'Michael', 'Terry'])
+</code></pre>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      if (solutionElement.style.display === 'block') {
+        solutionElement.style.display = 'none';
+      } else {
+        solutionElement.style.display = 'block';
+      }
+    }
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Practice - SELECT Queries</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>SQL SELECT Queries</h1>
+
+    <!-- Database Schema Information -->
+    <div class="db-schema">
+      <h3>Sample Database Schema</h3>
+      <p>For these exercises, we'll use the following database schema:</p>
+      <pre><code>-- Employees table
+CREATE TABLE employees (
+  employee_id INT PRIMARY KEY,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50),
+  email VARCHAR(100),
+  phone VARCHAR(20),
+  hire_date DATE,
+  job_id INT,
+  salary DECIMAL(10, 2),
+  department_id INT
+);
+
+-- Departments table
+CREATE TABLE departments (
+  department_id INT PRIMARY KEY,
+  department_name VARCHAR(50),
+  location_id INT
+);
+
+-- Jobs table
+CREATE TABLE jobs (
+  job_id INT PRIMARY KEY,
+  job_title VARCHAR(50),
+  min_salary DECIMAL(10, 2),
+  max_salary DECIMAL(10, 2)
+);
+</code></pre>
+    </div>
+
+    <!-- Block 1: Basic SELECT Queries -->
+    <div class="method">
+      <h3>Basic SELECT Queries</h3>
+      <p class="hint">// Write a SQL query to select all employees and their salaries</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('sql-select-basic')">Check Answer</button>
+      <pre id="sql-select-basic"><code>-- Select all columns from employees table
+SELECT * FROM employees;
+
+-- Select specific columns
+SELECT employee_id, first_name, last_name, salary 
+FROM employees;
+
+-- Using column aliases for better readability
+SELECT 
+  employee_id AS "ID",
+  first_name AS "First Name",
+  last_name AS "Last Name",
+  salary AS "Salary"
+FROM employees;
+
+-- Concatenating columns
+SELECT
+  employee_id,
+  first_name || ' ' || last_name AS "Full Name",
+  salary
+FROM employees;
+</code></pre>
+    </div>
+
+    <!-- Block 2: Filtering with WHERE -->
+    <div class="method">
+      <h3>Filtering with WHERE</h3>
+      <p class="hint">// Write a SQL query to filter employees based on specific criteria</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('sql-select-where')">Check Answer</button>
+      <pre id="sql-select-where"><code>-- Filtering with a single condition
+SELECT employee_id, first_name, last_name, salary
+FROM employees
+WHERE salary > 50000;
+
+-- Multiple conditions using AND
+SELECT employee_id, first_name, last_name, hire_date, department_id
+FROM employees
+WHERE hire_date >= '2020-01-01' AND department_id = 3;
+
+-- Multiple conditions using OR
+SELECT employee_id, first_name, last_name, department_id
+FROM employees
+WHERE department_id = 1 OR department_id = 2;
+
+-- Using IN for multiple possible values
+SELECT employee_id, first_name, last_name, department_id
+FROM employees
+WHERE department_id IN (1, 2, 3);
+
+-- Using BETWEEN for a range of values
+SELECT employee_id, first_name, last_name, salary
+FROM employees
+WHERE salary BETWEEN 40000 AND 60000;
+
+-- Using LIKE for pattern matching
+SELECT employee_id, first_name, last_name, email
+FROM employees
+WHERE email LIKE '%@company.com';
+
+-- Using IS NULL to find missing values
+SELECT employee_id, first_name, last_name, phone
+FROM employees
+WHERE phone IS NULL;
+</code></pre>
+    </div>
+
+    <!-- Block 3: Sorting with ORDER BY -->
+    <div class="method">
+      <h3>Sorting with ORDER BY</h3>
+      <p class="hint">// Write a SQL query to sort results in a specific order</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('sql-select-orderby')">Check Answer</button>
+      <pre id="sql-select-orderby"><code>-- Basic sorting in ascending order (ASC is default)
+SELECT employee_id, first_name, last_name, salary
+FROM employees
+ORDER BY salary;
+
+-- Sorting in descending order
+SELECT employee_id, first_name, last_name, salary
+FROM employees
+ORDER BY salary DESC;
+
+-- Sorting by multiple columns
+SELECT employee_id, department_id, salary, last_name
+FROM employees
+ORDER BY department_id, salary DESC;
+
+-- Sorting by column position
+SELECT employee_id, first_name, last_name, hire_date
+FROM employees
+ORDER BY 4; -- Sorts by hire_date (4th column)
+
+-- Sorting with NULLs (NULLS FIRST or NULLS LAST)
+-- Note: Not all databases support this syntax
+SELECT employee_id, first_name, last_name, phone
+FROM employees
+ORDER BY phone NULLS LAST;
+
+-- Complex sorting with calculated fields
+SELECT 
+  employee_id,
+  first_name,
+  last_name,
+  salary,
+  salary * 0.10 AS bonus
+FROM employees
+ORDER BY bonus DESC;
+</code></pre>
+    </div>
+
+    <!-- Block 4: DISTINCT and LIMIT -->
+    <div class="method">
+      <h3>DISTINCT and LIMIT</h3>
+      <p class="hint">// Write SQL queries using DISTINCT to eliminate duplicates and LIMIT to restrict results</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('sql-select-distinct-limit')">Check Answer</button>
+      <pre id="sql-select-distinct-limit"><code>-- Using DISTINCT to get unique values
+SELECT DISTINCT department_id
+FROM employees;
+
+-- DISTINCT on multiple columns (unique combinations)
+SELECT DISTINCT job_id, department_id
+FROM employees;
+
+-- Limiting the number of results returned (MySQL/PostgreSQL/SQLite)
+SELECT employee_id, first_name, last_name, salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 5; -- Returns the top 5 highest paid employees
+
+-- Pagination with LIMIT and OFFSET (MySQL/PostgreSQL/SQLite)
+SELECT employee_id, first_name, last_name
+FROM employees
+ORDER BY last_name, first_name
+LIMIT 10 OFFSET 20; -- Returns rows 21-30
+
+-- SQL Server equivalent uses TOP or OFFSET/FETCH
+-- SELECT TOP 5 employee_id, first_name, last_name, salary
+-- FROM employees
+-- ORDER BY salary DESC;
+
+-- Oracle equivalent uses ROWNUM or FETCH/OFFSET
+-- SELECT employee_id, first_name, last_name, salary
+-- FROM employees
+-- WHERE ROWNUM <= 5
+-- ORDER BY salary DESC;
+</code></pre>
+    </div>
+
+    <!-- Block 5: Advanced SELECT Techniques -->
+    <div class="method">
+      <h3>Advanced SELECT Techniques</h3>
+      <p class="hint">// Write advanced SQL SELECT queries using expressions and conditions</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('sql-select-advanced')">Check Answer</button>
+      <pre id="sql-select-advanced"><code>-- Using CASE expressions for conditional logic
+SELECT
+  employee_id,
+  first_name,
+  last_name,
+  salary,
+  CASE
+    WHEN salary < 30000 THEN 'Low'
+    WHEN salary BETWEEN 30000 AND 60000 THEN 'Medium'
+    ELSE 'High'
+  END AS salary_category
+FROM employees;
+
+-- Using built-in functions
+SELECT
+  employee_id,
+  UPPER(first_name) AS first_name_upper,
+  LOWER(last_name) AS last_name_lower,
+  LENGTH(email) AS email_length,
+  ROUND(salary, -3) AS rounded_salary,
+  EXTRACT(YEAR FROM hire_date) AS hire_year
+FROM employees;
+
+-- Calculating days of employment
+SELECT
+  employee_id,
+  first_name,
+  last_name,
+  hire_date,
+  CURRENT_DATE AS today,
+  DATEDIFF(CURRENT_DATE, hire_date) AS days_employed
+FROM employees;
+
+-- Combining subqueries with SELECT
+SELECT
+  employee_id,
+  first_name,
+  last_name,
+  salary,
+  (SELECT AVG(salary) FROM employees) AS avg_company_salary,
+  salary - (SELECT AVG(salary) FROM employees) AS diff_from_avg
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+</code></pre>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      if (solutionElement.style.display === 'block') {
+        solutionElement.style.display = 'none';
+      } else {
+        solutionElement.style.display = 'block';
+      }
+    }
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

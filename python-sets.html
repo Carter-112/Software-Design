@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Data Structures Practice - Sets</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Python Sets Implementation</h1>
+
+    <!-- Block 1: Set Creation & Basic Operations -->
+    <div class="method">
+      <h3>Set Creation & Basic Operations</h3>
+      <p class="hint">// Creating sets and performing basic operations</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-sets-creation')">Check Answer</button>
+      <pre id="python-sets-creation"><code># Creating sets
+fruits = {'apple', 'banana', 'orange', 'apple'}  # Duplicate 'apple' will be removed
+print(fruits)  # Output: {'apple', 'banana', 'orange'}
+
+# Creating a set from a list
+numbers = set([1, 2, 3, 2, 1])  # Duplicates removed
+print(numbers)  # Output: {1, 2, 3}
+
+# Creating an empty set (can't use {} as that creates a dict)
+empty_set = set()
+
+# Basic operations
+fruits.add('grape')         # Add a single element
+fruits.update(['mango', 'kiwi'])  # Add multiple elements
+fruits.remove('banana')     # Remove element (raises KeyError if not found)
+fruits.discard('melon')     # Remove if present (no error if not found)
+popped = fruits.pop()       # Remove and return an arbitrary element
+fruits.clear()              # Remove all elements
+
+# Creating sets for operation examples
+set1 = {1, 2, 3, 4, 5}
+set2 = {4, 5, 6, 7, 8}
+
+print(f"Set1: {set1}")
+print(f"Set2: {set2}")
+</code></pre>
+    </div>
+
+    <!-- Block 2: Set Operations -->
+    <div class="method">
+      <h3>Set Operations</h3>
+      <p class="hint">// Basic set operations like union, intersection, etc.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-sets-operations')">Check Answer</button>
+      <pre id="python-sets-operations"><code>set1 = {1, 2, 3, 4, 5}
+set2 = {4, 5, 6, 7, 8}
+
+# Union - all elements from both sets (no duplicates)
+union1 = set1.union(set2)         # Method form
+union2 = set1 | set2              # Operator form
+print(f"Union: {union1}")         # {1, 2, 3, 4, 5, 6, 7, 8}
+
+# Intersection - elements common to both sets
+intersection1 = set1.intersection(set2)   # Method form
+intersection2 = set1 & set2               # Operator form
+print(f"Intersection: {intersection1}")   # {4, 5}
+
+# Difference - elements in first set but not in second
+difference1 = set1.difference(set2)       # Method form
+difference2 = set1 - set2                 # Operator form
+print(f"Difference (set1 - set2): {difference1}")  # {1, 2, 3}
+print(f"Difference (set2 - set1): {set2 - set1}")  # {6, 7, 8}
+
+# Symmetric difference - elements in either set but not in both
+sym_diff1 = set1.symmetric_difference(set2)  # Method form
+sym_diff2 = set1 ^ set2                      # Operator form
+print(f"Symmetric difference: {sym_diff1}")  # {1, 2, 3, 6, 7, 8}
+
+# Checking if a set is a subset/superset of another
+set3 = {4, 5}
+is_subset = set3.issubset(set1)  # or set3 <= set1
+is_superset = set1.issuperset(set3)  # or set1 >= set3
+proper_subset = set3 < set1  # Proper subset (subset but not equal)
+print(f"Is {set3} a subset of {set1}? {is_subset}")  # True
+print(f"Is {set1} a superset of {set3}? {is_superset}")  # True
+</code></pre>
+    </div>
+
+    <!-- Block 3: Set Comprehensions -->
+    <div class="method">
+      <h3>Set Comprehensions</h3>
+      <p class="hint">// Creating sets with comprehensions</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-sets-comprehensions')">Check Answer</button>
+      <pre id="python-sets-comprehensions"><code># Basic set comprehension
+squares = {x**2 for x in range(1, 6)}
+print(squares)  # Output: {1, 4, 9, 16, 25}
+
+# Set comprehension with condition
+even_squares = {x**2 for x in range(1, 11) if x % 2 == 0}
+print(even_squares)  # Output: {4, 16, 36, 64, 100}
+
+# Creating a set of vowels in a string
+text = "Hello, how are you today?"
+vowels = {char.lower() for char in text if char.lower() in 'aeiou'}
+print(vowels)  # Output: {'a', 'e', 'o', 'u'}
+
+# Set of unique word lengths
+words = ["apple", "banana", "cherry", "date", "elderberry", "fig"]
+word_lengths = {len(word) for word in words}
+print(word_lengths)  # Output: {3, 5, 6, 11}
+
+# Set of unique characters
+chars = {char.lower() for char in "Mississippi" if char.isalpha()}
+print(chars)  # Output: {'m', 'i', 's', 'p'}
+</code></pre>
+    </div>
+
+    <!-- Block 4: Frozen Sets -->
+    <div class="method">
+      <h3>Frozen Sets</h3>
+      <p class="hint">// Working with immutable frozen sets</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-frozen-sets')">Check Answer</button>
+      <pre id="python-frozen-sets"><code># Creating a frozen set - immutable version of set
+frozen = frozenset([1, 2, 3, 4, 5])
+print(frozen)  # Output: frozenset({1, 2, 3, 4, 5})
+
+# Trying to modify a frozen set will raise an error
+# frozen.add(6)  # AttributeError: 'frozenset' object has no attribute 'add'
+# frozen.remove(1)  # AttributeError: 'frozenset' object has no attribute 'remove'
+
+# But you can use all non-modifying operations
+print(2 in frozen)  # Output: True
+print(len(frozen))  # Output: 5
+
+# You can use frozen sets as dictionary keys or set elements
+# (normal sets cannot be used as dictionary keys because they are mutable)
+dict_with_frozen_keys = {frozenset([1, 2]): "Set 1-2", 
+                         frozenset([3, 4]): "Set 3-4"}
+print(dict_with_frozen_keys[frozenset([1, 2])])  # Output: Set 1-2
+
+# Set operations work with frozen sets too
+fs1 = frozenset([1, 2, 3, 4])
+fs2 = frozenset([3, 4, 5, 6])
+print(fs1 | fs2)  # Union: frozenset({1, 2, 3, 4, 5, 6})
+print(fs1 & fs2)  # Intersection: frozenset({3, 4})
+print(fs1 - fs2)  # Difference: frozenset({1, 2})
+print(fs1 ^ fs2)  # Symmetric difference: frozenset({1, 2, 5, 6})
+</code></pre>
+    </div>
+
+    <!-- Block 5: Practical Set Applications -->
+    <div class="method">
+      <h3>Practical Set Applications</h3>
+      <p class="hint">// Common practical uses of sets</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-sets-practical')">Check Answer</button>
+      <pre id="python-sets-practical"><code># 1. Finding unique elements
+data = [3, 5, 1, 3, 7, 9, 5, 1, 8, 9]
+unique_values = set(data)
+print(f"Original data: {data}")
+print(f"Unique values: {unique_values}")  # {1, 3, 5, 7, 8, 9}
+
+# 2. Removing duplicates while preserving order (Python 3.7+)
+from collections import dict
+ordered_unique = list(dict.fromkeys(data))
+print(f"Ordered unique values: {ordered_unique}")  # [3, 5, 1, 7, 9, 8]
+
+# 3. Finding common elements between collections
+list1 = [1, 2, 3, 4, 5]
+list2 = [3, 4, 5, 6, 7]
+list3 = [4, 5, 6, 7, 8]
+common_elements = set(list1) & set(list2) & set(list3)
+print(f"Common elements: {common_elements}")  # {4, 5}
+
+# 4. Finding difference between collections
+only_in_list1 = set(list1) - (set(list2) | set(list3))
+print(f"Elements only in list1: {only_in_list1}")  # {1, 2}
+
+# 5. Checking if all elements of a collection are in another
+required_skills = {"Python", "SQL", "Git"}
+candidate1_skills = {"Python", "JavaScript", "HTML", "SQL", "Git"}
+candidate2_skills = {"Python", "JavaScript", "SQL"}
+has_all_required1 = required_skills.issubset(candidate1_skills)
+has_all_required2 = required_skills <= candidate2_skills
+print(f"Candidate 1 has all required skills: {has_all_required1}")  # True
+print(f"Candidate 2 has all required skills: {has_all_required2}")  # False
+
+# 6. Efficient membership testing
+large_set = set(range(1000000))
+# Much faster than checking a list
+print(999999 in large_set)  # True (very fast)
+# print(999999 in list(range(1000000)))  # True (but much slower)
+
+# 7. Removing specified items from a collection
+original_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+to_remove = {2, 5, 8}
+filtered_list = [item for item in original_list if item not in to_remove]
+print(f"Filtered list: {filtered_list}")  # [1, 3, 4, 6, 7, 9, 10]
+</code></pre>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      if (solutionElement.style.display === 'block') {
+        solutionElement.style.display = 'none';
+      } else {
+        solutionElement.style.display = 'block';
+      }
+    }
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

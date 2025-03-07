@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Data Structures Practice - Dictionaries</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Python Dictionaries Implementation</h1>
+
+    <!-- Block 1: Dictionary Creation & Basic Operations -->
+    <div class="method">
+      <h3>Dictionary Creation & Basic Operations</h3>
+      <p class="hint">// Creating dictionaries and performing basic operations</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-dict-creation')">Check Answer</button>
+      <pre id="python-dict-creation"><code># Creating dictionaries
+person = {
+    'name': 'John',
+    'age': 30,
+    'city': 'New York'
+}
+
+# Alternative creation methods
+person2 = dict(name='Alice', age=25, city='Boston')
+person3 = dict([('name', 'Bob'), ('age', 35), ('city', 'Chicago')])
+
+# Basic operations
+person['job'] = 'Developer'    # Add or update key-value pair
+age = person['age']            # Access a value (raises KeyError if not found)
+safe_email = person.get('email', 'Not available')  # Safe access with default
+del person['city']             # Remove a key-value pair
+has_name = 'name' in person    # Check if key exists
+
+print(person)
+print(f"Age: {age}")
+print(f"Email: {safe_email}")
+print(f"Has name: {has_name}")
+</code></pre>
+    </div>
+
+    <!-- Block 2: Dictionary Methods -->
+    <div class="method">
+      <h3>Dictionary Methods</h3>
+      <p class="hint">// Common dictionary methods</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-dict-methods')">Check Answer</button>
+      <pre id="python-dict-methods"><code>person = {
+    'name': 'John',
+    'age': 30,
+    'city': 'New York',
+    'job': 'Developer'
+}
+
+# Dictionary methods
+keys = person.keys()           # Get all keys (view object)
+values = person.values()       # Get all values (view object)
+items = person.items()         # Get all key-value pairs (view object)
+
+# Copy
+person_copy = person.copy()    # Shallow copy
+
+# Pop and popitem
+age = person.pop('age')        # Remove key and return value
+last_item = person.popitem()   # Remove and return last inserted item (Python 3.7+)
+
+# Update dictionary
+updates = {'age': 31, 'email': 'john@example.com'}
+person.update(updates)         # Update with another dictionary
+
+# Clear
+person_copy.clear()            # Remove all items
+
+print(f"Keys: {list(keys)}")
+print(f"Values: {list(values)}")
+print(f"Items: {list(items)}")
+print(f"Popped age: {age}")
+print(f"Last item: {last_item}")
+print(f"Updated person: {person}")
+print(f"Empty copy: {person_copy}")
+</code></pre>
+    </div>
+
+    <!-- Block 3: Dictionary Comprehensions -->
+    <div class="method">
+      <h3>Dictionary Comprehensions</h3>
+      <p class="hint">// Creating dictionaries with comprehensions</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-dict-comprehensions')">Check Answer</button>
+      <pre id="python-dict-comprehensions"><code># Basic dictionary comprehension
+squares = {x: x**2 for x in range(1, 6)}
+# Equivalent to:
+# squares = {}
+# for x in range(1, 6):
+#     squares[x] = x**2
+
+# Dictionary comprehension with condition
+even_squares = {x: x**2 for x in range(1, 11) if x % 2 == 0}
+
+# Convert two lists to a dictionary
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+name_to_age = {name: age for name, age in zip(names, ages)}
+
+# Swapping keys and values (assuming unique values)
+age_to_name = {age: name for name, age in name_to_age.items()}
+
+print(squares)
+print(even_squares)
+print(name_to_age)
+print(age_to_name)
+</code></pre>
+    </div>
+
+    <!-- Block 4: Nested Dictionaries -->
+    <div class="method">
+      <h3>Nested Dictionaries</h3>
+      <p class="hint">// Working with nested dictionaries</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-dict-nested')">Check Answer</button>
+      <pre id="python-dict-nested"><code># Creating nested dictionaries
+employees = {
+    'john': {
+        'id': 1,
+        'age': 30,
+        'department': 'Engineering',
+        'skills': ['Python', 'JavaScript', 'SQL']
+    },
+    'alice': {
+        'id': 2,
+        'age': 25,
+        'department': 'Product',
+        'skills': ['Project Management', 'UX Design']
+    }
+}
+
+# Accessing nested data
+john_dept = employees['john']['department']
+alice_skills = employees['alice']['skills']
+
+# Adding nested data
+employees['bob'] = {
+    'id': 3,
+    'age': 35,
+    'department': 'Marketing',
+    'skills': ['Content Strategy', 'Social Media']
+}
+
+# Modifying nested data
+employees['john']['skills'].append('Docker')
+
+# Safely accessing deeply nested data
+def get_nested(obj, path, default=None):
+    """Access nested object with path like 'a.b.c'"""
+    parts = path.split('.')
+    for part in parts:
+        if obj and isinstance(obj, dict) and part in obj:
+            obj = obj[part]
+        else:
+            return default
+    return obj
+
+safe_value = get_nested(employees, 'alice.skills.0', 'Not found')
+
+print(f"John's department: {john_dept}")
+print(f"Alice's skills: {alice_skills}")
+print(f"Safe access: {safe_value}")
+print(f"Bob's data: {employees['bob']}")
+</code></pre>
+    </div>
+
+    <!-- Block 5: Advanced Dictionary Operations -->
+    <div class="method">
+      <h3>Advanced Dictionary Operations</h3>
+      <p class="hint">// More complex dictionary operations</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('python-dict-advanced')">Check Answer</button>
+      <pre id="python-dict-advanced"><code># Merging dictionaries (Python 3.9+)
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+
+# Python 3.9+
+# merged = dict1 | dict2  # {'a': 1, 'b': 3, 'c': 4}
+
+# Python 3.5+
+merged = {**dict1, **dict2}  # {'a': 1, 'b': 3, 'c': 4}
+
+# Default dictionaries
+from collections import defaultdict
+
+# Default dictionary with default value of 0
+word_counts = defaultdict(int)
+for word in ['apple', 'banana', 'apple', 'orange', 'banana', 'apple']:
+    word_counts[word] += 1  # No KeyError for new keys
+
+# Default dictionary with default as list
+grouped_words = defaultdict(list)
+words = ['apple', 'bat', 'bar', 'atom', 'book']
+for word in words:
+    grouped_words[word[0]].append(word)
+
+# OrderedDict (preserves insertion order - less relevant in Python 3.7+)
+from collections import OrderedDict
+ordered = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+
+# Counter (specialized dictionary for counting)
+from collections import Counter
+char_count = Counter('mississippi')
+most_common = char_count.most_common(2)  # Top 2 most common
+
+print(f"Merged: {merged}")
+print(f"Word counts: {dict(word_counts)}")
+print(f"Grouped words: {dict(grouped_words)}")
+print(f"Ordered dict: {dict(ordered)}")
+print(f"Character count: {dict(char_count)}")
+print(f"Most common: {most_common}")
+</code></pre>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      if (solutionElement.style.display === 'block') {
+        solutionElement.style.display = 'none';
+      } else {
+        solutionElement.style.display = 'block';
+      }
+    }
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 
