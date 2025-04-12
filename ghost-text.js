@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
    * Sets up ghost text functionality for a textarea
    */
   function setupGhostText(textarea, solutionBlock) {
+    // Remove the placeholder text
+    textarea.placeholder = '';
+
     // Create a container to hold both the textarea and ghost text
     const container = document.createElement('div');
     container.className = 'ghost-text-container';
@@ -51,6 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update ghost text when user clicks or focuses
     textarea.addEventListener('focus', function() {
       updateGhostText(textarea, ghostText, processedCode);
+    });
+
+    // Update ghost text on scroll to keep alignment
+    textarea.addEventListener('scroll', function() {
+      ghostText.scrollTop = textarea.scrollTop;
+      ghostText.scrollLeft = textarea.scrollLeft;
     });
 
     // Handle tab key for indentation
@@ -97,14 +106,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update ghost text content
     ghostElement.textContent = remainingCode;
 
-    // Position ghost text to align with textarea
+    // Calculate cursor position for alignment
+    const cursorPosition = getCursorPosition(textarea);
+
+    // Position ghost text to align with textarea and cursor
     ghostElement.style.top = textarea.offsetTop + 'px';
     ghostElement.style.left = textarea.offsetLeft + 'px';
     ghostElement.style.width = textarea.offsetWidth + 'px';
     ghostElement.style.height = textarea.offsetHeight + 'px';
+    ghostElement.style.paddingLeft = textarea.style.paddingLeft;
+    ghostElement.style.paddingTop = textarea.style.paddingTop;
 
     // Scroll ghost text to match textarea scroll position
     ghostElement.scrollTop = textarea.scrollTop;
+    ghostElement.scrollLeft = textarea.scrollLeft;
+  }
+
+  /**
+   * Gets the cursor position in a textarea
+   */
+  function getCursorPosition(textarea) {
+    const position = textarea.selectionStart;
+    const text = textarea.value.substring(0, position);
+    const lines = text.split('\n');
+    const lineCount = lines.length;
+    const charCount = lines[lines.length - 1].length;
+
+    return {
+      line: lineCount,
+      char: charCount
+    };
   }
 
   /**
@@ -152,6 +183,7 @@ style.textContent = `
   position: relative;
   width: 100%;
   margin-bottom: 10px;
+  overflow: hidden;
 }
 
 textarea {
@@ -161,6 +193,10 @@ textarea {
   color: white;
   caret-color: #ff9800; /* Make cursor more visible */
   font-family: monospace;
+  padding: 10px;
+  line-height: 1.5;
+  resize: both;
+  overflow: auto;
 }
 
 .ghost-text {
@@ -180,6 +216,25 @@ textarea {
   box-sizing: border-box;
   line-height: 1.5;
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Make scrollbars visible and usable */
+textarea::-webkit-scrollbar,
+.ghost-text::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #222;
+}
+
+textarea::-webkit-scrollbar-thumb,
+.ghost-text::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover,
+.ghost-text::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
 }
 
 /* Add a hint about the ghost text */
@@ -203,9 +258,20 @@ textarea {
     padding: 8px;
   }
 
+  textarea {
+    font-size: 12px;
+    padding: 8px;
+  }
+
   .method:hover .ghost-text-container::before {
     font-size: 10px;
     top: -16px;
+  }
+
+  textarea::-webkit-scrollbar,
+  .ghost-text::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
   }
 }
 `;
