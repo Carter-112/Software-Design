@@ -190,9 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const scrollTopInLines = Math.floor(textarea.scrollTop / parseInt(getComputedStyle(textarea).lineHeight));
     const scrollLeftInColumns = Math.floor(textarea.scrollLeft / 8);
 
-    // Auto-scroll vertically if cursor is near the bottom edge
-    if (currentLine > scrollTopInLines + visibleLines - 3) {
-      textarea.scrollTop = (currentLine - visibleLines + 3) * parseInt(getComputedStyle(textarea).lineHeight);
+    // Auto-scroll vertically if cursor is near the bottom edge (scroll earlier - at 50% of visible area)
+    if (currentLine > scrollTopInLines + Math.floor(visibleLines * 0.5)) {
+      textarea.scrollTop = (currentLine - Math.floor(visibleLines * 0.5)) * parseInt(getComputedStyle(textarea).lineHeight);
     }
 
     // Auto-scroll vertically if cursor is near the top edge
@@ -201,9 +201,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if (textarea.scrollTop < 0) textarea.scrollTop = 0;
     }
 
-    // Auto-scroll horizontally if cursor is near the right edge
-    if (currentColumn > scrollLeftInColumns + visibleColumns - 10) {
-      textarea.scrollLeft = (currentColumn - visibleColumns + 10) * 8;
+    // Auto-scroll horizontally if cursor is near the right edge (scroll earlier)
+    if (currentColumn > scrollLeftInColumns + Math.floor(visibleColumns * 0.7)) {
+      textarea.scrollLeft = (currentColumn - Math.floor(visibleColumns * 0.7)) * 8;
     }
 
     // Auto-scroll horizontally if cursor is near the left edge
@@ -264,39 +264,45 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Only hide ghost text if user is typing something completely different
-    // Allow for small differences like capitalization
+    // Allow for small differences like capitalization and errors
     let isWayOff = false;
     if (userText.length > 0 && commonLength < userText.length) {
-      // Check if the user is just typing with different capitalization
+      // Check if the user is just typing with different capitalization or has minor errors
       const lowerUserText = userText.toLowerCase();
       const lowerFullCode = fullCode.toLowerCase();
 
-      let lowerCommonLength = 0;
-      while (lowerCommonLength < lowerUserText.length &&
-             lowerCommonLength < lowerFullCode.length &&
-             lowerUserText[lowerCommonLength] === lowerFullCode[lowerCommonLength]) {
-        lowerCommonLength++;
-      }
+      // Calculate edit distance to determine how far off the user is
+      const editDistance = calculateEditDistance(
+        lowerUserText.substring(Math.max(0, lowerUserText.length - 10)),
+        lowerFullCode.substring(commonLength, commonLength + 10)
+      );
 
-      // If the lowercase comparison is significantly better, user is just using different case
-      // Otherwise, they're typing something completely different
-      if (lowerCommonLength <= commonLength + 3 && lowerCommonLength < userText.length) {
-        // The user is way off track - they're typing something completely different
+      // If the edit distance is too large (more than 5 errors), the user is way off
+      if (editDistance > 5) {
         isWayOff = true;
       }
     }
 
     // Update ghost text content with proper alignment
     if (isWayOff) {
-      // If user is way off track, don't show ghost text
-      ghostElement.innerHTML = '';
+      // Even if user is way off track, still show ghost text but make it very faint
+      let formattedRemainingCode = escapeHTML(remainingCode);
+      ghostElement.innerHTML = matchedText + formattedRemainingCode;
+      ghostElement.style.opacity = '0.2'; // Make it very faint
     } else {
       // Show the exact remaining code from the solution
       let formattedRemainingCode = escapeHTML(remainingCode);
 
       // Add the invisible matched text followed by the visible remaining code
       ghostElement.innerHTML = matchedText + formattedRemainingCode;
+      ghostElement.style.opacity = '0.5'; // Normal opacity
     }
+
+    // Ensure the ghost text takes up space by adding a minimum height
+    // This helps with scrolling to see all the content
+    const lineCount = (ghostElement.innerHTML.match(/\n/g) || []).length + 1;
+    const lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
+    ghostElement.style.minHeight = (lineCount * lineHeight) + 'px';
 
     // Position ghost text to align with textarea
     ghostElement.style.top = textarea.offsetTop + 'px';
@@ -340,6 +346,43 @@ document.addEventListener('DOMContentLoaded', function() {
    */
   function isWhitespace(char) {
     return char === ' ' || char === '\t' || char === '\n' || char === '\r';
+  }
+
+  /**
+   * Calculates the Levenshtein edit distance between two strings
+   * This measures how many single-character edits are needed to change one string into another
+   */
+  function calculateEditDistance(a, b) {
+    if (a.length === 0) return b.length;
+    if (b.length === 0) return a.length;
+
+    const matrix = [];
+
+    // Initialize the matrix
+    for (let i = 0; i <= b.length; i++) {
+      matrix[i] = [i];
+    }
+
+    for (let j = 0; j <= a.length; j++) {
+      matrix[0][j] = j;
+    }
+
+    // Fill in the matrix
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        if (b.charAt(i - 1) === a.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1] + 1, // substitution
+            matrix[i][j - 1] + 1,     // insertion
+            matrix[i - 1][j] + 1      // deletion
+          );
+        }
+      }
+    }
+
+    return matrix[b.length][a.length];
   }
 
   /**
@@ -411,7 +454,8 @@ textarea {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: auto; /* Allow height to grow based on content */
+  min-height: 100%; /* At minimum, take up the full height of the container */
   padding: 10px;
   font-family: monospace;
   font-size: 14px;
@@ -459,25 +503,7 @@ textarea::-webkit-scrollbar-corner,
   background-color: #222;
 }
 
-/* Add scroll indicators for touch devices */
-.ghost-text-container::after {
-  content: '';
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 20px;
-  height: 20px;
-  background-color: rgba(255, 152, 0, 0.3);
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: 3;
-}
-
-.ghost-text-container:hover::after {
-  opacity: 1;
-}
+/* Remove scroll indicators */
 
 /* Add a hint about the ghost text */
 .method:hover .ghost-text-hint {
@@ -539,29 +565,7 @@ textarea::-webkit-scrollbar-corner,
     word-wrap: break-word !important;
   }
 
-  /* Add scroll indicators that are more visible on mobile */
-  .ghost-text-container::after {
-    width: 25px;
-    height: 25px;
-    opacity: 0.5;
-    bottom: 10px;
-    right: 10px;
-  }
-
-  /* Add horizontal scroll indicator */
-  .ghost-text-container::before {
-    content: '';
-    position: absolute;
-    bottom: 10px;
-    right: 40px;
-    width: 25px;
-    height: 25px;
-    background-color: rgba(255, 152, 0, 0.3);
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0.5;
-    z-index: 3;
-  }
+  /* Remove mobile scroll indicators */
 }
 `;
 document.head.appendChild(style);
