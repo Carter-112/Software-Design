@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Aggregation - SQL Topics</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+    }
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: 1px solid #3e3e42;
+      border-radius: 4px;
+      padding: 10px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      margin: 10px 0;
+    }
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: #252526;
+    }
+    th, td {
+      border: 1px solid #3e3e42;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #333333;
+      color: #ffcc00;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="java.html">Java</a>
+          <a href="python.html">Python</a>
+          <a href="sql.html">SQL</a>
+          <a href="webdev.html">Web Development</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>SQL Aggregation Practice</h1>
+
+    <p>Practice implementing SQL aggregation functions. For these exercises, consider the following database tables:</p>
+
+    <div class="table-container">
+      <h3>Sales Table</h3>
+      <table>
+        <tr>
+          <th>sale_id</th>
+          <th>product_id</th>
+          <th>customer_id</th>
+          <th>sale_date</th>
+          <th>quantity</th>
+          <th>amount</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>101</td>
+          <td>201</td>
+          <td>2023-01-15</td>
+          <td>2</td>
+          <td>150.00</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>102</td>
+          <td>202</td>
+          <td>2023-01-16</td>
+          <td>1</td>
+          <td>99.99</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>101</td>
+          <td>203</td>
+          <td>2023-01-16</td>
+          <td>3</td>
+          <td>225.00</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>103</td>
+          <td>201</td>
+          <td>2023-01-17</td>
+          <td>1</td>
+          <td>49.95</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>102</td>
+          <td>204</td>
+          <td>2023-01-18</td>
+          <td>2</td>
+          <td>199.98</td>
+        </tr>
+      </table>
+      
+      <h3>Products Table</h3>
+      <table>
+        <tr>
+          <th>product_id</th>
+          <th>product_name</th>
+          <th>category</th>
+          <th>unit_price</th>
+        </tr>
+        <tr>
+          <td>101</td>
+          <td>Laptop</td>
+          <td>Electronics</td>
+          <td>75.00</td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>Smartphone</td>
+          <td>Electronics</td>
+          <td>99.99</td>
+        </tr>
+        <tr>
+          <td>103</td>
+          <td>Headphones</td>
+          <td>Electronics</td>
+          <td>49.95</td>
+        </tr>
+        <tr>
+          <td>104</td>
+          <td>Tablet</td>
+          <td>Electronics</td>
+          <td>65.50</td>
+        </tr>
+      </table>
+      
+      <h3>Customers Table</h3>
+      <table>
+        <tr>
+          <th>customer_id</th>
+          <th>customer_name</th>
+          <th>city</th>
+          <th>state</th>
+        </tr>
+        <tr>
+          <td>201</td>
+          <td>John Smith</td>
+          <td>New York</td>
+          <td>NY</td>
+        </tr>
+        <tr>
+          <td>202</td>
+          <td>Jane Doe</td>
+          <td>Los Angeles</td>
+          <td>CA</td>
+        </tr>
+        <tr>
+          <td>203</td>
+          <td>Bob Johnson</td>
+          <td>Chicago</td>
+          <td>IL</td>
+        </tr>
+        <tr>
+          <td>204</td>
+          <td>Mary Wilson</td>
+          <td>Houston</td>
+          <td>TX</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Block 1: COUNT Function -->
+    <div class="method">
+      <h3>COUNT Function</h3>
+      <p class="hint">-- Write a query to count the total number of sales</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('count-function-solution')">Check Answer</button>
+      <pre id="count-function-solution"><code>SELECT COUNT(*) AS total_sales
+FROM Sales;</code></pre>
+    </div>
+
+    <!-- Block 2: SUM Function -->
+    <div class="method">
+      <h3>SUM Function</h3>
+      <p class="hint">-- Write a query to calculate the total revenue (sum of amount)</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('sum-function-solution')">Check Answer</button>
+      <pre id="sum-function-solution"><code>SELECT SUM(amount) AS total_revenue
+FROM Sales;</code></pre>
+    </div>
+
+    <!-- Block 3: AVG Function -->
+    <div class="method">
+      <h3>AVG Function</h3>
+      <p class="hint">-- Write a query to calculate the average sale amount</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('avg-function-solution')">Check Answer</button>
+      <pre id="avg-function-solution"><code>SELECT AVG(amount) AS average_sale_amount
+FROM Sales;</code></pre>
+    </div>
+
+    <!-- Block 4: MIN and MAX Functions -->
+    <div class="method">
+      <h3>MIN and MAX Functions</h3>
+      <p class="hint">-- Write a query to find the minimum and maximum sale amounts</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('min-max-function-solution')">Check Answer</button>
+      <pre id="min-max-function-solution"><code>SELECT 
+  MIN(amount) AS minimum_amount,
+  MAX(amount) AS maximum_amount
+FROM Sales;</code></pre>
+    </div>
+
+    <!-- Block 5: GROUP BY -->
+    <div class="method">
+      <h3>GROUP BY Clause</h3>
+      <p class="hint">-- Write a query to calculate total sales amount by product_id</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('group-by-solution')">Check Answer</button>
+      <pre id="group-by-solution"><code>SELECT 
+  product_id,
+  SUM(amount) AS total_amount
+FROM Sales
+GROUP BY product_id
+ORDER BY total_amount DESC;</code></pre>
+    </div>
+
+    <!-- Block 6: HAVING Clause -->
+    <div class="method">
+      <h3>HAVING Clause</h3>
+      <p class="hint">-- Write a query to find products with total sales amount greater than $200</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('having-solution')">Check Answer</button>
+      <pre id="having-solution"><code>SELECT 
+  product_id,
+  SUM(amount) AS total_amount
+FROM Sales
+GROUP BY product_id
+HAVING SUM(amount) > 200
+ORDER BY total_amount DESC;</code></pre>
+    </div>
+
+    <!-- Block 7: Multiple Aggregations -->
+    <div class="method">
+      <h3>Multiple Aggregations</h3>
+      <p class="hint">-- Write a query to calculate count, sum, average, min, and max of sales by customer_id</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('multiple-agg-solution')">Check Answer</button>
+      <pre id="multiple-agg-solution"><code>SELECT 
+  customer_id,
+  COUNT(*) AS number_of_purchases,
+  SUM(amount) AS total_spent,
+  AVG(amount) AS average_purchase,
+  MIN(amount) AS smallest_purchase,
+  MAX(amount) AS largest_purchase
+FROM Sales
+GROUP BY customer_id
+ORDER BY total_spent DESC;</code></pre>
+    </div>
+
+    <!-- Block 8: Joining with Aggregations -->
+    <div class="method">
+      <h3>Joining with Aggregations</h3>
+      <p class="hint">-- Write a query to show product names with their total sales amounts</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('join-agg-solution')">Check Answer</button>
+      <pre id="join-agg-solution"><code>SELECT 
+  p.product_id,
+  p.product_name,
+  SUM(s.amount) AS total_sales_amount,
+  COUNT(s.sale_id) AS number_of_sales
+FROM Products p
+LEFT JOIN Sales s ON p.product_id = s.product_id
+GROUP BY p.product_id, p.product_name
+ORDER BY total_sales_amount DESC;</code></pre>
+    </div>
+
+    <!-- Block 9: Date Aggregation -->
+    <div class="method">
+      <h3>Date Aggregation</h3>
+      <p class="hint">-- Write a query to calculate total sales amount by sale_date</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('date-agg-solution')">Check Answer</button>
+      <pre id="date-agg-solution"><code>SELECT 
+  sale_date,
+  COUNT(*) AS number_of_sales,
+  SUM(amount) AS daily_revenue
+FROM Sales
+GROUP BY sale_date
+ORDER BY sale_date;</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

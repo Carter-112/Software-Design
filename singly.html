@@ -12,6 +12,7 @@
   <script src="external-link-handler.js"></script>
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body>
   <header>
@@ -26,6 +27,8 @@
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
           <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
           <a href="random.html">Random</a>
         </div>
@@ -48,16 +51,16 @@
     private class Node {
         E data;
         Node next;
-        
+
         Node(E data) {
             this.data = data;
             next = null;
         }
     }
-    
+
     private Node head;
     private int size;
-    
+
     public SinglyLinkedList() {
         head = null;
         size = 0;
@@ -72,7 +75,7 @@
       <button class="check-btn" onclick="toggleSolution('singly-add-solution')">Check Answer</button>
       <pre id="singly-add-solution"><code>public void add(E element) {
     Node newNode = new Node(element);
-    
+
     // If the list is empty, set the new node as head
     if (head == null) {
         head = newNode;
@@ -84,7 +87,7 @@
         }
         current.next = newNode;
     }
-    
+
     size++;
 }</code></pre>
     </div>
@@ -111,27 +114,27 @@
       <button class="check-btn" onclick="toggleSolution('singly-remove-solution')">Check Answer</button>
       <pre id="singly-remove-solution"><code>public boolean remove(E element) {
     if (head == null) return false;
-    
+
     // Special case: remove head
     if (head.data.equals(element)) {
         head = head.next;
         size--;
         return true;
     }
-    
+
     // Look for the element in the rest of the list
     Node current = head;
     while (current.next != null && !current.next.data.equals(element)) {
         current = current.next;
     }
-    
+
     // If found, remove it
     if (current.next != null) {
         current.next = current.next.next;
         size--;
         return true;
     }
-    
+
     return false;
 }</code></pre>
     </div>
@@ -146,12 +149,12 @@
     if (index < 0 || index >= size) {
         throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
     }
-    
+
     Node current = head;
     for (int i = 0; i < index; i++) {
         current = current.next;
     }
-    
+
     return current.data;
 }</code></pre>
     </div>
@@ -164,14 +167,14 @@
       <button class="check-btn" onclick="toggleSolution('singly-contains-solution')">Check Answer</button>
       <pre id="singly-contains-solution"><code>public boolean contains(E element) {
     Node current = head;
-    
+
     while (current != null) {
         if (current.data.equals(element)) {
             return true;
         }
         current = current.next;
     }
-    
+
     return false;
 }</code></pre>
     </div>
@@ -208,7 +211,7 @@
 public String toString() {
     StringBuilder sb = new StringBuilder("[");
     Node current = head;
-    
+
     while (current != null) {
         sb.append(current.data);
         if (current.next != null) {
@@ -216,7 +219,7 @@ public String toString() {
         }
         current = current.next;
     }
-    
+
     sb.append("]");
     return sb.toString();
 }</code></pre>
@@ -233,7 +236,7 @@ public String toString() {
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
-</html> 
+</html>
 
 
 

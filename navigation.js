@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
             { name: "HashMap", url: "hashmap.html" },
             { name: "HashSet", url: "hashset.html" },
             { name: "Binary Search Tree", url: "bst.html" },
+            { name: "Lazy Binary Search Tree", url: "lazybst.html" },
+            { name: "Red-Black Tree", url: "redblacktree.html" },
             { name: "Streams & Lambdas", url: "streams.html" }
         ],
         "Python Data Structures": [
@@ -45,6 +47,33 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
+    // Function to save scroll position to localStorage
+    function saveScrollPosition() {
+        // Get the current page URL
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        // Save current scroll position
+        localStorage.setItem(`scrollPos_${currentPage}`, window.scrollY);
+        console.log(`Saved scroll position ${window.scrollY} for ${currentPage}`);
+    }
+
+    // Function to restore scroll position
+    function restoreScrollPosition() {
+        // Get the current page URL
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        // Check if we have a saved position for this page
+        const savedPosition = localStorage.getItem(`scrollPos_${currentPage}`);
+        if (savedPosition !== null) {
+            // Use setTimeout to ensure DOM is fully loaded before scrolling
+            setTimeout(() => {
+                window.scrollTo({
+                    top: parseInt(savedPosition),
+                    behavior: 'auto'
+                });
+                console.log(`Restored scroll position ${savedPosition} for ${currentPage}`);
+            }, 100);
+        }
+    }
+
     // Function to build the navigation menu
     function buildNavigation() {
         // Check if header already exists
@@ -64,17 +93,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create navbar structure
         const navbar = document.createElement('div');
         navbar.className = 'navbar';
-        
+
         const dropdown = document.createElement('div');
         dropdown.className = 'dropdown';
-        
+
         const dropbtn = document.createElement('button');
         dropbtn.className = 'dropbtn';
         dropbtn.textContent = 'Navigation ▼';
-        
+
         const dropdownContent = document.createElement('div');
         dropdownContent.className = 'dropdown-content';
-        
+
         // Add home link
         const homeLink = document.createElement('a');
         homeLink.href = 'index.html';
@@ -91,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
             categoryDiv.className = 'nav-category';
             categoryDiv.textContent = category;
             dropdownContent.appendChild(categoryDiv);
-            
+
             // Add links for this category
             navigationStructure[category].forEach(item => {
                 const link = document.createElement('a');
@@ -101,17 +130,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (currentPage === item.url) {
                     link.className = 'active-page';
                 }
+                // Add click event to save scroll position before navigating
+                link.addEventListener('click', function(e) {
+                    // Save position before navigating
+                    saveScrollPosition();
+
+                    // Store destination page in sessionStorage
+                    const destinationPage = this.getAttribute('href');
+                    sessionStorage.setItem('lastNavigation', destinationPage);
+                });
                 dropdownContent.appendChild(link);
             });
         }
-        
+
         // Assemble the navbar
         dropdown.appendChild(dropbtn);
         dropdown.appendChild(dropdownContent);
         navbar.appendChild(dropdown);
         header.appendChild(navbar);
 
-        // Add some hover effects for better UX
+        // Add click event to home link
+        homeLink.addEventListener('click', function(e) {
+            saveScrollPosition();
+        });
+
+        // Add hover effects for better UX
         const navLinks = document.querySelectorAll('.dropdown-content a');
         navLinks.forEach(link => {
             link.addEventListener('mouseenter', function() {
@@ -126,14 +169,47 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Add style for active page
+        // Add style for active page and moving border animation
         const style = document.createElement('style');
         style.textContent = `
-            .active-page {
-                background-color: #4CAF50 !important;
-                color: white !important;
-                font-weight: bold;
+            @keyframes borderPulse {
+                0% { border-color: #e78c11; }
+                50% { border-color: #ff5722; }
+                100% { border-color: #e78c11; }
             }
+
+            @keyframes glowPulse {
+                0% { box-shadow: 0 0 5px rgba(231, 140, 17, 0.5); }
+                50% { box-shadow: 0 0 15px rgba(231, 140, 17, 0.8); }
+                100% { box-shadow: 0 0 5px rgba(231, 140, 17, 0.5); }
+            }
+
+            .active-page {
+                background-color: #333 !important;
+                color: #e78c11 !important;
+                font-weight: bold;
+                border-left: 3px solid #e78c11 !important;
+                animation: borderPulse 2s infinite, glowPulse 3s infinite;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .active-page::before {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: linear-gradient(to right, transparent, #e78c11, transparent);
+                animation: moveLeft 2s infinite linear;
+            }
+
+            @keyframes moveLeft {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+
             .nav-category {
                 background-color: #333;
                 color: white;
@@ -141,6 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 font-weight: bold;
                 border-bottom: 1px solid #555;
             }
+
             .dropdown-content {
                 max-height: 80vh;
                 overflow-y: auto;
@@ -151,4 +228,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Build the navigation when the page loads
     buildNavigation();
-}); 
+
+    // Restore scroll position after page is fully loaded
+    window.addEventListener('load', function() {
+        // Check if we came from another page in the site
+        const referrer = document.referrer;
+        const currentHost = window.location.host;
+
+        // Only restore if we're navigating within the same site
+        if (referrer.includes(currentHost) || sessionStorage.getItem('lastNavigation')) {
+            restoreScrollPosition();
+        }
+    });
+
+    // Save scroll position when dropdown is closed
+    document.addEventListener('click', function(e) {
+        // Check if the dropdown is open
+        const dropdown = document.querySelector('.dropdown-content');
+        if (dropdown && window.getComputedStyle(dropdown).display !== 'none') {
+            // If click is outside the dropdown
+            if (!dropdown.contains(e.target) && !e.target.classList.contains('dropbtn')) {
+                saveScrollPosition();
+            }
+        }
+    });
+
+    // Save scroll position before page unload (when navigating away)
+    window.addEventListener('beforeunload', function() {
+        saveScrollPosition();
+    });
+
+    // Save scroll position when scrolling stops
+    let scrollTimer;
+    window.addEventListener('scroll', function() {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function() {
+            saveScrollPosition();
+        }, 300); // Save position 300ms after scrolling stops
+    });
+});

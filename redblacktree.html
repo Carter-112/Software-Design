@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Data Structures Practice - Red-Black Tree</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Red-Black Tree – Full Class</h1>
+    
+    <!-- Block 1: Class Declaration, Fields & Constructor -->
+    <div class="method">
+      <h3>Class Declaration, Fields & Constructor</h3>
+      <p class="hint">// The class header, Node inner class, and constructor.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-header-solution')">Check Answer</button>
+      <pre id="rbt-header-solution"><code>import java.util.*;
+
+/**
+ * Red-Black Tree implementation with balancing and color properties.
+ * Supports insertion, deletion, search, traversal, and iteration.
+ */
+public class RedBlackTree&lt;E extends Comparable&lt;E&gt;&gt; implements Iterable&lt;E&gt; {
+
+	private TreeNode&lt;E&gt; root; // root of the tree
+	private int size; // number of nodes in the tree
+	private static final boolean RED = true;
+	private static final boolean BLACK = false;
+
+	public RedBlackTree() {
+		root = null;
+		size = 0;
+	}
+
+	/**
+	 * TreeNode inner class for the Red-Black Tree
+	 */
+	private static class TreeNode&lt;E&gt; {
+		private E value;
+		private TreeNode&lt;E&gt; leftNode;
+		private TreeNode&lt;E&gt; rightNode;
+		private boolean color;
+
+		public TreeNode(E value, boolean color) {
+			this.value = value;
+			this.color = color;
+		}
+
+		public String toString() {
+			String out = "" + value + (color == RED ? "(R)" : "(B)") + " [ ";
+			if (leftNode != null) out += leftNode.toString();
+			out += " ] [ ";
+			if (rightNode != null) out += rightNode.toString();
+			out += " ] ";
+			return out;
+		}
+	}</code></pre>
+    </div>
+    
+    <!-- Block 2: Insert Method -->
+    <div class="method">
+      <h3>Insert Method</h3>
+      <p class="hint">// Add a value to the Red-Black Tree with balancing.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-insert-solution')">Check Answer</button>
+      <pre id="rbt-insert-solution"><code>/**
+ * Inserts the specified element to this tree if it is not already present.
+ * 
+ * @param e Element to add
+ * @return true if the element was added
+ */
+public boolean insert(E e) {
+	if (contains(e)) return false;
+	root = insert(root, e);
+	root.color = BLACK;
+	size++;
+	return true;
+}
+
+private TreeNode&lt;E&gt; insert(TreeNode&lt;E&gt; h, E e) {
+	if (h == null) return new TreeNode&lt;&gt;(e, RED);
+
+	int cmp = e.compareTo(h.value);
+	if (cmp < 0) {
+		h.leftNode = insert(h.leftNode, e);
+	} else {
+		h.rightNode = insert(h.rightNode, e);
+	}
+
+	if (isRed(h.rightNode) && !isRed(h.leftNode)) h = rotateLeft(h);
+	if (isRed(h.leftNode) && isRed(h.leftNode.leftNode)) h = rotateRight(h);
+	if (isRed(h.leftNode) && isRed(h.rightNode)) flipColors(h);
+
+	return h;
+}</code></pre>
+    </div>
+    
+    <!-- Block 3: Contains Method -->
+    <div class="method">
+      <h3>Contains Method</h3>
+      <p class="hint">// Check if a value exists in the Red-Black Tree.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-contains-solution')">Check Answer</button>
+      <pre id="rbt-contains-solution"><code>/**
+ * Returns true if this tree contains the specified element.
+ * 
+ * @param e Element to test for presence
+ * @return true if the element exists
+ */
+public boolean contains(E e) {
+	TreeNode&lt;E&gt; current = root;
+	while (current != null) {
+		int cmp = e.compareTo(current.value);
+		if (cmp == 0) return true;
+		current = (cmp < 0) ? current.leftNode : current.rightNode;
+	}
+	return false;
+}</code></pre>
+    </div>
+    
+    <!-- Block 4: Remove Method -->
+    <div class="method">
+      <h3>Remove Method</h3>
+      <p class="hint">// Remove a value from the Red-Black Tree with balancing.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-remove-solution')">Check Answer</button>
+      <pre id="rbt-remove-solution"><code>/**
+ * Removes the specified element if it exists in the tree.
+ * 
+ * @param e Element to remove
+ * @return true if the element was removed
+ */
+public boolean remove(E e) {
+	if (!contains(e)) return false;
+	if (!isRed(root.leftNode) && !isRed(root.rightNode)) root.color = RED;
+	root = remove(root, e);
+	if (root != null) root.color = BLACK;
+	size--;
+	return true;
+}
+
+private TreeNode&lt;E&gt; remove(TreeNode&lt;E&gt; h, E e) {
+	if (e.compareTo(h.value) < 0) {
+		if (!isRed(h.leftNode) && !isRed(h.leftNode != null ? h.leftNode.leftNode : null))
+			h = moveRedLeft(h);
+		h.leftNode = remove(h.leftNode, e);
+	} else {
+		if (isRed(h.leftNode)) h = rotateRight(h);
+		if (e.compareTo(h.value) == 0 && h.rightNode == null) return null;
+		if (!isRed(h.rightNode) && !isRed(h.rightNode != null ? h.rightNode.leftNode : null))
+			h = moveRedRight(h);
+		if (e.compareTo(h.value) == 0) {
+			TreeNode&lt;E&gt; min = min(h.rightNode);
+			h.value = min.value;
+			h.rightNode = deleteMin(h.rightNode);
+		} else {
+			h.rightNode = remove(h.rightNode, e);
+		}
+	}
+	return fixUp(h);
+}
+
+private TreeNode&lt;E&gt; deleteMin(TreeNode&lt;E&gt; h) {
+	if (h.leftNode == null) return null;
+	if (!isRed(h.leftNode) && !isRed(h.leftNode.leftNode)) h = moveRedLeft(h);
+	h.leftNode = deleteMin(h.leftNode);
+	return fixUp(h);
+}</code></pre>
+    </div>
+    
+    <!-- Block 5: Find Min Method -->
+    <div class="method">
+      <h3>Find Min Method</h3>
+      <p class="hint">// Find the minimum value in the tree.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-findmin-solution')">Check Answer</button>
+      <pre id="rbt-findmin-solution"><code>/**
+ * Returns the minimum element in the tree.
+ * 
+ * @return Minimum element
+ */
+public E findMin() {
+	if (root == null) return null;
+	return min(root).value;
+}
+
+private TreeNode&lt;E&gt; min(TreeNode&lt;E&gt; node) {
+	while (node.leftNode != null) node = node.leftNode;
+	return node;
+}</code></pre>
+    </div>
+    
+    <!-- Block 6: Traversal Methods -->
+    <div class="method">
+      <h3>Traversal Methods</h3>
+      <p class="hint">// Methods for traversing the tree.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-traversal-solution')">Check Answer</button>
+      <pre id="rbt-traversal-solution"><code>/**
+ * Prints an inorder traversal of the tree.
+ */
+public void inorderTraversal() {
+	inorderTraversal(root);
+}
+
+private void inorderTraversal(TreeNode&lt;E&gt; root) {
+	if (root == null) return;
+	inorderTraversal(root.leftNode);
+	System.out.println(root.value + (root.color == RED ? "(R)" : "(B)"));
+	inorderTraversal(root.rightNode);
+}
+
+/**
+ * Prints a level-order traversal of the tree.
+ */
+public void levelOrderTraversal() {
+	if (root == null) return;
+	Queue&lt;TreeNode&lt;E&gt;&gt; q = new LinkedList&lt;&gt;();
+	q.add(root);
+	while (!q.isEmpty()) {
+		TreeNode&lt;E&gt; node = q.poll();
+		System.out.println(node.value + (node.color == RED ? "(R)" : "(B)"));
+		if (node.leftNode != null) q.add(node.leftNode);
+		if (node.rightNode != null) q.add(node.rightNode);
+	}
+}</code></pre>
+    </div>
+    
+    <!-- Block 7: Iterator Implementation -->
+    <div class="method">
+      <h3>Iterator Implementation</h3>
+      <p class="hint">// Iterator for traversing the tree in ascending order.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-iterator-solution')">Check Answer</button>
+      <pre id="rbt-iterator-solution"><code>/**
+ * Returns an iterator that traverses the tree in ascending order.
+ */
+@Override
+public Iterator&lt;E&gt; iterator() {
+	return new RBTIterator(root);
+}
+
+private class RBTIterator implements Iterator&lt;E&gt; {
+	private Stack&lt;TreeNode&lt;E&gt;&gt; stack = new Stack&lt;&gt;();
+
+	public RBTIterator(TreeNode&lt;E&gt; root) {
+		pushLeft(root);
+	}
+
+	private void pushLeft(TreeNode&lt;E&gt; node) {
+		while (node != null) {
+			stack.push(node);
+			node = node.leftNode;
+		}
+	}
+
+	@Override
+	public boolean hasNext() {
+		return !stack.isEmpty();
+	}
+
+	@Override
+	public E next() {
+		if (!hasNext()) throw new NoSuchElementException();
+		TreeNode&lt;E&gt; node = stack.pop();
+		pushLeft(node.rightNode);
+		return node.value;
+	}
+}</code></pre>
+    </div>
+    
+    <!-- Block 8: Red-Black Tree Helper Methods -->
+    <div class="method">
+      <h3>Red-Black Tree Helper Methods</h3>
+      <p class="hint">// Helper methods for maintaining Red-Black Tree properties.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-helpers-solution')">Check Answer</button>
+      <pre id="rbt-helpers-solution"><code>// Red-Black Tree helper methods
+
+private boolean isRed(TreeNode&lt;E&gt; node) {
+	return node != null && node.color == RED;
+}
+
+private TreeNode&lt;E&gt; rotateLeft(TreeNode&lt;E&gt; h) {
+	TreeNode&lt;E&gt; x = h.rightNode;
+	h.rightNode = x.leftNode;
+	x.leftNode = h;
+	x.color = h.color;
+	h.color = RED;
+	return x;
+}
+
+private TreeNode&lt;E&gt; rotateRight(TreeNode&lt;E&gt; h) {
+	TreeNode&lt;E&gt; x = h.leftNode;
+	h.leftNode = x.rightNode;
+	x.rightNode = h;
+	x.color = h.color;
+	h.color = RED;
+	return x;
+}
+
+private void flipColors(TreeNode&lt;E&gt; h) {
+	h.color = RED;
+	if (h.leftNode != null) h.leftNode.color = BLACK;
+	if (h.rightNode != null) h.rightNode.color = BLACK;
+}
+
+private TreeNode&lt;E&gt; moveRedLeft(TreeNode&lt;E&gt; h) {
+	flipColors(h);
+	if (isRed(h.rightNode != null ? h.rightNode.leftNode : null)) {
+		h.rightNode = rotateRight(h.rightNode);
+		h = rotateLeft(h);
+		flipColors(h);
+	}
+	return h;
+}
+
+private TreeNode&lt;E&gt; moveRedRight(TreeNode&lt;E&gt; h) {
+	flipColors(h);
+	if (isRed(h.leftNode != null ? h.leftNode.leftNode : null)) {
+		h = rotateRight(h);
+		flipColors(h);
+	}
+	return h;
+}
+
+private TreeNode&lt;E&gt; fixUp(TreeNode&lt;E&gt; h) {
+	if (isRed(h.rightNode)) h = rotateLeft(h);
+	if (isRed(h.leftNode) && isRed(h.leftNode.leftNode)) h = rotateRight(h);
+	if (isRed(h.leftNode) && isRed(h.rightNode)) flipColors(h);
+	return h;
+}</code></pre>
+    </div>
+    
+    <!-- Block 9: ToString Method -->
+    <div class="method">
+      <h3>ToString Method</h3>
+      <p class="hint">// String representation of the tree.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-tostring-solution')">Check Answer</button>
+      <pre id="rbt-tostring-solution"><code>/**
+ * Returns a preorder bracketed visualization of the tree.
+ */
+public String toString() {
+	return "[ " + (root != null ? root.toString() : "") + " ]";
+}</code></pre>
+    </div>
+    
+    <!-- Block 10: Main Method -->
+    <div class="method">
+      <h3>Main Method</h3>
+      <p class="hint">// A main method demonstrating all the features of the Red-Black Tree.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('rbt-main-solution')">Check Answer</button>
+      <pre id="rbt-main-solution"><code>/**
+ * Main method to demonstrate Red-Black Tree functionality
+ */
+public static void main(String[] args) {
+	// Create a new Red-Black Tree
+	RedBlackTree&lt;Integer&gt; rbt = new RedBlackTree&lt;&gt;();
+	
+	// Add some values
+	int[] values = {50, 30, 70, 20, 40, 60, 80};
+	for (int value : values) {
+		rbt.insert(value);
+		System.out.println("After inserting " + value + ": " + rbt);
+	}
+	
+	// Test traversals
+	System.out.println("\nInorder traversal:");
+	rbt.inorderTraversal();
+	
+	System.out.println("\nLevel order traversal:");
+	rbt.levelOrderTraversal();
+	
+	// Test iterator
+	System.out.println("\nUsing iterator:");
+	for (Integer i : rbt) {
+		System.out.print(i + " ");
+	}
+	System.out.println();
+	
+	// Test contains and remove
+	System.out.println("\nContains 40: " + rbt.contains(40));
+	System.out.println("Contains 100: " + rbt.contains(100));
+	
+	System.out.println("\nBefore removing 30: " + rbt);
+	rbt.remove(30);
+	System.out.println("After removing 30: " + rbt);
+	
+	// Test findMin
+	System.out.println("\nMinimum value: " + rbt.findMin());
+}</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html>

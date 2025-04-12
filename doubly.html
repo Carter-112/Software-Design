@@ -12,6 +12,7 @@
   <script src="external-link-handler.js"></script>
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body>
   <header>
@@ -26,6 +27,8 @@
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
           <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
           <a href="random.html">Random</a>
         </div>
@@ -49,18 +52,18 @@
         E data;
         Node&lt;E&gt; next;
         Node&lt;E&gt; prev;
-        
+
         Node(E data, Node&lt;E&gt; prev, Node&lt;E&gt; next) {
             this.data = data;
             this.prev = prev;
             this.next = next;
         }
     }
-    
+
     private final Node&lt;E&gt; sentinelHead;
     private final Node&lt;E&gt; sentinelTail;
     private int size;
-    
+
     public DoublyLinkedList() {
         // Create sentinel nodes that point to each other
         sentinelHead = new Node&lt;&gt;(null, null, null);
@@ -87,7 +90,7 @@ private void addBefore(Node&lt;E&gt; node, E element) {
     // Create new node with proper links
     Node&lt;E&gt; predecessor = node.prev;
     Node&lt;E&gt; newNode = new Node&lt;&gt;(element, predecessor, node);
-    
+
     // Fix links in existing nodes
     predecessor.next = newNode;
     node.prev = newNode;
@@ -116,9 +119,9 @@ private void addBefore(Node&lt;E&gt; node, E element) {
       <pre id="doubly-remove-solution"><code>public boolean remove(E element) {
     // Find the node with the element
     Node&lt;E&gt; current = sentinelHead.next;
-    
+
     while (current != sentinelTail) {
-        if ((element == null && current.data == null) || 
+        if ((element == null && current.data == null) ||
             (element != null && element.equals(current.data))) {
             // Remove the node by adjusting links
             current.prev.next = current.next;
@@ -128,7 +131,7 @@ private void addBefore(Node&lt;E&gt; node, E element) {
         }
         current = current.next;
     }
-    
+
     return false;
 }</code></pre>
     </div>
@@ -143,7 +146,7 @@ private void addBefore(Node&lt;E&gt; node, E element) {
     if (index < 0 || index >= size) {
         throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
     }
-    
+
     // Determine whether to start from head or tail based on index
     if (index < size / 2) {
         // Start from head
@@ -224,7 +227,7 @@ public boolean isEmpty() {
 public String toString() {
     StringBuilder sb = new StringBuilder("[");
     Node&lt;E&gt; current = sentinelHead.next;
-    
+
     while (current != sentinelTail) {
         sb.append(current.data);
         if (current.next != sentinelTail) {
@@ -232,7 +235,7 @@ public String toString() {
         }
         current = current.next;
     }
-    
+
     sb.append("]");
     return sb.toString();
 }</code></pre>
@@ -249,7 +252,7 @@ public String toString() {
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
-</html> 
+</html>
 
 
 

@@ -497,83 +497,80 @@ header {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: rgba(26, 26, 26, 0.95);
-  min-width: 200px;
-  max-height: 80vh; /* Limit height to 80% of viewport height */
-  overflow-y: auto; /* Add vertical scrollbar when needed */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  border-radius: 10px;
+  background-color: var(--dark-color);
+  min-width: 220px;
+  max-height: 80vh;
+  overflow-y: auto; /* Add scrolling for long menus */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+  z-index: 1000;
+  border-radius: 5px;
+  border: 1px solid var(--gray-color);
   padding: 10px 0;
-  backdrop-filter: blur(5px);
-  transform: translateY(20px);
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  border: 1px solid rgba(255, 69, 0, 0.2);
-  will-change: var(--will-change-transform), var(--will-change-opacity);
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: var(--primary-color) rgba(26, 26, 26, 0.5); /* For Firefox */
+  transition: all 0.3s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--highlight-color) transparent;
 }
 
-/* Custom scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+/* Style for navigation categories */
+.nav-category {
+  padding: 10px 16px;
+  text-align: left;
+  color: var(--highlight-color);
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 12px;
+  border-bottom: 1px solid var(--gray-color);
+  background-color: rgba(255, 69, 0, 0.1);
+}
+
+/* Add extra margin to the first category */
+.nav-category:first-of-type {
+  margin-top: 5px;
+}
+
 .dropdown-content::-webkit-scrollbar {
   width: 8px;
 }
 
 .dropdown-content::-webkit-scrollbar-track {
   background: rgba(26, 26, 26, 0.5);
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .dropdown-content::-webkit-scrollbar-thumb {
-  background-color: var(--primary-color);
-  border-radius: 10px;
+  background-color: var(--highlight-color);
+  border-radius: 5px;
 }
 
 .dropdown-content::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--primary-color));
-  background-size: 200% 100%;
-  animation: gradientBG 3s linear infinite;
+  top: -10px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid var(--dark-color);
+  z-index: 1001;
 }
 
 .dropdown-content a {
   color: var(--text-color);
-  padding: 12px 20px;
+  padding: 10px 16px;
   text-decoration: none;
   display: block;
-  transition: all 0.3s ease;
+  text-align: left;
+  transition: background-color 0.2s, color 0.2s;
   position: relative;
-  overflow: hidden;
-  font-weight: 500;
-}
-
-.dropdown-content a::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 69, 0, 0.5), transparent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
+  font-size: 0.95rem;
 }
 
 .dropdown-content a:hover {
   background-color: rgba(255, 69, 0, 0.15);
-  padding-left: 25px;
-  color: var(--primary-color);
-}
-
-.dropdown-content a:hover::before {
-  transform: scaleX(1);
+  color: var(--highlight-color);
 }
 
 .dropdown:hover .dropdown-content {

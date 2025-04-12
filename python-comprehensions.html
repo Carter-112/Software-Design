@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Comprehensions - Python Topics</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+    }
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: 1px solid #3e3e42;
+      border-radius: 4px;
+      padding: 10px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      margin: 10px 0;
+    }
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
+    .run-btn {
+      background-color: #107C10;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .run-btn:hover {
+      background-color: #15a015;
+    }
+    .output {
+      background-color: #0d0d0d;
+      border: 1px solid #3e3e42;
+      border-radius: 4px;
+      padding: 15px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      min-height: 50px;
+      margin: 10px 0;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="java.html">Java</a>
+          <a href="python.html">Python</a>
+          <a href="sql.html">SQL</a>
+          <a href="webdev.html">Web Development</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Python Comprehensions Practice</h1>
+    <p>Practice implementing Python's comprehensions. These provide a concise way to create lists, dictionaries, and sets from existing iterables.</p>
+
+    <!-- Block 1: Basic List Comprehension -->
+    <div class="method">
+      <h3>Basic List Comprehension</h3>
+      <p class="hint"># Create a list of squares for numbers from 1 to 10</p>
+      <textarea id="list-comp-basic-code" placeholder="Write your Python code here..."></textarea>
+      <button class="run-btn" onclick="runCode('list-comp-basic-code', 'list-comp-basic-output')">Run Code</button>
+      <div id="list-comp-basic-output" class="output"></div>
+      <button class="check-btn" onclick="toggleSolution('list-comp-basic-solution')">Check Solution</button>
+      <pre id="list-comp-basic-solution" style="display: none;"><code>squares = [x**2 for x in range(1, 11)]
+print(squares)
+
+# This creates: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]</code></pre>
+    </div>
+
+    <!-- Block 2: List Comprehension with Condition -->
+    <div class="method">
+      <h3>List Comprehension with Condition</h3>
+      <p class="hint"># Create a list of even numbers from 1 to 20</p>
+      <textarea id="list-comp-condition-code" placeholder="Write your Python code here..."></textarea>
+      <button class="run-btn" onclick="runCode('list-comp-condition-code', 'list-comp-condition-output')">Run Code</button>
+      <div id="list-comp-condition-output" class="output"></div>
+      <button class="check-btn" onclick="toggleSolution('list-comp-condition-solution')">Check Solution</button>
+      <pre id="list-comp-condition-solution" style="display: none;"><code>even_numbers = [x for x in range(1, 21) if x % 2 == 0]
+print(even_numbers)
+
+# This creates: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]</code></pre>
+    </div>
+
+    <!-- Block 3: List Comprehension with Transformation -->
+    <div class="method">
+      <h3>List Comprehension with Transformation</h3>
+      <p class="hint"># Create a list of strings from a list of numbers (convert numbers to strings and add a prefix)</p>
+      <textarea id="list-comp-transform-code" placeholder="Write your Python code here..."></textarea>
+      <button class="run-btn" onclick="runCode('list-comp-transform-code', 'list-comp-transform-output')">Run Code</button>
+      <div id="list-comp-transform-output" class="output"></div>
+      <button class="check-btn" onclick="toggleSolution('list-comp-transform-solution')">Check Solution</button>
+      <pre id="list-comp-transform-solution" style="display: none;"><code>numbers = [1, 2, 3, 4, 5]
+number_strings = ["Number: " + str(x) for x in numbers]
+print(number_strings)
+
+# This creates: ['Number: 1', 'Number: 2', 'Number: 3', 'Number: 4', 'Number: 5']</code></pre>
+    </div>
+
+    <!-- Block 4: Dictionary Comprehension -->
+    <div class="method">
+      <h3>Dictionary Comprehension</h3>
+      <p class="hint"># Create a dictionary with numbers 1-10 as keys and their squares as values</p>
+      <textarea id="dict-comp-code" placeholder="Write your Python code here..."></textarea>
+      <button class="run-btn" onclick="runCode('dict-comp-code', 'dict-comp-output')">Run Code</button>
+      <div id="dict-comp-output" class="output"></div>
+      <button class="check-btn" onclick="toggleSolution('dict-comp-solution')">Check Solution</button>
+      <pre id="dict-comp-solution" style="display: none;"><code>square_dict = {x: x**2 for x in range(1, 11)}
+print(square_dict)
+
+# This creates: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81, 10: 100}</code></pre>
+    </div>
+
+    <!-- Block 5: Dictionary Comprehension with Condition -->
+    <div class="method">
+      <h3>Dictionary Comprehension with Condition</h3>
+      <p class="hint"># Create a dictionary of even numbers (1-10) and their squares</p>
+      <textarea id="dict-comp-condition-code" placeholder="Write your Python code here..."></textarea>
+      <button class="run-btn" onclick="runCode('dict-comp-condition-code', 'dict-comp-condition-output')">Run Code</button>
+      <div id="dict-comp-condition-output" class="output"></div>
+      <button class="check-btn" onclick="toggleSolution('dict-comp-condition-solution')">Check Solution</button>
+      <pre id="dict-comp-condition-solution" style="display: none;"><code>even_square_dict = {x: x**2 for x in range(1, 11) if x % 2 == 0}
+print(even_square_dict)
+
+# This creates: {2: 4, 4: 16, 6: 36, 8: 64, 10: 100}</code></pre>
+    </div>
+
+    <!-- Block 6: Set Comprehension -->
+    <div class="method">
+      <h3>Set Comprehension</h3>
+      <p class="hint"># Create a set of the first letters from a list of words</p>
+      <textarea id="set-comp-code" placeholder="Write your Python code here..."></textarea>
+      <button class="run-btn" onclick="runCode('set-comp-code', 'set-comp-output')">Run Code</button>
+      <div id="set-comp-output" class="output"></div>
+      <button class="check-btn" onclick="toggleSolution('set-comp-solution')">Check Solution</button>
+      <pre id="set-comp-solution" style="display: none;"><code>words = ["apple", "banana", "apple", "cherry", "banana", "date"]
+first_letters = {word[0] for word in words}
+print(first_letters)
+
+# This creates a set like: {'a', 'b', 'c', 'd'}</code></pre>
+    </div>
+
+    <!-- Block 7: Generator Expression -->
+    <div class="method">
+      <h3>Generator Expression</h3>
+      <p class="hint"># Create a generator for squares of numbers 1-5 and convert to list</p>
+      <textarea id="gen-exp-code" placeholder="Write your Python code here..."></textarea>
+      <button class="run-btn" onclick="runCode('gen-exp-code', 'gen-exp-output')">Run Code</button>
+      <div id="gen-exp-output" class="output"></div>
+      <button class="check-btn" onclick="toggleSolution('gen-exp-solution')">Check Solution</button>
+      <pre id="gen-exp-solution" style="display: none;"><code>square_generator = (x**2 for x in range(1, 6))
+print(type(square_generator))
+print(list(square_generator))
+
+# First line shows the generator type
+# Second line converts to list and prints: [1, 4, 9, 16, 25]</code></pre>
+    </div>
+
+    <!-- Block 8: Nested List Comprehension -->
+    <div class="method">
+      <h3>Nested List Comprehension</h3>
+      <p class="hint"># Create a flattened list from a list of lists</p>
+      <textarea id="nested-comp-code" placeholder="Write your Python code here..."></textarea>
+      <button class="run-btn" onclick="runCode('nested-comp-code', 'nested-comp-output')">Run Code</button>
+      <div id="nested-comp-output" class="output"></div>
+      <button class="check-btn" onclick="toggleSolution('nested-comp-solution')">Check Solution</button>
+      <pre id="nested-comp-solution" style="display: none;"><code>nested_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flattened = [item for sublist in nested_list for item in sublist]
+print(flattened)
+
+# This creates: [1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+    </div>
+
+    <!-- Block 9: Advanced Comprehension -->
+    <div class="method">
+      <h3>Advanced Comprehension</h3>
+      <p class="hint"># Create a list of tuples (num, square, cube) for numbers 1-5</p>
+      <textarea id="advanced-comp-code" placeholder="Write your Python code here..."></textarea>
+      <button class="run-btn" onclick="runCode('advanced-comp-code', 'advanced-comp-output')">Run Code</button>
+      <div id="advanced-comp-output" class="output"></div>
+      <button class="check-btn" onclick="toggleSolution('advanced-comp-solution')">Check Solution</button>
+      <pre id="advanced-comp-solution" style="display: none;"><code>result = [(x, x**2, x**3) for x in range(1, 6)]
+print(result)
+
+# This creates: [(1, 1, 1), (2, 4, 8), (3, 9, 27), (4, 16, 64), (5, 25, 125)]</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none") ? "block" : "none";
+    }
+
+    // Function to run Python code using Pyodide (mock function as we can't run it client-side)
+    function runCode(codeId, outputId) {
+      const codeElement = document.getElementById(codeId);
+      const outputElement = document.getElementById(outputId);
+      
+      // This is just a mock implementation
+      outputElement.textContent = "Code execution is simulated in this environment.\n";
+      outputElement.textContent += "To run this code, copy it into a Python environment.";
+      
+      // In a real implementation, we would use something like Pyodide or a backend API
+      // to execute the Python code and return the result
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

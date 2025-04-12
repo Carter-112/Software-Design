@@ -16,21 +16,21 @@
       background-color: #222;
       color: #fff;
     }
-    
+
     #content {
       background-color: #222;
       padding: 20px;
       border-radius: 8px;
     }
-    
+
     .code-container {
       background-color: #333;
       border-radius: 5px;
       padding: 10px;
-      margin: 10px 0;
+      margin: 10px 0 0 0;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-    
+
     .code-area {
       background-color: #333;
       color: #eee;
@@ -39,7 +39,7 @@
       white-space: pre-wrap;
       font-family: monospace;
     }
-    
+
     .code-input {
       width: 100%;
       min-height: 150px;
@@ -51,7 +51,7 @@
       background-color: #333;
       color: #eee;
     }
-    
+
     .hint-container {
       background-color: #333;
       border-left: 4px solid #e78c11;
@@ -59,8 +59,10 @@
       margin: 0 0 15px 0;
       border-radius: 0 5px 5px 0;
       color: #fff;
+      border-top: none;
+      margin-top: -5px;
     }
-    
+
     #solutionContainer {
       background-color: #333;
       border: 2px solid #e78c11;
@@ -71,7 +73,7 @@
       position: relative;
       color: #eee;
     }
-    
+
     #solutionCode {
       color: #eee;
       background-color: #333;
@@ -79,18 +81,18 @@
       width: 100%;
       white-space: pre-wrap;
     }
-    
+
     #solutionContainer h3 {
       color: #e78c11;
       margin-top: 0;
     }
-    
+
     .button-row {
       display: flex;
       gap: 10px;
       margin: 10px 0;
     }
-    
+
     button {
       padding: 10px 15px;
       background-color: #e78c11;
@@ -101,31 +103,31 @@
       transition: background-color 0.3s;
       font-weight: bold;
     }
-    
+
     button:hover {
       background-color: #f39c21;
     }
-    
+
     h1, h2, h3, h4, h5 {
       color: #e78c11;
     }
-    
+
     #snippetTitle {
       color: #e78c11;
       font-size: 1.5em;
       margin-bottom: 10px;
     }
-    
+
     #snippetDescription {
       color: #fff;
       margin-bottom: 20px;
     }
-    
+
     /* Fix for solution display */
     #snippetContainer {
       position: relative;
     }
-    
+
     /* No gap between hint and solution */
     h4 {
       margin-top: 0;
@@ -140,7 +142,7 @@
         <button class="dropbtn">Navigation ▼</button>
         <div class="dropdown-content">
           <a href="index.html">Home</a>
-          
+
           <!-- Java Data Structures -->
           <div class="nav-category">Java Data Structures</div>
           <a href="singly.html">Singly Linked List</a>
@@ -149,8 +151,10 @@
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
           <a href="bst.html">Binary Search Tree</a>
+          <a href="lazybst.html">Lazy Binary Search Tree</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
-          
+
           <!-- Python Data Structures -->
           <div class="nav-category">Python Data Structures</div>
           <a href="python-lists.html">Lists</a>
@@ -158,7 +162,7 @@
           <a href="python-sets.html">Sets</a>
           <a href="python-tuples.html">Tuples</a>
           <a href="python-comprehensions.html">Comprehensions</a>
-          
+
           <!-- SQL Topics -->
           <div class="nav-category">SQL Topics</div>
           <a href="sql-select.html">SELECT Queries</a>
@@ -166,7 +170,7 @@
           <a href="sql-aggregation.html">Aggregation</a>
           <a href="sql-subqueries.html">Subqueries</a>
           <a href="sql-transactions.html">Transactions</a>
-          
+
           <!-- Web Development -->
           <div class="nav-category">Web Development</div>
           <a href="web-html.html">HTML Structure</a>
@@ -174,14 +178,14 @@
           <a href="web-js-dom.html">JavaScript DOM</a>
           <a href="web-js-events.html">JavaScript Events</a>
           <a href="web-responsive.html">Responsive Design</a>
-          
+
           <!-- Language Fundamentals -->
           <div class="nav-category">Language Fundamentals</div>
           <a href="javabasics.html">Java Basics</a>
           <a href="pythonbasics.html">Python Basics</a>
           <a href="sqlbasics.html">SQL Basics</a>
           <a href="webbasics.html">HTML/CSS/JS Basics</a>
-          
+
           <!-- Random Practice -->
           <div class="nav-category">Random Practice</div>
           <a href="random.html">Java Random Practice</a>
@@ -196,29 +200,29 @@
   <div id="content">
     <h1>Java Random Practice</h1>
     <p>Test your Java programming skills with these randomly selected challenges from various Java implementations.</p>
-    
+
     <button id="randomSnippetButton" onclick="getRandomSnippet()">Get Random Challenge</button>
-    
+
     <div id="snippetContainer" style="display: none;">
       <h3 id="snippetTitle">Challenge Title</h3>
       <p id="snippetDescription">Description of the challenge.</p>
-      
-      <div class="code-container">
+
+      <div class="code-container" style="margin-bottom: 0;">
         <pre id="snippetCode" class="code-area"></pre>
       </div>
-      
+
       <div class="hint-container" id="hintContainer">
         <h4>Hint:</h4>
         <p id="snippetHint">This will show a helpful hint.</p>
       </div>
-      
+
       <h4>Your Solution:</h4>
       <textarea id="userCodeInput" class="code-input" placeholder="Write your code solution here..."></textarea>
-      
+
       <div class="button-row">
         <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
       </div>
-      
+
       <div id="solutionContainer" style="display: none;">
         <h3>Solution:</h3>
         <div class="code-container" style="margin-bottom: 20px;">
@@ -272,7 +276,7 @@
         hint: "Check if the index is valid. For index 0, update the head. Otherwise, traverse to the node before the one to remove and update its next pointer.",
         solution: "public E remove(int index) {\n    if (index < 0 || index >= size) {\n        throw new IndexOutOfBoundsException(\"Index: \" + index + \", Size: \" + size);\n    }\n    \n    E removedData;\n    if (index == 0) {\n        removedData = head.data;\n        head = head.next;\n    } else {\n        Node current = head;\n        for (int i = 0; i < index - 1; i++) {\n            current = current.next;\n        }\n        removedData = current.next.data;\n        current.next = current.next.next;\n    }\n    \n    size--;\n    return removedData;\n}"
       },
-      
+
       // Doubly Linked List snippets
       {
         title: "Doubly Linked List - Node Class",
@@ -314,7 +318,7 @@
         hint: "Check if the list is empty. If head equals tail, set both to null. Otherwise, update the tail and its next reference.",
         solution: "public E removeLast() {\n    if (tail == null) {\n        throw new NoSuchElementException(\"List is empty\");\n    }\n    \n    E removedData = tail.data;\n    \n    if (head == tail) {\n        head = tail = null;\n    } else {\n        tail = tail.prev;\n        tail.next = null;\n    }\n    \n    size--;\n    return removedData;\n}"
       },
-      
+
       // ArrayList snippets
       {
         title: "ArrayList - Constructor",
@@ -356,7 +360,7 @@
         hint: "Use the indexOf method to check if the object exists in the array. Return true if the index is not -1.",
         solution: "public boolean contains(Object o) {\n    return indexOf(o) >= 0;\n}\n\npublic int indexOf(Object o) {\n    if (o == null) {\n        for (int i = 0; i < size; i++) {\n            if (elements[i] == null) {\n                return i;\n            }\n        }\n    } else {\n        for (int i = 0; i < size; i++) {\n            if (o.equals(elements[i])) {\n                return i;\n            }\n        }\n    }\n    return -1;\n}"
       },
-      
+
       // HashMap snippets
       {
         title: "HashMap - Entry Class",
@@ -390,7 +394,7 @@
         hint: "Calculate the hash and find the bucket. Traverse the linked list to find the matching key. Remove the entry and return its value.",
         solution: "public V remove(Object key) {\n    Entry<K, V> e = removeEntryForKey(key);\n    return (e == null ? null : e.value);\n}\n\nprivate Entry<K, V> removeEntryForKey(Object key) {\n    if (size == 0) {\n        return null;\n    }\n    \n    int hash = (key == null) ? 0 : hash(key.hashCode());\n    int i = indexFor(hash, table.length);\n    \n    Entry<K, V> prev = table[i];\n    Entry<K, V> e = prev;\n    \n    while (e != null) {\n        Entry<K, V> next = e.next;\n        Object k;\n        \n        if (e.hash == hash && ((k = e.key) == key || (key != null && key.equals(k)))) {\n            size--;\n            if (prev == e) {\n                table[i] = next;\n            } else {\n                prev.next = next;\n            }\n            return e;\n        }\n        \n        prev = e;\n        e = next;\n    }\n    \n    return e;\n}"
       },
-      
+
       // BST snippets
       {
         title: "Binary Search Tree - Node Class",
@@ -433,15 +437,15 @@
         solution: "public int height() {\n    return heightRecursive(root);\n}\n\nprivate int heightRecursive(Node node) {\n    if (node == null) {\n        return -1; // Height of an empty tree is -1\n    }\n    \n    int leftHeight = heightRecursive(node.left);\n    int rightHeight = heightRecursive(node.right);\n    \n    return 1 + Math.max(leftHeight, rightHeight);\n}"
       }
     ];
-    
+
     // Keep track of the current snippet
     let currentSnippet = null;
-    
+
     // Get a random snippet
     function getRandomSnippet() {
       // Select a random snippet
       currentSnippet = javaSnippets[Math.floor(Math.random() * javaSnippets.length)];
-      
+
       // Update the DOM
       document.getElementById('snippetTitle').textContent = currentSnippet.title;
       document.getElementById('snippetDescription').textContent = currentSnippet.description;
@@ -449,47 +453,47 @@
       document.getElementById('snippetHint').textContent = currentSnippet.hint;
       document.getElementById('solutionCode').textContent = currentSnippet.solution;
       document.getElementById('userCodeInput').value = currentSnippet.code;
-      
+
       // Show snippet
       document.getElementById('snippetContainer').style.display = 'block';
       document.getElementById('solutionContainer').style.display = 'none';
       document.getElementById('toggleAnswerButton').textContent = 'Show Solution';
-      
+
       // Scroll to snippet
       document.getElementById('snippetContainer').scrollIntoView({
-        behavior: 'smooth', 
+        behavior: 'smooth',
         block: 'start'
       });
     }
-    
+
     // Toggle solution visibility
     function toggleRandomAnswer() {
       const solutionContainer = document.getElementById('solutionContainer');
       const toggleButton = document.getElementById('toggleAnswerButton');
-      
+
       // Remove any existing orange solution buttons
       const orangeButtons = document.querySelectorAll('.orange-solution');
       orangeButtons.forEach(btn => btn.remove());
-      
+
       // Check for and remove any elements with the text "Solution" that might be orange
       const allElements = document.querySelectorAll('*');
       allElements.forEach(el => {
-        if (el.textContent.includes('Solution') && 
+        if (el.textContent.includes('Solution') &&
             window.getComputedStyle(el).getPropertyValue('border').includes('orange')) {
           el.remove();
         }
       });
-      
+
       // Force solution to be visible and properly formatted
       if (solutionContainer.style.display === 'none' || solutionContainer.style.display === '') {
         solutionContainer.style.display = 'block';
         toggleButton.textContent = 'Hide Solution';
-        
+
         // Make sure solution code is properly set
         if (currentSnippet) {
           document.getElementById('solutionCode').textContent = currentSnippet.solution;
         }
-        
+
         // Ensure solution is visible
         setTimeout(() => {
           solutionContainer.scrollIntoView({
@@ -502,34 +506,34 @@
         toggleButton.textContent = 'Show Solution';
       }
     }
-    
+
     // Remove any orange solution buttons and load first challenge when the page loads
     window.onload = function() {
       // Give DOM time to fully render before removing elements
       setTimeout(() => {
         const orangeButtons = document.querySelectorAll('.orange-solution');
         orangeButtons.forEach(btn => btn.remove());
-        
+
         // Also check for and remove any elements with the text "Solution" that might be orange
         const allElements = document.querySelectorAll('*');
         allElements.forEach(el => {
-          if (el.textContent.includes('Solution') && 
+          if (el.textContent.includes('Solution') &&
               (window.getComputedStyle(el).getPropertyValue('border').includes('orange') ||
                window.getComputedStyle(el).getPropertyValue('background').includes('orange'))) {
             el.remove();
           }
         });
-        
+
         // Load the first challenge automatically
         getRandomSnippet();
       }, 500);
     };
   </script>
-  
+
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
-</html> 
+</html>
 
 
 

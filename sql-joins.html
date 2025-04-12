@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Joins - SQL Topics</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+    }
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: 1px solid #3e3e42;
+      border-radius: 4px;
+      padding: 10px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      margin: 10px 0;
+    }
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: #252526;
+    }
+    th, td {
+      border: 1px solid #3e3e42;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #333333;
+      color: #ffcc00;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="java.html">Java</a>
+          <a href="python.html">Python</a>
+          <a href="sql.html">SQL</a>
+          <a href="webdev.html">Web Development</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>SQL Joins Practice</h1>
+
+    <p>Practice implementing different types of SQL JOIN operations. For these exercises, consider the following database tables:</p>
+
+    <div class="table-container">
+      <h3>Employees Table</h3>
+      <table>
+        <tr>
+          <th>employee_id</th>
+          <th>name</th>
+          <th>department_id</th>
+          <th>salary</th>
+          <th>hire_date</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Alice</td>
+          <td>1</td>
+          <td>70000</td>
+          <td>2020-01-10</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Bob</td>
+          <td>2</td>
+          <td>80000</td>
+          <td>2019-06-15</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Charlie</td>
+          <td>1</td>
+          <td>65000</td>
+          <td>2021-02-20</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Diana</td>
+          <td>3</td>
+          <td>75000</td>
+          <td>2020-11-05</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Evan</td>
+          <td>NULL</td>
+          <td>60000</td>
+          <td>2022-03-15</td>
+        </tr>
+      </table>
+      
+      <h3>Departments Table</h3>
+      <table>
+        <tr>
+          <th>department_id</th>
+          <th>department_name</th>
+          <th>location</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Engineering</td>
+          <td>New York</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Marketing</td>
+          <td>San Francisco</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Finance</td>
+          <td>Chicago</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>HR</td>
+          <td>Boston</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Block 1: INNER JOIN -->
+    <div class="method">
+      <h3>INNER JOIN</h3>
+      <p class="hint">-- Write a query to get employee name, department name, and salary for all employees who have a department assigned</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('inner-join-solution')">Check Answer</button>
+      <pre id="inner-join-solution"><code>SELECT e.name, d.department_name, e.salary
+FROM Employees e
+INNER JOIN Departments d
+ON e.department_id = d.department_id;</code></pre>
+    </div>
+
+    <!-- Block 2: LEFT JOIN -->
+    <div class="method">
+      <h3>LEFT JOIN (LEFT OUTER JOIN)</h3>
+      <p class="hint">-- Write a query to get all employees and their department (if any)</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('left-join-solution')">Check Answer</button>
+      <pre id="left-join-solution"><code>SELECT e.name, d.department_name
+FROM Employees e
+LEFT JOIN Departments d
+ON e.department_id = d.department_id;</code></pre>
+    </div>
+
+    <!-- Block 3: RIGHT JOIN -->
+    <div class="method">
+      <h3>RIGHT JOIN (RIGHT OUTER JOIN)</h3>
+      <p class="hint">-- Write a query to get all departments and any employees in them (if any)</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('right-join-solution')">Check Answer</button>
+      <pre id="right-join-solution"><code>SELECT e.name, d.department_name
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.department_id = d.department_id;</code></pre>
+    </div>
+
+    <!-- Block 4: FULL JOIN -->
+    <div class="method">
+      <h3>FULL JOIN (FULL OUTER JOIN)</h3>
+      <p class="hint">-- Write a query to get all employees and all departments, showing all possible combinations</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('full-join-solution')">Check Answer</button>
+      <pre id="full-join-solution"><code>SELECT e.name, d.department_name
+FROM Employees e
+FULL OUTER JOIN Departments d
+ON e.department_id = d.department_id;</code></pre>
+    </div>
+
+    <!-- Block 5: CROSS JOIN -->
+    <div class="method">
+      <h3>CROSS JOIN</h3>
+      <p class="hint">-- Write a query to get all possible combinations of employees and departments (Cartesian product)</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('cross-join-solution')">Check Answer</button>
+      <pre id="cross-join-solution"><code>SELECT e.name, d.department_name
+FROM Employees e
+CROSS JOIN Departments d;</code></pre>
+    </div>
+
+    <!-- Block 6: SELF JOIN -->
+    <div class="method">
+      <h3>SELF JOIN</h3>
+      <p class="hint">-- Assume there's a manager_id column in Employees table. Write a query to get employee names and their manager names</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('self-join-solution')">Check Answer</button>
+      <pre id="self-join-solution"><code>SELECT e.name AS employee_name, m.name AS manager_name
+FROM Employees e
+LEFT JOIN Employees m
+ON e.manager_id = m.employee_id;</code></pre>
+    </div>
+
+    <!-- Block 7: JOIN with WHERE -->
+    <div class="method">
+      <h3>JOIN with WHERE Filters</h3>
+      <p class="hint">-- Write a query to get employee name, department name for employees in Engineering or Marketing departments</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('join-where-solution')">Check Answer</button>
+      <pre id="join-where-solution"><code>SELECT e.name, d.department_name
+FROM Employees e
+INNER JOIN Departments d ON e.department_id = d.department_id
+WHERE d.department_name IN ('Engineering', 'Marketing');</code></pre>
+    </div>
+
+    <!-- Block 8: Multiple JOINs -->
+    <div class="method">
+      <h3>Multiple JOINs</h3>
+      <p class="hint">-- Assume there's a Projects table with project_id, project_name, and department_id columns. Write a query to get employee name, department name, and project name</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('multiple-joins-solution')">Check Answer</button>
+      <pre id="multiple-joins-solution"><code>SELECT e.name, d.department_name, p.project_name
+FROM Employees e
+INNER JOIN Departments d ON e.department_id = d.department_id
+INNER JOIN Projects p ON d.department_id = p.department_id;</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

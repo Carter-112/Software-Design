@@ -12,14 +12,86 @@
   <script src="external-link-handler.js"></script>
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
   <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+    }
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: 1px solid #3e3e42;
+      border-radius: 4px;
+      padding: 10px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      margin: 10px 0;
+    }
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
     .preview-box {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      color: #333;
+      background-color: #2d2d2d;
+      border: 1px solid #444;
+      color: #dcdcdc;
       padding: 15px;
       margin-top: 10px;
       border-radius: 4px;
+    }
+    .preview-btn {
+      background-color: #107C10;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .preview-btn:hover {
+      background-color: #15a015;
     }
   </style>
 </head>
@@ -85,15 +157,18 @@
 
   <!-- Page Content -->
   <div id="content">
-    <h1>HTML Structure and Semantics</h1>
+    <h1>HTML Structure and Semantics Practice</h1>
+    <p>Practice writing HTML markup for different scenarios. These exercises will help you understand and apply proper HTML structure and semantic elements.</p>
 
     <!-- Block 1: Basic HTML Document Structure -->
     <div class="method">
       <h3>Basic HTML Document Structure</h3>
-      <p class="hint">// Write the basic structure of an HTML document</p>
-      <textarea placeholder="Type your HTML code here..."></textarea>
+      <p class="hint">// Write the basic structure of an HTML document including DOCTYPE, html, head, and body elements</p>
+      <textarea id="html-basic-structure-input" placeholder="Type your HTML code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('html-basic-structure')">Check Answer</button>
-      <pre id="html-basic-structure"><code>&lt;!DOCTYPE html&gt;
+      <button class="preview-btn" onclick="previewHTML('html-basic-structure-input', 'preview-html-basic-structure')">Preview Your Code</button>
+      <div id="preview-html-basic-structure" class="preview-box"></div>
+      <pre id="html-basic-structure" style="display: none;"><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
   &lt;meta charset="UTF-8"&gt;
@@ -125,17 +200,17 @@
   &lt;/footer&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-      <button onclick="previewHTML('html-basic-structure')">Preview Solution</button>
-      <div id="preview-html-basic-structure" class="preview-box"></div>
     </div>
 
     <!-- Block 2: Semantic HTML Elements -->
     <div class="method">
       <h3>Semantic HTML Elements</h3>
-      <p class="hint">// Create a webpage structure using semantic HTML5 elements</p>
-      <textarea placeholder="Type your HTML code here..."></textarea>
+      <p class="hint">// Create a webpage structure using semantic HTML5 elements such as article, section, aside, figure, etc.</p>
+      <textarea id="html-semantic-input" placeholder="Type your HTML code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('html-semantic')">Check Answer</button>
-      <pre id="html-semantic"><code>&lt;!-- Article with semantic elements --&gt;
+      <button class="preview-btn" onclick="previewHTML('html-semantic-input', 'preview-html-semantic')">Preview Your Code</button>
+      <div id="preview-html-semantic" class="preview-box"></div>
+      <pre id="html-semantic" style="display: none;"><code>&lt;!-- Article with semantic elements --&gt;
 &lt;article&gt;
   &lt;header&gt;
     &lt;h1&gt;Understanding Semantic HTML&lt;/h1&gt;
@@ -178,17 +253,17 @@
     &lt;/nav&gt;
   &lt;/footer&gt;
 &lt;/article&gt;</code></pre>
-      <button onclick="previewHTML('html-semantic')">Preview Solution</button>
-      <div id="preview-html-semantic" class="preview-box"></div>
     </div>
 
     <!-- Block 3: HTML Forms -->
     <div class="method">
       <h3>HTML Forms</h3>
-      <p class="hint">// Create a fully functional HTML form with various form controls</p>
-      <textarea placeholder="Type your HTML code here..."></textarea>
+      <p class="hint">// Create a fully functional HTML form with various form controls (input types, select, textarea, etc.)</p>
+      <textarea id="html-forms-input" placeholder="Type your HTML code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('html-forms')">Check Answer</button>
-      <pre id="html-forms"><code>&lt;form action="/submit-form" method="post"&gt;
+      <button class="preview-btn" onclick="previewHTML('html-forms-input', 'preview-html-forms')">Preview Your Code</button>
+      <div id="preview-html-forms" class="preview-box"></div>
+      <pre id="html-forms" style="display: none;"><code>&lt;form action="/submit-form" method="post"&gt;
   &lt;fieldset&gt;
     &lt;legend&gt;Personal Information&lt;/legend&gt;
     
@@ -286,17 +361,17 @@
     &lt;button type="submit"&gt;Submit&lt;/button&gt;
   &lt;/div&gt;
 &lt;/form&gt;</code></pre>
-      <button onclick="previewHTML('html-forms')">Preview Solution</button>
-      <div id="preview-html-forms" class="preview-box"></div>
     </div>
 
     <!-- Block 4: Tables -->
     <div class="method">
       <h3>HTML Tables</h3>
-      <p class="hint">// Create a structured HTML table with semantic elements</p>
-      <textarea placeholder="Type your HTML code here..."></textarea>
+      <p class="hint">// Create a structured HTML table with semantic elements like thead, tbody, tfoot, caption, etc.</p>
+      <textarea id="html-tables-input" placeholder="Type your HTML code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('html-tables')">Check Answer</button>
-      <pre id="html-tables"><code>&lt;table&gt;
+      <button class="preview-btn" onclick="previewHTML('html-tables-input', 'preview-html-tables')">Preview Your Code</button>
+      <div id="preview-html-tables" class="preview-box"></div>
+      <pre id="html-tables" style="display: none;"><code>&lt;table&gt;
   &lt;caption&gt;Quarterly Sales by Department (Q1 2023)&lt;/caption&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -387,17 +462,17 @@
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</code></pre>
-      <button onclick="previewHTML('html-tables')">Preview Solution</button>
-      <div id="preview-html-tables" class="preview-box"></div>
     </div>
 
     <!-- Block 5: Media and Embedding -->
     <div class="method">
       <h3>Media and Embedding</h3>
-      <p class="hint">// Embedding images, videos, audio, and other content in HTML</p>
-      <textarea placeholder="Type your HTML code here..."></textarea>
+      <p class="hint">// Write HTML code for embedding images, videos, audio, and other content in a webpage</p>
+      <textarea id="html-media-input" placeholder="Type your HTML code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('html-media')">Check Answer</button>
-      <pre id="html-media"><code>&lt;!-- Responsive image --&gt;
+      <button class="preview-btn" onclick="previewHTML('html-media-input', 'preview-html-media')">Preview Your Code</button>
+      <div id="preview-html-media" class="preview-box"></div>
+      <pre id="html-media" style="display: none;"><code>&lt;!-- Responsive image --&gt;
 &lt;figure&gt;
   &lt;img src="sample-image.jpg" 
        alt="A scenic mountain landscape at sunset" 
@@ -464,8 +539,6 @@
           referrerpolicy="no-referrer-when-downgrade"&gt;
   &lt;/iframe&gt;
 &lt;/figure&gt;</code></pre>
-      <button onclick="previewHTML('html-media')">Preview Solution</button>
-      <div id="preview-html-media" class="preview-box"></div>
     </div>
   </div>
 
@@ -479,16 +552,16 @@
       }
     }
     
-    function previewHTML(solutionId) {
-      const solutionElement = document.getElementById(solutionId);
-      const previewElement = document.getElementById('preview-' + solutionId);
+    function previewHTML(inputId, outputId) {
+      const inputElement = document.getElementById(inputId);
+      const outputElement = document.getElementById(outputId);
       
-      if (solutionElement && previewElement) {
-        // Get the HTML code from the pre element, without the code tags
-        const htmlCode = solutionElement.querySelector('code').innerText;
+      if (inputElement && outputElement) {
+        // Get the HTML code from the textarea
+        const htmlCode = inputElement.value || '';
         
         // Set the HTML content of the preview div
-        previewElement.innerHTML = htmlCode;
+        outputElement.innerHTML = htmlCode;
       }
     }
   </script>

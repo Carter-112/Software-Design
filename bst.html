@@ -12,6 +12,7 @@
   <script src="external-link-handler.js"></script>
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body>
   <header>
@@ -26,6 +27,8 @@
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
           <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
           <a href="random.html">Random</a>
         </div>
@@ -36,349 +39,416 @@
   <!-- Page Content -->
   <div id="content">
     <h1>Binary Search Tree (BST) – Full Class</h1>
-    
+
     <!-- Block 1: Class Declaration, Fields & Constructor -->
     <div class="method">
       <h3>Class Declaration, Fields & Constructor</h3>
       <p class="hint">// The class header, Node inner class, and constructor.</p>
       <textarea placeholder="Type your code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('bst-header-solution')">Check Answer</button>
-      <pre id="bst-header-solution"><code>import java.util.Iterator;
-import java.util.Stack;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.stream.Stream;
+      <pre id="bst-header-solution"><code>import java.util.*;
 
+/**
+ * Basic Binary Search Tree implementation with insert, search, remove, traversal, and iterator support.
+ */
 public class BST&lt;E extends Comparable&lt;E&gt;&gt; implements Iterable&lt;E&gt; {
 
-    // --------------------------------------------------
-    // Node Class Definition
-    // --------------------------------------------------
-    private class Node {
-        E value;
-        Node left, right;
+	private TreeNode&lt;E&gt; root; // the root of the tree; not using sentinel nodes
+	private int size; // how many elements are stored in the tree
 
-        public Node(E value) {
-            this.value = value;
-            left = right = null;
-        }
-    }
+	public BST() {
+		root = null;
+		size = 0;
+	}
 
-    // Root node of the BST
-    private Node root;
+	/**
+	 * TreeNode inner class for the BST
+	 */
+	private static class TreeNode&lt;E&gt; {
+		private E value;
+		private TreeNode&lt;E&gt; leftNode;
+		private TreeNode&lt;E&gt; rightNode;
 
-    // --------------------------------------------------
-    // Constructor
-    // --------------------------------------------------
-    public BST() {
-        root = null;
-    }</code></pre>
+		public TreeNode(E value) {
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			String toReturn = "" + value + " [ ";
+			if (leftNode != null) toReturn += leftNode.toString();
+			toReturn += " ] [ ";
+			if (rightNode != null) toReturn += rightNode.toString();
+			toReturn += " ] ";
+			return toReturn;
+		}
+	}</code></pre>
     </div>
-    
+
     <!-- Block 2: add Method -->
     <div class="method">
       <h3>Add Method</h3>
       <p class="hint">// Add a value to the BST.</p>
       <textarea placeholder="Type your code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('bst-add-solution')">Check Answer</button>
-      <pre id="bst-add-solution"><code>// --------------------------------------------------
-// Add Method (alias for insert)
-// --------------------------------------------------
-public void add(E value) {
-    root = insertRec(root, value);
+      <pre id="bst-add-solution"><code>/**
+ * Inserts the specified element to this BST if it is not already present.
+ *
+ * @param e Element to be added to this BST
+ * @return true if this set did not already contain the specified element
+ */
+public boolean insert(E e) {
+	if (root == null) {
+		root = new TreeNode<>(e);
+		size++;
+		return true;
+	}
+	return insert(root, e);
 }
 
-// Recursive helper method for insert
-private Node insertRec(Node node, E value) {
-    // Base case: if we've found an empty spot, create a new node
-    if (node == null) {
-        return new Node(value);
-    }
-    
-    // Otherwise, compare and traverse left or right accordingly
-    int cmp = value.compareTo(node.value);
-    
-    if (cmp < 0) {
-        // Value is less, go left
-        node.left = insertRec(node.left, value);
-    } else if (cmp > 0) {
-        // Value is greater, go right
-        node.right = insertRec(node.right, value);
-    }
-    // If cmp == 0, value already exists, do nothing
-    
-    return node;</code></pre>
+private boolean insert(TreeNode<E> root, E e) {
+	int compareValue = root.value.compareTo(e);
+
+	if (compareValue == 0) {
+		return false;
+	} else if (compareValue > 0) {
+		if (root.leftNode == null) {
+			root.leftNode = new TreeNode<>(e);
+			size++;
+			return true;
+		}
+		return insert(root.leftNode, e);
+	} else {
+		if (root.rightNode == null) {
+			root.rightNode = new TreeNode<>(e);
+			size++;
+			return true;
+		}
+		return insert(root.rightNode, e);
+	}
+}
+
+// Add method as an alias for insert
+public boolean add(E e) {
+	return insert(e);
+}</code></pre>
     </div>
-    
+
     <!-- Block 3: remove Method -->
     <div class="method">
       <h3>Remove Method</h3>
       <p class="hint">// Remove a value from the BST.</p>
       <textarea placeholder="Type your code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('bst-remove-solution')">Check Answer</button>
-      <pre id="bst-remove-solution"><code>// --------------------------------------------------
-// Remove Method (by value)
-// --------------------------------------------------
-public void remove(E value) {
-    root = removeRec(root, value);
+      <pre id="bst-remove-solution"><code>/**
+ * Removes the specified element from this BST if it is present.
+ *
+ * @param e Element to be removed from this BST, if present
+ * @return true if the BST contained the specified element
+ */
+public boolean remove(E e) {
+	int oldSize = size;
+	root = remove(root, e);
+	return size < oldSize;
 }
 
-// Recursive helper method for remove
-private Node removeRec(Node node, E value) {
-    // Base case: If node is null, nothing to remove
-    if (node == null) return null;
-    
-    // Compare value to current node
-    int cmp = value.compareTo(node.value);
-    
-    if (cmp < 0) {
-        // Value is less, go left
-        node.left = removeRec(node.left, value);
-    } else if (cmp > 0) {
-        // Value is greater, go right
-        node.right = removeRec(node.right, value);
-    } else {
-        // Found the node to remove
-        
-        // Case 1: Node with zero or one child
-        if (node.left == null) {
-            return node.right;
-        } else if (node.right == null) {
-            return node.left;
-        }
-        
-        // Case 2: Node with two children
-        // Find the inorder successor (smallest value in right subtree)
-        node.value = findMin(node.right).value;
-        
-        // Remove the inorder successor
-        node.right = removeRec(node.right, node.value);
-    }
-    
-    return node;
+private TreeNode<E> remove(TreeNode<E> root, E e) {
+	if (root == null) return root;
+
+	int compareValue = root.value.compareTo(e);
+
+	if (compareValue == 0) {
+		if (root.leftNode != null && root.rightNode != null) {
+			root.value = findMin(root.rightNode);
+			root.rightNode = remove(root.rightNode, root.value);
+		} else {
+			root = (root.leftNode != null) ? root.leftNode : root.rightNode;
+		}
+		size--;
+	} else if (compareValue > 0) {
+		root.leftNode = remove(root.leftNode, e);
+	} else {
+		root.rightNode = remove(root.rightNode, e);
+	}
+	return root;
 }
 
-// Helper method to find minimum value node
-private Node findMin(Node node) {
-    while (node.left != null) {
-        node = node.left;
-    }
-    return node;</code></pre>
+/**
+ * Finds the minimum value in this tree.
+ *
+ * @return The minimum value
+ */
+public E findMin() {
+	return findMin(root);
+}
+
+private E findMin(TreeNode<E> root) {
+	if (root == null) return null;
+	if (root.leftNode == null) return root.value;
+	return findMin(root.leftNode);
+}</code></pre>
     </div>
-    
+
     <!-- Block 4: contains Method -->
     <div class="method">
       <h3>Contains Method</h3>
       <p class="hint">// Check if a value exists in the BST.</p>
       <textarea placeholder="Type your code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('bst-contains-solution')">Check Answer</button>
-      <pre id="bst-contains-solution"><code>// --------------------------------------------------
-// Contains Method
-// --------------------------------------------------
-public boolean contains(E value) {
-    return containsRec(root, value);
+      <pre id="bst-contains-solution"><code>/**
+ * Returns true if this collection contains the specified element.
+ *
+ * @param e Element whose presence in this collection is to be tested
+ * @return true if this collection contains the specified element
+ */
+public boolean contains(E e) {
+	if (root == null) {
+		return false;
+	}
+	return contains(root, e);
 }
 
-// Recursive helper method for contains
-private boolean containsRec(Node node, E value) {
-    // Base case: reached a leaf node without finding value
-    if (node == null) {
-        return false;
-    }
-    
-    // Compare value to current node
-    int cmp = value.compareTo(node.value);
-    
-    if (cmp < 0) {
-        // Value is less, search left subtree
-        return containsRec(node.left, value);
-    } else if (cmp > 0) {
-        // Value is greater, search right subtree
-        return containsRec(node.right, value);
-    } else {
-        // Found the value
-        return true;
-    }
+private boolean contains(TreeNode<E> root, E e) {
+	int compareValue = root.value.compareTo(e);
+
+	if (compareValue == 0) {
+		return true;
+	} else if (compareValue > 0) {
+		if (root.leftNode == null) return false;
+		return contains(root.leftNode, e);
+	} else {
+		if (root.rightNode == null) return false;
+		return contains(root.rightNode, e);
+	}
 }</code></pre>
     </div>
-    
+
     <!-- Block 5: Normal Traversals -->
     <div class="method">
       <h3>Normal Traversals (Recursive)</h3>
       <p class="hint">// Inorder, Preorder, and Postorder traversals.</p>
       <textarea placeholder="Type your code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('bst-traversals-solution')">Check Answer</button>
-      <pre id="bst-traversals-solution"><code>// --------------------------------------------------
-// Section 1: Normal Traversals (Recursive)
-// --------------------------------------------------
-// Inorder Traversal: Left, Root, Right
+      <pre id="bst-traversals-solution"><code>/**
+ * Prints an inorder traversal of the tree
+ */
+public void inorderTraversal() {
+	inorderTraversal(root);
+}
+
+private void inorderTraversal(TreeNode<E> root) {
+	if (root == null) return;
+	inorderTraversal(root.leftNode);
+	System.out.println(root.value);
+	inorderTraversal(root.rightNode);
+}
+
+/**
+ * Prints the BST in level order, i.e., prints all values by tree level.
+ */
+public void levelOrderTraversal() {
+	if (root == null) return;
+	Queue<TreeNode<E>> queue = new LinkedList<>();
+	queue.add(root);
+	while (!queue.isEmpty()) {
+		TreeNode<E> current = queue.poll();
+		System.out.println(current.value);
+		if (current.leftNode != null) queue.add(current.leftNode);
+		if (current.rightNode != null) queue.add(current.rightNode);
+	}
+}
+
+// For compatibility with the original code
 public void inorder() {
-    inorderRec(root);
-    System.out.println();
+	inorderTraversal();
 }
 
-private void inorderRec(Node node) {
-    if (node != null) {
-        inorderRec(node.left);
-        System.out.print(node.value + " ");
-        inorderRec(node.right);
-    }
-}
-
-// Preorder Traversal: Root, Left, Right
 public void preorder() {
-    preorderRec(root);
-    System.out.println();
+	preorderTraversal(root);
+	System.out.println();
 }
 
-private void preorderRec(Node node) {
-    if (node != null) {
-        System.out.print(node.value + " ");
-        preorderRec(node.left);
-        preorderRec(node.right);
-    }
+private void preorderTraversal(TreeNode<E> node) {
+	if (node == null) return;
+	System.out.print(node.value + " ");
+	preorderTraversal(node.leftNode);
+	preorderTraversal(node.rightNode);
 }
 
-// Postorder Traversal: Left, Right, Root
 public void postorder() {
-    postorderRec(root);
-    System.out.println();
+	postorderTraversal(root);
+	System.out.println();
 }
 
-private void postorderRec(Node node) {
-    if (node != null) {
-        postorderRec(node.left);
-        postorderRec(node.right);
-        System.out.print(node.value + " ");
-    }
+private void postorderTraversal(TreeNode<E> node) {
+	if (node == null) return;
+	postorderTraversal(node.leftNode);
+	postorderTraversal(node.rightNode);
+	System.out.print(node.value + " ");
 }</code></pre>
     </div>
-    
+
     <!-- Block 6: Iterator Implementations -->
     <div class="method">
       <h3>Iterator Implementations</h3>
       <p class="hint">// Iterators for inorder, preorder, and postorder traversals.</p>
       <textarea placeholder="Type your code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('bst-iterators-solution')">Check Answer</button>
-      <pre id="bst-iterators-solution"><code>// --------------------------------------------------
-// Section 2: Traversals using for-each Loop (Iterable)
-// --------------------------------------------------
-// These custom iterator classes enable using a for‑each loop on an Iterable.
+      <pre id="bst-iterators-solution"><code>/**
+ * Iterator implementation for the BST
+ */
+private class BSTIterator implements Iterator<E> {
+	private Stack<TreeNode<E>> stack = new Stack<>();
+
+	public BSTIterator(TreeNode<E> root) {
+		pushLeft(root);
+	}
+
+	private void pushLeft(TreeNode<E> node) {
+		while (node != null) {
+			stack.push(node);
+			node = node.leftNode;
+		}
+	}
+
+	@Override
+	public boolean hasNext() {
+		return !stack.isEmpty();
+	}
+
+	@Override
+	public E next() {
+		if (!hasNext()) throw new NoSuchElementException();
+		TreeNode<E> node = stack.pop();
+		pushLeft(node.rightNode);
+		return node.value;
+	}
+}
+
+// For compatibility with the original code, we'll keep these iterator classes
 
 // Inorder Iterator - use Stack to simulate recursion
-private class InorderIterator implements Iterator&lt;E&gt; {
-    private Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-    
-    public InorderIterator(Node root) {
-        // Push all nodes along leftmost path
-        pushLeft(root);
-    }
-    
-    private void pushLeft(Node node) {
-        while (node != null) {
-            stack.push(node);
-            node = node.left;
-        }
-    }
-    
-    @Override
-    public boolean hasNext() {
-        return !stack.isEmpty();
-    }
-    
-    @Override
-    public E next() {
-        Node node = stack.pop();
-        pushLeft(node.right);
-        return node.value;
-    }
+private class InorderIterator implements Iterator<E> {
+	private Stack<TreeNode<E>> stack = new Stack<>();
+
+	public InorderIterator(TreeNode<E> root) {
+		// Push all nodes along leftmost path
+		pushLeft(root);
+	}
+
+	private void pushLeft(TreeNode<E> node) {
+		while (node != null) {
+			stack.push(node);
+			node = node.leftNode;
+		}
+	}
+
+	@Override
+	public boolean hasNext() {
+		return !stack.isEmpty();
+	}
+
+	@Override
+	public E next() {
+		TreeNode<E> node = stack.pop();
+		pushLeft(node.rightNode);
+		return node.value;
+	}
 }
 
 // Preorder Iterator - also uses Stack
-private class PreorderIterator implements Iterator&lt;E&gt; {
-    private Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-    
-    public PreorderIterator(Node root) {
-        if (root != null) {
-            stack.push(root);
-        }
-    }
-    
-    @Override
-    public boolean hasNext() {
-        return !stack.isEmpty();
-    }
-    
-    @Override
-    public E next() {
-        Node node = stack.pop();
-        // Push right first so left gets popped first
-        if (node.right != null) {
-            stack.push(node.right);
-        }
-        if (node.left != null) {
-            stack.push(node.left);
-        }
-        return node.value;
-    }
+private class PreorderIterator implements Iterator<E> {
+	private Stack<TreeNode<E>> stack = new Stack<>();
+
+	public PreorderIterator(TreeNode<E> root) {
+		if (root != null) {
+			stack.push(root);
+		}
+	}
+
+	@Override
+	public boolean hasNext() {
+		return !stack.isEmpty();
+	}
+
+	@Override
+	public E next() {
+		TreeNode<E> node = stack.pop();
+		// Push right first so left gets popped first
+		if (node.rightNode != null) {
+			stack.push(node.rightNode);
+		}
+		if (node.leftNode != null) {
+			stack.push(node.leftNode);
+		}
+		return node.value;
+	}
 }
 
 // Postorder Iterator - collects all nodes in postorder first
-private class PostorderIterator implements Iterator&lt;E&gt; {
-    private List&lt;E&gt; list;
-    private int index;
-    
-    public PostorderIterator(Node root) {
-        list = new ArrayList&lt;&gt;();
-        index = 0;
-        collectPostorder(root);
-    }
-    
-    private void collectPostorder(Node node) {
-        if (node != null) {
-            collectPostorder(node.left);
-            collectPostorder(node.right);
-            list.add(node.value);
-        }
-    }
-    
-    @Override
-    public boolean hasNext() {
-        return index < list.size();
-    }
-    
-    @Override
-    public E next() {
-        return list.get(index++);
-    }
+private class PostorderIterator implements Iterator<E> {
+	private List<E> list;
+	private int index;
+
+	public PostorderIterator(TreeNode<E> root) {
+		list = new ArrayList<>();
+		index = 0;
+		collectPostorder(root);
+	}
+
+	private void collectPostorder(TreeNode<E> node) {
+		if (node != null) {
+			collectPostorder(node.leftNode);
+			collectPostorder(node.rightNode);
+			list.add(node.value);
+		}
+	}
+
+	@Override
+	public boolean hasNext() {
+		return index < list.size();
+	}
+
+	@Override
+	public E next() {
+		return list.get(index++);
+	}
 }</code></pre>
     </div>
-    
+
     <!-- Block 7: Iterable Methods -->
     <div class="method">
       <h3>Iterable Methods</h3>
       <p class="hint">// Iterable methods for each traversal order.</p>
       <textarea placeholder="Type your code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('bst-iterable-solution')">Check Answer</button>
-      <pre id="bst-iterable-solution"><code>// Iterable methods for each traversal order.
-public Iterable&lt;E&gt; getInorderIterable() {
-    return () -> new InorderIterator(root);
+      <pre id="bst-iterable-solution"><code>/**
+ * Returns a preorder bracketed traversal of the tree.
+ */
+public String toString() {
+	return "[ " + (root != null ? root.toString() : "") + " ]";
 }
-public Iterable&lt;E&gt; getPreorderIterable() {
-    return () -> new PreorderIterator(root);
+
+// Iterable methods for each traversal order.
+public Iterable<E> getInorderIterable() {
+	return () -> new InorderIterator(root);
 }
-public Iterable&lt;E&gt; getPostorderIterable() {
-    return () -> new PostorderIterator(root);
+
+public Iterable<E> getPreorderIterable() {
+	return () -> new PreorderIterator(root);
+}
+
+public Iterable<E> getPostorderIterable() {
+	return () -> new PostorderIterator(root);
 }
 
 // The default iterator for this BST (used if you iterate over the BST itself)
-// Here, we choose the inorder traversal.
 @Override
-public Iterator&lt;E&gt; iterator() {
-    return new InorderIterator(root);
+public Iterator<E> iterator() {
+	return new BSTIterator(root);
 }</code></pre>
     </div>
-    
+
     <!-- Block 8: Stream Methods -->
     <div class="method">
       <h3>Stream Methods</h3>
@@ -386,49 +456,49 @@ public Iterator&lt;E&gt; iterator() {
       <textarea placeholder="Type your code here..."></textarea>
       <button class="check-btn" onclick="toggleSolution('bst-stream-solution')">Check Answer</button>
       <pre id="bst-stream-solution"><code>// Stream methods for each traversal order.
-public Stream&lt;E&gt; inorderStream() {
-    List&lt;E&gt; list = new ArrayList&lt;&gt;();
-    inorderRec(root, list);
-    return list.stream();
+public Stream<E> inorderStream() {
+	List<E> list = new ArrayList<>();
+	inorderStreamRec(root, list);
+	return list.stream();
 }
 
-private void inorderRec(Node node, List&lt;E&gt; list) {
-    if (node != null) {
-        inorderRec(node.left, list);
-        list.add(node.value);
-        inorderRec(node.right, list);
-    }
+private void inorderStreamRec(TreeNode<E> node, List<E> list) {
+	if (node != null) {
+		inorderStreamRec(node.leftNode, list);
+		list.add(node.value);
+		inorderStreamRec(node.rightNode, list);
+	}
 }
 
-public Stream&lt;E&gt; preorderStream() {
-    List&lt;E&gt; list = new ArrayList&lt;&gt;();
-    preorderRec(root, list);
-    return list.stream();
+public Stream<E> preorderStream() {
+	List<E> list = new ArrayList<>();
+	preorderStreamRec(root, list);
+	return list.stream();
 }
 
-private void preorderRec(Node node, List&lt;E&gt; list) {
-    if (node != null) {
-        list.add(node.value);
-        preorderRec(node.left, list);
-        preorderRec(node.right, list);
-    }
+private void preorderStreamRec(TreeNode<E> node, List<E> list) {
+	if (node != null) {
+		list.add(node.value);
+		preorderStreamRec(node.leftNode, list);
+		preorderStreamRec(node.rightNode, list);
+	}
 }
 
-public Stream&lt;E&gt; postorderStream() {
-    List&lt;E&gt; list = new ArrayList&lt;&gt;();
-    postorderRec(root, list);
-    return list.stream();
+public Stream<E> postorderStream() {
+	List<E> list = new ArrayList<>();
+	postorderStreamRec(root, list);
+	return list.stream();
 }
 
-private void postorderRec(Node node, List&lt;E&gt; list) {
-    if (node != null) {
-        postorderRec(node.left, list);
-        postorderRec(node.right, list);
-        list.add(node.value);
-    }
+private void postorderStreamRec(TreeNode<E> node, List<E> list) {
+	if (node != null) {
+		postorderStreamRec(node.leftNode, list);
+		postorderStreamRec(node.rightNode, list);
+		list.add(node.value);
+	}
 }</code></pre>
     </div>
-    
+
     <!-- Block 9: Main Method -->
     <div class="method">
       <h3>Main Method</h3>
@@ -439,68 +509,84 @@ private void postorderRec(Node node, List&lt;E&gt; list) {
 // Main Method for Testing All Sections
 // --------------------------------------------------
 public static void main(String[] args) {
-    // Create a new BST
-    BST&lt;Integer&gt; bst = new BST&lt;&gt;();
-    
-    // Add some values
-    int[] values = {50, 30, 70, 20, 40, 60, 80};
-    for (int value : values) {
-        bst.add(value);
-    }
-    
-    // Test normal traversals
-    System.out.println("Traversals:");
-    System.out.print("Inorder: ");
-    bst.inorder();
-    System.out.print("Preorder: ");
-    bst.preorder();
-    System.out.print("Postorder: ");
-    bst.postorder();
-    
-    // Test iterator methods
-    System.out.println("\nUsing Iterators:");
-    System.out.print("Inorder Iterator: ");
-    for (Integer i : bst) {
-        System.out.print(i + " ");
-    }
-    System.out.println();
-    
-    System.out.print("Preorder Iterator: ");
-    for (Integer i : bst.getPreorderIterable()) {
-        System.out.print(i + " ");
-    }
-    System.out.println();
-    
-    System.out.print("Postorder Iterator: ");
-    for (Integer i : bst.getPostorderIterable()) {
-        System.out.print(i + " ");
-    }
-    System.out.println();
-    
-    // Test stream methods
-    System.out.println("\nUsing Streams:");
-    System.out.print("Inorder Stream: ");
-    bst.inorderStream().forEach(e -> System.out.print(e + " "));
-    System.out.println();
-    
-    System.out.print("Preorder Stream: ");
-    bst.preorderStream().forEach(e -> System.out.print(e + " "));
-    System.out.println();
-    
-    System.out.print("Postorder Stream: ");
-    bst.postorderStream().forEach(e -> System.out.print(e + " "));
-    System.out.println();
-    
-    // Test contains and remove
-    System.out.println("\nTest Contains and Remove:");
-    System.out.println("Contains 40: " + bst.contains(40));
-    System.out.println("Contains 100: " + bst.contains(100));
-    
-    System.out.print("Before removing 30, inorder: ");
-    bst.inorder();
-    bst.remove(30);
-    System.out.print("After removing 30, inorder: ");
-    bst.inorder();
+	// Create a new BST
+	BST<Integer> bst = new BST<>();
+
+	// Add some values
+	int[] values = {50, 30, 70, 20, 40, 60, 80};
+	for (int value : values) {
+		bst.insert(value);
+	}
+
+	// Test normal traversals
+	System.out.println("Traversals:");
+	System.out.println("Inorder: ");
+	bst.inorderTraversal();
+	System.out.println("Level Order: ");
+	bst.levelOrderTraversal();
+
+	// Test iterator
+	System.out.println("\nUsing Iterator:");
+	System.out.print("Iterator: ");
+	for (Integer i : bst) {
+		System.out.print(i + " ");
+	}
+	System.out.println();
+
+	// Test contains and remove
+	System.out.println("\nTest Contains and Remove:");
+	System.out.println("Contains 40: " + bst.contains(40));
+	System.out.println("Contains 100: " + bst.contains(100));
+
+	System.out.println("Before removing 30: " + bst);
+	bst.remove(30);
+	System.out.println("After removing 30: " + bst);
+
+	// Test minimum value
+	System.out.println("\nMinimum value: " + bst.findMin());
+
+	// For compatibility with the original code
+	System.out.println("\nOriginal traversal methods:");
+	System.out.print("Inorder: ");
+	bst.inorder();
+	System.out.print("Preorder: ");
+	bst.preorder();
+	System.out.print("Postorder: ");
+	bst.postorder();
+
+	// Test iterator methods
+	System.out.println("\nUsing Iterables:");
+	System.out.print("Inorder Iterator: ");
+	for (Integer i : bst.getInorderIterable()) {
+		System.out.print(i + " ");
+	}
+	System.out.println();
+
+	System.out.print("Preorder Iterator: ");
+	for (Integer i : bst.getPreorderIterable()) {
+		System.out.print(i + " ");
+	}
+	System.out.println();
+
+	System.out.print("Postorder Iterator: ");
+	for (Integer i : bst.getPostorderIterable()) {
+		System.out.print(i + " ");
+	}
+	System.out.println();
+
+	// Test stream methods
+	System.out.println("\nUsing Streams:");
+	System.out.print("Inorder Stream: ");
+	bst.inorderStream().forEach(e -> System.out.print(e + " "));
+	System.out.println();
+
+	System.out.print("Preorder Stream: ");
+	bst.preorderStream().forEach(e -> System.out.print(e + " "));
+	System.out.println();
+
+	System.out.print("Postorder Stream: ");
+	bst.postorderStream().forEach(e -> System.out.print(e + " "));
+	System.out.println();
 }</code></pre>
     </div>
   </div>
@@ -515,7 +601,7 @@ public static void main(String[] args) {
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
-</html> 
+</html>
 
 
 

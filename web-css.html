@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Practice - CSS Styling</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .preview-box {
+      background-color: #2d2d2d;
+      border: 1px solid #444;
+      color: #dcdcdc;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    
+    .css-practice-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 15px;
+    }
+    
+    .css-preview {
+      border: 1px solid #444;
+      padding: 15px;
+      margin-top: 10px;
+      background-color: #2d2d2d;
+      color: #dcdcdc;
+    }
+    
+    .css-preview * {
+      /* Keep default text color for elements inside preview, so CSS is visible */
+      /* Individual student CSS will override these colors */
+    }
+    
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: 1px solid #3e3e42;
+      border-radius: 4px;
+      padding: 10px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      margin: 10px 0;
+    }
+    
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+    
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
+    
+    .preview-btn {
+      background-color: #107C10;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .preview-btn:hover {
+      background-color: #15a015;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>CSS Styling Practice</h1>
+    <p>Practice implementing CSS to style elements. Type your CSS in the text area, then click "Apply Your CSS" to see the changes, or "Check Answer" to see the solution.</p>
+
+    <!-- Block 1: Basic CSS Selectors and Properties -->
+    <div class="method">
+      <h3>Basic CSS Selectors and Properties</h3>
+      <p class="hint">// Style the HTML elements below using class selectors, ID selectors, and element selectors</p>
+      
+      <div class="css-practice-container">
+        <div class="css-preview" id="preview-basic-selectors">
+          <h2>Example Heading</h2>
+          <p class="intro">This is an introduction paragraph.</p>
+          <p>This is a regular paragraph with some <span class="highlight">highlighted text</span>.</p>
+          <div id="special-content">This is special content with a unique ID.</div>
+          <ul>
+            <li>Item 1</li>
+            <li class="important">Item 2 (Important)</li>
+            <li>Item 3</li>
+          </ul>
+        </div>
+        
+        <textarea id="css-input-basic" placeholder="Write your CSS here..."></textarea>
+        <div class="button-group">
+          <button class="preview-btn" onclick="applyCSSToPreview('css-input-basic', 'preview-basic-selectors')">Apply Your CSS</button>
+          <button class="check-btn" onclick="toggleSolution('css-basic-selectors')">Check Answer</button>
+          <button class="preview-btn" onclick="applyExampleCSS('css-basic-selectors', 'preview-basic-selectors')">Show Solution</button>
+        </div>
+        <pre id="css-basic-selectors" style="display: none;"><code>/* Element selector */
+h2 {
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 5px;
+}
+
+/* Class selector */
+.intro {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #2980b9;
+}
+
+/* Element with class selector */
+p {
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+/* Descendant selector */
+p .highlight {
+  background-color: #f1c40f;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+/* ID selector */
+#special-content {
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 5px;
+}
+
+/* Element selector with pseudo-class */
+ul {
+  list-style-type: square;
+  background-color: #f8f9fa;
+  padding: 15px 40px;
+  border-left: 4px solid #7f8c8d;
+}
+
+/* Class selector for specific list item */
+.important {
+  font-weight: bold;
+  color: #c0392b;
+}
+
+/* Adjacent sibling selector */
+h2 + .intro {
+  margin-top: 20px;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Block 2: CSS Box Model -->
+    <div class="method">
+      <h3>CSS Box Model</h3>
+      <p class="hint">// Apply CSS box model properties (margin, padding, border) to create properly spaced elements</p>
+      
+      <div class="css-practice-container">
+        <div class="css-preview" id="preview-box-model">
+          <div class="container">
+            <div class="box box1">Box 1</div>
+            <div class="box box2">Box 2</div>
+            <div class="box box3">Box 3</div>
+          </div>
+        </div>
+        
+        <textarea id="css-input-box-model" placeholder="Write your CSS here..."></textarea>
+        <div class="button-group">
+          <button class="preview-btn" onclick="applyCSSToPreview('css-input-box-model', 'preview-box-model')">Apply Your CSS</button>
+          <button class="check-btn" onclick="toggleSolution('css-box-model')">Check Answer</button>
+          <button class="preview-btn" onclick="applyExampleCSS('css-box-model', 'preview-box-model')">Show Solution</button>
+        </div>
+        <pre id="css-box-model" style="display: none;"><code>/* Container for the boxes */
+.container {
+  background-color: #ecf0f1;
+  padding: 20px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Common box styles */
+.box {
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+  width: 150px;
+  height: 100px;
+  /* Box model properties will differ for each box */
+}
+
+/* Box 1: Margin demonstration */
+.box1 {
+  margin: 20px;
+  background-color: #2ecc71;
+  /* Margin creates space outside the border */
+}
+
+/* Box 2: Border demonstration */
+.box2 {
+  border: 5px dashed #e74c3c;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: #f39c12;
+  /* Border creates a visible boundary */
+}
+
+/* Box 3: Padding demonstration */
+.box3 {
+  padding: 20px;
+  border: 2px solid #9b59b6;
+  box-sizing: border-box;
+  background-color: #1abc9c;
+  /* Padding creates space inside the border */
+}</code></pre>
+      </div>
+    </div>
+    
+    <!-- Block 3: Flexbox Layout -->
+    <div class="method">
+      <h3>Flexbox Layout</h3>
+      <p class="hint">// Create a responsive layout using CSS Flexbox properties</p>
+      
+      <div class="css-practice-container">
+        <div class="css-preview" id="preview-flexbox">
+          <div class="flex-container">
+            <div class="flex-item">Item 1</div>
+            <div class="flex-item">Item 2</div>
+            <div class="flex-item">Item 3</div>
+            <div class="flex-item">Item 4</div>
+            <div class="flex-item">Item 5</div>
+          </div>
+        </div>
+        
+        <textarea id="css-input-flexbox" placeholder="Write your CSS here..."></textarea>
+        <div class="button-group">
+          <button class="preview-btn" onclick="applyCSSToPreview('css-input-flexbox', 'preview-flexbox')">Apply Your CSS</button>
+          <button class="check-btn" onclick="toggleSolution('css-flexbox')">Check Answer</button>
+          <button class="preview-btn" onclick="applyExampleCSS('css-flexbox', 'preview-flexbox')">Show Solution</button>
+        </div>
+        <pre id="css-flexbox" style="display: none;"><code>/* Flex container */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  background-color: #2c3e50;
+  padding: 20px;
+  min-height: 200px;
+}
+
+/* Flex items */
+.flex-item {
+  background-color: #e74c3c;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  flex: 1 1 150px; /* grow | shrink | basis */
+  margin: 5px;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+/* Different styling for each item */
+.flex-item:nth-child(1) {
+  background-color: #3498db;
+}
+
+.flex-item:nth-child(2) {
+  background-color: #2ecc71;
+}
+
+.flex-item:nth-child(3) {
+  background-color: #f39c12;
+}
+
+.flex-item:nth-child(4) {
+  background-color: #9b59b6;
+}
+
+.flex-item:nth-child(5) {
+  background-color: #1abc9c;
+}
+
+/* Hover effect */
+.flex-item:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+  background-color: #e67e22;
+}</code></pre>
+      </div>
+    </div>
+    
+    <!-- Block 4: CSS Grid Layout -->
+    <div class="method">
+      <h3>CSS Grid Layout</h3>
+      <p class="hint">// Create a grid layout with different sized areas</p>
+      
+      <div class="css-practice-container">
+        <div class="css-preview" id="preview-grid">
+          <div class="grid-container">
+            <div class="grid-item header">Header</div>
+            <div class="grid-item sidebar">Sidebar</div>
+            <div class="grid-item main">Main Content</div>
+            <div class="grid-item footer">Footer</div>
+          </div>
+        </div>
+        
+        <textarea id="css-input-grid" placeholder="Write your CSS here..."></textarea>
+        <div class="button-group">
+          <button class="preview-btn" onclick="applyCSSToPreview('css-input-grid', 'preview-grid')">Apply Your CSS</button>
+          <button class="check-btn" onclick="toggleSolution('css-grid')">Check Answer</button>
+          <button class="preview-btn" onclick="applyExampleCSS('css-grid', 'preview-grid')">Show Solution</button>
+        </div>
+        <pre id="css-grid" style="display: none;"><code>/* Grid Container */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  gap: 10px;
+  height: 300px;
+  background-color: #ecf0f1;
+  padding: 10px;
+}
+
+/* Grid Items */
+.grid-item {
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+/* Header Area */
+.header {
+  grid-area: header;
+  background-color: #e74c3c;
+}
+
+/* Sidebar Area */
+.sidebar {
+  grid-area: sidebar;
+  background-color: #3498db;
+}
+
+/* Main Content Area */
+.main {
+  grid-area: main;
+  background-color: #2ecc71;
+}
+
+/* Footer Area */
+.footer {
+  grid-area: footer;
+  background-color: #9b59b6;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 600px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "footer";
+  }
+}</code></pre>
+      </div>
+    </div>
+    
+    <!-- Block 5: CSS Animations and Transitions -->
+    <div class="method">
+      <h3>CSS Animations and Transitions</h3>
+      <p class="hint">// Create animations and transitions for interactive elements</p>
+      
+      <div class="css-practice-container">
+        <div class="css-preview" id="preview-animations">
+          <div class="animation-container">
+            <button class="animated-button">Hover Me</button>
+            <div class="animated-box"></div>
+            <div class="pulse-element">Pulse Animation</div>
+          </div>
+        </div>
+        
+        <textarea id="css-input-animations" placeholder="Write your CSS here..."></textarea>
+        <div class="button-group">
+          <button class="preview-btn" onclick="applyCSSToPreview('css-input-animations', 'preview-animations')">Apply Your CSS</button>
+          <button class="check-btn" onclick="toggleSolution('css-animations')">Check Answer</button>
+          <button class="preview-btn" onclick="applyExampleCSS('css-animations', 'preview-animations')">Show Solution</button>
+        </div>
+        <pre id="css-animations" style="display: none;"><code>/* Animation Container */
+.animation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f5f6fa;
+}
+
+/* Button with transition effect */
+.animated-button {
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.animated-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Box with animation */
+.animated-box {
+  width: 100px;
+  height: 100px;
+  background-color: #e74c3c;
+  animation: rotate-scale 3s ease-in-out infinite;
+}
+
+@keyframes rotate-scale {
+  0% {
+    transform: rotate(0deg) scale(1);
+    background-color: #e74c3c;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.5);
+    background-color: #2ecc71;
+    border-radius: 50%;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    background-color: #e74c3c;
+  }
+}
+
+/* Pulse element */
+.pulse-element {
+  padding: 15px 30px;
+  background-color: #9b59b6;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      if (solutionElement.style.display === 'block') {
+        solutionElement.style.display = 'none';
+      } else {
+        solutionElement.style.display = 'block';
+      }
+    }
+    
+    function applyCSSToPreview(inputId, previewId) {
+      const cssInput = document.getElementById(inputId).value;
+      const previewContainer = document.getElementById(previewId);
+      
+      // Create a style element if it doesn't exist
+      let styleEl = document.getElementById(`${previewId}-style`);
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = `${previewId}-style`;
+        document.head.appendChild(styleEl);
+      }
+      
+      // Update the style element with user's CSS
+      styleEl.textContent = cssInput;
+    }
+    
+    function applyExampleCSS(solutionId, previewId) {
+      const solutionElement = document.getElementById(solutionId);
+      const cssCode = solutionElement.querySelector('code').innerText;
+      
+      // Create a style element if it doesn't exist
+      let styleEl = document.getElementById(`${previewId}-style`);
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = `${previewId}-style`;
+        document.head.appendChild(styleEl);
+      }
+      
+      // Update the style element with solution CSS
+      styleEl.textContent = cssCode;
+      
+      // Also update the textarea to show the solution
+      document.getElementById(`css-input-${solutionId.replace('css-', '')}`).value = cssCode;
+    }
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

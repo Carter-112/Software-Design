@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Tuples - Python Topics</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="external-link-handler.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #222;
+      color: #fff;
+    }
+    
+    #content {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    
+    .method {
+      background-color: #333;
+      border-left: 4px solid #e78c11;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 5px 5px 0;
+    }
+    
+    .code-block {
+      background-color: #333;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    
+    .hint-container {
+      background-color: #333;
+      border-left: 4px solid #e78c11;
+      padding: 15px;
+      margin: 0 0 15px 0;
+      border-radius: 0 5px 5px 0;
+      color: #fff;
+      border-top: none;
+    }
+    
+    h1, h2, h3, h4 {
+      color: #e78c11;
+    }
+    
+    button {
+      padding: 10px 15px;
+      background-color: #e78c11;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    button:hover {
+      background-color: #f39c21;
+    }
+    
+    .solution {
+      display: none;
+      background-color: #333;
+      border: 2px solid #e78c11;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+    
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      font-family: monospace;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    
+    .practice-area {
+      width: 100%;
+      min-height: 150px;
+      font-family: monospace;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    
+    .output-area {
+      background-color: #222;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-family: monospace;
+      min-height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">
+    <h1>Python Tuples</h1>
+    <p>Tuples are immutable sequences in Python, similar to lists but cannot be changed after creation. They're often used for fixed collections of items where data integrity is important.</p>
+    
+    <div class="method">
+      <h2>1. Creating and Accessing Tuples</h2>
+      <p>Tuples are defined using parentheses () or the tuple() constructor. Once created, elements can be accessed by index but cannot be modified.</p>
+      
+      <div class="code-block">
+# Creating tuples
+empty_tuple = ()
+single_item_tuple = (1,)  # Note the comma - needed for single item tuples
+mixed_tuple = (1, "hello", 3.14, True)
+nested_tuple = (1, (2, 3), ["a", "b"])
+
+# Alternative creation
+tuple_from_list = tuple([1, 2, 3])
+tuple_from_string = tuple("Python")
+
+# Accessing tuple elements
+print(mixed_tuple[0])      # 1
+print(mixed_tuple[1:3])    # ("hello", 3.14)
+print(nested_tuple[1][0])  # 2
+      </div>
+      
+      <p>Practice: Create a tuple containing days of the week and access specific elements</p>
+      <textarea id="practice-create-tuple" class="practice-area" placeholder="Write your Python code here..."></textarea>
+      <button onclick="runPython('practice-create-tuple', 'output-create-tuple')">Run Code</button>
+      <div id="output-create-tuple" class="output-area"></div>
+      
+      <button onclick="toggleSolution('solution1')">Show Solution</button>
+      <div id="solution1" class="solution">
+        <h3>Solution: Creating and Accessing Tuples</h3>
+        <div class="code-block">
+# Create a tuple containing days of the week
+days_of_week = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+# Access the first day (index 0)
+print("First day:", days_of_week[0])
+
+# Access the weekend days (last two elements)
+print("Weekend days:", days_of_week[-2:])
+
+# Access all weekdays (first five elements)
+print("Weekdays:", days_of_week[:5])
+
+# Try accessing using negative index
+print("Last day:", days_of_week[-1])
+
+# Get the length of the tuple
+print("Number of days:", len(days_of_week))
+
+# Verify tuples are immutable by trying to change an element
+try:
+    days_of_week[0] = "NewDay"
+except TypeError as e:
+    print("Error:", e)
+        </div>
+        <p>Expected output:</p>
+        <pre>
+First day: Monday
+Weekend days: ('Saturday', 'Sunday')
+Weekdays: ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
+Last day: Sunday
+Number of days: 7
+Error: 'tuple' object does not support item assignment
+        </pre>
+      </div>
+    </div>
+    
+    <div class="method">
+      <h2>2. Tuple Methods and Operations</h2>
+      <p>While tuples have fewer methods than lists due to their immutability, they support common sequence operations.</p>
+      
+      <div class="code-block">
+# Tuple methods
+numbers = (1, 2, 3, 2, 4, 2)
+print(numbers.count(2))    # 3 - counts occurrences of value
+print(numbers.index(4))    # 4 - returns first index of value
+
+# Common operations
+tuple1 = (1, 2, 3)
+tuple2 = (4, 5, 6)
+
+# Concatenation
+combined = tuple1 + tuple2  # (1, 2, 3, 4, 5, 6)
+
+# Repetition
+repeated = tuple1 * 3  # (1, 2, 3, 1, 2, 3, 1, 2, 3)
+
+# Membership testing
+print(2 in tuple1)    # True
+print(5 in tuple1)    # False
+
+# Length
+print(len(combined))  # 6
+      </div>
+      
+      <p>Practice: Perform various operations on tuples</p>
+      <textarea id="practice-tuple-ops" class="practice-area" placeholder="Write your Python code here..."></textarea>
+      <button onclick="runPython('practice-tuple-ops', 'output-tuple-ops')">Run Code</button>
+      <div id="output-tuple-ops" class="output-area"></div>
+      
+      <button onclick="toggleSolution('solution2')">Show Solution</button>
+      <div id="solution2" class="solution">
+        <h3>Solution: Tuple Methods and Operations</h3>
+        <div class="code-block">
+# Create some sample tuples
+fruits = ("apple", "banana", "cherry", "apple", "orange")
+numbers = (10, 20, 30, 40, 50)
+
+# Count occurrences
+apple_count = fruits.count("apple")
+print(f"'apple' appears {apple_count} times in the fruits tuple")
+
+# Find index
+try:
+    cherry_index = fruits.index("cherry")
+    print(f"'cherry' is at index {cherry_index}")
+    
+    # This will raise ValueError
+    grape_index = fruits.index("grape")
+except ValueError as e:
+    print(f"Error: {e}")
+
+# Concatenation
+combined = fruits + numbers
+print("Combined tuple:", combined)
+
+# Tuple unpacking
+first, second, *rest = fruits
+print(f"First fruit: {first}")
+print(f"Second fruit: {second}")
+print(f"Rest of fruits: {rest}")  # Note: rest will be a list, not a tuple
+
+# Nested tuple access
+coordinates = ((1, 2), (3, 4), (5, 6))
+print(f"First coordinate: {coordinates[0]}")
+print(f"Second point y-value: {coordinates[1][1]}")
+
+# Convert to list, modify, and convert back to tuple
+fruit_list = list(fruits)
+fruit_list.append("grape")
+fruit_list[0] = "pear"
+new_fruits = tuple(fruit_list)
+print("Modified fruits:", new_fruits)
+        </div>
+        <p>Expected output:</p>
+        <pre>
+'apple' appears 2 times in the fruits tuple
+'cherry' is at index 2
+Error: 'grape' is not in tuple
+Combined tuple: ('apple', 'banana', 'cherry', 'apple', 'orange', 10, 20, 30, 40, 50)
+First fruit: apple
+Second fruit: banana
+Rest of fruits: ['cherry', 'apple', 'orange']
+First coordinate: (1, 2)
+Second point y-value: 4
+Modified fruits: ('pear', 'banana', 'cherry', 'apple', 'orange', 'grape')
+        </pre>
+      </div>
+    </div>
+    
+    <div class="method">
+      <h2>3. Tuple Packing and Unpacking</h2>
+      <p>Python allows packing values into tuples and unpacking tuples into individual variables.</p>
+      
+      <div class="code-block">
+# Tuple packing
+coordinates = 3, 4  # Parentheses are optional - this creates a tuple (3, 4)
+
+# Tuple unpacking
+x, y = coordinates
+print(x)  # 3
+print(y)  # 4
+
+# Unpacking with *
+first, *middle, last = (1, 2, 3, 4, 5)
+print(first)   # 1
+print(middle)  # [2, 3, 4]
+print(last)    # 5
+
+# Swapping values
+a, b = 1, 2
+a, b = b, a  # Swaps values using tuple packing and unpacking
+print(a, b)  # 2 1
+      </div>
+      
+      <p>Practice: Use tuple packing and unpacking in different scenarios</p>
+      <textarea id="practice-unpacking" class="practice-area" placeholder="Write your Python code here..."></textarea>
+      <button onclick="runPython('practice-unpacking', 'output-unpacking')">Run Code</button>
+      <div id="output-unpacking" class="output-area"></div>
+      
+      <button onclick="toggleSolution('solution3')">Show Solution</button>
+      <div id="solution3" class="solution">
+        <h3>Solution: Tuple Packing and Unpacking</h3>
+        <div class="code-block">
+# Simple tuple packing
+person = "John Doe", 30, "Developer"
+print("Person tuple:", person)
+
+# Unpacking the person tuple
+name, age, occupation = person
+print(f"Name: {name}, Age: {age}, Occupation: {occupation}")
+
+# Unpacking with * for collecting multiple values
+rgb = (255, 0, 0, 0.5)  # Red with alpha channel
+r, g, b, *alpha = rgb   # alpha becomes a list with one item
+print(f"RGB: {r}, {g}, {b}")
+print(f"Alpha: {alpha[0]}")
+
+# Unpacking with * for ignoring values
+first, *_, last = (1, 2, 3, 4, 5, 6, 7, 8)
+print(f"First: {first}, Last: {last}")
+
+# Function returning multiple values as a tuple
+def get_dimensions():
+    return 1920, 1080
+
+# Unpacking the returned tuple
+width, height = get_dimensions()
+print(f"Width: {width}px, Height: {height}px")
+
+# Nested unpacking
+((x1, y1), (x2, y2)) = ((1, 2), (3, 4))
+print(f"Point 1: ({x1}, {y1}), Point 2: ({x2}, {y2})")
+
+# Swapping multiple values
+a, b, c = 1, 2, 3
+print(f"Before swap: a={a}, b={b}, c={c}")
+a, b, c = c, a, b
+print(f"After swap: a={a}, b={b}, c={c}")
+        </div>
+        <p>Expected output:</p>
+        <pre>
+Person tuple: ('John Doe', 30, 'Developer')
+Name: John Doe, Age: 30, Occupation: Developer
+RGB: 255, 0, 0
+Alpha: 0.5
+First: 1, Last: 8
+Width: 1920px, Height: 1080px
+Point 1: (1, 2), Point 2: (3, 4)
+Before swap: a=1, b=2, c=3
+After swap: a=3, b=1, c=2
+        </pre>
+      </div>
+    </div>
+    
+    <div class="method">
+      <h2>4. Tuples vs Lists</h2>
+      <p>Tuples and lists have similar capabilities, but differ in mutability and typical use cases. Understanding their differences helps choose the right data structure.</p>
+      
+      <div class="code-block">
+# Performance comparison
+import sys
+import timeit
+
+# Size comparison
+list_ex = [1, 2, 3, 4, 5]
+tuple_ex = (1, 2, 3, 4, 5)
+print(f"List size: {sys.getsizeof(list_ex)} bytes")
+print(f"Tuple size: {sys.getsizeof(tuple_ex)} bytes")
+
+# Creation speed
+list_creation = timeit.timeit(stmt="[1, 2, 3, 4, 5]", number=1000000)
+tuple_creation = timeit.timeit(stmt="(1, 2, 3, 4, 5)", number=1000000)
+print(f"List creation: {list_creation:.6f} seconds")
+print(f"Tuple creation: {tuple_creation:.6f} seconds")
+
+# Access speed
+list_access = timeit.timeit(stmt="x[2]", setup="x = [1, 2, 3, 4, 5]", number=1000000)
+tuple_access = timeit.timeit(stmt="x[2]", setup="x = (1, 2, 3, 4, 5)", number=1000000)
+print(f"List access: {list_access:.6f} seconds")
+print(f"Tuple access: {tuple_access:.6f} seconds")
+      </div>
+      
+      <p>Practice: Compare operations with tuples and lists</p>
+      <textarea id="practice-comparison" class="practice-area" placeholder="Write your Python code here..."></textarea>
+      <button onclick="runPython('practice-comparison', 'output-comparison')">Run Code</button>
+      <div id="output-comparison" class="output-area"></div>
+      
+      <button onclick="toggleSolution('solution4')">Show Solution</button>
+      <div id="solution4" class="solution">
+        <h3>Solution: Tuples vs Lists</h3>
+        <div class="code-block">
+import sys
+import timeit
+
+# Create equivalent tuple and list
+my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+my_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+# Compare memory usage
+list_size = sys.getsizeof(my_list)
+tuple_size = sys.getsizeof(my_tuple)
+print(f"Memory usage - List: {list_size} bytes, Tuple: {tuple_size} bytes")
+print(f"Tuple uses {round((tuple_size / list_size) * 100)}% of the list's memory")
+
+# Compare iteration speed
+list_iteration = timeit.timeit(
+    stmt="for i in x: pass", 
+    setup="x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]", 
+    number=1000000
+)
+tuple_iteration = timeit.timeit(
+    stmt="for i in x: pass", 
+    setup="x = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)", 
+    number=1000000
+)
+print(f"Iteration speed - List: {list_iteration:.6f}s, Tuple: {tuple_iteration:.6f}s")
+
+# Test as dictionary keys
+try:
+    dict_with_list_keys = {[1, 2, 3]: "value"}
+except TypeError as e:
+    print(f"Using list as dict key: {e}")
+
+dict_with_tuple_keys = {(1, 2, 3): "value"}
+print(f"Using tuple as dict key: {dict_with_tuple_keys[(1, 2, 3)]}")
+
+# Function returning multiple values
+def get_user_info():
+    name = "Alice"
+    age = 30
+    is_active = True
+    return name, age, is_active  # Implicitly returns a tuple
+
+# Unpack the returned tuple
+user_name, user_age, user_status = get_user_info()
+print(f"User: {user_name}, Age: {user_age}, Active: {user_status}")
+
+# Demonstration of immutability
+try:
+    my_tuple[0] = 99  # This will fail
+except TypeError as e:
+    print(f"Modifying tuple: {e}")
+
+# But lists can be modified
+my_list[0] = 99
+print(f"Modified list: {my_list}")
+        </div>
+        <p>Expected output:</p>
+        <pre>
+Memory usage - List: 120 bytes, Tuple: 104 bytes
+Tuple uses 87% of the list's memory
+Iteration speed - List: 0.121095s, Tuple: 0.114367s
+Using list as dict key: unhashable type: 'list'
+Using tuple as dict key: value
+User: Alice, Age: 30, Active: True
+Modifying tuple: 'tuple' object does not support item assignment
+Modified list: [99, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        </pre>
+      </div>
+    </div>
+    
+    <div class="method">
+      <h2>5. Named Tuples</h2>
+      <p>Named tuples are a subclass of tuples that have field names and expanded functionality while retaining tuple's immutability.</p>
+      
+      <div class="code-block">
+from collections import namedtuple
+
+# Creating a named tuple type
+Person = namedtuple('Person', ['name', 'age', 'job'])
+
+# Creating instances
+alice = Person(name='Alice', age=30, job='Engineer')
+bob = Person('Bob', 25, 'Designer')  # Positional arguments work too
+
+# Accessing by name or position
+print(alice.name)    # 'Alice'
+print(bob[1])        # 25
+
+# Converting to dictionary
+alice_dict = alice._asdict()
+print(alice_dict)    # {'name': 'Alice', 'age': 30, 'job': 'Engineer'}
+
+# Creating new instance with replaced values
+alice_promoted = alice._replace(job='Senior Engineer')
+print(alice_promoted)  # Person(name='Alice', age=30, job='Senior Engineer')
+      </div>
+      
+      <p>Practice: Use named tuples to represent structured data</p>
+      <textarea id="practice-namedtuple" class="practice-area" placeholder="Write your Python code here..."></textarea>
+      <button onclick="runPython('practice-namedtuple', 'output-namedtuple')">Run Code</button>
+      <div id="output-namedtuple" class="output-area"></div>
+      
+      <button onclick="toggleSolution('solution5')">Show Solution</button>
+      <div id="solution5" class="solution">
+        <h3>Solution: Named Tuples</h3>
+        <div class="code-block">
+from collections import namedtuple
+
+# Create a Point namedtuple
+Point = namedtuple('Point', ['x', 'y', 'z'])
+
+# Create instances
+p1 = Point(1, 2, 3)
+p2 = Point(x=4, y=5, z=6)
+
+print(f"Point 1: {p1}")
+print(f"Point 2 coordinates: x={p2.x}, y={p2.y}, z={p2.z}")
+
+# Calculate distance between points
+import math
+distance = math.sqrt(sum((a - b) ** 2 for a, b in zip(p1, p2)))
+print(f"Distance between points: {distance:.2f}")
+
+# Create a Rectangle namedtuple using Points
+Rectangle = namedtuple('Rectangle', ['top_left', 'bottom_right'])
+
+# Create a rectangle using Point instances
+rect = Rectangle(Point(0, 10, 0), Point(10, 0, 0))
+print(f"Rectangle: {rect}")
+
+# Calculate width and height
+width = rect.bottom_right.x - rect.top_left.x
+height = rect.top_left.y - rect.bottom_right.y
+print(f"Rectangle dimensions: {width}x{height}")
+
+# Create a modified rectangle that's moved by 5 units in x direction
+moved_rect = rect._replace(
+    top_left=rect.top_left._replace(x=rect.top_left.x + 5),
+    bottom_right=rect.bottom_right._replace(x=rect.bottom_right.x + 5)
+)
+print(f"Moved rectangle: {moved_rect}")
+
+# Demonstrate _fields and _asdict()
+print(f"Point fields: {Point._fields}")
+print(f"Rectangle as dict: {rect._asdict()}")
+
+# Create a namedtuple from a dictionary
+point_data = {'x': 100, 'y': 200, 'z': 300}
+p3 = Point(**point_data)
+print(f"Point from dictionary: {p3}")
+
+# Create a subclass with default values
+class PointWithDefaults(namedtuple('PointWithDefaults', ['x', 'y', 'z'])):
+    def __new__(cls, x=0, y=0, z=0):
+        return super().__new__(cls, x, y, z)
+    
+    def magnitude(self):
+        return math.sqrt(self.x**2 + self.y**2 + self.z**2)
+
+# Use the subclass
+origin = PointWithDefaults()
+p4 = PointWithDefaults(3, 4, 5)
+print(f"Default point: {origin}")
+print(f"Point p4 magnitude: {p4.magnitude():.2f}")
+        </div>
+        <p>Expected output:</p>
+        <pre>
+Point 1: Point(x=1, y=2, z=3)
+Point 2 coordinates: x=4, y=5, z=6
+Distance between points: 5.20
+Rectangle: Rectangle(top_left=Point(x=0, y=10, z=0), bottom_right=Point(x=10, y=0, z=0))
+Rectangle dimensions: 10x10
+Moved rectangle: Rectangle(top_left=Point(x=5, y=10, z=0), bottom_right=Point(x=15, y=0, z=0))
+Point fields: ('x', 'y', 'z')
+Rectangle as dict: {'top_left': Point(x=0, y=10, z=0), 'bottom_right': Point(x=10, y=0, z=0)}
+Point from dictionary: Point(x=100, y=200, z=300)
+Default point: PointWithDefaults(x=0, y=0, z=0)
+Point p4 magnitude: 7.07
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(solutionId) {
+      const solution = document.getElementById(solutionId);
+      if (solution.style.display === 'block') {
+        solution.style.display = 'none';
+      } else {
+        solution.style.display = 'block';
+      }
+    }
+    
+    // Function to emulate running Python code
+    function runPython(textareaId, outputId) {
+      const code = document.getElementById(textareaId).value;
+      const outputArea = document.getElementById(outputId);
+      
+      // In a real implementation, this would connect to a Python interpreter
+      // Here we'll just show a message that this is a client-side emulator
+      outputArea.innerHTML = '<span style="color: #e78c11;">[Client-side Python Emulator]</span><br>' +
+                             'Your code would execute on the server and display results here.<br>' +
+                             'For now, please compare your solution with the example solutions.';
+      
+      // Optionally, if you have a Python transpiler like Brython or Skulpt,
+      // you could include that and actually run the Python code in the browser
+    }
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

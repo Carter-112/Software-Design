@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Practice - JavaScript Events</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .preview-box {
+      background-color: #2d2d2d;
+      border: 1px solid #444;
+      color: #dcdcdc;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    
+    /* Code editor styling */
+    .code-editor {
+      position: relative;
+      margin: 20px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    
+    .code-editor-header {
+      background-color: #007acc;
+      color: white;
+      padding: 8px 15px;
+      font-size: 14px;
+      font-weight: bold;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .code-editor textarea {
+      width: 100%;
+      min-height: 180px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: none;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      padding: 15px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+    }
+    
+    .code-editor textarea:focus {
+      box-shadow: inset 0 0 0 2px #007acc;
+    }
+    
+    .practice-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 15px;
+      position: relative;
+      z-index: 0;
+    }
+    
+    .interactive-area {
+      border: 1px solid #444;
+      padding: 15px;
+      margin-top: 10px;
+      background-color: #2d2d2d;
+      color: #dcdcdc;
+      border-radius: 4px;
+    }
+    
+    .output-area {
+      border: 1px solid #444;
+      padding: 15px;
+      margin-top: 10px;
+      background-color: #2d2d2d;
+      color: #dcdcdc;
+      min-height: 100px;
+      border-radius: 4px;
+    }
+    
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+    
+    .console-output {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      height: 100px;
+      overflow-y: auto;
+      border: 1px solid #444;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+    
+    .run-btn {
+      background-color: #107C10;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .run-btn:hover {
+      background-color: #15a015;
+    }
+    
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
+    
+    .reset-btn {
+      background-color: #ca5010;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .reset-btn:hover {
+      background-color: #e95a0c;
+    }
+    
+    /* Style overrides for interactive elements */
+    .interactive-area input[type="text"] {
+      background-color: #1e1e1e !important;
+      color: #dcdcdc !important;
+      border: 1px solid #3e3e42 !important;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    
+    .interactive-area button {
+      background-color: #1e1e1e !important;
+      color: #dcdcdc !important;
+      border: 1px solid #3e3e42 !important;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .interactive-area button:hover {
+      background-color: #2d2d2d !important;
+    }
+    
+    .event-demo {
+      padding: 10px;
+      border: 1px solid #444;
+      margin: 10px 0;
+      background-color: #2d2d2d;
+    }
+    
+    .draggable {
+      width: 100px;
+      height: 50px;
+      background-color: #3498db;
+      color: white;
+      text-align: center;
+      line-height: 50px;
+      cursor: move;
+      position: relative;
+    }
+    
+    .dropzone {
+      width: 200px;
+      height: 100px;
+      border: 2px dashed #444;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>JavaScript Event Handling Practice</h1>
+    <p>Practice implementing JavaScript events to create interactive web applications. Learn how to handle user interactions and create responsive experiences. Type your JavaScript code in the editor area, then click "Run Code" to see the result.</p>
+
+    <!-- Block 1: Basic Event Handlers -->
+    <div class="method">
+      <h3>Basic Event Handlers</h3>
+      <p class="hint">// Implement basic event handlers using different methods</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="basic-events-area">
+          <button id="click-me">Click Me</button>
+          <button id="hover-me">Hover Over Me</button>
+          <input type="text" id="input-field" placeholder="Type something...">
+          <div id="event-output" style="border: 1px solid #555; padding: 10px; margin-top: 10px; min-height: 20px;">
+            Event output will appear here
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-basic" placeholder="// Your task:
+// 1. Add a click event to the &quot;Click Me&quot; button that changes the text in the output div
+// 2. Add mouseover and mouseout events to the &quot;Hover Over Me&quot; button
+// 3. Add an input event to the text field that shows the current text in the output div">// Your task:
+// 1. Add a click event to the "Click Me" button that changes the text in the output div
+// 2. Add mouseover and mouseout events to the "Hover Over Me" button
+// 3. Add an input event to the text field that shows the current text in the output div</textarea>
+        </div>
+        
+        <div class="console-output" id="console-basic"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-basic', 'basic-events-area', 'console-basic')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-basic-events')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('basic-events-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-basic-events" style="display: none;"><code>// 1. Click event handler
+const clickButton = document.getElementById('click-me');
+const outputDiv = document.getElementById('event-output');
+
+clickButton.addEventListener('click', function() {
+  outputDiv.textContent = 'Button was clicked!';
+  console.log('Click event triggered');
+});
+
+// 2. Hover events
+const hoverButton = document.getElementById('hover-me');
+
+hoverButton.addEventListener('mouseover', function() {
+  outputDiv.textContent = 'Mouse is over the button';
+  this.style.backgroundColor = '#e74c3c';
+  console.log('Mouseover event triggered');
+});
+
+hoverButton.addEventListener('mouseout', function() {
+  outputDiv.textContent = 'Mouse left the button';
+  this.style.backgroundColor = '';
+  console.log('Mouseout event triggered');
+});
+
+// 3. Input event
+const inputField = document.getElementById('input-field');
+
+inputField.addEventListener('input', function(event) {
+  outputDiv.textContent = 'Current input: ' + event.target.value;
+  console.log('Input changed to: ' + event.target.value);
+});</code></pre>
+      </div>
+    </div>
+
+    <!-- Block 2: Event Propagation -->
+    <div class="method">
+      <h3>Event Propagation (Bubbling and Capturing)</h3>
+      <p class="hint">// Understand event bubbling, capturing, and how to control event propagation</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="propagation-area">
+          <div id="outer" style="padding: 25px; background-color: #f1c40f; text-align: center; color: #333;">
+            OUTER
+            <div id="middle" style="padding: 25px; background-color: #e67e22; margin: 10px; color: #333;">
+              MIDDLE
+              <div id="inner" style="padding: 25px; background-color: #e74c3c; margin: 10px; color: #333;">
+                INNER
+              </div>
+            </div>
+          </div>
+          <div id="propagation-log" style="border: 1px solid #555; padding: 10px; margin-top: 10px; max-height: 100px; overflow-y: auto;">
+            Click on the boxes to see event propagation
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-propagation" placeholder="// Your task:
+// 1. Add click event listeners to all three boxes (outer, middle, inner)
+// 2. Demonstrate event bubbling by logging which element was clicked in which order
+// 3. Implement stopPropagation() on the middle element to prevent bubbling to the outer element
+// 4. Add a useCapture example by setting the third parameter of addEventListener to true">// Your task:
+// 1. Add click event listeners to all three boxes (outer, middle, inner)
+// 2. Demonstrate event bubbling by logging which element was clicked in which order
+// 3. Implement stopPropagation() on the middle element to prevent bubbling to the outer element
+// 4. Add a useCapture example by setting the third parameter of addEventListener to true</textarea>
+        </div>
+        
+        <div class="console-output" id="console-propagation"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-propagation', 'propagation-area', 'console-propagation')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-propagation')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('propagation-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-propagation" style="display: none;"><code>// Get references to the elements
+const outer = document.getElementById('outer');
+const middle = document.getElementById('middle');
+const inner = document.getElementById('inner');
+const log = document.getElementById('propagation-log');
+
+// Helper function to add messages to the log
+function addToLog(message) {
+  log.innerHTML += `<div>${message}</div>`;
+  log.scrollTop = log.scrollHeight;
+  console.log(message);
+}
+
+// Clear the log initially
+log.innerHTML = '';
+
+// 1 & 2. Demonstrate event bubbling
+outer.addEventListener('click', function(e) {
+  addToLog('OUTER box clicked (bubbling phase)');
+});
+
+// 3. Stop propagation at the middle element
+middle.addEventListener('click', function(e) {
+  addToLog('MIDDLE box clicked (bubbling phase)');
+  e.stopPropagation(); // This prevents the event from bubbling up to the outer element
+  addToLog('Propagation stopped at MIDDLE');
+});
+
+inner.addEventListener('click', function(e) {
+  addToLog('INNER box clicked (bubbling phase)');
+  // Here we don't stop propagation, so it will bubble up to middle
+});
+
+// 4. Capture phase example (third parameter set to true)
+outer.addEventListener('click', function(e) {
+  addToLog('OUTER box captured (capturing phase)');
+}, true);
+
+middle.addEventListener('click', function(e) {
+  addToLog('MIDDLE box captured (capturing phase)');
+}, true);
+
+inner.addEventListener('click', function(e) {
+  addToLog('INNER box captured (capturing phase)');
+}, true);
+
+// Add explanation
+addToLog('Click on any box to see event propagation in action.');
+addToLog('The event will be captured from OUTER → MIDDLE → INNER (capturing phase)');
+addToLog('Then bubble up from INNER → MIDDLE (bubbling phase stops at MIDDLE)');</code></pre>
+      </div>
+    </div>
+    
+    <!-- Block 3: Event Delegation -->
+    <div class="method">
+      <h3>Event Delegation</h3>
+      <p class="hint">// Implement event delegation to efficiently handle events on multiple elements</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="delegation-area">
+          <button id="add-item">Add New Item</button>
+          <ul id="item-list">
+            <li class="list-item">Item 1</li>
+            <li class="list-item">Item 2</li>
+            <li class="list-item">Item 3</li>
+          </ul>
+          <div id="delegation-output" style="border: 1px solid #555; padding: 10px; margin-top: 10px;">
+            Click on an item to select it
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-delegation" placeholder="// Your task:
+// 1. Implement event delegation on the &lt;ul&gt; element to handle clicks on all &lt;li&gt; elements
+//    (even ones that will be added later)
+// 2. Make the &quot;Add New Item&quot; button functional (should add a new &lt;li&gt; element)
+// 3. When an item is clicked, highlight it and display its text in the output div
+// 4. Implement a way to remove an item when it's double-clicked">// Your task:
+// 1. Implement event delegation on the <ul> element to handle clicks on all <li> elements
+//    (even ones that will be added later)
+// 2. Make the "Add New Item" button functional (should add a new <li> element)
+// 3. When an item is clicked, highlight it and display its text in the output div
+// 4. Implement a way to remove an item when it's double-clicked</textarea>
+        </div>
+        
+        <div class="console-output" id="console-delegation"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-delegation', 'delegation-area', 'console-delegation')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-delegation')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('delegation-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-delegation" style="display: none;"><code>// Get references to elements
+const addButton = document.getElementById('add-item');
+const itemList = document.getElementById('item-list');
+const output = document.getElementById('delegation-output');
+
+// Counter for new items
+let itemCount = 3;
+
+// 1. Implement event delegation on the list
+itemList.addEventListener('click', function(e) {
+  // Check if the clicked element is an li with class 'list-item'
+  if (e.target && e.target.matches('li.list-item')) {
+    // Remove highlight from all items
+    const items = document.querySelectorAll('.list-item');
+    items.forEach(item => item.style.backgroundColor = '');
+    
+    // Highlight the clicked item
+    e.target.style.backgroundColor = '#f39c12';
+    
+    // Display the text in the output div
+    output.textContent = 'Selected: ' + e.target.textContent;
+    
+    console.log('Item clicked:', e.target.textContent);
+  }
+});
+
+// Handle double-click to remove items (using event delegation)
+itemList.addEventListener('dblclick', function(e) {
+  if (e.target && e.target.matches('li.list-item')) {
+    console.log('Removing item:', e.target.textContent);
+    e.target.remove();
+    output.textContent = 'Removed: ' + e.target.textContent;
+  }
+});
+
+// 2. Make the Add New Item button functional
+addButton.addEventListener('click', function() {
+  itemCount++;
+  
+  // Create a new list item
+  const newItem = document.createElement('li');
+  newItem.className = 'list-item';
+  newItem.textContent = 'Item ' + itemCount;
+  
+  // Add it to the list
+  itemList.appendChild(newItem);
+  
+  console.log('Added new item:', newItem.textContent);
+  output.textContent = 'Added: ' + newItem.textContent;
+});</code></pre>
+      </div>
+    </div>
+    
+    <!-- Block 4: Form Events -->
+    <div class="method">
+      <h3>Form Events and Validation</h3>
+      <p class="hint">// Handle form submission and implement form validation</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="form-events-area">
+          <form id="signup-form">
+            <div style="margin-bottom: 10px;">
+              <label for="username">Username:</label>
+              <input type="text" id="username" name="username" required>
+              <span id="username-error" style="color: red; margin-left: 10px;"></span>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+              <span id="email-error" style="color: red; margin-left: 10px;"></span>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required>
+              <span id="password-error" style="color: red; margin-left: 10px;"></span>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label for="confirm-password">Confirm Password:</label>
+              <input type="password" id="confirm-password" name="confirm-password" required>
+              <span id="confirm-error" style="color: red; margin-left: 10px;"></span>
+            </div>
+            <button type="submit">Sign Up</button>
+          </form>
+          <div id="form-output" style="border: 1px solid #555; padding: 10px; margin-top: 10px;">
+            Form submission results will appear here
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-form" placeholder="// Your task:
+// 1. Add a submit event handler to the form that prevents the default submission
+// 2. Implement validation for the following rules:
+//    - Username must be at least 5 characters
+//    - Email must contain @ and .
+//    - Password must be at least 8 characters
+//    - Confirm password must match the password
+// 3. Display appropriate error messages next to the fields that fail validation
+// 4. If all validation passes, display a success message in the output div">// Your task:
+// 1. Add a submit event handler to the form that prevents the default submission
+// 2. Implement validation for the following rules:
+//    - Username must be at least 5 characters
+//    - Email must contain @ and .
+//    - Password must be at least 8 characters
+//    - Confirm password must match the password
+// 3. Display appropriate error messages next to the fields that fail validation
+// 4. If all validation passes, display a success message in the output div</textarea>
+        </div>
+        
+        <div class="console-output" id="console-form"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-form', 'form-events-area', 'console-form')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-form-events')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('form-events-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-form-events" style="display: none;"><code>// Get form and form elements
+const form = document.getElementById('signup-form');
+const usernameInput = document.getElementById('username');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const confirmInput = document.getElementById('confirm-password');
+
+// Get error elements
+const usernameError = document.getElementById('username-error');
+const emailError = document.getElementById('email-error');
+const passwordError = document.getElementById('password-error');
+const confirmError = document.getElementById('confirm-error');
+
+// Get output div
+const formOutput = document.getElementById('form-output');
+
+// Helper function to validate email format
+function isValidEmail(email) {
+  // Simple email validation - must contain @ and .
+  return email.includes('@') && email.includes('.');
+}
+
+// Helper function to clear all error messages
+function clearErrors() {
+  usernameError.textContent = '';
+  emailError.textContent = '';
+  passwordError.textContent = '';
+  confirmError.textContent = '';
+}
+
+// 1. Add submit event handler
+form.addEventListener('submit', function(e) {
+  // Prevent default form submission
+  e.preventDefault();
+  
+  // Clear any previous error messages
+  clearErrors();
+  
+  // Get form values
+  const username = usernameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+  const confirmPassword = confirmInput.value;
+  
+  // Track validation status
+  let isValid = true;
+  
+  // 2. Validate username
+  if (username.length < 5) {
+    usernameError.textContent = 'Username must be at least 5 characters';
+    isValid = false;
+    console.log('Username validation failed');
+  }
+  
+  // Validate email
+  if (!isValidEmail(email)) {
+    emailError.textContent = 'Please enter a valid email address';
+    isValid = false;
+    console.log('Email validation failed');
+  }
+  
+  // Validate password
+  if (password.length < 8) {
+    passwordError.textContent = 'Password must be at least 8 characters';
+    isValid = false;
+    console.log('Password validation failed');
+  }
+  
+  // Validate confirm password
+  if (password !== confirmPassword) {
+    confirmError.textContent = 'Passwords do not match';
+    isValid = false;
+    console.log('Password confirmation failed');
+  }
+  
+  // 4. If all validation passes, show success message
+  if (isValid) {
+    formOutput.innerHTML = `
+      <div style="color: green; font-weight: bold;">Registration Successful!</div>
+      <div>Username: ${username}</div>
+      <div>Email: ${email}</div>
+      <div>Password: ${'*'.repeat(password.length)}</div>
+    `;
+    console.log('Form validation successful');
+    
+    // Optional: Clear the form
+    form.reset();
+  } else {
+    formOutput.textContent = 'Please correct the errors and try again.';
+  }
+});</code></pre>
+      </div>
+    </div>
+    
+    <!-- Block 5: Drag and Drop -->
+    <div class="method">
+      <h3>Drag and Drop</h3>
+      <p class="hint">// Implement drag and drop functionality using the HTML5 Drag and Drop API</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="drag-drop-area">
+          <div id="draggable" class="draggable" draggable="true">Drag Me</div>
+          <div id="dropzone" class="dropzone">Drop Zone</div>
+          <div id="drag-output" style="border: 1px solid #555; padding: 10px; margin-top: 10px;">
+            Drag the box into the drop zone
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-drag" placeholder="// Your task:
+// 1. Implement the necessary drag and drop event handlers:
+//    - dragstart: When the user starts dragging an element
+//    - dragover: When a dragged element is over the drop zone (prevent default to allow dropping)
+//    - drop: When the user drops the element on the drop zone
+// 2. Add visual cues during the drag operation (change appearance of dragged item and drop zone)
+// 3. On successful drop, display a success message and change the appearance of elements
+// 4. Add a way to reset the drag and drop operation">// Your task:
+// 1. Implement the necessary drag and drop event handlers:
+//    - dragstart: When the user starts dragging an element
+//    - dragover: When a dragged element is over the drop zone (prevent default to allow dropping)
+//    - drop: When the user drops the element on the drop zone
+// 2. Add visual cues during the drag operation (change appearance of dragged item and drop zone)
+// 3. On successful drop, display a success message and change the appearance of elements
+// 4. Add a way to reset the drag and drop operation</textarea>
+        </div>
+        
+        <div class="console-output" id="console-drag"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-drag', 'drag-drop-area', 'console-drag')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-drag-drop')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('drag-drop-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-drag-drop" style="display: none;"><code>// Get elements
+const draggable = document.getElementById('draggable');
+const dropzone = document.getElementById('dropzone');
+const output = document.getElementById('drag-output');
+
+// Add a reset button
+const resetButton = document.createElement('button');
+resetButton.textContent = 'Reset';
+resetButton.style.marginTop = '10px';
+resetButton.addEventListener('click', resetDragDrop);
+document.getElementById('drag-drop-area').appendChild(resetButton);
+
+// 1. Implement drag and drop event handlers
+
+// Drag start event
+draggable.addEventListener('dragstart', function(e) {
+  console.log('Drag started');
+  
+  // Set data to be dragged
+  e.dataTransfer.setData('text/plain', 'draggable');
+  
+  // Add dragging class for visual feedback
+  this.classList.add('dragging');
+  
+  // Change appearance of the dragged element
+  setTimeout(() => {
+    this.style.opacity = '0.5';
+  }, 0);
+  
+  output.textContent = 'Dragging in progress...';
+});
+
+// Dragover event on dropzone
+dropzone.addEventListener('dragover', function(e) {
+  // Prevent default to allow drop
+  e.preventDefault();
+  console.log('Drag over dropzone');
+  
+  // Change appearance of the dropzone
+  this.style.backgroundColor = '#f39c12';
+  this.style.borderStyle = 'solid';
+});
+
+// Dragleave event on dropzone
+dropzone.addEventListener('dragleave', function(e) {
+  console.log('Drag left dropzone');
+  
+  // Reset dropzone appearance
+  this.style.backgroundColor = '';
+  this.style.borderStyle = 'dashed';
+});
+
+// Drop event on dropzone
+dropzone.addEventListener('drop', function(e) {
+  // Prevent default browser behavior
+  e.preventDefault();
+  console.log('Item dropped');
+  
+  // Get the dragged data
+  const data = e.dataTransfer.getData('text/plain');
+  
+  if (data === 'draggable') {
+    // Change appearance for successful drop
+    this.style.backgroundColor = '#2ecc71';
+    this.style.borderStyle = 'solid';
+    
+    // Move the draggable element into the dropzone
+    this.innerHTML = '';
+    this.appendChild(draggable);
+    
+    // Reset the draggable element appearance
+    draggable.style.opacity = '1';
+    draggable.classList.remove('dragging');
+    
+    // Update the output message
+    output.textContent = 'Drop successful! Item has been placed in the drop zone.';
+    
+    // Disable dragging now that it's dropped
+    draggable.setAttribute('draggable', 'false');
+  }
+});
+
+// Drag end event (cleanup if drop was not successful)
+draggable.addEventListener('dragend', function(e) {
+  console.log('Drag ended');
+  
+  // Reset appearance
+  this.style.opacity = '1';
+  this.classList.remove('dragging');
+  
+  // Reset dropzone if drag was not successful
+  if (this.parentNode !== dropzone) {
+    dropzone.style.backgroundColor = '';
+    dropzone.style.borderStyle = 'dashed';
+    output.textContent = 'Drag was cancelled or unsuccessful. Try again.';
+  }
+});
+
+// Function to reset the drag and drop operation
+function resetDragDrop() {
+  console.log('Resetting drag and drop');
+  
+  // Move the draggable element back
+  draggable.parentNode.removeChild(draggable);
+  document.getElementById('drag-drop-area').insertBefore(draggable, dropzone);
+  
+  // Reset appearances
+  draggable.style.opacity = '1';
+  draggable.classList.remove('dragging');
+  draggable.setAttribute('draggable', 'true');
+  
+  dropzone.style.backgroundColor = '';
+  dropzone.style.borderStyle = 'dashed';
+  dropzone.innerHTML = 'Drop Zone';
+  
+  // Reset output message
+  output.textContent = 'Drag the box into the drop zone';
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Custom console logger
+    function createCustomConsole(consoleElementId) {
+      const consoleElement = document.getElementById(consoleElementId);
+      
+      return {
+        log: function(...args) {
+          const message = args.map(arg => {
+            if (typeof arg === 'object') {
+              return JSON.stringify(arg);
+            }
+            return arg;
+          }).join(' ');
+          
+          const logEntry = document.createElement('div');
+          logEntry.textContent = '> ' + message;
+          consoleElement.appendChild(logEntry);
+          consoleElement.scrollTop = consoleElement.scrollHeight;
+        },
+        clear: function() {
+          consoleElement.innerHTML = '';
+        }
+      };
+    }
+    
+    // Main function to run JavaScript code
+    function runJSCode(inputId, targetAreaId, consoleId) {
+      const code = document.getElementById(inputId).value;
+      const originalConsole = console;
+      const customConsole = createCustomConsole(consoleId);
+      
+      try {
+        // Clear previous console output
+        customConsole.clear();
+        
+        // Replace console.log with our custom logger
+        console = customConsole;
+        
+        // Create a function that includes the user's code
+        const executeCode = new Function(`
+          const targetArea = document.getElementById('${targetAreaId}');
+          ${code}
+        `);
+        
+        // Execute the code
+        executeCode();
+        
+      } catch (error) {
+        // Log any errors
+        customConsole.log('Error: ' + error.message);
+      } finally {
+        // Restore the original console
+        console = originalConsole;
+      }
+    }
+    
+    function toggleSolution(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      if (solutionElement.style.display === 'block') {
+        solutionElement.style.display = 'none';
+      } else {
+        solutionElement.style.display = 'block';
+      }
+    }
+    
+    // Reset the exercise area to its initial state
+    function resetExercise(areaId) {
+      location.reload();
+    }
+
+    // Run this after the page loads to make sure text areas are properly setup
+    document.addEventListener('DOMContentLoaded', function() {
+      // Focus on first text area to show user it's clickable
+      setTimeout(function() {
+        const firstTextarea = document.querySelector('.code-editor textarea');
+        if (firstTextarea) {
+          firstTextarea.focus();
+        }
+      }, 1000);
+    });
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

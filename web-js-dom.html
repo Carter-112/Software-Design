@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Practice - JavaScript DOM</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .preview-box {
+      background-color: #2d2d2d;
+      border: 1px solid #444;
+      color: #dcdcdc;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    
+    .practice-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 15px;
+      position: relative;
+      z-index: 0;
+    }
+    
+    .interactive-area {
+      border: 1px solid #444;
+      padding: 15px;
+      margin-top: 10px;
+      background-color: #2d2d2d;
+      color: #dcdcdc;
+      border-radius: 4px;
+    }
+    
+    .output-area {
+      border: 1px solid #444;
+      padding: 15px;
+      margin-top: 10px;
+      background-color: #2d2d2d;
+      color: #dcdcdc;
+      min-height: 100px;
+      border-radius: 4px;
+    }
+    
+    /* Code editor styling */
+    .code-editor {
+      position: relative;
+      margin: 20px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    
+    .code-editor-header {
+      background-color: #007acc;
+      color: white;
+      padding: 8px 15px;
+      font-size: 14px;
+      font-weight: bold;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .code-editor textarea {
+      width: 100%;
+      min-height: 180px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: none;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      padding: 15px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+    }
+    
+    .code-editor textarea:focus {
+      box-shadow: inset 0 0 0 2px #007acc;
+    }
+    
+    /* Ensure input fields are accessible and match the theme */
+    input[type="text"] {
+      background-color: #1e1e1e !important;
+      color: #dcdcdc !important;
+      border: 1px solid #3e3e42 !important;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+    
+    .console-output {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      height: 100px;
+      overflow-y: auto;
+      border: 1px solid #444;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+    
+    .run-btn {
+      background-color: #107C10;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .run-btn:hover {
+      background-color: #15a015;
+    }
+    
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
+    
+    .reset-btn {
+      background-color: #ca5010;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .reset-btn:hover {
+      background-color: #e95a0c;
+    }
+    
+    /* Style overrides for interactive elements */
+    .interactive-area input[type="text"] {
+      background-color: #1e1e1e !important;
+      color: #dcdcdc !important;
+      border: 1px solid #3e3e42 !important;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    
+    .interactive-area button {
+      background-color: #1e1e1e !important;
+      color: #dcdcdc !important;
+      border: 1px solid #3e3e42 !important;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .interactive-area button:hover {
+      background-color: #2d2d2d !important;
+    }
+    
+    .interactive-area #hover-area {
+      background-color: #1e1e1e !important;
+    }
+    
+    .interactive-area #animated-box {
+      background-color: #e74c3c;
+    }
+    
+    #output-box, #event-output, #traversal-output {
+      border: 1px solid #555 !important;
+      background-color: #333 !important;
+      color: #dcdcdc !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>JavaScript DOM Manipulation Practice</h1>
+    <p>Practice implementing JavaScript to interact with and manipulate the Document Object Model (DOM). Type your JavaScript code in the editor area, then click "Run Code" to see the result.</p>
+
+    <!-- Block 1: DOM Selection and Manipulation -->
+    <div class="method">
+      <h3>DOM Selection and Manipulation</h3>
+      <p class="hint">// Select elements and modify their content and attributes</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="dom-selection-area">
+          <h4 id="main-heading">Original Heading</h4>
+          <p class="paragraph">This is the first paragraph.</p>
+          <p class="paragraph">This is the second paragraph.</p>
+          <ul id="item-list">
+            <li class="item">Item 1</li>
+            <li class="item">Item 2</li>
+            <li class="item">Item 3</li>
+          </ul>
+          <div id="output-box" style="border: 1px solid #555; padding: 10px; margin-top: 10px;">
+            Content will change here
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-selection" placeholder="// Your task:
+// 1. Change the text of the heading to &quot;Updated Heading&quot;
+// 2. Change the text color of all paragraphs to blue
+// 3. Add a new list item with the text &quot;Item 4&quot;
+// 4. Change the content of the output-box to show &quot;DOM Updated Successfully!&quot;">// Your task:
+// 1. Change the text of the heading to "Updated Heading"
+// 2. Change the text color of all paragraphs to blue
+// 3. Add a new list item with the text "Item 4"
+// 4. Change the content of the output-box to show "DOM Updated Successfully!"</textarea>
+        </div>
+        
+        <div class="console-output" id="console-selection"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-selection', 'dom-selection-area', 'console-selection')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-dom-selection')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('dom-selection-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-dom-selection" style="display: none;"><code>// 1. Change the heading text
+document.getElementById('main-heading').textContent = 'Updated Heading';
+
+// 2. Change the text color of all paragraphs
+const paragraphs = document.querySelectorAll('.paragraph');
+paragraphs.forEach(paragraph => {
+  paragraph.style.color = 'blue';
+});
+
+// 3. Add a new list item
+const itemList = document.getElementById('item-list');
+const newItem = document.createElement('li');
+newItem.textContent = 'Item 4';
+newItem.className = 'item';
+itemList.appendChild(newItem);
+
+// 4. Change the output box content
+document.getElementById('output-box').innerHTML = 'DOM Updated Successfully!';
+
+// Optional: Log to our custom console
+console.log('All tasks completed!');</code></pre>
+      </div>
+    </div>
+
+    <!-- Block 2: Event Listeners -->
+    <div class="method">
+      <h3>Event Listeners</h3>
+      <p class="hint">// Add event listeners to elements to create interactive components</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="event-listeners-area">
+          <button id="click-btn">Click Me</button>
+          <input type="text" id="input-field" placeholder="Type something...">
+          <div id="hover-area" style="background-color: #3e3e42; padding: 20px; margin: 10px 0;">
+            Hover over me
+          </div>
+          <div id="event-output" style="border: 1px solid #555; padding: 10px; margin-top: 10px;">
+            Event output will appear here
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-events" placeholder="// Your task:
+// 1. Add a click event listener to the &quot;Click Me&quot; button that displays &quot;Button clicked!&quot; in the event-output div
+// 2. Add an input event listener to the text field that displays the current text value in the event-output div
+// 3. Add mouseover and mouseout event listeners to the hover area that change its background color
+//    (Use any colors you want)">// Your task:
+// 1. Add a click event listener to the "Click Me" button that displays "Button clicked!" in the event-output div
+// 2. Add an input event listener to the text field that displays the current text value in the event-output div
+// 3. Add mouseover and mouseout event listeners to the hover area that change its background color
+//    (Use any colors you want)</textarea>
+        </div>
+        
+        <div class="console-output" id="console-events"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-events', 'event-listeners-area', 'console-events')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-event-listeners')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('event-listeners-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-event-listeners" style="display: none;"><code>// 1. Click event listener
+const clickBtn = document.getElementById('click-btn');
+const eventOutput = document.getElementById('event-output');
+
+clickBtn.addEventListener('click', function() {
+  eventOutput.textContent = 'Button clicked!';
+  console.log('Button clicked');
+});
+
+// 2. Input event listener
+const inputField = document.getElementById('input-field');
+
+inputField.addEventListener('input', function(event) {
+  eventOutput.textContent = 'Current input: ' + event.target.value;
+  console.log('Input changed to: ' + event.target.value);
+});
+
+// 3. Mouse events for hover area
+const hoverArea = document.getElementById('hover-area');
+const originalColor = hoverArea.style.backgroundColor;
+
+hoverArea.addEventListener('mouseover', function() {
+  hoverArea.style.backgroundColor = '#3498db';
+  console.log('Mouse over hover area');
+});
+
+hoverArea.addEventListener('mouseout', function() {
+  hoverArea.style.backgroundColor = '#3e3e42';
+  console.log('Mouse left hover area');
+});</code></pre>
+      </div>
+    </div>
+    
+    <!-- Block 3: DOM Traversal -->
+    <div class="method">
+      <h3>DOM Traversal</h3>
+      <p class="hint">// Navigate through the DOM tree using parent, child, and sibling relationships</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="dom-traversal-area">
+          <div id="parent">
+            <h4>Parent Element</h4>
+            <div id="child1" class="child">Child 1</div>
+            <div id="child2" class="child">Child 2</div>
+            <div id="child3" class="child">Child 3
+              <div id="grandchild" class="grandchild">Grandchild</div>
+            </div>
+          </div>
+          <div id="traversal-output" style="border: 1px solid #555; padding: 10px; margin-top: 10px;">
+            Traversal results will appear here
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-traversal" placeholder="// Your task:
+// 1. Find and display the text content of the parent element
+// 2. Find all child elements of the parent and highlight the second child in yellow
+// 3. Find the grandchild element by traversing from child3, and change its text to &quot;Modified Grandchild&quot;
+// 4. Display the count of all child elements in the traversal-output div">// Your task:
+// 1. Find and display the text content of the parent element
+// 2. Find all child elements of the parent and highlight the second child in yellow
+// 3. Find the grandchild element by traversing from child3, and change its text to "Modified Grandchild"
+// 4. Display the count of all child elements in the traversal-output div</textarea>
+        </div>
+        
+        <div class="console-output" id="console-traversal"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-traversal', 'dom-traversal-area', 'console-traversal')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-dom-traversal')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('dom-traversal-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-dom-traversal" style="display: none;"><code>// Get reference to the output div
+const traversalOutput = document.getElementById('traversal-output');
+let outputText = '';
+
+// 1. Find and display parent element text
+const parentElement = document.getElementById('parent');
+const parentHeading = parentElement.querySelector('h4');
+outputText += 'Parent Text: ' + parentHeading.textContent + '<br>';
+console.log('Parent text:', parentHeading.textContent);
+
+// 2. Find all children and highlight the second child
+const childElements = parentElement.querySelectorAll('.child');
+childElements[1].style.backgroundColor = 'yellow';
+console.log('Highlighted second child');
+
+// 3. Navigate to the grandchild and modify its text
+const child3 = document.getElementById('child3');
+const grandchild = child3.querySelector('.grandchild');
+grandchild.textContent = 'Modified Grandchild';
+console.log('Modified grandchild text');
+
+// 4. Count and display the number of child elements
+outputText += 'Number of child elements: ' + childElements.length;
+traversalOutput.innerHTML = outputText;
+console.log('Child count:', childElements.length);</code></pre>
+      </div>
+    </div>
+    
+    <!-- Block 4: Creating and Removing Elements -->
+    <div class="method">
+      <h3>Creating and Removing Elements</h3>
+      <p class="hint">// Dynamically create, insert, and remove DOM elements</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="dom-create-area">
+          <div>
+            <input type="text" id="new-item-text" placeholder="Enter item text">
+            <button id="add-btn">Add Item</button>
+            <button id="remove-btn">Remove Last Item</button>
+          </div>
+          <div id="controls" style="margin-top: 10px;">
+            <button id="clear-all">Clear All</button>
+          </div>
+          <ul id="dynamic-list">
+            <li class="list-item">Initial Item 1</li>
+            <li class="list-item">Initial Item 2</li>
+          </ul>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-create" placeholder="// Your task:
+// 1. Make the &quot;Add Item&quot; button functional - it should add a new list item with text from the input field
+// 2. Make the &quot;Remove Last Item&quot; button functional - it should remove the last item from the list
+// 3. Make the &quot;Clear All&quot; button functional - it should remove all items from the list
+// 4. Add a feature where double-clicking on a list item removes that specific item">// Your task:
+// 1. Make the "Add Item" button functional - it should add a new list item with text from the input field
+// 2. Make the "Remove Last Item" button functional - it should remove the last item from the list
+// 3. Make the "Clear All" button functional - it should remove all items from the list
+// 4. Add a feature where double-clicking on a list item removes that specific item</textarea>
+        </div>
+        
+        <div class="console-output" id="console-create"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-create', 'dom-create-area', 'console-create')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-dom-create')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('dom-create-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-dom-create" style="display: none;"><code>// Get references to elements
+const newItemInput = document.getElementById('new-item-text');
+const addBtn = document.getElementById('add-btn');
+const removeBtn = document.getElementById('remove-btn');
+const clearAllBtn = document.getElementById('clear-all');
+const dynamicList = document.getElementById('dynamic-list');
+
+// 1. Add item functionality
+addBtn.addEventListener('click', function() {
+  // Get input value
+  const text = newItemInput.value.trim();
+  
+  // Validate input
+  if (text === '') {
+    console.log('Input is empty');
+    return;
+  }
+  
+  // Create new list item
+  const newItem = document.createElement('li');
+  newItem.textContent = text;
+  newItem.className = 'list-item';
+  
+  // Add double-click event listener to the new item
+  newItem.addEventListener('dblclick', function() {
+    this.remove();
+    console.log('Item removed by double-click');
+  });
+  
+  // Add to list
+  dynamicList.appendChild(newItem);
+  
+  // Clear input field
+  newItemInput.value = '';
+  console.log('Added new item:', text);
+});
+
+// 2. Remove last item functionality
+removeBtn.addEventListener('click', function() {
+  const items = dynamicList.querySelectorAll('li');
+  
+  if (items.length > 0) {
+    const lastItem = items[items.length - 1];
+    lastItem.remove();
+    console.log('Removed last item');
+  } else {
+    console.log('No items to remove');
+  }
+});
+
+// 3. Clear all functionality
+clearAllBtn.addEventListener('click', function() {
+  dynamicList.innerHTML = '';
+  console.log('Cleared all items');
+});
+
+// 4. Add double-click listeners to existing items
+const existingItems = dynamicList.querySelectorAll('li');
+existingItems.forEach(item => {
+  item.addEventListener('dblclick', function() {
+    this.remove();
+    console.log('Item removed by double-click');
+  });
+});</code></pre>
+      </div>
+    </div>
+    
+    <!-- Block 5: DOM Animation and Effects -->
+    <div class="method">
+      <h3>DOM Animation and Effects</h3>
+      <p class="hint">// Create animations and visual effects using JavaScript and DOM manipulation</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="dom-animation-area">
+          <div id="animation-controls">
+            <button id="start-animation">Start Animation</button>
+            <button id="stop-animation">Stop Animation</button>
+            <button id="toggle-visibility">Toggle Visibility</button>
+          </div>
+          <div id="animation-container" style="position: relative; height: 200px; border: 1px solid #555; margin-top: 15px; overflow: hidden;">
+            <div id="animated-box" style="position: absolute; left: 0; top: 50px; width: 50px; height: 50px; background-color: #e74c3c;"></div>
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>JavaScript Editor - Write your code here</span>
+          </div>
+          <textarea id="js-input-animation" placeholder="// Your task:
+// 1. Make the &quot;Start Animation&quot; button move the red box across the container from left to right
+// 2. Make the &quot;Stop Animation&quot; button stop the animation
+// 3. Make the &quot;Toggle Visibility&quot; button show/hide the box
+// 4. Add a feature that changes the box color during the animation">// Your task:
+// 1. Make the "Start Animation" button move the red box across the container from left to right
+// 2. Make the "Stop Animation" button stop the animation
+// 3. Make the "Toggle Visibility" button show/hide the box
+// 4. Add a feature that changes the box color during the animation</textarea>
+        </div>
+        
+        <div class="console-output" id="console-animation"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runJSCode('js-input-animation', 'dom-animation-area', 'console-animation')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('js-dom-animation')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('dom-animation-area')">Reset Exercise</button>
+        </div>
+        <pre id="js-dom-animation" style="display: none;"><code>// Get references to elements
+const startButton = document.getElementById('start-animation');
+const stopButton = document.getElementById('stop-animation');
+const toggleButton = document.getElementById('toggle-visibility');
+const animatedBox = document.getElementById('animated-box');
+const container = document.getElementById('animation-container');
+
+// Global variables
+let animationId;
+let posX = 0;
+let direction = 1; // 1 for right, -1 for left
+const speed = 5;
+const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6'];
+let colorIndex = 0;
+
+// 1. Animation function
+function animateBox() {
+  // Update position
+  posX += speed * direction;
+  
+  // Check boundaries and change direction if needed
+  const containerWidth = container.clientWidth;
+  const boxWidth = animatedBox.clientWidth;
+  
+  if (posX >= containerWidth - boxWidth) {
+    direction = -1; // Change direction to left
+    changeColor();
+  } else if (posX <= 0) {
+    direction = 1; // Change direction to right
+    changeColor();
+  }
+  
+  // Apply position
+  animatedBox.style.left = posX + 'px';
+  
+  // Continue animation
+  animationId = requestAnimationFrame(animateBox);
+}
+
+// Function to change color
+function changeColor() {
+  colorIndex = (colorIndex + 1) % colors.length;
+  animatedBox.style.backgroundColor = colors[colorIndex];
+  console.log('Changed color to:', colors[colorIndex]);
+}
+
+// 2. Start animation button
+startButton.addEventListener('click', function() {
+  // Cancel any existing animation first
+  if (animationId) {
+    cancelAnimationFrame(animationId);
+  }
+  
+  // Start the animation
+  animationId = requestAnimationFrame(animateBox);
+  console.log('Animation started');
+});
+
+// 3. Stop animation button
+stopButton.addEventListener('click', function() {
+  cancelAnimationFrame(animationId);
+  animationId = null;
+  console.log('Animation stopped');
+});
+
+// 4. Toggle visibility button
+toggleButton.addEventListener('click', function() {
+  if (animatedBox.style.display === 'none') {
+    animatedBox.style.display = 'block';
+    console.log('Box is now visible');
+  } else {
+    animatedBox.style.display = 'none';
+    console.log('Box is now hidden');
+  }
+});</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Custom console logger
+    function createCustomConsole(consoleElementId) {
+      const consoleElement = document.getElementById(consoleElementId);
+      
+      return {
+        log: function(...args) {
+          const message = args.map(arg => {
+            if (typeof arg === 'object') {
+              return JSON.stringify(arg);
+            }
+            return arg;
+          }).join(' ');
+          
+          const logEntry = document.createElement('div');
+          logEntry.textContent = '> ' + message;
+          consoleElement.appendChild(logEntry);
+          consoleElement.scrollTop = consoleElement.scrollHeight;
+        },
+        clear: function() {
+          consoleElement.innerHTML = '';
+        }
+      };
+    }
+    
+    // Main function to run JavaScript code
+    function runJSCode(inputId, targetAreaId, consoleId) {
+      const code = document.getElementById(inputId).value;
+      const originalConsole = console;
+      const customConsole = createCustomConsole(consoleId);
+      
+      try {
+        // Clear previous console output
+        customConsole.clear();
+        
+        // Replace console.log with our custom logger
+        console = customConsole;
+        
+        // Create a function that includes the user's code
+        const executeCode = new Function(`
+          const targetArea = document.getElementById('${targetAreaId}');
+          ${code}
+        `);
+        
+        // Execute the code
+        executeCode();
+        
+      } catch (error) {
+        // Log any errors
+        customConsole.log('Error: ' + error.message);
+      } finally {
+        // Restore the original console
+        console = originalConsole;
+      }
+    }
+    
+    function toggleSolution(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      if (solutionElement.style.display === 'block') {
+        solutionElement.style.display = 'none';
+      } else {
+        solutionElement.style.display = 'block';
+      }
+    }
+    
+    // Reset the exercise area to its initial state
+    function resetExercise(areaId) {
+      location.reload();
+    }
+
+    // Run this after the page loads to make sure text areas are properly setup
+    document.addEventListener('DOMContentLoaded', function() {
+      // Focus on first text area to show user it's clickable
+      setTimeout(function() {
+        const firstTextarea = document.querySelector('.code-editor textarea');
+        if (firstTextarea) {
+          firstTextarea.focus();
+        }
+      }, 1000);
+    });
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

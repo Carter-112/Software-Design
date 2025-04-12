@@ -11,6 +11,7 @@
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
   <script src="external-link-handler.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body>
   <header>
@@ -19,15 +20,29 @@
         <button class="dropbtn">Navigation ▼</button>
         <div class="dropdown-content">
           <a href="index.html">Home</a>
-          <a href="singly.html">Singly</a>
-          <a href="doubly.html">Doubly</a>
+
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
           <a href="arraylist.html">ArrayList</a>
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
-          <a href="bst.html">BST</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="lazybst.html">Lazy Binary Search Tree</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
-          <a href="random.html">Random</a>
+
+          <!-- Language Basics -->
+          <div class="nav-category">Language Fundamentals</div>
           <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+
+          <!-- Other -->
+          <div class="nav-category">Practice</div>
+          <a href="random.html">Random Practice</a>
         </div>
       </div>
     </div>
@@ -37,7 +52,7 @@
   <div id="content">
     <h1>Java Basics Learning Guide</h1>
     <p>This page provides a comprehensive introduction to Java programming with heavily commented examples.</p>
-    
+
     <div class="section-navigation">
       <button onclick="toggleSection('hello-world')">Hello World Program</button>
       <button onclick="toggleSection('data-types')">Variables & Data Types</button>
@@ -45,12 +60,12 @@
       <button onclick="toggleSection('oop-basics')">OOP Basics</button>
       <button onclick="toggleSection('collections')">Collections & Generics</button>
     </div>
-    
+
     <!-- Section placeholders - will be filled with content later -->
     <div id="hello-world" class="java-section">
       <h2>Hello World Program</h2>
       <p>The "Hello World" program is traditionally the first program you write when learning any programming language. Let's explore a well-commented Java Hello World program:</p>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="20" readonly>
 // HelloWorld.java
@@ -62,7 +77,7 @@
  * This is a multi-line comment used for documentation
  */
 public class HelloWorld {
-    
+
     /**
      * The main method is the entry point for Java applications
      * It must have exactly this signature to be recognized as the starting point
@@ -70,20 +85,20 @@ public class HelloWorld {
      */
     public static void main(String[] args) {
         // This is a single-line comment
-        
+
         /* This is another form of multi-line comment
            that can span multiple lines */
-        
+
         // System.out.println prints text to the console and adds a new line
         System.out.println("Hello, World!"); // Outputs: Hello, World!
-        
+
         // We can also use System.out.print which doesn't add a new line
         System.out.print("Welcome to ");
         System.out.println("Java Programming!");
     }
 }</textarea>
       </div>
-      
+
       <!-- Practice section -->
       <div class="practice-container">
         <h3>Hello World Program</h3>
@@ -92,7 +107,7 @@ public class HelloWorld {
         <button onclick="checkAnswer('hello-practice')">Check Answer</button>
         <div id="hello-practice-feedback" class="feedback"></div>
       </div>
-      
+
       <h3>Key Concepts Explained</h3>
       <ul>
         <li><strong>public class HelloWorld</strong> - In Java, code must be inside a class. The class name should match the filename (HelloWorld.java).</li>
@@ -100,7 +115,7 @@ public class HelloWorld {
         <li><strong>System.out.println()</strong> - Used to output text to the console with a newline at the end.</li>
         <li><strong>Comments</strong> - Java supports single-line (//) and multi-line (/* */) comments, as well as documentation comments (/** */).</li>
       </ul>
-      
+
       <h3>How to Run This Program</h3>
       <ol>
         <li>Save the code in a file called <code>HelloWorld.java</code></li>
@@ -109,11 +124,11 @@ public class HelloWorld {
         <li>Run the program with: <code>java HelloWorld</code></li>
       </ol>
     </div>
-    
+
     <div id="data-types" class="java-section" style="display: none;">
       <h2>Variables & Data Types</h2>
       <p>Understanding data types and variables is essential for programming in Java. Java is statically typed, meaning you must declare a variable's type before using it.</p>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="28" readonly>
 // BasicDataTypes.java
@@ -124,30 +139,30 @@ public class HelloWorld {
  * with different data types in Java
  */
 public class BasicDataTypes {
-    
+
     public static void main(String[] args) {
         // Primitive data types in Java:
-        
+
         // Integer types:
         byte byteVar = 127;                // 8-bit, range: -128 to 127
         short shortVar = 32767;            // 16-bit, range: -32,768 to 32,767
         int intVar = 2147483647;           // 32-bit, range: -2^31 to 2^31-1 (most commonly used)
         long longVar = 9223372036854775807L; // 64-bit, note the 'L' suffix for long literals
-        
+
         // Floating-point types:
         float floatVar = 3.14159f;         // 32-bit, note the 'f' suffix for float literals
         double doubleVar = 3.141592653589793; // 64-bit, more precision (default for decimal values)
-        
+
         // Character type:
         char charVar = 'A';                // 16-bit Unicode character
-        
+
         // Boolean type:
         boolean boolVar = true;            // true or false
-        
+
         // String is not a primitive type but a class
         // However, it's so commonly used that it gets special treatment
         String stringVar = "Hello Java!";  // String is a reference type
-        
+
         // Printing all variables
         System.out.println("byte value: " + byteVar);
         System.out.println("short value: " + shortVar);
@@ -161,12 +176,12 @@ public class BasicDataTypes {
     }
 }</textarea>
       </div>
-      
+
       <!-- Practice section -->
       <div class="practice-container">
         <h3>Variables and Data Types</h3>
         <p>Java is a strongly-typed language, meaning every variable must be declared with a specific data type.</p>
-        
+
         <h4>Core Data Types</h4>
         <ul>
           <li><strong>int</strong>: 32-bit integer</li>
@@ -177,21 +192,21 @@ public class BasicDataTypes {
           <li><strong>char</strong>: single character</li>
           <li><strong>String</strong>: text (technically a class, not a primitive)</li>
         </ul>
-        
+
         <h4>Variable Declaration Practice</h4>
         <p>Declare variables of different types with appropriate values:</p>
         <textarea id="variables-practice" class="practice-area" rows="10" placeholder="Write your code here..."></textarea>
         <button onclick="checkAnswer('variables-practice')">Check Answer</button>
         <div id="variables-practice-feedback" class="feedback"></div>
       </div>
-      
+
       <h3>Primitive Data Types vs Reference Types</h3>
       <p>Java has two categories of data types:</p>
       <ul>
         <li><strong>Primitive Types</strong> - These are basic types built into Java: byte, short, int, long, float, double, char, and boolean.</li>
         <li><strong>Reference Types</strong> - These are objects created from classes, like String, Arrays, and other custom classes.</li>
       </ul>
-      
+
       <h3>Variable Declaration and Initialization</h3>
       <p>In Java, you can:</p>
       <ul>
@@ -199,7 +214,7 @@ public class BasicDataTypes {
         <li>Initialize it later: <code>number = 42;</code></li>
         <li>Or do both at once: <code>int number = 42;</code></li>
       </ul>
-      
+
       <h3>Type Conversion</h3>
       <p>Java supports two types of type conversion:</p>
       <ul>
@@ -207,11 +222,11 @@ public class BasicDataTypes {
         <li><strong>Explicit conversion</strong> (narrowing): <code>long l = 100L; int i = (int) l;</code> - Requires a cast operator when converting to a smaller type.</li>
       </ul>
     </div>
-    
+
     <div id="control-flow" class="java-section" style="display: none;">
       <h2>Control Flow & Loops</h2>
       <p>Java offers various control flow structures to control the execution order of your code. This example focuses on loops, particularly the for-each loop and iterators.</p>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="40" readonly>
 // LoopsAndIterators.java
@@ -228,28 +243,28 @@ import java.util.List;      // Importing the List interface from java.util packa
  * with special focus on for-each loops and iterators
  */
 public class LoopsAndIterators {
-    
+
     public static void main(String[] args) {
         // Creating a List to demonstrate loops and iterators
         // ArrayList is a class that implements the List interface
         List<String> fruits = new ArrayList<>();
-        
+
         // Adding elements to our list
         fruits.add("Apple");     // Adds "Apple" to the list
         fruits.add("Banana");    // Adds "Banana" to the list
         fruits.add("Cherry");    // Adds "Cherry" to the list
         fruits.add("Durian");    // Adds "Durian" to the list
         fruits.add("Elderberry"); // Adds "Elderberry" to the list
-        
+
         System.out.println("List of fruits: " + fruits);
-        
+
         // 1. Standard for loop
         System.out.println("\n1. Using standard for loop:");
         for (int i = 0; i < fruits.size(); i++) {
             // This loop uses an index variable i to access elements
             System.out.println("Fruit at index " + i + ": " + fruits.get(i));
         }
-        
+
         // 2. For-each loop (enhanced for loop)
         System.out.println("\n2. Using for-each loop:");
         // Syntax: for (elementType variable : collection)
@@ -258,19 +273,19 @@ public class LoopsAndIterators {
             // It's more concise and less prone to errors
             System.out.println("Current fruit: " + fruit);
         }
-        
+
         // 3. Using Iterator explicitly
         System.out.println("\n3. Using Iterator explicitly:");
         // Iterator is an interface used to step through a collection
         Iterator<String> iterator = fruits.iterator();
-        
+
         // The iterator has two main methods:
         // - hasNext(): returns true if there are more elements
         // - next(): returns the next element and advances the iterator
         while (iterator.hasNext()) {
             String fruit = iterator.next();
             System.out.println("Current fruit (via iterator): " + fruit);
-            
+
             // Iterators also allow you to safely remove elements during iteration
             if (fruit.equals("Durian")) {
                 // Removing an element using the iterator (safe)
@@ -278,18 +293,18 @@ public class LoopsAndIterators {
                 System.out.println("  (Removed Durian because of its smell)");
             }
         }
-        
+
         // Verify that Durian was removed
         System.out.println("\nUpdated list after removal: " + fruits);
     }
 }</textarea>
       </div>
-      
+
       <!-- Practice section -->
       <div class="practice-container">
         <h3>Control Flow</h3>
         <p>Java provides various statements for controlling the flow of execution in a program.</p>
-        
+
         <h4>Conditional Statements</h4>
         <pre><code>// If statement
 if (condition) {
@@ -311,14 +326,14 @@ switch (variable) {
     default:
         // default code
 }</code></pre>
-        
+
         <h4>Loops Practice</h4>
         <p>Write examples of for, while, do-while, and enhanced for loops:</p>
         <textarea id="loops-practice" class="practice-area" rows="10" placeholder="Write your code here..."></textarea>
         <button onclick="checkAnswer('loops-practice')">Check Answer</button>
         <div id="loops-practice-feedback" class="feedback"></div>
       </div>
-      
+
       <h3>Other Control Flow Structures</h3>
       <h4>For-Each Loop vs Iterator: When to Use Which</h4>
       <ul>
@@ -326,11 +341,11 @@ switch (variable) {
         <li><strong>Iterator</strong>: Use when you need to modify the collection during iteration (like removing elements).</li>
       </ul>
     </div>
-    
+
     <div id="oop-basics" class="java-section" style="display: none;">
       <h2>Object-Oriented Programming Basics</h2>
       <p>Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects" which can contain data and code. Java is fundamentally an object-oriented language, and understanding OOP concepts is essential.</p>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="45" readonly>
 // OOPBasics.java
@@ -346,58 +361,58 @@ switch (variable) {
 
 // The main class that contains the program entry point
 public class OOPBasics {
-    
+
     public static void main(String[] args) {
         // Creating objects (instances of classes)
         System.out.println("Creating and using objects:");
-        
+
         // Creating a Person object
         Person person = new Person("John", 25);
         person.introduce();  // Calling a method on the object
-        
+
         // Person's age is private (encapsulation), so we use methods to interact with it
         person.celebrateBirthday();
         System.out.println(person.getName() + " is now " + person.getAge() + " years old.");
-        
+
         // Creating a Student object (Student inherits from Person)
         Student student = new Student("Alice", 20, "Computer Science");
         student.introduce();  // This calls the overridden method (polymorphism)
         student.study();      // This is a method specific to Student
-        
+
         // Polymorphism: treating a Student as a Person
         Person polymorphicPerson = new Student("Bob", 22, "Physics");
         polymorphicPerson.introduce();  // Calls Student's version of introduce()
-        
+
         // We need to cast to access Student-specific methods
         if (polymorphicPerson instanceof Student) {
             Student castedStudent = (Student) polymorphicPerson;
             castedStudent.study();
         }
-        
+
         // Using interfaces
         System.out.println("\nWorking with interfaces:");
-        
+
         // Creating objects that implement the Payable interface
         Employee employee = new Employee("Charlie", 30, "Software Engineer", 75000);
         Contractor contractor = new Contractor("Diana", 35, "Graphic Designer", 50, 20);
-        
+
         // We can treat both as Payable
         Payable[] payables = new Payable[2];
         payables[0] = employee;
         payables[1] = contractor;
-        
+
         // Process payment for each, regardless of specific type
         for (Payable payable : payables) {
             System.out.println(payable.getPaymentDetails());
         }
-        
+
         // Abstract classes
         System.out.println("\nUsing abstract classes:");
-        
+
         Shape[] shapes = new Shape[2];
         shapes[0] = new Circle("Red", 5.0);
         shapes[1] = new Rectangle("Blue", 4.0, 6.0);
-        
+
         for (Shape shape : shapes) {
             System.out.println(shape.getDescription());
             System.out.println("Area: " + shape.calculateArea());
@@ -413,27 +428,27 @@ class Person {
     // Private fields - encapsulation
     private String name;  // Private means these can only be accessed within this class
     private int age;
-    
+
     // Constructor - special method that runs when an object is created
     public Person(String name, int age) {
         this.name = name;  // "this" refers to the current object
         this.age = age;
     }
-    
+
     // Getter methods - allow controlled access to private fields
     public String getName() {
         return name;
     }
-    
+
     public int getAge() {
         return age;
     }
-    
+
     // Other methods
     public void introduce() {
         System.out.println("Hi, I'm " + name + " and I'm " + age + " years old.");
     }
-    
+
     public void celebrateBirthday() {
         age++;  // Increment age
         System.out.println(name + " celebrates their birthday!");
@@ -447,32 +462,32 @@ class Person {
 class Student extends Person {
     // Additional field for Student
     private String major;
-    
+
     // Constructor calls the parent constructor using super()
     public Student(String name, int age, String major) {
         super(name, age);  // Call parent constructor
         this.major = major;
     }
-    
+
     // Getter for the new field
     public String getMajor() {
         return major;
     }
-    
+
     // Method specific to Student
     public void study() {
         System.out.println(getName() + " is studying " + major + ".");
     }
-    
+
     // Override the introduce method - this demonstrates polymorphism
     @Override  // This annotation indicates we're deliberately overriding a parent method
     public void introduce() {
-        System.out.println("Hi, I'm " + getName() + ", a " + getAge() + 
+        System.out.println("Hi, I'm " + getName() + ", a " + getAge() +
                            "-year-old student majoring in " + major + ".");
     }
 }</textarea>
       </div>
-      
+
       <!-- Practice section -->
       <div class="practice-container">
         <h3>Class Practice</h3>
@@ -481,10 +496,10 @@ class Student extends Person {
         <button onclick="checkAnswer('oop-practice')">Check Answer</button>
         <div id="oop-practice-feedback" class="feedback"></div>
       </div>
-      
+
       <h3>Interfaces in Java</h3>
       <p>Interfaces define a contract that implementing classes must fulfill. They allow you to achieve polymorphism without inheritance.</p>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="25" readonly>
 /**
@@ -503,31 +518,31 @@ interface Payable {
 class Employee extends Person implements Payable {
     private String jobTitle;
     private double annualSalary;
-    
+
     public Employee(String name, int age, String jobTitle, double annualSalary) {
         super(name, age);
         this.jobTitle = jobTitle;
         this.annualSalary = annualSalary;
     }
-    
+
     public String getJobTitle() {
         return jobTitle;
     }
-    
+
     // Implementing methods required by the Payable interface
     @Override
     public double calculatePay() {
         return annualSalary / 12; // Monthly pay
     }
-    
+
     @Override
     public String getPaymentDetails() {
-        return getName() + " (" + jobTitle + ") - Monthly salary: $" + 
+        return getName() + " (" + jobTitle + ") - Monthly salary: $" +
                String.format("%.2f", calculatePay());
     }
 }</textarea>
       </div>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="25" readonly>
 /**
@@ -537,33 +552,33 @@ class Contractor extends Person implements Payable {
     private String specialty;
     private double hourlyRate;
     private int hoursWorked;
-    
-    public Contractor(String name, int age, String specialty, 
+
+    public Contractor(String name, int age, String specialty,
                      double hourlyRate, int hoursWorked) {
         super(name, age);
         this.specialty = specialty;
         this.hourlyRate = hourlyRate;
         this.hoursWorked = hoursWorked;
     }
-    
+
     // Implementing methods required by the Payable interface
     @Override
     public double calculatePay() {
         return hourlyRate * hoursWorked;
     }
-    
+
     @Override
     public String getPaymentDetails() {
-        return getName() + " (" + specialty + " contractor) - Payment: $" + 
-               String.format("%.2f", calculatePay()) + 
+        return getName() + " (" + specialty + " contractor) - Payment: $" +
+               String.format("%.2f", calculatePay()) +
                " (" + hoursWorked + " hours @ $" + hourlyRate + "/hr)";
     }
 }</textarea>
       </div>
-      
+
       <h3>Abstract Classes in Java</h3>
       <p>Abstract classes combine features of interfaces and regular classes. They can have both abstract methods (like interfaces) and concrete implementations.</p>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="30" readonly>
 /**
@@ -571,18 +586,18 @@ class Contractor extends Person implements Payable {
  */
 abstract class Shape {
     private String color;
-    
+
     public Shape(String color) {
         this.color = color;
     }
-    
+
     public String getColor() {
         return color;
     }
-    
+
     // Abstract method - must be implemented by non-abstract subclasses
     public abstract double calculateArea();
-    
+
     // Concrete method - already implemented
     public String getDescription() {
         return "A " + color + " " + this.getClass().getSimpleName();
@@ -594,17 +609,17 @@ abstract class Shape {
  */
 class Circle extends Shape {
     private double radius;
-    
+
     public Circle(String color, double radius) {
         super(color);
         this.radius = radius;
     }
-    
+
     @Override
     public double calculateArea() {
         return Math.PI * radius * radius;
     }
-    
+
     @Override
     public String getDescription() {
         return super.getDescription() + " with radius " + radius;
@@ -617,25 +632,25 @@ class Circle extends Shape {
 class Rectangle extends Shape {
     private double width;
     private double height;
-    
+
     public Rectangle(String color, double width, double height) {
         super(color);
         this.width = width;
         this.height = height;
     }
-    
+
     @Override
     public double calculateArea() {
         return width * height;
     }
-    
+
     @Override
     public String getDescription() {
         return super.getDescription() + " with dimensions " + width + "x" + height;
     }
 }</textarea>
       </div>
-      
+
       <h3>Key OOP Concepts in Java</h3>
       <ul>
         <li><strong>Classes and Objects</strong>: Classes are blueprints for objects. Objects are instances of classes created at runtime.</li>
@@ -645,7 +660,7 @@ class Rectangle extends Shape {
         <li><strong>Interfaces</strong>: Contracts that classes must fulfill. Used to implement polymorphism without inheritance.</li>
         <li><strong>Abstract Classes</strong>: Classes that cannot be instantiated and may contain both abstract and concrete methods.</li>
       </ul>
-      
+
       <h3>Best Practices for OOP in Java</h3>
       <ul>
         <li>Follow the <strong>single responsibility principle</strong>: each class should have only one reason to change.</li>
@@ -656,11 +671,11 @@ class Rectangle extends Shape {
         <li>Use <strong>abstract classes</strong> when you want to share code among closely related classes.</li>
       </ul>
     </div>
-    
+
     <div id="collections" class="java-section" style="display: none;">
       <h2>Collections & Generics</h2>
       <p>The Java Collections Framework provides a unified architecture for representing and manipulating collections of objects. Generics enable type-safe collections, eliminating the need for type casting and preventing runtime errors.</p>
-      
+
       <h3>Overview of Java Collections Framework</h3>
       <p>The Collections Framework is organized into interfaces, implementations, and algorithms:</p>
       <ul>
@@ -668,7 +683,7 @@ class Rectangle extends Shape {
         <li><strong>Implementations</strong>: Concrete classes that implement collection interfaces (ArrayList, HashSet, HashMap, etc.)</li>
         <li><strong>Algorithms</strong>: Static methods that perform useful operations on collections (sorting, searching, etc.)</li>
       </ul>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="35" readonly>
 // CollectionsExample.java
@@ -681,72 +696,72 @@ import java.util.*;
  * and common operations performed on them
  */
 public class CollectionsExample {
-    
+
     public static void main(String[] args) {
         // ===== LISTS =====
         // Lists maintain insertion order and allow duplicates
         System.out.println("===== LISTS =====");
-        
+
         // ArrayList: Dynamic array implementation - fast random access, slower insertions/deletions
         List<String> arrayList = new ArrayList<>();
         arrayList.add("Apple");
         arrayList.add("Banana");
         arrayList.add("Cherry");
         arrayList.add("Apple");  // Duplicates allowed
-        
+
         System.out.println("ArrayList: " + arrayList);
         System.out.println("Element at index 1: " + arrayList.get(1));
         System.out.println("Contains 'Cherry'? " + arrayList.contains("Cherry"));
         System.out.println("Size: " + arrayList.size());
-        
+
         // LinkedList: Doubly-linked list implementation - fast insertions/deletions, slower random access
         List<String> linkedList = new LinkedList<>();
         linkedList.add("Dog");
         linkedList.add("Elephant");
         linkedList.add("Fox");
-        
+
         System.out.println("\nLinkedList: " + linkedList);
-        
+
         // Add at specific position
         linkedList.add(1, "Dolphin");
         System.out.println("After insertion: " + linkedList);
-        
+
         // Remove an element
         linkedList.remove("Elephant");
         System.out.println("After removal: " + linkedList);
-        
+
         // ===== SETS =====
         // Sets do not allow duplicates
         System.out.println("\n===== SETS =====");
-        
+
         // HashSet: Hash table implementation - very fast operations, but unordered
         Set<Integer> hashSet = new HashSet<>();
         hashSet.add(10);
         hashSet.add(20);
         hashSet.add(30);
         hashSet.add(10);  // Duplicate not added
-        
+
         System.out.println("HashSet: " + hashSet);
-        
+
         // TreeSet: Red-black tree implementation - ordered, but slower than HashSet
         Set<Integer> treeSet = new TreeSet<>();
         treeSet.add(30);
         treeSet.add(10);
         treeSet.add(20);
-        
+
         System.out.println("TreeSet (ordered): " + treeSet);
-        
+
         // LinkedHashSet: Hash table and linked list - ordered by insertion, fast operations
         Set<Integer> linkedHashSet = new LinkedHashSet<>();
         linkedHashSet.add(30);
         linkedHashSet.add(10);
         linkedHashSet.add(20);
-        
+
         System.out.println("LinkedHashSet (preserves insertion order): " + linkedHashSet);
     }
 }</textarea>
       </div>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="40" readonly>
 // MapExample.java
@@ -755,64 +770,64 @@ public class CollectionsExample {
 import java.util.*;
 
 public class MapExample {
-    
+
     public static void main(String[] args) {
         // ===== MAPS =====
         // Maps store key-value pairs and keys must be unique
         System.out.println("===== MAPS =====");
-        
+
         // HashMap: Hash table implementation - very fast operations, unordered
         Map<String, Integer> hashMap = new HashMap<>();
         hashMap.put("Apple", 10);
         hashMap.put("Banana", 20);
         hashMap.put("Cherry", 30);
         hashMap.put("Apple", 15);  // Overwrites previous value for "Apple"
-        
+
         System.out.println("HashMap: " + hashMap);
         System.out.println("Value for 'Banana': " + hashMap.get("Banana"));
         System.out.println("Contains key 'Durian'? " + hashMap.containsKey("Durian"));
         System.out.println("Contains value 15? " + hashMap.containsValue(15));
-        
+
         // TreeMap: Red-black tree implementation - keys are ordered
         Map<String, Integer> treeMap = new TreeMap<>();
         treeMap.put("Zebra", 100);
         treeMap.put("Ant", 5);
         treeMap.put("Monkey", 50);
-        
+
         System.out.println("\nTreeMap (ordered by keys): " + treeMap);
-        
+
         // LinkedHashMap: Hash table and linked list - predictable iteration order
         Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
         linkedHashMap.put("First", 1);
         linkedHashMap.put("Second", 2);
         linkedHashMap.put("Third", 3);
-        
+
         System.out.println("\nLinkedHashMap (preserves insertion order): " + linkedHashMap);
-        
+
         // Iterating through a Map
         System.out.println("\nIterating through a Map:");
-        
+
         // Using entrySet() to get key-value pairs
         for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
             System.out.println(entry.getKey() + " => " + entry.getValue());
         }
-        
+
         // Using keySet() to get keys, then looking up values
         System.out.println("\nUsing keySet():");
         for (String key : hashMap.keySet()) {
             System.out.println(key + " => " + hashMap.get(key));
         }
-        
+
         // Java 8+ forEach method with lambda
         System.out.println("\nUsing forEach with lambda:");
         hashMap.forEach((key, value) -> System.out.println(key + " => " + value));
     }
 }</textarea>
       </div>
-      
+
       <h3>Generics in Java</h3>
       <p>Generics enable classes, interfaces, and methods to operate on objects of various types while providing compile-time type safety. This eliminates the need for casting and helps catch type errors at compile time rather than runtime.</p>
-      
+
       <div class="code-container">
         <textarea class="code-area" rows="40" readonly>
 // GenericsExample.java
@@ -823,77 +838,77 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GenericsExample {
-    
+
     public static void main(String[] args) {
         // Generic class usage
         System.out.println("===== GENERIC CLASS =====");
-        
+
         // Create a Box that holds an Integer
         Box<Integer> intBox = new Box<>(42);
         System.out.println("Integer box contains: " + intBox.get());
-        
+
         // Create a Box that holds a String
         Box<String> stringBox = new Box<>("Hello Generics!");
         System.out.println("String box contains: " + stringBox.get());
-        
+
         // Generic method usage
         System.out.println("\n===== GENERIC METHODS =====");
-        
+
         // Create arrays of different types
         Integer[] intArray = {1, 2, 3, 4, 5};
         String[] stringArray = {"A", "B", "C", "D"};
-        
+
         // Call the generic method with different types
         printArray(intArray);
         printArray(stringArray);
-        
+
         // Type bounds
         System.out.println("\n===== TYPE BOUNDS =====");
-        
+
         List<Integer> numbers = Arrays.asList(5, 2, 8, 1, 9, 3);
         System.out.println("Maximum in " + numbers + ": " + findMax(numbers));
-        
+
         // Wildcards
         System.out.println("\n===== WILDCARDS =====");
-        
+
         List<Integer> intList = new ArrayList<>();
         intList.add(10);
         intList.add(20);
-        
+
         List<Double> doubleList = new ArrayList<>();
         doubleList.add(10.5);
         doubleList.add(20.5);
-        
+
         // Both Integer and Double are Number, so we can use wildcard
         System.out.println("Sum of intList: " + sumOfList(intList));
         System.out.println("Sum of doubleList: " + sumOfList(doubleList));
-        
+
         // We can add to a list using lower-bounded wildcard
         List<Number> numberList = new ArrayList<>();
         addNumbers(numberList);
         System.out.println("After adding numbers: " + numberList);
     }
-    
+
     /**
      * A generic class that can hold any type of object
      * @param <T> the type parameter representing the type to store
      */
     static class Box<T> {
         private T t; // T stands for "Type"
-        
+
         public Box(T t) {
             this.t = t;
         }
-        
+
         public T get() {
             return t;
         }
-        
+
         public void set(T t) {
             this.t = t;
         }
     }
-    
+
     /**
      * Generic method to print any type of array
      * @param <E> the type parameter for array elements
@@ -909,7 +924,7 @@ public class GenericsExample {
         }
         System.out.println("]");
     }
-    
+
     /**
      * Generic method with bounded type parameter
      * This method accepts only types that extend Comparable
@@ -921,17 +936,17 @@ public class GenericsExample {
         if (list.isEmpty()) {
             return null;
         }
-        
+
         T max = list.get(0);
         for (int i = 1; i < list.size(); i++) {
             if (list.get(i).compareTo(max) > 0) {
                 max = list.get(i);
             }
         }
-        
+
         return max;
     }
-    
+
     /**
      * Method using upper bounded wildcard
      * This method can accept List<Integer>, List<Double>, etc.
@@ -945,7 +960,7 @@ public class GenericsExample {
         }
         return sum;
     }
-    
+
     /**
      * Method using lower bounded wildcard
      * This method can add integers to any List<Integer>, List<Number>, or List<Object>
@@ -958,7 +973,7 @@ public class GenericsExample {
     }
 }</textarea>
       </div>
-      
+
       <h3>Common Collection Operations</h3>
       <div class="code-container">
         <textarea class="code-area" rows="35" readonly>
@@ -968,68 +983,68 @@ public class GenericsExample {
 import java.util.*;
 
 public class CollectionOperations {
-    
+
     public static void main(String[] args) {
         // Creating a list
         List<String> fruits = new ArrayList<>(Arrays.asList(
             "Apple", "Banana", "Cherry", "Date", "Elderberry"
         ));
-        
+
         System.out.println("Original list: " + fruits);
-        
+
         // Sorting a list (natural order)
         Collections.sort(fruits);
         System.out.println("Sorted list: " + fruits);
-        
+
         // Sorting with a custom Comparator (by length)
         Collections.sort(fruits, Comparator.comparingInt(String::length));
         System.out.println("Sorted by length: " + fruits);
-        
+
         // Reversing a list
         Collections.reverse(fruits);
         System.out.println("Reversed: " + fruits);
-        
+
         // Shuffling a list
         Collections.shuffle(fruits);
         System.out.println("Shuffled: " + fruits);
-        
+
         // Finding min and max
         String min = Collections.min(fruits);
         String max = Collections.max(fruits);
         System.out.println("Min (alphabetically): " + min);
         System.out.println("Max (alphabetically): " + max);
-        
+
         // Binary search (list must be sorted first)
         Collections.sort(fruits);
         int index = Collections.binarySearch(fruits, "Cherry");
         System.out.println("Sorted list: " + fruits);
         System.out.println("'Cherry' found at index: " + index);
-        
+
         // Converting between arrays and lists
         // Array to List
         String[] colorsArray = {"Red", "Green", "Blue"};
         List<String> colorsList = Arrays.asList(colorsArray);
         System.out.println("\nArray converted to list: " + colorsList);
-        
+
         // List to Array
         String[] backToArray = fruits.toArray(new String[0]);
         System.out.println("List converted to array: " + Arrays.toString(backToArray));
-        
+
         // Using Stream API (Java 8+)
         System.out.println("\n===== USING STREAM API =====");
-        
+
         // Filter elements
         List<String> longFruits = fruits.stream()
                                         .filter(f -> f.length() > 5)
                                         .toList(); // Java 16+
         System.out.println("Fruits with more than 5 letters: " + longFruits);
-        
+
         // Transform elements
         List<Integer> lengths = fruits.stream()
                                      .map(String::length)
                                      .toList();
         System.out.println("Lengths of fruit names: " + lengths);
-        
+
         // Statistics on numeric data
         OptionalInt maxLength = fruits.stream()
                                      .mapToInt(String::length)
@@ -1038,7 +1053,7 @@ public class CollectionOperations {
     }
 }</textarea>
       </div>
-      
+
       <h3>Choosing the Right Collection</h3>
       <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 15px;">
         <tr>
@@ -1118,7 +1133,7 @@ public class CollectionOperations {
           <td>Fast lookups with predictable iteration order</td>
         </tr>
       </table>
-      
+
       <h3>Key Points About Generics</h3>
       <ul>
         <li><strong>Type Safety</strong>: Generics allow for compile-time type checking, preventing ClassCastExceptions.</li>
@@ -1141,7 +1156,7 @@ public class CollectionOperations {
           </ul>
         </li>
       </ul>
-      
+
       <!-- Practice section -->
       <div class="practice-container">
         <h3>Collections Practice</h3>
@@ -1157,21 +1172,21 @@ public class CollectionOperations {
     // Toggle visibility of sections
     function toggleSection(sectionId) {
       const sections = document.querySelectorAll('.java-section');
-      
+
       // Hide all sections
       sections.forEach(section => {
         section.style.display = 'none';
       });
-      
+
       // Show the selected section
       document.getElementById(sectionId).style.display = 'block';
-      
+
       // Scroll to the section
       document.getElementById(sectionId).scrollIntoView({
         behavior: 'smooth'
       });
     }
-    
+
     // Initialize the page
     window.onload = function() {
       // Default to showing the first section
@@ -1183,10 +1198,10 @@ public class CollectionOperations {
       console.log("Checking answer for: " + practiceId);
       const textarea = document.getElementById(practiceId);
       const solutionId = practiceId + "-solution";
-      
+
       // Check if solution already exists and is visible
       let solution = document.getElementById(solutionId);
-      
+
       if (solution) {
         // If solution exists, toggle it
         if (solution.style.display === 'block') {
@@ -1198,10 +1213,10 @@ public class CollectionOperations {
           return;
         }
       }
-      
+
       // Get solution content based on practice ID
       let solutionContent = "";
-      
+
       switch(practiceId) {
         case 'hello-practice':
           solutionContent = `public class HelloWorld {
@@ -1247,20 +1262,20 @@ for (int num : numbers) {
           solutionContent = `public class Animal {
     private String name;
     private int age;
-    
+
     public Animal(String name, int age) {
         this.name = name;
         this.age = age;
     }
-    
+
     public void makeSound() {
         System.out.println("Some generic animal sound");
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public int getAge() {
         return age;
     }
@@ -1268,17 +1283,17 @@ for (int num : numbers) {
 
 public class Dog extends Animal {
     private String breed;
-    
+
     public Dog(String name, int age, String breed) {
         super(name, age);
         this.breed = breed;
     }
-    
+
     @Override
     public void makeSound() {
         System.out.println("Woof!");
     }
-    
+
     public String getBreed() {
         return breed;
     }
@@ -1294,27 +1309,27 @@ public class CollectionsExample {
         nameList.add("Alice");
         nameList.add("Bob");
         nameList.add("Charlie");
-        
+
         for (String name : nameList) {
             System.out.println(name);
         }
-        
+
         // HashMap example
         Map<String, Integer> ageMap = new HashMap<>();
         ageMap.put("Alice", 25);
         ageMap.put("Bob", 30);
         ageMap.put("Charlie", 35);
-        
+
         for (Map.Entry<String, Integer> entry : ageMap.entrySet()) {
             System.out.println(entry.getKey() + " is " + entry.getValue() + " years old");
         }
-        
+
         // HashSet example
         Set<String> uniqueNames = new HashSet<>();
         uniqueNames.add("Alice");
         uniqueNames.add("Bob");
         uniqueNames.add("Alice");  // This won't be added as it's a duplicate
-        
+
         System.out.println("Unique names: " + uniqueNames.size());
     }
 }`;
@@ -1322,14 +1337,14 @@ public class CollectionsExample {
         default:
           solutionContent = "No solution available for this practice.";
       }
-      
+
       // Create solution element with high z-index styling
       solution = document.createElement('div');
       solution.id = solutionId;
       solution.className = 'solution-container';
       solution.style.position = 'relative';
       solution.style.zIndex = '9999';
-      
+
       // Set HTML with site theme styling
       solution.innerHTML = `
         <div style="
@@ -1343,7 +1358,7 @@ public class CollectionsExample {
           z-index: 9999;
         ">
           <h3 style="
-            color: #ccc; 
+            color: #FF5349;
             margin-top: 0;
             margin-bottom: 10px;
             font-size: 18px;
@@ -1366,15 +1381,15 @@ public class CollectionsExample {
           ">${solutionContent}</pre>
         </div>
       `;
-      
+
       // Add solution element after the textarea
       textarea.parentNode.insertBefore(solution, textarea.nextSibling);
-      
+
       // Scroll to solution
       solution.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      
+
       console.log("Solution displayed for: " + practiceId);
     }
   </script>
 </body>
-</html> 
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Subqueries - SQL Topics</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+    }
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: 1px solid #3e3e42;
+      border-radius: 4px;
+      padding: 10px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      margin: 10px 0;
+    }
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: #252526;
+    }
+    th, td {
+      border: 1px solid #3e3e42;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #333333;
+      color: #ffcc00;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="java.html">Java</a>
+          <a href="python.html">Python</a>
+          <a href="sql.html">SQL</a>
+          <a href="webdev.html">Web Development</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>SQL Subqueries Practice</h1>
+
+    <p>Practice implementing different types of SQL subqueries. For these exercises, consider the following database tables:</p>
+
+    <div class="table-container">
+      <h3>Employees Table</h3>
+      <table>
+        <tr>
+          <th>employee_id</th>
+          <th>name</th>
+          <th>department_id</th>
+          <th>salary</th>
+          <th>manager_id</th>
+          <th>hire_date</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Alice Johnson</td>
+          <td>1</td>
+          <td>75000</td>
+          <td>5</td>
+          <td>2020-01-15</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Bob Smith</td>
+          <td>2</td>
+          <td>65000</td>
+          <td>6</td>
+          <td>2020-02-20</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Charlie Davis</td>
+          <td>1</td>
+          <td>70000</td>
+          <td>5</td>
+          <td>2020-03-10</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>David Wilson</td>
+          <td>3</td>
+          <td>80000</td>
+          <td>7</td>
+          <td>2019-11-05</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Eva Martinez</td>
+          <td>1</td>
+          <td>90000</td>
+          <td>NULL</td>
+          <td>2018-06-15</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Frank Thomas</td>
+          <td>2</td>
+          <td>95000</td>
+          <td>NULL</td>
+          <td>2018-05-10</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Grace Lee</td>
+          <td>3</td>
+          <td>92000</td>
+          <td>NULL</td>
+          <td>2018-08-22</td>
+        </tr>
+      </table>
+      
+      <h3>Departments Table</h3>
+      <table>
+        <tr>
+          <th>department_id</th>
+          <th>department_name</th>
+          <th>location</th>
+          <th>budget</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Engineering</td>
+          <td>New York</td>
+          <td>1000000</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Marketing</td>
+          <td>Los Angeles</td>
+          <td>800000</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Finance</td>
+          <td>Chicago</td>
+          <td>750000</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>HR</td>
+          <td>Boston</td>
+          <td>500000</td>
+        </tr>
+      </table>
+      
+      <h3>Projects Table</h3>
+      <table>
+        <tr>
+          <th>project_id</th>
+          <th>project_name</th>
+          <th>department_id</th>
+          <th>start_date</th>
+          <th>end_date</th>
+          <th>budget</th>
+        </tr>
+        <tr>
+          <td>101</td>
+          <td>Website Redesign</td>
+          <td>2</td>
+          <td>2022-01-15</td>
+          <td>2022-06-30</td>
+          <td>150000</td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>Database Migration</td>
+          <td>1</td>
+          <td>2022-02-10</td>
+          <td>2022-05-15</td>
+          <td>200000</td>
+        </tr>
+        <tr>
+          <td>103</td>
+          <td>Annual Audit</td>
+          <td>3</td>
+          <td>2022-03-01</td>
+          <td>2022-04-30</td>
+          <td>100000</td>
+        </tr>
+        <tr>
+          <td>104</td>
+          <td>Mobile App Development</td>
+          <td>1</td>
+          <td>2022-01-01</td>
+          <td>2022-12-31</td>
+          <td>300000</td>
+        </tr>
+      </table>
+      
+      <h3>Project_Assignments Table</h3>
+      <table>
+        <tr>
+          <th>assignment_id</th>
+          <th>project_id</th>
+          <th>employee_id</th>
+          <th>role</th>
+          <th>hours_allocated</th>
+        </tr>
+        <tr>
+          <td>1001</td>
+          <td>101</td>
+          <td>2</td>
+          <td>Lead</td>
+          <td>120</td>
+        </tr>
+        <tr>
+          <td>1002</td>
+          <td>101</td>
+          <td>6</td>
+          <td>Supervisor</td>
+          <td>80</td>
+        </tr>
+        <tr>
+          <td>1003</td>
+          <td>102</td>
+          <td>1</td>
+          <td>Developer</td>
+          <td>150</td>
+        </tr>
+        <tr>
+          <td>1004</td>
+          <td>102</td>
+          <td>3</td>
+          <td>Developer</td>
+          <td>150</td>
+        </tr>
+        <tr>
+          <td>1005</td>
+          <td>102</td>
+          <td>5</td>
+          <td>Supervisor</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>1006</td>
+          <td>103</td>
+          <td>4</td>
+          <td>Lead</td>
+          <td>100</td>
+        </tr>
+        <tr>
+          <td>1007</td>
+          <td>103</td>
+          <td>7</td>
+          <td>Supervisor</td>
+          <td>40</td>
+        </tr>
+        <tr>
+          <td>1008</td>
+          <td>104</td>
+          <td>1</td>
+          <td>Developer</td>
+          <td>200</td>
+        </tr>
+        <tr>
+          <td>1009</td>
+          <td>104</td>
+          <td>3</td>
+          <td>Developer</td>
+          <td>180</td>
+        </tr>
+        <tr>
+          <td>1010</td>
+          <td>104</td>
+          <td>5</td>
+          <td>Supervisor</td>
+          <td>70</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Block 1: Simple Subquery in WHERE -->
+    <div class="method">
+      <h3>Simple Subquery in WHERE</h3>
+      <p class="hint">-- Write a query to find employees who earn more than the average salary</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('simple-subquery-where-solution')">Check Answer</button>
+      <pre id="simple-subquery-where-solution"><code>SELECT employee_id, name, salary
+FROM Employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM Employees
+)
+ORDER BY salary DESC;</code></pre>
+    </div>
+
+    <!-- Block 2: Subquery with IN Operator -->
+    <div class="method">
+      <h3>Subquery with IN Operator</h3>
+      <p class="hint">-- Write a query to find employees who work in departments with a budget over $800,000</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('subquery-in-solution')">Check Answer</button>
+      <pre id="subquery-in-solution"><code>SELECT employee_id, name, department_id
+FROM Employees
+WHERE department_id IN (
+    SELECT department_id
+    FROM Departments
+    WHERE budget > 800000
+);</code></pre>
+    </div>
+
+    <!-- Block 3: Subquery with EXISTS -->
+    <div class="method">
+      <h3>Subquery with EXISTS</h3>
+      <p class="hint">-- Write a query to find departments that have at least one employee assigned to the Mobile App Development project</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('subquery-exists-solution')">Check Answer</button>
+      <pre id="subquery-exists-solution"><code>SELECT d.department_id, d.department_name
+FROM Departments d
+WHERE EXISTS (
+    SELECT 1
+    FROM Employees e
+    JOIN Project_Assignments pa ON e.employee_id = pa.employee_id
+    JOIN Projects p ON pa.project_id = p.project_id
+    WHERE e.department_id = d.department_id
+    AND p.project_name = 'Mobile App Development'
+);</code></pre>
+    </div>
+
+    <!-- Block 4: Subquery in FROM Clause -->
+    <div class="method">
+      <h3>Subquery in FROM Clause</h3>
+      <p class="hint">-- Write a query to find the average budget for projects in each department</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('subquery-from-solution')">Check Answer</button>
+      <pre id="subquery-from-solution"><code>SELECT d.department_name,
+    dept_projects.avg_budget
+FROM Departments d
+JOIN (
+    SELECT department_id, AVG(budget) as avg_budget
+    FROM Projects
+    GROUP BY department_id
+) dept_projects ON d.department_id = dept_projects.department_id
+ORDER BY dept_projects.avg_budget DESC;</code></pre>
+    </div>
+
+    <!-- Block 5: Subquery in SELECT Clause -->
+    <div class="method">
+      <h3>Subquery in SELECT Clause</h3>
+      <p class="hint">-- Write a query to show each department with its employee count</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('subquery-select-solution')">Check Answer</button>
+      <pre id="subquery-select-solution"><code>SELECT 
+    d.department_id,
+    d.department_name,
+    (
+        SELECT COUNT(*)
+        FROM Employees e
+        WHERE e.department_id = d.department_id
+    ) AS employee_count
+FROM 
+    Departments d
+ORDER BY 
+    employee_count DESC;</code></pre>
+    </div>
+
+    <!-- Block 6: Correlated Subquery -->
+    <div class="method">
+      <h3>Correlated Subquery</h3>
+      <p class="hint">-- Write a query to find employees who have the highest salary in their department</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('correlated-subquery-solution')">Check Answer</button>
+      <pre id="correlated-subquery-solution"><code>SELECT e.employee_id, e.name, e.department_id, e.salary
+FROM Employees e
+WHERE e.salary = (
+    SELECT MAX(salary)
+    FROM Employees e2
+    WHERE e2.department_id = e.department_id
+)
+ORDER BY e.department_id;</code></pre>
+    </div>
+
+    <!-- Block 7: Multiple Subqueries -->
+    <div class="method">
+      <h3>Multiple Subqueries</h3>
+      <p class="hint">-- Write a query to find employees who work on more projects than the average and earn above average salary</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('multiple-subqueries-solution')">Check Answer</button>
+      <pre id="multiple-subqueries-solution"><code>SELECT e.employee_id, e.name, e.salary, COUNT(pa.project_id) AS project_count
+FROM Employees e
+JOIN Project_Assignments pa ON e.employee_id = pa.employee_id
+WHERE e.salary > (
+    SELECT AVG(salary) FROM Employees
+)
+GROUP BY e.employee_id, e.name, e.salary
+HAVING COUNT(pa.project_id) > (
+    SELECT AVG(project_count) FROM (
+        SELECT COUNT(project_id) AS project_count
+        FROM Project_Assignments
+        GROUP BY employee_id
+    ) AS avg_projects
+)
+ORDER BY project_count DESC;</code></pre>
+    </div>
+
+    <!-- Block 8: Subqueries with Set Operations -->
+    <div class="method">
+      <h3>Subqueries with Set Operations</h3>
+      <p class="hint">-- Write a query to find employees who are either department managers or project leads (but not both)</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('subquery-set-operations-solution')">Check Answer</button>
+      <pre id="subquery-set-operations-solution"><code>SELECT e.employee_id, e.name
+FROM Employees e
+WHERE e.employee_id IN (
+    -- Department managers
+    SELECT DISTINCT manager_id
+    FROM Employees
+    WHERE manager_id IS NOT NULL
+    
+    EXCEPT
+    
+    -- Project leads
+    SELECT DISTINCT employee_id
+    FROM Project_Assignments
+    WHERE role = 'Lead'
+)
+OR e.employee_id IN (
+    -- Project leads
+    SELECT DISTINCT employee_id
+    FROM Project_Assignments
+    WHERE role = 'Lead'
+    
+    EXCEPT
+    
+    -- Department managers
+    SELECT DISTINCT manager_id
+    FROM Employees
+    WHERE manager_id IS NOT NULL
+);</code></pre>
+    </div>
+
+    <!-- Block 9: Subqueries with Common Table Expressions (CTEs) -->
+    <div class="method">
+      <h3>Subqueries with CTEs</h3>
+      <p class="hint">-- Write a query using CTEs to find the top 3 employees with the most project hours and their department names</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('subquery-cte-solution')">Check Answer</button>
+      <pre id="subquery-cte-solution"><code>WITH EmployeeHours AS (
+    SELECT 
+        e.employee_id, 
+        e.name, 
+        e.department_id,
+        SUM(pa.hours_allocated) AS total_hours
+    FROM 
+        Employees e
+    JOIN 
+        Project_Assignments pa ON e.employee_id = pa.employee_id
+    GROUP BY 
+        e.employee_id, e.name, e.department_id
+),
+RankedEmployees AS (
+    SELECT 
+        eh.*,
+        RANK() OVER (ORDER BY eh.total_hours DESC) AS hours_rank
+    FROM 
+        EmployeeHours eh
+)
+SELECT 
+    re.employee_id, 
+    re.name, 
+    d.department_name,
+    re.total_hours
+FROM 
+    RankedEmployees re
+JOIN 
+    Departments d ON re.department_id = d.department_id
+WHERE 
+    re.hours_rank <= 3
+ORDER BY 
+    re.total_hours DESC;</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

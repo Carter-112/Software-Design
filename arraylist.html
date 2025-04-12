@@ -12,6 +12,7 @@
   <script src="external-link-handler.js"></script>
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body>
   <header>
@@ -26,6 +27,8 @@
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
           <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
           <a href="random.html">Random</a>
         </div>
@@ -46,13 +49,13 @@
       <pre id="array-list-header-solution"><code>public class MyArrayList&lt;E&gt; implements Iterable&lt;E&gt; {
     // Default capacity when a no-arg constructor is used
     private static final int DEFAULT_CAPACITY = 10;
-    
+
     // Array to store elements
     private Object[] elements;
-    
+
     // Number of elements in the list
     private int size;
-    
+
     // Constructor with initial capacity
     public MyArrayList(int initialCapacity) {
         if (initialCapacity < 0) {
@@ -61,7 +64,7 @@
         this.elements = new Object[initialCapacity];
         this.size = 0;
     }
-    
+
     // No-arg constructor with default capacity
     public MyArrayList() {
         this(DEFAULT_CAPACITY);
@@ -101,13 +104,13 @@ private void ensureCapacity(int minCapacity) {
     if (index < 0 || index > size) {
         throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
     }
-    
+
     // Ensure we have enough space
     ensureCapacity(size + 1);
-    
+
     // Shift elements right to make space
     System.arraycopy(elements, index, elements, index + 1, size - index);
-    
+
     // Insert the element and increment size
     elements[index] = element;
     size++;
@@ -140,18 +143,18 @@ public E remove(int index) {
     if (index < 0 || index >= size) {
         throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
     }
-    
+
     E oldValue = (E) elements[index];
-    
+
     // Shift elements left to fill the gap
     int numMoved = size - index - 1;
     if (numMoved > 0) {
         System.arraycopy(elements, index + 1, elements, index, numMoved);
     }
-    
+
     // Clear the reference to the last element to help with garbage collection
     elements[--size] = null;
-    
+
     return oldValue;
 }</code></pre>
     </div>
@@ -186,7 +189,7 @@ public E set(int index, E element) {
     if (index < 0 || index >= size) {
         throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
     }
-    
+
     E oldValue = (E) elements[index];
     elements[index] = element;
     return oldValue;
@@ -206,12 +209,12 @@ public Iterator&lt;E&gt; iterator() {
 
 private class ArrayListIterator implements Iterator&lt;E&gt; {
     private int cursor = 0;
-    
+
     @Override
     public boolean hasNext() {
         return cursor < size;
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public E next() {
@@ -220,7 +223,7 @@ private class ArrayListIterator implements Iterator&lt;E&gt; {
         }
         return (E) elements[cursor++];
     }
-    
+
     @Override
     public void remove() {
         if (cursor <= 0) {
@@ -271,7 +274,7 @@ public String toString() {
     if (size == 0) {
         return "[]";
     }
-    
+
     StringBuilder sb = new StringBuilder("[");
     for (int i = 0; i < size; i++) {
         sb.append(elements[i]);
@@ -295,7 +298,7 @@ public String toString() {
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
-</html> 
+</html>
 
 
 

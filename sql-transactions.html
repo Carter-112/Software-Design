@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Transactions - SQL Topics</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+    }
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: 1px solid #3e3e42;
+      border-radius: 4px;
+      padding: 10px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      margin: 10px 0;
+    }
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: #252526;
+    }
+    th, td {
+      border: 1px solid #3e3e42;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #333333;
+      color: #ffcc00;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="java.html">Java</a>
+          <a href="python.html">Python</a>
+          <a href="sql.html">SQL</a>
+          <a href="webdev.html">Web Development</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>SQL Transactions Practice</h1>
+
+    <p>Practice implementing SQL transactions. For these exercises, consider the following database tables:</p>
+
+    <div class="table-container">
+      <h3>Accounts Table</h3>
+      <table>
+        <tr>
+          <th>account_id</th>
+          <th>customer_id</th>
+          <th>account_type</th>
+          <th>balance</th>
+          <th>status</th>
+        </tr>
+        <tr>
+          <td>101</td>
+          <td>1001</td>
+          <td>Checking</td>
+          <td>5000.00</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>1001</td>
+          <td>Savings</td>
+          <td>10000.00</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>103</td>
+          <td>1002</td>
+          <td>Checking</td>
+          <td>2500.00</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>104</td>
+          <td>1003</td>
+          <td>Savings</td>
+          <td>15000.00</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>105</td>
+          <td>1004</td>
+          <td>Checking</td>
+          <td>1000.00</td>
+          <td>Active</td>
+        </tr>
+      </table>
+      
+      <h3>Transactions Table</h3>
+      <table>
+        <tr>
+          <th>transaction_id</th>
+          <th>account_id</th>
+          <th>transaction_type</th>
+          <th>amount</th>
+          <th>transaction_date</th>
+          <th>status</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>101</td>
+          <td>Deposit</td>
+          <td>1000.00</td>
+          <td>2023-01-15</td>
+          <td>Completed</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>102</td>
+          <td>Withdrawal</td>
+          <td>500.00</td>
+          <td>2023-01-16</td>
+          <td>Completed</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>103</td>
+          <td>Deposit</td>
+          <td>750.00</td>
+          <td>2023-01-18</td>
+          <td>Completed</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>104</td>
+          <td>Transfer</td>
+          <td>1000.00</td>
+          <td>2023-01-20</td>
+          <td>Completed</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>105</td>
+          <td>Withdrawal</td>
+          <td>200.00</td>
+          <td>2023-01-22</td>
+          <td>Completed</td>
+        </tr>
+      </table>
+      
+      <h3>Customers Table</h3>
+      <table>
+        <tr>
+          <th>customer_id</th>
+          <th>first_name</th>
+          <th>last_name</th>
+          <th>email</th>
+          <th>phone</th>
+        </tr>
+        <tr>
+          <td>1001</td>
+          <td>John</td>
+          <td>Smith</td>
+          <td>john.smith@example.com</td>
+          <td>555-123-4567</td>
+        </tr>
+        <tr>
+          <td>1002</td>
+          <td>Jane</td>
+          <td>Doe</td>
+          <td>jane.doe@example.com</td>
+          <td>555-234-5678</td>
+        </tr>
+        <tr>
+          <td>1003</td>
+          <td>Robert</td>
+          <td>Johnson</td>
+          <td>robert.johnson@example.com</td>
+          <td>555-345-6789</td>
+        </tr>
+        <tr>
+          <td>1004</td>
+          <td>Sarah</td>
+          <td>Williams</td>
+          <td>sarah.williams@example.com</td>
+          <td>555-456-7890</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Block 1: Basic Transaction -->
+    <div class="method">
+      <h3>Basic Transaction</h3>
+      <p class="hint">-- Write a transaction to transfer $500 from account 101 to account 103</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('basic-transaction-solution')">Check Answer</button>
+      <pre id="basic-transaction-solution"><code>BEGIN TRANSACTION;
+
+-- Subtract the amount from the source account
+UPDATE Accounts
+SET balance = balance - 500.00
+WHERE account_id = 101;
+
+-- Add the amount to the destination account
+UPDATE Accounts
+SET balance = balance + 500.00
+WHERE account_id = 103;
+
+-- Record the transaction for the withdrawal
+INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+VALUES (101, 'Transfer Out', 500.00, CURRENT_DATE, 'Completed');
+
+-- Record the transaction for the deposit
+INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+VALUES (103, 'Transfer In', 500.00, CURRENT_DATE, 'Completed');
+
+COMMIT;</code></pre>
+    </div>
+
+    <!-- Block 2: Transaction with Rollback -->
+    <div class="method">
+      <h3>Transaction with Rollback</h3>
+      <p class="hint">-- Write a transaction to withdraw $2000 from account 105, but roll back if balance would go below $0</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('transaction-rollback-solution')">Check Answer</button>
+      <pre id="transaction-rollback-solution"><code>BEGIN TRANSACTION;
+
+DECLARE @current_balance DECIMAL(10, 2);
+DECLARE @withdrawal_amount DECIMAL(10, 2) = 2000.00;
+
+-- Get the current balance
+SELECT @current_balance = balance
+FROM Accounts
+WHERE account_id = 105;
+
+-- Check if withdrawal is possible
+IF @current_balance >= @withdrawal_amount
+BEGIN
+    -- Update the account balance
+    UPDATE Accounts
+    SET balance = balance - @withdrawal_amount
+    WHERE account_id = 105;
+    
+    -- Record the transaction
+    INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+    VALUES (105, 'Withdrawal', @withdrawal_amount, CURRENT_DATE, 'Completed');
+    
+    COMMIT;
+END
+ELSE
+BEGIN
+    -- Not enough funds, roll back the transaction
+    ROLLBACK;
+    
+    -- Optionally log the failed transaction attempt
+    INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+    VALUES (105, 'Withdrawal', @withdrawal_amount, CURRENT_DATE, 'Failed - Insufficient Funds');
+END</code></pre>
+    </div>
+
+    <!-- Block 3: ACID Properties -->
+    <div class="method">
+      <h3>Transaction Demonstrating Atomicity</h3>
+      <p class="hint">-- Write a transaction that demonstrates atomicity (all operations succeed or none do)</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('transaction-atomicity-solution')">Check Answer</button>
+      <pre id="transaction-atomicity-solution"><code>BEGIN TRANSACTION;
+
+BEGIN TRY
+    -- Create a new customer
+    INSERT INTO Customers (customer_id, first_name, last_name, email, phone)
+    VALUES (1005, 'Michael', 'Brown', 'michael.brown@example.com', '555-567-8901');
+    
+    -- Create a checking account for the new customer
+    INSERT INTO Accounts (account_id, customer_id, account_type, balance, status)
+    VALUES (106, 1005, 'Checking', 1000.00, 'Active');
+    
+    -- Create a savings account for the new customer
+    INSERT INTO Accounts (account_id, customer_id, account_type, balance, status)
+    VALUES (107, 1005, 'Savings', 5000.00, 'Active');
+    
+    -- Initial deposit transactions
+    INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+    VALUES (106, 'Deposit', 1000.00, CURRENT_DATE, 'Completed');
+    
+    INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+    VALUES (107, 'Deposit', 5000.00, CURRENT_DATE, 'Completed');
+    
+    COMMIT;
+END TRY
+BEGIN CATCH
+    -- If any error occurs, roll back all changes
+    ROLLBACK;
+    
+    -- Optionally log the error
+    INSERT INTO ErrorLog (error_message, error_datetime)
+    VALUES (ERROR_MESSAGE(), CURRENT_TIMESTAMP);
+END CATCH</code></pre>
+    </div>
+
+    <!-- Block 4: Transaction Isolation Levels -->
+    <div class="method">
+      <h3>Transaction Isolation Levels</h3>
+      <p class="hint">-- Write a transaction with SERIALIZABLE isolation level to prevent phantom reads</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('transaction-isolation-solution')">Check Answer</button>
+      <pre id="transaction-isolation-solution"><code>-- Set the transaction isolation level to SERIALIZABLE
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+BEGIN TRANSACTION;
+
+-- Get the sum of all balances for checking accounts
+DECLARE @total_checking DECIMAL(10, 2);
+
+SELECT @total_checking = SUM(balance)
+FROM Accounts
+WHERE account_type = 'Checking';
+
+-- Generate a report of all checking accounts and their percentage of the total
+SELECT 
+    account_id,
+    customer_id,
+    balance,
+    (balance / @total_checking) * 100 AS percentage_of_total
+FROM 
+    Accounts
+WHERE 
+    account_type = 'Checking'
+ORDER BY 
+    balance DESC;
+
+-- In SERIALIZABLE mode, no other transaction can add or remove rows
+-- that would match our WHERE condition until this transaction completes
+
+COMMIT;</code></pre>
+    </div>
+
+    <!-- Block 5: Savepoints -->
+    <div class="method">
+      <h3>Transactions with Savepoints</h3>
+      <p class="hint">-- Write a transaction that uses savepoints to create a partial rollback</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('transaction-savepoints-solution')">Check Answer</button>
+      <pre id="transaction-savepoints-solution"><code>BEGIN TRANSACTION;
+
+-- Create a savepoint before the first update
+SAVE TRANSACTION BeforeUpdates;
+
+-- Update customer information
+UPDATE Customers
+SET phone = '555-987-6543'
+WHERE customer_id = 1001;
+
+-- Create another savepoint after the first update
+SAVE TRANSACTION AfterCustomerUpdate;
+
+-- Try to update account information
+UPDATE Accounts
+SET balance = balance + 100
+WHERE account_id = 101;
+
+-- Something went wrong with the account update, so roll back to after the customer update
+ROLLBACK TRANSACTION AfterCustomerUpdate;
+
+-- The customer update is still valid, so continue with a different account update
+UPDATE Accounts
+SET status = 'VIP'
+WHERE account_id = 101;
+
+-- Now commit all changes that weren't rolled back
+COMMIT;</code></pre>
+    </div>
+
+    <!-- Block 6: Complex Transaction -->
+    <div class="method">
+      <h3>Complex Transaction</h3>
+      <p class="hint">-- Write a transaction to handle a complex business scenario involving multiple tables</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('complex-transaction-solution')">Check Answer</button>
+      <pre id="complex-transaction-solution"><code>BEGIN TRANSACTION;
+
+DECLARE @customer_id INT = 1002;
+DECLARE @old_checking_id INT;
+DECLARE @new_checking_id INT = 108;
+DECLARE @transfer_amount DECIMAL(10, 2);
+
+-- Find the current checking account for this customer
+SELECT @old_checking_id = account_id
+FROM Accounts
+WHERE customer_id = @customer_id AND account_type = 'Checking';
+
+-- Get the current balance
+SELECT @transfer_amount = balance
+FROM Accounts
+WHERE account_id = @old_checking_id;
+
+-- Create a new checking account for the customer (account upgrade)
+INSERT INTO Accounts (account_id, customer_id, account_type, balance, status)
+VALUES (@new_checking_id, @customer_id, 'Premium Checking', 0.00, 'Active');
+
+-- Transfer all money from old checking to new checking
+UPDATE Accounts
+SET balance = @transfer_amount
+WHERE account_id = @new_checking_id;
+
+UPDATE Accounts
+SET balance = 0.00, status = 'Closed'
+WHERE account_id = @old_checking_id;
+
+-- Record the transfer transaction
+INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+VALUES (@old_checking_id, 'Account Transfer Out', @transfer_amount, CURRENT_DATE, 'Completed');
+
+INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+VALUES (@new_checking_id, 'Account Transfer In', @transfer_amount, CURRENT_DATE, 'Completed');
+
+-- Add a bonus for upgrading to premium
+UPDATE Accounts
+SET balance = balance + 100.00
+WHERE account_id = @new_checking_id;
+
+INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+VALUES (@new_checking_id, 'Bonus', 100.00, CURRENT_DATE, 'Completed');
+
+-- Send a notification to the customer (simulated with a table insert)
+INSERT INTO CustomerNotifications (customer_id, notification_type, message, sent_date)
+VALUES (@customer_id, 'Account Upgrade', 'Your checking account has been upgraded to Premium with a $100 bonus!', CURRENT_DATE);
+
+COMMIT;</code></pre>
+    </div>
+    
+    <!-- Block 7: Handling Deadlocks -->
+    <div class="method">
+      <h3>Handling Deadlocks</h3>
+      <p class="hint">-- Write a transaction that includes error handling for potential deadlocks</p>
+      <textarea placeholder="Type your SQL query here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('deadlock-handling-solution')">Check Answer</button>
+      <pre id="deadlock-handling-solution"><code>-- Setting deadlock priority (lower numbers yield first)
+SET DEADLOCK_PRIORITY LOW;
+
+DECLARE @retry_count INT = 0;
+DECLARE @max_retries INT = 3;
+DECLARE @success BIT = 0;
+
+WHILE @retry_count < @max_retries AND @success = 0
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Update accounts table
+        UPDATE Accounts
+        SET balance = balance - 100
+        WHERE account_id = 101;
+        
+        -- Simulate some processing time that might lead to a deadlock
+        WAITFOR DELAY '00:00:00.1';
+        
+        -- Update transactions table
+        INSERT INTO Transactions (account_id, transaction_type, amount, transaction_date, status)
+        VALUES (101, 'Fee', 100.00, CURRENT_DATE, 'Completed');
+        
+        COMMIT;
+        SET @success = 1; -- Transaction succeeded
+    END TRY
+    BEGIN CATCH
+        IF ERROR_NUMBER() = 1205 -- Deadlock victim error code
+        BEGIN
+            -- Roll back the transaction and try again
+            IF @@TRANCOUNT > 0
+                ROLLBACK;
+                
+            SET @retry_count = @retry_count + 1;
+            
+            -- Wait a bit before retrying (random delay could help avoid repeated deadlocks)
+            WAITFOR DELAY '00:00:00.2';
+        END
+        ELSE
+        BEGIN
+            -- Some other error occurred, rollback and re-throw
+            IF @@TRANCOUNT > 0
+                ROLLBACK;
+                
+            -- Log the error
+            INSERT INTO ErrorLog (error_number, error_message, error_datetime)
+            VALUES (ERROR_NUMBER(), ERROR_MESSAGE(), CURRENT_TIMESTAMP);
+            
+            -- Exit the retry loop
+            SET @retry_count = @max_retries;
+        END
+    END CATCH
+END
+
+IF @success = 0 AND @retry_count >= @max_retries
+BEGIN
+    -- All retry attempts failed
+    INSERT INTO ErrorLog (error_message, error_datetime)
+    VALUES ('Maximum retry attempts reached for transaction', CURRENT_TIMESTAMP);
+END</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

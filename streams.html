@@ -12,6 +12,7 @@
   <script src="external-link-handler.js"></script>
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body>
   <header>
@@ -26,6 +27,8 @@
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
           <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
           <a href="random.html">Random</a>
         </div>
@@ -107,7 +110,7 @@ Stream&lt;Integer&gt; nameLengths = names.stream()
 
 // flatMap - flatten nested streams
 List&lt;List&lt;String&gt;&gt; nestedList = Arrays.asList(
-    Arrays.asList("a", "b"), 
+    Arrays.asList("a", "b"),
     Arrays.asList("c", "d")
 );
 Stream&lt;String&gt; flatStream = nestedList.stream()
@@ -340,14 +343,14 @@ List&lt;String&gt; uniqueWords = Arrays.stream(text.split("\\s+"))
 // Custom class example
 class Order {
     private List&lt;OrderItem&gt; items;
-    
+
     public List&lt;OrderItem&gt; getItems() { return items; }
     public double getTotal() {
         return items.stream()
                    .mapToDouble(item -> item.getPrice() * item.getQuantity())
                    .sum();
     }
-    
+
     public List&lt;String&gt; getUniqueProductNames() {
         return items.stream()
                    .map(OrderItem::getProductName)
@@ -368,7 +371,7 @@ class Order {
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
-</html> 
+</html>
 
 
 

@@ -3,13 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQL Random Practice - Coding Challenges</title>
+  <title>SQL Random Practice</title>
   <link rel="stylesheet" href="styles.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
   <!-- Fire/Lava Mouse Trail Effect -->
   <script src="mouse-trail.js"></script>
   <script src="diagnostic.js"></script>
   <script src="external-link-handler.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #222;
+      color: #fff;
+    }
+    
+    #content {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    
+    .challenge-container {
+      background-color: #333;
+      border-left: 4px solid #e78c11;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 5px 5px 0;
+    }
+    
+    .sql-challenge {
+      background-color: #444;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+    
+    .table-info {
+      background-color: #2c3e50;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-family: monospace;
+    }
+    
+    .sql-query-area {
+      width: 100%;
+      min-height: 100px;
+      font-family: monospace;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    
+    .expected-results {
+      background-color: #2c3e50;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-family: monospace;
+      display: none;
+    }
+    
+    h1, h2, h3, h4 {
+      color: #e78c11;
+    }
+    
+    button {
+      padding: 10px 15px;
+      background-color: #e78c11;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    button:hover {
+      background-color: #f39c21;
+    }
+    
+    .solution {
+      display: none;
+      background-color: #333;
+      border: 2px solid #e78c11;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+    
+    .sql-code {
+      background-color: #333;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    
+    .language-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .language-btn {
+      padding: 8px 15px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .language-btn.active {
+      background-color: #e78c11;
+    }
+    
+    .difficulty-level {
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 0.8em;
+      margin-left: 10px;
+      display: inline-block;
+    }
+    
+    .easy {
+      background-color: #27ae60;
+    }
+    
+    .medium {
+      background-color: #f39c12;
+    }
+    
+    .hard {
+      background-color: #e74c3c;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -49,31 +182,526 @@
 
   <div id="content">
     <h1>SQL Random Practice</h1>
-    <p>Test your SQL skills with randomly generated database challenges. Try to solve them before revealing the solution.</p>
+    <p>Practice your SQL skills with random challenges. Write your SQL query in the text area and click "Check Solution" to see if you got it right.</p>
     
-    <div class="placeholder-content">
-      <h3>Coming Soon</h3>
-      <p>SQL random practice challenges are currently in development. Check back soon for:</p>
-      <ul>
-        <li>Query challenges with complex JOINs</li>
-        <li>Data aggregation problems</li>
-        <li>Database schema design</li>
-        <li>Performance optimization tasks</li>
-        <li>Data analysis scenarios</li>
-      </ul>
+    <div class="challenge-container">
+      <h2>Get a Random SQL Challenge <button id="new-challenge-btn">New Challenge</button></h2>
+      
+      <div id="current-challenge" class="sql-challenge">
+        <h3>Select all employees from a specific department <span class="difficulty-level easy">Easy</span></h3>
+        
+        <div class="table-info">
+          <h4>Tables:</h4>
+<pre>
+employees
+------------
+employee_id (INTEGER)
+first_name (TEXT)
+last_name (TEXT)
+email (TEXT)
+hire_date (DATE)
+department_id (INTEGER)
+salary (DECIMAL)
+
+departments
+------------
+department_id (INTEGER)
+department_name (TEXT)
+manager_id (INTEGER)
+location_id (INTEGER)
+</pre>
+        </div>
+        
+        <p><strong>Challenge:</strong> Write a SQL query to retrieve all employees who work in the 'Marketing' department. Include their employee_id, first name, last name, and salary. Order the results by salary in descending order.</p>
+        
+        <textarea id="sql-query-1" class="sql-query-area" placeholder="Write your SQL query here..."></textarea>
+        
+        <button onclick="checkSolution(1)">Check Solution</button>
+        <button onclick="showSolution(1)">Show Solution</button>
+        
+        <div id="solution-1" class="solution">
+          <h4>Solution:</h4>
+          <div class="sql-code">
+SELECT e.employee_id, e.first_name, e.last_name, e.salary
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+WHERE d.department_name = 'Marketing'
+ORDER BY e.salary DESC;
+          </div>
+          <h4>Explanation:</h4>
+          <p>This query joins the employees and departments tables on the department_id column. It filters the results to only include employees in the Marketing department. The SELECT clause specifies which columns to retrieve, and the ORDER BY clause sorts the results by salary in descending order.</p>
+          
+          <h4>Expected Output:</h4>
+          <div class="expected-results">
+<pre>
+employee_id | first_name | last_name | salary
+-----------------------------------------
+201         | Michael    | Hartstein | 13000.00
+202         | Pat        | Fay       | 6000.00
+203         | Susan      | Mavris    | 6500.00
+</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="challenge-container">
+      <div id="challenge-2" class="sql-challenge">
+        <h3>Find highest paid employees per department <span class="difficulty-level medium">Medium</span></h3>
+        
+        <div class="table-info">
+          <h4>Tables:</h4>
+<pre>
+employees
+------------
+employee_id (INTEGER)
+first_name (TEXT)
+last_name (TEXT)
+email (TEXT)
+hire_date (DATE)
+department_id (INTEGER)
+salary (DECIMAL)
+
+departments
+------------
+department_id (INTEGER)
+department_name (TEXT)
+manager_id (INTEGER)
+location_id (INTEGER)
+</pre>
+        </div>
+        
+        <p><strong>Challenge:</strong> Write a SQL query to find the highest paid employee in each department. Return the department name, employee's first name, last name, and their salary. Order the results by department name alphabetically.</p>
+        
+        <textarea id="sql-query-2" class="sql-query-area" placeholder="Write your SQL query here..."></textarea>
+        
+        <button onclick="checkSolution(2)">Check Solution</button>
+        <button onclick="showSolution(2)">Show Solution</button>
+        
+        <div id="solution-2" class="solution">
+          <h4>Solution:</h4>
+          <div class="sql-code">
+WITH RankedEmployees AS (
+  SELECT 
+    d.department_name,
+    e.first_name,
+    e.last_name,
+    e.salary,
+    RANK() OVER (PARTITION BY e.department_id ORDER BY e.salary DESC) as salary_rank
+  FROM employees e
+  JOIN departments d ON e.department_id = d.department_id
+)
+SELECT 
+  department_name,
+  first_name,
+  last_name,
+  salary
+FROM RankedEmployees
+WHERE salary_rank = 1
+ORDER BY department_name;
+          </div>
+          <h4>Alternative Solution:</h4>
+          <div class="sql-code">
+SELECT 
+  d.department_name,
+  e.first_name,
+  e.last_name,
+  e.salary
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+WHERE (e.department_id, e.salary) IN (
+  SELECT 
+    department_id, 
+    MAX(salary)
+  FROM employees
+  GROUP BY department_id
+)
+ORDER BY d.department_name;
+          </div>
+          <h4>Explanation:</h4>
+          <p>The first solution uses a Common Table Expression (CTE) with a window function to rank employees by salary within each department. It then filters for only the top-ranked employees in each department.</p>
+          <p>The alternative solution uses a subquery to find the maximum salary in each department, then matches against the employee table to find the employees with those salaries.</p>
+          
+          <h4>Expected Output:</h4>
+          <div class="expected-results">
+<pre>
+department_name | first_name | last_name | salary
+-------------------------------------------------
+Accounting      | Shelley    | Higgins   | 12000.00
+Administration  | Jennifer   | Whalen    | 4400.00
+Executive       | Steven     | King      | 24000.00
+Finance         | Nancy      | Greenberg | 12008.00
+Human Resources | Susan      | Mavris    | 6500.00
+IT              | Alexander  | Hunold    | 9000.00
+Marketing       | Michael    | Hartstein | 13000.00
+Sales           | John       | Russell   | 14000.00
+Shipping        | Adam       | Fripp     | 8200.00
+</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="challenge-container">
+      <div id="challenge-3" class="sql-challenge">
+        <h3>Analyze month-over-month sales growth <span class="difficulty-level hard">Hard</span></h3>
+        
+        <div class="table-info">
+          <h4>Tables:</h4>
+<pre>
+sales
+------------
+sale_id (INTEGER)
+product_id (INTEGER)
+customer_id (INTEGER)
+sale_date (DATE)
+quantity (INTEGER)
+amount (DECIMAL)
+
+products
+------------
+product_id (INTEGER)
+product_name (TEXT)
+category_id (INTEGER)
+unit_price (DECIMAL)
+</pre>
+        </div>
+        
+        <p><strong>Challenge:</strong> Write a SQL query to calculate month-over-month growth in sales amount for each product category in 2022. Include the month, category_id, total sales amount for the current month, total sales amount for the previous month, and the percentage growth (can be negative). Order by category_id and month.</p>
+        
+        <textarea id="sql-query-3" class="sql-query-area" placeholder="Write your SQL query here..."></textarea>
+        
+        <button onclick="checkSolution(3)">Check Solution</button>
+        <button onclick="showSolution(3)">Show Solution</button>
+        
+        <div id="solution-3" class="solution">
+          <h4>Solution:</h4>
+          <div class="sql-code">
+WITH monthly_sales AS (
+  SELECT 
+    EXTRACT(MONTH FROM sale_date) AS month,
+    p.category_id,
+    SUM(s.amount) AS monthly_total
+  FROM sales s
+  JOIN products p ON s.product_id = p.product_id
+  WHERE EXTRACT(YEAR FROM sale_date) = 2022
+  GROUP BY EXTRACT(MONTH FROM sale_date), p.category_id
+)
+SELECT 
+  current_month.month,
+  current_month.category_id,
+  current_month.monthly_total AS current_month_total,
+  previous_month.monthly_total AS previous_month_total,
+  CASE 
+    WHEN previous_month.monthly_total IS NULL OR previous_month.monthly_total = 0 
+      THEN NULL
+    ELSE ROUND(
+      ((current_month.monthly_total - previous_month.monthly_total) / previous_month.monthly_total) * 100, 
+      2
+    )
+  END AS percentage_growth
+FROM monthly_sales current_month
+LEFT JOIN monthly_sales previous_month 
+  ON current_month.category_id = previous_month.category_id
+  AND current_month.month = previous_month.month + 1
+ORDER BY current_month.category_id, current_month.month;
+          </div>
+          <h4>Explanation:</h4>
+          <p>This query uses a Common Table Expression (CTE) to first calculate the total sales amount per month and product category. Then it self-joins this CTE to get the previous month's sales for comparison. The CASE statement handles null or zero values for the previous month (which would cause division by zero). The percentage is calculated as ((current - previous) / previous) * 100 and rounded to 2 decimal places.</p>
+          
+          <h4>Expected Output:</h4>
+          <div class="expected-results">
+<pre>
+month | category_id | current_month_total | previous_month_total | percentage_growth
+------------------------------------------------------------------------------
+2     | 1           | 12500.50            | 10250.75             | 21.95
+3     | 1           | 13750.25            | 12500.50             | 10.00
+4     | 1           | 12250.00            | 13750.25             | -10.91
+2     | 2           | 8750.25             | 7500.00              | 16.67
+3     | 2           | 9250.75             | 8750.25              | 5.72
+4     | 2           | 9500.00             | 9250.75              | 2.69
+</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="challenge-container">
+      <div id="challenge-4" class="sql-challenge">
+        <h3>Find customers who purchased all products <span class="difficulty-level hard">Hard</span></h3>
+        
+        <div class="table-info">
+          <h4>Tables:</h4>
+<pre>
+customers
+------------
+customer_id (INTEGER)
+customer_name (TEXT)
+email (TEXT)
+city (TEXT)
+join_date (DATE)
+
+orders
+------------
+order_id (INTEGER)
+customer_id (INTEGER)
+order_date (DATE)
+total_amount (DECIMAL)
+
+order_items
+------------
+order_id (INTEGER)
+product_id (INTEGER)
+quantity (INTEGER)
+unit_price (DECIMAL)
+
+products
+------------
+product_id (INTEGER)
+product_name (TEXT)
+category_id (INTEGER)
+</pre>
+        </div>
+        
+        <p><strong>Challenge:</strong> Write a SQL query to find all customers who have purchased every product in the database at least once. Return the customer_id, customer_name, and the count of distinct products they've purchased. Order by customer_name.</p>
+        
+        <textarea id="sql-query-4" class="sql-query-area" placeholder="Write your SQL query here..."></textarea>
+        
+        <button onclick="checkSolution(4)">Check Solution</button>
+        <button onclick="showSolution(4)">Show Solution</button>
+        
+        <div id="solution-4" class="solution">
+          <h4>Solution:</h4>
+          <div class="sql-code">
+SELECT 
+  c.customer_id,
+  c.customer_name,
+  COUNT(DISTINCT oi.product_id) AS products_purchased
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+JOIN order_items oi ON o.order_id = oi.order_id
+GROUP BY c.customer_id, c.customer_name
+HAVING COUNT(DISTINCT oi.product_id) = (SELECT COUNT(*) FROM products)
+ORDER BY c.customer_name;
+          </div>
+          <h4>Explanation:</h4>
+          <p>This query joins the customers, orders, and order_items tables to get all product purchases by each customer. The GROUP BY clause groups the results by customer, and the HAVING clause filters to only include customers who have purchased a count of distinct products equal to the total number of products in the products table. The subquery (SELECT COUNT(*) FROM products) gets the total number of products in the database.</p>
+          
+          <h4>Expected Output:</h4>
+          <div class="expected-results">
+<pre>
+customer_id | customer_name | products_purchased
+---------------------------------------------
+103         | Anne Wilson    | 8
+107         | David Thompson | 8
+101         | John Smith     | 8
+</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="challenge-container">
+      <div id="challenge-5" class="sql-challenge">
+        <h3>Identify duplicate records <span class="difficulty-level medium">Medium</span></h3>
+        
+        <div class="table-info">
+          <h4>Tables:</h4>
+<pre>
+contacts
+------------
+contact_id (INTEGER)
+first_name (TEXT)
+last_name (TEXT)
+email (TEXT)
+phone (TEXT)
+address (TEXT)
+</pre>
+        </div>
+        
+        <p><strong>Challenge:</strong> Write a SQL query to find potential duplicate contacts in the database. Consider records as potential duplicates if they have the same email OR the same phone number. Return groups of contacts that might be duplicates, showing their contact_id, first_name, last_name, email, and phone. Order by email, then phone.</p>
+        
+        <textarea id="sql-query-5" class="sql-query-area" placeholder="Write your SQL query here..."></textarea>
+        
+        <button onclick="checkSolution(5)">Check Solution</button>
+        <button onclick="showSolution(5)">Show Solution</button>
+        
+        <div id="solution-5" class="solution">
+          <h4>Solution:</h4>
+          <div class="sql-code">
+WITH email_groups AS (
+  SELECT email
+  FROM contacts
+  WHERE email IS NOT NULL
+  GROUP BY email
+  HAVING COUNT(*) > 1
+),
+phone_groups AS (
+  SELECT phone
+  FROM contacts
+  WHERE phone IS NOT NULL
+  GROUP BY phone
+  HAVING COUNT(*) > 1
+)
+SELECT 
+  c.contact_id,
+  c.first_name,
+  c.last_name,
+  c.email,
+  c.phone
+FROM contacts c
+WHERE 
+  c.email IN (SELECT email FROM email_groups)
+  OR c.phone IN (SELECT phone FROM phone_groups)
+ORDER BY c.email, c.phone;
+          </div>
+          <h4>Alternative Solution:</h4>
+          <div class="sql-code">
+SELECT 
+  c1.contact_id,
+  c1.first_name,
+  c1.last_name,
+  c1.email,
+  c1.phone
+FROM contacts c1
+JOIN contacts c2 ON 
+  (c1.email = c2.email OR c1.phone = c2.phone)
+  AND c1.contact_id != c2.contact_id
+ORDER BY c1.email, c1.phone;
+          </div>
+          <h4>Explanation:</h4>
+          <p>The first solution uses Common Table Expressions (CTEs) to first identify emails and phone numbers that appear more than once. It then selects all contacts whose email or phone is in one of these groups. This approach ensures we get all potential duplicates grouped together.</p>
+          <p>The alternative solution uses a self-join approach, joining the contacts table to itself where the email or phone matches but the contact_id is different. This directly identifies pairs of contacts that could be duplicates.</p>
+          
+          <h4>Expected Output:</h4>
+          <div class="expected-results">
+<pre>
+contact_id | first_name | last_name | email               | phone
+----------------------------------------------------------------------
+101        | John       | Smith     | john.smith@email.com | 555-123-4567
+105        | Johnny     | Smith     | john.smith@email.com | 555-987-6543
+103        | Sarah      | Johnson   | sarah.j@email.com    | 555-456-7890
+108        | Sarah      | Jones     | sarah.jones@email.com| 555-456-7890
+</pre>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    // Remove any orange solution buttons when the page loads
-    window.onload = function() {
-      // Give DOM time to fully render before removing elements
-      setTimeout(() => {
-        const orangeButtons = document.querySelectorAll('.orange-solution');
-        orangeButtons.forEach(btn => btn.remove());
-      }, 500);
-    };
+    function showSolution(challengeId) {
+      const solution = document.getElementById(`solution-${challengeId}`);
+      if (solution.style.display === 'block') {
+        solution.style.display = 'none';
+      } else {
+        solution.style.display = 'block';
+        
+        // Also show expected results
+        const expectedResults = solution.querySelector('.expected-results');
+        if (expectedResults) {
+          expectedResults.style.display = 'block';
+        }
+      }
+    }
+    
+    function checkSolution(challengeId) {
+      const userQuery = document.getElementById(`sql-query-${challengeId}`).value.trim().toLowerCase();
+      const solution = document.getElementById(`solution-${challengeId}`);
+      
+      // Very basic check - just looking for key SQL components
+      // In a real implementation, you would parse and check the SQL properly
+      let feedback = "Checking your query...\n\n";
+      let isCorrect = true;
+      
+      // Check for required elements based on the challenge
+      switch(challengeId) {
+        case 1:
+          if (!userQuery.includes('join') && !userQuery.includes('inner join')) {
+            feedback += "⚠️ Your query should include a JOIN between employees and departments tables.\n";
+            isCorrect = false;
+          }
+          if (!userQuery.includes('marketing')) {
+            feedback += "⚠️ Your query should filter for the 'Marketing' department.\n";
+            isCorrect = false;
+          }
+          if (!userQuery.includes('order by') || !userQuery.includes('desc')) {
+            feedback += "⚠️ Results should be ordered by salary in descending order.\n";
+            isCorrect = false;
+          }
+          break;
+        case 2:
+          if (!userQuery.includes('rank()') && !userQuery.includes('max(salary)') && !userQuery.includes('dense_rank()')) {
+            feedback += "⚠️ Your query should use either window functions or MAX aggregate with a subquery.\n";
+            isCorrect = false;
+          }
+          if (!userQuery.includes('department_name')) {
+            feedback += "⚠️ Your query should include the department_name in the results.\n";
+            isCorrect = false;
+          }
+          break;
+        case 3:
+          if (!userQuery.includes('extract(month') && !userQuery.includes('month(')) {
+            feedback += "⚠️ Your query should extract the month from the sale_date.\n";
+            isCorrect = false;
+          }
+          if (!userQuery.includes('join')) {
+            feedback += "⚠️ Your query should join the sales and products tables.\n";
+            isCorrect = false;
+          }
+          if (!userQuery.includes('previous') && !userQuery.includes('lag(')) {
+            feedback += "⚠️ Your query should calculate the previous month's sales for comparison.\n";
+            isCorrect = false;
+          }
+          break;
+        case 4:
+          if (!userQuery.includes('having count(distinct') && !userQuery.includes('count(*)') && !userQuery.includes('count(')) {
+            feedback += "⚠️ Your query should count distinct products and compare to the total.\n";
+            isCorrect = false;
+          }
+          if (!userQuery.includes('(select count(*) from products)')) {
+            feedback += "⚠️ Your query should include a subquery to get the total product count.\n";
+            isCorrect = false;
+          }
+          break;
+        case 5:
+          if (!userQuery.includes('group by') && !userQuery.includes('join') && !userQuery.includes('self join')) {
+            feedback += "⚠️ Your query should either use GROUP BY to find duplicates or do a self-join.\n";
+            isCorrect = false;
+          }
+          if (!userQuery.includes('email') || !userQuery.includes('phone')) {
+            feedback += "⚠️ Your query should check for duplicate email OR phone numbers.\n";
+            isCorrect = false;
+          }
+          break;
+      }
+      
+      if (isCorrect) {
+        feedback += "✅ Your query looks good! Here's the expected output:\n\n";
+        
+        // Show the expected results
+        const expectedResults = solution.querySelector('.expected-results');
+        if (expectedResults) {
+          feedback += expectedResults.textContent;
+        }
+        
+        // Show the solution for comparison
+        showSolution(challengeId);
+      } else {
+        feedback += "\nTry again or check the solution for help.";
+      }
+      
+      alert(feedback);
+    }
+    
+    // Function to get a new random challenge
+    document.getElementById('new-challenge-btn').addEventListener('click', function() {
+      // In a real implementation, you would fetch a new random challenge
+      // For now, we'll just show a message
+      alert("In a full implementation, this would load a new random SQL challenge from a database of challenges. The current challenges are static examples.");
+    });
   </script>
+  
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>

@@ -12,6 +12,7 @@
   <script src="external-link-handler.js"></script>
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body>
   <header>
@@ -26,6 +27,8 @@
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
           <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
           <a href="random.html">Random</a>
         </div>
@@ -48,16 +51,16 @@
     // We store elements as keys with a dummy value
     private static final Object PRESENT = new Object();
     private final MyHashMap&lt;E, Object&gt; map;
-    
+
     // Constructors that delegate to the HashMap
     public MyHashSet() {
         map = new MyHashMap<>();
     }
-    
+
     public MyHashSet(int initialCapacity) {
         map = new MyHashMap<>(initialCapacity, 0.75f);
     }
-    
+
     public MyHashSet(int initialCapacity, float loadFactor) {
         map = new MyHashMap<>(initialCapacity, loadFactor);
     }</code></pre>
@@ -132,21 +135,21 @@ public Iterator&lt;E&gt; iterator() {
 private class HashSetIterator implements Iterator&lt;E&gt; {
     // This will be implemented once we add a method to iterate over map keys
     private final Iterator&lt;Map.Entry&lt;E, Object&gt;&gt; mapIterator;
-    
+
     public HashSetIterator() {
         mapIterator = map.entrySet().iterator();
     }
-    
+
     @Override
     public boolean hasNext() {
         return mapIterator.hasNext();
     }
-    
+
     @Override
     public E next() {
         return mapIterator.next().getKey();
     }
-    
+
     @Override
     public void remove() {
         mapIterator.remove();
@@ -166,7 +169,7 @@ public String toString() {
     if (!it.hasNext()) {
         return "[]";
     }
-    
+
     StringBuilder sb = new StringBuilder("[");
     for (;;) {
         E element = it.next();
@@ -229,7 +232,7 @@ public boolean retainAll(Collection&lt;?&gt; c) {
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
-</html> 
+</html>
 
 
 

@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Practice - Responsive Design</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      color: #ffcc00;
+    }
+    pre {
+      background-color: #2d2d2d;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #7ec699;
+    }
+    .method {
+      background-color: #252526;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .preview-box {
+      background-color: #2d2d2d;
+      border: 1px solid #444;
+      color: #dcdcdc;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    
+    /* Code editor styling */
+    .code-editor {
+      position: relative;
+      margin: 20px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    
+    .code-editor-header {
+      background-color: #007acc;
+      color: white;
+      padding: 8px 15px;
+      font-size: 14px;
+      font-weight: bold;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .code-editor textarea {
+      width: 100%;
+      min-height: 180px;
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      border: none;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      padding: 15px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+    }
+    
+    .code-editor textarea:focus {
+      box-shadow: inset 0 0 0 2px #007acc;
+    }
+    
+    .practice-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 15px;
+      position: relative;
+      z-index: 0;
+    }
+    
+    .interactive-area {
+      border: 1px solid #444;
+      padding: 15px;
+      margin-top: 10px;
+      background-color: #2d2d2d;
+      color: #dcdcdc;
+      border-radius: 4px;
+    }
+    
+    .output-area {
+      border: 1px solid #444;
+      padding: 15px;
+      margin-top: 10px;
+      background-color: #2d2d2d;
+      color: #dcdcdc;
+      min-height: 100px;
+      border-radius: 4px;
+    }
+    
+    .hint {
+      color: #ffcc00;
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+    
+    .console-output {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      height: 100px;
+      overflow-y: auto;
+      border: 1px solid #444;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+    
+    .run-btn {
+      background-color: #107C10;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .run-btn:hover {
+      background-color: #15a015;
+    }
+    
+    .check-btn {
+      background-color: #0e639c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .check-btn:hover {
+      background-color: #1177bb;
+    }
+    
+    .reset-btn {
+      background-color: #ca5010;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .reset-btn:hover {
+      background-color: #e95a0c;
+    }
+    
+    /* Responsive Design specific styles */
+    .responsive-container {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid #444;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
+    
+    .device-frame {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: auto;
+      background-color: #333;
+    }
+    
+    .device-content {
+      padding: 15px;
+    }
+    
+    /* Simple Breakpoint Demo */
+    .breakpoint-demo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .breakpoint-box {
+      flex: 1;
+      min-width: 200px;
+      height: 100px;
+      background-color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+    
+    .viewport-indicator {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      z-index: 1000;
+    }
+    
+    @media (max-width: 768px) {
+      .breakpoint-box {
+        min-width: 150px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .breakpoint-box {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Python Data Structures -->
+          <div class="nav-category">Python Data Structures</div>
+          <a href="python-lists.html">Lists</a>
+          <a href="python-dictionaries.html">Dictionaries</a>
+          <a href="python-sets.html">Sets</a>
+          <a href="python-tuples.html">Tuples</a>
+          <a href="python-comprehensions.html">Comprehensions</a>
+          
+          <!-- SQL Topics -->
+          <div class="nav-category">SQL Topics</div>
+          <a href="sql-select.html">SELECT Queries</a>
+          <a href="sql-joins.html">JOINs</a>
+          <a href="sql-aggregation.html">Aggregation</a>
+          <a href="sql-subqueries.html">Subqueries</a>
+          <a href="sql-transactions.html">Transactions</a>
+          
+          <!-- Web Development -->
+          <div class="nav-category">Web Development</div>
+          <a href="web-html.html">HTML Structure</a>
+          <a href="web-css.html">CSS Styling</a>
+          <a href="web-js-dom.html">JavaScript DOM</a>
+          <a href="web-js-events.html">JavaScript Events</a>
+          <a href="web-responsive.html">Responsive Design</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Random Practice -->
+          <div class="nav-category">Random Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="pythonrandom.html">Python Random Practice</a>
+          <a href="sqlrandom.html">SQL Random Practice</a>
+          <a href="webrandom.html">Web Dev Random Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Responsive Web Design Practice</h1>
+    <p>Practice implementing responsive design techniques to create websites that work across all devices and screen sizes. Type your HTML and CSS in the editor area, then click "Run Code" to see the result.</p>
+
+    <!-- Block 1: Media Queries -->
+    <div class="method">
+      <h3>Media Queries</h3>
+      <p class="hint">// Implement media queries to create responsive layouts</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="media-queries-area">
+          <div id="device-selector">
+            <button onclick="changeViewport('desktop')">Desktop</button>
+            <button onclick="changeViewport('tablet')">Tablet</button>
+            <button onclick="changeViewport('mobile')">Mobile</button>
+          </div>
+          <div class="responsive-container">
+            <div class="device-frame" id="preview-frame">
+              <div class="device-content" id="media-queries-preview">
+                <div class="viewport-indicator" id="viewport-size">Desktop</div>
+                <div class="main-content">
+                  <h2>Responsive Layout</h2>
+                  <div class="breakpoint-demo">
+                    <div class="breakpoint-box">Box 1</div>
+                    <div class="breakpoint-box">Box 2</div>
+                    <div class="breakpoint-box">Box 3</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>CSS Editor - Write your code here</span>
+          </div>
+          <textarea id="css-input-media-queries" placeholder="/* Your task:
+ * 1. Write media queries for different screen sizes:
+ *    - Desktop (greater than 768px)
+ *    - Tablet (481px to 768px)
+ *    - Mobile (480px or less)
+ * 2. Change the layout of the boxes for each screen size:
+ *    - Desktop: display boxes in a row (3 columns)
+ *    - Tablet: display boxes in 2 columns
+ *    - Mobile: stack boxes vertically (1 column)
+ * 3. Change the background color of the boxes for each screen size
+ *    to make the differences obvious
+ */
+
+/* Base styles for all devices */
+.breakpoint-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.breakpoint-box {
+  flex: 1;
+  min-height: 100px;
+  background-color: #3498db;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+/* Desktop Styles (default) */
+/* Add your desktop-specific styles here */
+
+/* Tablet Styles */
+@media (max-width: 768px) {
+  /* Add your tablet-specific styles here */
+  
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+  /* Add your mobile-specific styles here */
+  
+}</textarea>
+        </div>
+        
+        <div class="console-output" id="console-media-queries"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runCSSCode('css-input-media-queries', 'media-queries-preview')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('css-media-queries')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('media-queries-area')">Reset Exercise</button>
+        </div>
+        <pre id="css-media-queries" style="display: none;"><code>/* Base styles for all devices */
+.breakpoint-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.breakpoint-box {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) {
+  .breakpoint-box {
+    flex: 1 1 calc(33.33% - 15px);
+    background-color: #3498db;
+  }
+  
+  .viewport-indicator::after {
+    content: "Desktop View (> 768px)";
+  }
+  
+  .breakpoint-box::after {
+    content: " - Desktop Layout";
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 481px) and (max-width: 768px) {
+  .breakpoint-box {
+    flex: 1 1 calc(50% - 15px);
+    background-color: #e67e22;
+  }
+  
+  .viewport-indicator::after {
+    content: "Tablet View (481px - 768px)";
+  }
+  
+  .breakpoint-box::after {
+    content: " - Tablet Layout";
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+  .breakpoint-box {
+    flex: 1 1 100%;
+    background-color: #e74c3c;
+  }
+  
+  .viewport-indicator::after {
+    content: "Mobile View (≤ 480px)";
+  }
+  
+  .breakpoint-box::after {
+    content: " - Mobile Layout";
+  }
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Block 2: Flexible Images -->
+    <div class="method">
+      <h3>Flexible Images</h3>
+      <p class="hint">// Make images responsive using various techniques</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="flexible-images-area">
+          <div id="device-selector-images">
+            <button onclick="changeImageViewport('desktop')">Desktop</button>
+            <button onclick="changeImageViewport('tablet')">Tablet</button>
+            <button onclick="changeImageViewport('mobile')">Mobile</button>
+          </div>
+          <div class="responsive-container">
+            <div class="device-frame" id="images-preview-frame">
+              <div class="device-content" id="flexible-images-preview">
+                <div class="viewport-indicator" id="image-viewport-size">Desktop</div>
+                <div class="image-demo">
+                  <h2>Responsive Images</h2>
+                  <div class="image-container">
+                    <img src="https://via.placeholder.com/800x400/3498db/ffffff?text=Responsive+Image" alt="Example image" id="responsive-image">
+                  </div>
+                  <div class="image-caption">
+                    This image should scale based on its container width
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>CSS Editor - Write your code here</span>
+          </div>
+          <textarea id="css-input-flexible-images" placeholder="/* Your task:
+ * 1. Make the image responsive so it scales with its container
+ * 2. Set maximum width constraints to prevent the image from becoming too large
+ * 3. Maintain aspect ratio
+ * 4. Apply different styling for different device sizes:
+ *    - Desktop: show the image at up to 100% of its container
+ *    - Tablet: add a border and shadow
+ *    - Mobile: make the image circular (rounded) and centered
+ */
+
+/* Base styles for the image container */
+.image-container {
+  /* Your code here */
+}
+
+/* Base styles for the image */
+#responsive-image {
+  /* Your code here */
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  /* Your desktop-specific styles */
+}
+
+/* Tablet styles */
+@media (min-width: 481px) and (max-width: 768px) {
+  /* Your tablet-specific styles */
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+  /* Your mobile-specific styles */
+}</textarea>
+        </div>
+        
+        <div class="console-output" id="console-flexible-images"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runCSSCode('css-input-flexible-images', 'flexible-images-preview')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('css-flexible-images')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('flexible-images-area')">Reset Exercise</button>
+        </div>
+        <pre id="css-flexible-images" style="display: none;"><code>/* Base styles for the image container */
+.image-container {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Base styles for the image */
+#responsive-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.image-caption {
+  margin-top: 10px;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .image-container {
+    width: 80%;
+  }
+  
+  #responsive-image {
+    width: 100%;
+  }
+  
+  .image-caption::after {
+    content: " (Desktop View)";
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 481px) and (max-width: 768px) {
+  .image-container {
+    width: 90%;
+  }
+  
+  #responsive-image {
+    border: 5px solid #3498db;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .image-caption::after {
+    content: " (Tablet View)";
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+  .image-container {
+    width: 95%;
+  }
+  
+  #responsive-image {
+    width: 80%;
+    border-radius: 50%;
+    border: 3px solid #e74c3c;
+  }
+  
+  .image-caption::after {
+    content: " (Mobile View)";
+  }
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Block 3: CSS Grid Layout -->
+    <div class="method">
+      <h3>CSS Grid Layout</h3>
+      <p class="hint">// Create responsive layouts using CSS Grid</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="grid-layout-area">
+          <div id="device-selector-grid">
+            <button onclick="changeGridViewport('desktop')">Desktop</button>
+            <button onclick="changeGridViewport('tablet')">Tablet</button>
+            <button onclick="changeGridViewport('mobile')">Mobile</button>
+          </div>
+          <div class="responsive-container">
+            <div class="device-frame" id="grid-preview-frame">
+              <div class="device-content" id="grid-layout-preview">
+                <div class="viewport-indicator" id="grid-viewport-size">Desktop</div>
+                <div class="grid-demo">
+                  <div class="grid-container">
+                    <div class="grid-item header">Header</div>
+                    <div class="grid-item nav">Navigation</div>
+                    <div class="grid-item main">Main Content</div>
+                    <div class="grid-item sidebar">Sidebar</div>
+                    <div class="grid-item footer">Footer</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>CSS Editor - Write your code here</span>
+          </div>
+          <textarea id="css-input-grid-layout" placeholder="/* Your task:
+ * 1. Create a responsive grid layout that adapts to different screen sizes:
+ *    - Desktop: header on top, nav on left, main content in center, sidebar on right, footer at bottom
+ *    - Tablet: header on top, nav below header, main content and sidebar in a row, footer at bottom
+ *    - Mobile: All items stacked vertically (header, nav, main, sidebar, footer)
+ * 2. Use CSS Grid properties like grid-template-areas to define the layout for each screen size
+ * 3. Add appropriate visual styling for each element
+ */
+
+/* Base styles for the grid container and items */
+.grid-container {
+  display: grid;
+  gap: 10px;
+  /* Add your grid properties here */
+}
+
+.grid-item {
+  padding: 20px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+/* Styles for specific grid items */
+.header {
+  background-color: #3498db;
+}
+
+.nav {
+  background-color: #2ecc71;
+}
+
+.main {
+  background-color: #e74c3c;
+}
+
+.sidebar {
+  background-color: #f39c12;
+}
+
+.footer {
+  background-color: #9b59b6;
+}
+
+/* Desktop Layout (> 768px) */
+@media (min-width: 769px) {
+  /* Add your desktop grid layout */
+  
+}
+
+/* Tablet Layout (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  /* Add your tablet grid layout */
+  
+}
+
+/* Mobile Layout (< 480px) */
+@media (max-width: 480px) {
+  /* Add your mobile grid layout */
+  
+}</textarea>
+        </div>
+        
+        <div class="console-output" id="console-grid-layout"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runCSSCode('css-input-grid-layout', 'grid-layout-preview')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('css-grid-layout')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('grid-layout-area')">Reset Exercise</button>
+        </div>
+        <pre id="css-grid-layout" style="display: none;"><code>/* Base styles for the grid container and items */
+.grid-container {
+  display: grid;
+  gap: 10px;
+  min-height: 400px;
+}
+
+.grid-item {
+  padding: 20px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles for specific grid items */
+.header {
+  background-color: #3498db;
+}
+
+.nav {
+  background-color: #2ecc71;
+}
+
+.main {
+  background-color: #e74c3c;
+}
+
+.sidebar {
+  background-color: #f39c12;
+}
+
+.footer {
+  background-color: #9b59b6;
+}
+
+/* Desktop Layout (> 768px) */
+@media (min-width: 769px) {
+  .grid-container {
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header header header"
+      "nav main sidebar"
+      "footer footer footer";
+  }
+  
+  .header {
+    grid-area: header;
+  }
+  
+  .nav {
+    grid-area: nav;
+  }
+  
+  .main {
+    grid-area: main;
+    min-height: 250px;
+  }
+  
+  .sidebar {
+    grid-area: sidebar;
+  }
+  
+  .footer {
+    grid-area: footer;
+  }
+  
+  .grid-viewport-size::after {
+    content: " - Desktop Layout (Grid)";
+  }
+}
+
+/* Tablet Layout (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "header header"
+      "nav nav"
+      "main sidebar"
+      "footer footer";
+  }
+  
+  .header {
+    grid-area: header;
+  }
+  
+  .nav {
+    grid-area: nav;
+  }
+  
+  .main {
+    grid-area: main;
+    min-height: 200px;
+  }
+  
+  .sidebar {
+    grid-area: sidebar;
+  }
+  
+  .footer {
+    grid-area: footer;
+  }
+  
+  .grid-viewport-size::after {
+    content: " - Tablet Layout (Grid)";
+  }
+}
+
+/* Mobile Layout (< 480px) */
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas:
+      "header"
+      "nav"
+      "main"
+      "sidebar"
+      "footer";
+  }
+  
+  .header {
+    grid-area: header;
+  }
+  
+  .nav {
+    grid-area: nav;
+  }
+  
+  .main {
+    grid-area: main;
+    min-height: 150px;
+  }
+  
+  .sidebar {
+    grid-area: sidebar;
+  }
+  
+  .footer {
+    grid-area: footer;
+  }
+  
+  .grid-viewport-size::after {
+    content: " - Mobile Layout (Grid)";
+  }
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Block 4: Flexbox Layout -->
+    <div class="method">
+      <h3>Flexbox Layout</h3>
+      <p class="hint">// Create responsive layouts using CSS Flexbox</p>
+      
+      <div class="practice-container">
+        <div class="interactive-area" id="flexbox-layout-area">
+          <div id="device-selector-flexbox">
+            <button onclick="changeFlexboxViewport('desktop')">Desktop</button>
+            <button onclick="changeFlexboxViewport('tablet')">Tablet</button>
+            <button onclick="changeFlexboxViewport('mobile')">Mobile</button>
+          </div>
+          <div class="responsive-container">
+            <div class="device-frame" id="flexbox-preview-frame">
+              <div class="device-content" id="flexbox-layout-preview">
+                <div class="viewport-indicator" id="flexbox-viewport-size">Desktop</div>
+                <div class="flexbox-demo">
+                  <h2>Product Cards</h2>
+                  <div class="card-container">
+                    <div class="product-card">
+                      <div class="card-image" style="background-color: #3498db;"></div>
+                      <h3>Product 1</h3>
+                      <p>This is a description for Product 1. It has amazing features!</p>
+                      <button class="card-button">Buy Now</button>
+                    </div>
+                    <div class="product-card">
+                      <div class="card-image" style="background-color: #2ecc71;"></div>
+                      <h3>Product 2</h3>
+                      <p>This is a description for Product 2. It has incredible features!</p>
+                      <button class="card-button">Buy Now</button>
+                    </div>
+                    <div class="product-card">
+                      <div class="card-image" style="background-color: #e74c3c;"></div>
+                      <h3>Product 3</h3>
+                      <p>This is a description for Product 3. It has awesome features!</p>
+                      <button class="card-button">Buy Now</button>
+                    </div>
+                    <div class="product-card">
+                      <div class="card-image" style="background-color: #f39c12;"></div>
+                      <h3>Product 4</h3>
+                      <p>This is a description for Product 4. It has fantastic features!</p>
+                      <button class="card-button">Buy Now</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="code-editor">
+          <div class="code-editor-header">
+            <span>CSS Editor - Write your code here</span>
+          </div>
+          <textarea id="css-input-flexbox-layout" placeholder="/* Your task:
+ * 1. Create a responsive card layout using Flexbox that adapts to different screen sizes:
+ *    - Desktop: Display all cards in a single row (4 cards per row)
+ *    - Tablet: Display 2 cards per row (2 rows total)
+ *    - Mobile: Stack all cards vertically (1 card per row)
+ * 2. Style the product cards to look visually appealing
+ * 3. Add hover effects for interactive elements like buttons
+ */
+
+/* Container for the product cards */
+.card-container {
+  /* Your flexbox container styles here */
+}
+
+/* Individual product card styles */
+.product-card {
+  /* Your product card styles here */
+}
+
+/* Product image placeholder */
+.card-image {
+  height: 150px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+/* Card button */
+.card-button {
+  /* Your button styles here */
+}
+
+.card-button:hover {
+  /* Your button hover effect here */
+}
+
+/* Desktop Layout (> 768px) */
+@media (min-width: 769px) {
+  /* Desktop-specific card layout */
+}
+
+/* Tablet Layout (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  /* Tablet-specific card layout */
+}
+
+/* Mobile Layout (< 480px) */
+@media (max-width: 480px) {
+  /* Mobile-specific card layout */
+}</textarea>
+        </div>
+        
+        <div class="console-output" id="console-flexbox-layout"></div>
+        
+        <div class="button-group">
+          <button class="run-btn" onclick="runCSSCode('css-input-flexbox-layout', 'flexbox-layout-preview')">Run Code</button>
+          <button class="check-btn" onclick="toggleSolution('css-flexbox-layout')">Check Answer</button>
+          <button class="reset-btn" onclick="resetExercise('flexbox-layout-area')">Reset Exercise</button>
+        </div>
+        <pre id="css-flexbox-layout" style="display: none;"><code>/* Container for the product cards */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+/* Individual product card styles */
+.product-card {
+  background-color: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Product image placeholder */
+.card-image {
+  height: 150px;
+  margin-bottom: 15px;
+  border-radius: 0;
+}
+
+/* Card text content */
+.product-card h3 {
+  padding: 0 15px;
+  margin-top: 0;
+}
+
+.product-card p {
+  padding: 0 15px;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+/* Card button */
+.card-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+}
+
+.card-button:hover {
+  background-color: #2980b9;
+}
+
+/* Desktop Layout (> 768px) */
+@media (min-width: 769px) {
+  .product-card {
+    flex: 1 1 calc(25% - 15px);
+    max-width: calc(25% - 15px);
+  }
+  
+  .card-container {
+    flex-wrap: nowrap;
+  }
+  
+  .flexbox-viewport-size::after {
+    content: " - Desktop Layout (Flexbox)";
+  }
+}
+
+/* Tablet Layout (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .product-card {
+    flex: 1 1 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+  
+  .card-container {
+    flex-wrap: wrap;
+  }
+  
+  .flexbox-viewport-size::after {
+    content: " - Tablet Layout (Flexbox)";
+  }
+}
+
+/* Mobile Layout (< 480px) */
+@media (max-width: 480px) {
+  .product-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .card-container {
+    flex-direction: column;
+  }
+  
+  .flexbox-viewport-size::after {
+    content: " - Mobile Layout (Flexbox)";
+  }
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Helper function to toggle solution display
+    function toggleSolution(solutionId) {
+      const solutionElement = document.getElementById(solutionId);
+      if (solutionElement.style.display === 'block') {
+        solutionElement.style.display = 'none';
+      } else {
+        solutionElement.style.display = 'block';
+      }
+    }
+    
+    // Reset exercise by reloading the page
+    function resetExercise(areaId) {
+      location.reload();
+    }
+    
+    // Function to apply CSS code to the preview
+    function runCSSCode(inputId, previewId) {
+      const cssCode = document.getElementById(inputId).value;
+      
+      // Create or update style element
+      let styleEl = document.getElementById(`${previewId}-style`);
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = `${previewId}-style`;
+        document.head.appendChild(styleEl);
+      }
+      
+      // Update the style content
+      styleEl.textContent = cssCode;
+      
+      // Log to console
+      console.log('CSS applied to preview');
+    }
+    
+    // Change viewport size for demonstration
+    function changeViewport(size) {
+      const frame = document.getElementById('preview-frame');
+      const indicator = document.getElementById('viewport-size');
+      
+      switch(size) {
+        case 'desktop':
+          frame.style.width = '100%';
+          indicator.textContent = 'Desktop';
+          break;
+        case 'tablet':
+          frame.style.width = '600px';
+          indicator.textContent = 'Tablet';
+          break;
+        case 'mobile':
+          frame.style.width = '375px';
+          indicator.textContent = 'Mobile';
+          break;
+      }
+    }
+    
+    // Change viewport for image preview
+    function changeImageViewport(size) {
+      const frame = document.getElementById('images-preview-frame');
+      const indicator = document.getElementById('image-viewport-size');
+      
+      switch(size) {
+        case 'desktop':
+          frame.style.width = '100%';
+          indicator.textContent = 'Desktop';
+          break;
+        case 'tablet':
+          frame.style.width = '600px';
+          indicator.textContent = 'Tablet';
+          break;
+        case 'mobile':
+          frame.style.width = '375px';
+          indicator.textContent = 'Mobile';
+          break;
+      }
+    }
+    
+    // Change viewport for grid preview
+    function changeGridViewport(size) {
+      const frame = document.getElementById('grid-preview-frame');
+      const indicator = document.getElementById('grid-viewport-size');
+      
+      switch(size) {
+        case 'desktop':
+          frame.style.width = '100%';
+          indicator.textContent = 'Desktop';
+          break;
+        case 'tablet':
+          frame.style.width = '600px';
+          indicator.textContent = 'Tablet';
+          break;
+        case 'mobile':
+          frame.style.width = '375px';
+          indicator.textContent = 'Mobile';
+          break;
+      }
+    }
+    
+    // Change viewport for flexbox preview
+    function changeFlexboxViewport(size) {
+      const frame = document.getElementById('flexbox-preview-frame');
+      const indicator = document.getElementById('flexbox-viewport-size');
+      
+      switch(size) {
+        case 'desktop':
+          frame.style.width = '100%';
+          indicator.textContent = 'Desktop';
+          break;
+        case 'tablet':
+          frame.style.width = '600px';
+          indicator.textContent = 'Tablet';
+          break;
+        case 'mobile':
+          frame.style.width = '375px';
+          indicator.textContent = 'Mobile';
+          break;
+      }
+    }
+    
+    // Run this after the page loads to make sure text areas are properly setup
+    document.addEventListener('DOMContentLoaded', function() {
+      // Focus on first text area to show user it's clickable
+      setTimeout(function() {
+        const firstTextarea = document.querySelector('.code-editor textarea');
+        if (firstTextarea) {
+          firstTextarea.focus();
+        }
+      }, 1000);
+    });
+  </script>
+  
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html> 

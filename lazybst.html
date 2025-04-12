@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Data Structures Practice - Lazy Binary Search Tree</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <!-- External link handler -->
+  <script src="external-link-handler.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Lazy Binary Search Tree (LazyBST) – Full Class</h1>
+
+    <!-- Block 1: Class Declaration, Fields & Constructor -->
+    <div class="method">
+      <h3>Class Declaration, Fields & Constructor</h3>
+      <p class="hint">// The class header, Node inner class, and constructor.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lazybst-header-solution')">Check Answer</button>
+      <pre id="lazybst-header-solution"><code>import java.util.*;
+
+/**
+ * Lazy Binary Search Tree with soft deletion.
+ * Nodes are never removed; they're just marked as deleted.
+ */
+public class LazyBST&lt;E extends Comparable&lt;E&gt;&gt; implements Iterable&lt;E&gt; {
+
+	private TreeNode&lt;E&gt; root; // root of the tree
+	private int size; // number of actual (non-deleted) elements in the tree
+
+	public LazyBST() {
+		root = null;
+		size = 0;
+	}
+
+	/**
+	 * TreeNode inner class for the LazyBST
+	 */
+	private static class TreeNode&lt;E&gt; {
+		private E value;
+		private TreeNode&lt;E&gt; leftNode;
+		private TreeNode&lt;E&gt; rightNode;
+		private boolean deleted;
+
+		public TreeNode(E value) {
+			this.value = value;
+			this.deleted = false;
+		}
+
+		public String toString() {
+			String str = "" + value + (deleted ? "(X)" : "") + " [ ";
+			if (leftNode != null) str += leftNode.toString();
+			str += " ] [ ";
+			if (rightNode != null) str += rightNode.toString();
+			str += " ] ";
+			return str;
+		}
+	}</code></pre>
+    </div>
+
+    <!-- Block 2: Insert Method -->
+    <div class="method">
+      <h3>Insert Method</h3>
+      <p class="hint">// Add a value to the LazyBST or revive a deleted node.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lazybst-insert-solution')">Check Answer</button>
+      <pre id="lazybst-insert-solution"><code>/**
+ * Inserts the specified element to this LazyBST if it is not already present or was previously deleted.
+ *
+ * @param e Element to be added
+ * @return true if element was newly added or revived
+ */
+public boolean insert(E e) {
+	if (root == null) {
+		root = new TreeNode&lt;>(e);
+		size++;
+		return true;
+	}
+	return insert(root, e);
+}
+
+private boolean insert(TreeNode&lt;E&gt; root, E e) {
+	int compareValue = root.value.compareTo(e);
+
+	if (compareValue == 0) {
+		if (root.deleted) {
+			root.deleted = false;
+			size++;
+			return true;
+		}
+		return false;
+	} else if (compareValue > 0) {
+		if (root.leftNode == null) {
+			root.leftNode = new TreeNode&lt;>(e);
+			size++;
+			return true;
+		}
+		return insert(root.leftNode, e);
+	} else {
+		if (root.rightNode == null) {
+			root.rightNode = new TreeNode&lt;>(e);
+			size++;
+			return true;
+		}
+		return insert(root.rightNode, e);
+	}
+}</code></pre>
+    </div>
+
+    <!-- Block 3: Contains Method -->
+    <div class="method">
+      <h3>Contains Method</h3>
+      <p class="hint">// Check if a value exists in the LazyBST and is not marked as deleted.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lazybst-contains-solution')">Check Answer</button>
+      <pre id="lazybst-contains-solution"><code>/**
+ * Returns true if this tree contains the specified element and it is not marked deleted.
+ *
+ * @param e Element whose presence is being tested
+ * @return true if present and not deleted
+ */
+public boolean contains(E e) {
+	if (root == null) return false;
+	return contains(root, e);
+}
+
+private boolean contains(TreeNode&lt;E&gt; root, E e) {
+	int compareValue = root.value.compareTo(e);
+
+	if (compareValue == 0) return !root.deleted;
+	else if (compareValue > 0) {
+		if (root.leftNode == null) return false;
+		return contains(root.leftNode, e);
+	} else {
+		if (root.rightNode == null) return false;
+		return contains(root.rightNode, e);
+	}
+}</code></pre>
+    </div>
+
+    <!-- Block 4: Remove Method -->
+    <div class="method">
+      <h3>Remove Method</h3>
+      <p class="hint">// Mark a value as deleted in the LazyBST.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lazybst-remove-solution')">Check Answer</button>
+      <pre id="lazybst-remove-solution"><code>/**
+ * Marks the specified element as deleted if found and not already deleted.
+ *
+ * @param e Element to remove
+ * @return true if deletion occurred
+ */
+public boolean remove(E e) {
+	return remove(root, e);
+}
+
+private boolean remove(TreeNode&lt;E&gt; root, E e) {
+	if (root == null) return false;
+	int compareValue = root.value.compareTo(e);
+
+	if (compareValue == 0 && !root.deleted) {
+		root.deleted = true;
+		size--;
+		return true;
+	} else if (compareValue > 0) {
+		return remove(root.leftNode, e);
+	} else {
+		return remove(root.rightNode, e);
+	}
+}</code></pre>
+    </div>
+
+    <!-- Block 5: Find Min Method -->
+    <div class="method">
+      <h3>Find Min Method</h3>
+      <p class="hint">// Find the minimum undeleted value in the tree.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lazybst-findmin-solution')">Check Answer</button>
+      <pre id="lazybst-findmin-solution"><code>/**
+ * Finds the minimum undeleted value in the tree.
+ *
+ * @return The minimum element, or null if none
+ */
+public E findMin() {
+	return findMin(root);
+}
+
+private E findMin(TreeNode&lt;E&gt; root) {
+	if (root == null) return null;
+	E left = findMin(root.leftNode);
+	if (left != null) return left;
+	if (!root.deleted) return root.value;
+	return findMin(root.rightNode);
+}</code></pre>
+    </div>
+
+    <!-- Block 6: Traversal Methods -->
+    <div class="method">
+      <h3>Traversal Methods</h3>
+      <p class="hint">// Methods for traversing the tree, skipping deleted nodes.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lazybst-traversal-solution')">Check Answer</button>
+      <pre id="lazybst-traversal-solution"><code>/**
+ * Prints all non-deleted values in in-order (ascending).
+ */
+public void inorderTraversal() {
+	inorderTraversal(root);
+}
+
+private void inorderTraversal(TreeNode&lt;E&gt; root) {
+	if (root == null) return;
+	inorderTraversal(root.leftNode);
+	if (!root.deleted) System.out.println(root.value);
+	inorderTraversal(root.rightNode);
+}
+
+/**
+ * Prints all non-deleted values in level-order.
+ */
+public void levelOrderTraversal() {
+	if (root == null) return;
+	Queue&lt;TreeNode&lt;E&gt;&gt; queue = new LinkedList&lt;&gt;();
+	queue.add(root);
+	while (!queue.isEmpty()) {
+		TreeNode&lt;E&gt; node = queue.poll();
+		if (!node.deleted) System.out.println(node.value);
+		if (node.leftNode != null) queue.add(node.leftNode);
+		if (node.rightNode != null) queue.add(node.rightNode);
+	}
+}</code></pre>
+    </div>
+
+    <!-- Block 7: Iterator Implementation -->
+    <div class="method">
+      <h3>Iterator Implementation</h3>
+      <p class="hint">// Iterator that skips deleted nodes.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lazybst-iterator-solution')">Check Answer</button>
+      <pre id="lazybst-iterator-solution"><code>/**
+ * Returns an in-order iterator that skips deleted nodes.
+ */
+@Override
+public Iterator&lt;E&gt; iterator() {
+	return new LazyIterator(root);
+}
+
+private class LazyIterator implements Iterator&lt;E&gt; {
+	private Stack&lt;TreeNode&lt;E&gt;&gt; stack = new Stack&lt;&gt;();
+
+	public LazyIterator(TreeNode&lt;E&gt; root) {
+		pushLeft(root);
+	}
+
+	private void pushLeft(TreeNode&lt;E&gt; node) {
+		while (node != null) {
+			stack.push(node);
+			node = node.leftNode;
+		}
+	}
+
+	@Override
+	public boolean hasNext() {
+		while (!stack.isEmpty()) {
+			if (!stack.peek().deleted) return true;
+			TreeNode&lt;E&gt; node = stack.pop();
+			pushLeft(node.rightNode);
+		}
+		return false;
+	}
+
+	@Override
+	public E next() {
+		while (!stack.isEmpty()) {
+			TreeNode&lt;E&gt; node = stack.pop();
+			pushLeft(node.rightNode);
+			if (!node.deleted) return node.value;
+		}
+		throw new NoSuchElementException();
+	}
+}</code></pre>
+    </div>
+
+    <!-- Block 8: ToString Method -->
+    <div class="method">
+      <h3>ToString Method</h3>
+      <p class="hint">// String representation of the tree.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lazybst-tostring-solution')">Check Answer</button>
+      <pre id="lazybst-tostring-solution"><code>/**
+ * Returns a string representation of the tree using bracketed preorder format.
+ */
+public String toString() {
+	return "[ " + (root != null ? root.toString() : "") + " ]";
+}</code></pre>
+    </div>
+
+    <!-- Block 9: Main Method -->
+    <div class="method">
+      <h3>Main Method</h3>
+      <p class="hint">// A main method demonstrating all the features of the LazyBST.</p>
+      <textarea placeholder="Type your code here..."></textarea>
+      <button class="check-btn" onclick="toggleSolution('lazybst-main-solution')">Check Answer</button>
+      <pre id="lazybst-main-solution"><code>/**
+ * Main method to demonstrate LazyBST functionality
+ */
+public static void main(String[] args) {
+	// Create a new LazyBST
+	LazyBST&lt;Integer&gt; bst = new LazyBST&lt;&gt;();
+
+	// Add some values
+	int[] values = {50, 30, 70, 20, 40, 60, 80};
+	for (int value : values) {
+		bst.insert(value);
+	}
+
+	// Test traversals
+	System.out.println("Initial tree:");
+	System.out.println(bst);
+
+	System.out.println("\nInorder traversal:");
+	bst.inorderTraversal();
+
+	System.out.println("\nLevel order traversal:");
+	bst.levelOrderTraversal();
+
+	// Test lazy deletion
+	System.out.println("\nAfter removing 30 and 60:");
+	bst.remove(30);
+	bst.remove(60);
+	System.out.println(bst);
+
+	System.out.println("\nInorder traversal after deletion:");
+	bst.inorderTraversal();
+
+	// Test iterator
+	System.out.println("\nUsing iterator (skips deleted nodes):");
+	for (Integer i : bst) {
+		System.out.print(i + " ");
+	}
+	System.out.println();
+
+	// Test revival
+	System.out.println("\nAfter reviving 30:");
+	bst.insert(30);
+	System.out.println(bst);
+
+	System.out.println("\nInorder traversal after revival:");
+	bst.inorderTraversal();
+
+	// Test findMin
+	System.out.println("\nMinimum value: " + bst.findMin());
+}</code></pre>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle solution visibility
+    function toggleSolution(id) {
+      var solution = document.getElementById(id);
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+    }
+  </script>
+  <!-- AdSense Integration -->
+  <script src="adsense.js"></script>
+</body>
+</html>

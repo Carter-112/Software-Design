@@ -27,20 +27,20 @@
           });
       });
     }
-    
+
     // Ensure solution labels don't get cut off when scrolling
     document.addEventListener('DOMContentLoaded', function() {
       // Function to fix solution display
       function fixSolutionDisplay() {
         // Get all check answer buttons
         var buttons = document.querySelectorAll('.check-btn');
-        
+
         buttons.forEach(function(button) {
           button.addEventListener('click', function() {
             // Get the associated solution element
             var solutionId = this.getAttribute('onclick').match(/'([^']+)'/)[1];
             var solution = document.getElementById(solutionId);
-            
+
             // When solution is shown, scroll to ensure label is visible
             if (solution && solution.style.display === 'block') {
               // Reset scroll position to top
@@ -49,13 +49,14 @@
           });
         });
       }
-      
+
       // Run on page load
       fixSolutionDisplay();
     });
   </script>
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body class="index-page">
   <div class="stars"></div>
@@ -77,15 +78,29 @@
         <button class="dropbtn">Navigation ▼</button>
         <div class="dropdown-content">
           <a href="index.html">Home</a>
-          <a href="singly.html">Singly</a>
-          <a href="doubly.html">Doubly</a>
+
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
           <a href="arraylist.html">ArrayList</a>
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
-          <a href="bst.html">BST</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="lazybst.html">Lazy Binary Search Tree</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
-          <a href="random.html">Random</a>
+
+          <!-- Language Basics -->
+          <div class="nav-category">Language Fundamentals</div>
           <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+
+          <!-- Other -->
+          <div class="nav-category">Practice</div>
+          <a href="random.html">Random Practice</a>
         </div>
       </div>
     </div>
@@ -95,68 +110,98 @@
   <div id="content">
     <h1>Java Data Structures Practice</h1>
     <p>Welcome to the Java Data Structures Practice page. This site is designed to help you practice implementing various data structures in Java. Each page contains code snippets for a specific data structure, with text areas where you can practice writing the code yourself. Click "Check Answer" to reveal the solution.</p>
-    
+
     <h2>Choose a Data Structure to Practice:</h2>
-    
+
     <div class="card-container">
       <div class="card">
         <h3>Singly Linked List</h3>
         <p>A linear collection of nodes, each containing data and a reference to the next node in the sequence.</p>
         <a href="singly.html">Practice</a>
       </div>
-      
+
       <div class="card">
         <h3>Doubly Linked List</h3>
         <p>Similar to a singly linked list, but each node also contains a reference to the previous node.</p>
         <a href="doubly.html">Practice</a>
       </div>
-      
+
       <div class="card">
         <h3>ArrayList</h3>
         <p>A resizable array implementation that provides dynamic capacity and fast random access.</p>
         <a href="arraylist.html">Practice</a>
       </div>
-      
+
       <div class="card">
         <h3>HashMap</h3>
         <p>An implementation of the Map interface using a hash table with linked lists to handle collisions.</p>
         <a href="hashmap.html">Practice</a>
       </div>
-      
+
       <div class="card">
         <h3>HashSet</h3>
         <p>An implementation of the Set interface backed by a HashMap for fast access and uniqueness.</p>
         <a href="hashset.html">Practice</a>
       </div>
-      
+
       <div class="card">
         <h3>Binary Search Tree</h3>
         <p>A tree data structure where each node has at most two children, with specific ordering properties.</p>
         <a href="bst.html">Practice</a>
       </div>
-      
+
+      <div class="card">
+        <h3>Lazy Binary Search Tree</h3>
+        <p>A BST variant that uses soft deletion by marking nodes as deleted rather than removing them.</p>
+        <a href="lazybst.html">Practice</a>
+      </div>
+
+      <div class="card">
+        <h3>Red-Black Tree</h3>
+        <p>A self-balancing binary search tree with color properties to ensure efficient operations.</p>
+        <a href="redblacktree.html">Practice</a>
+      </div>
+
       <div class="card">
         <h3>Streams & Lambdas</h3>
         <p>Modern Java features for functional-style operations on collections and other data sources.</p>
         <a href="streams.html">Practice</a>
       </div>
-      
+
       <div class="card">
         <h3>Random Practice</h3>
         <p>Get a random code snippet from any data structure for broader practice.</p>
         <a href="random.html">Practice</a>
       </div>
-      
+
       <div class="card">
         <h3>Java Basics</h3>
         <p>Learn fundamental Java concepts with detailed, well-commented code examples and explanations.</p>
         <a href="javabasics.html">Practice</a>
+      </div>
+
+      <div class="card">
+        <h3>Python Basics</h3>
+        <p>Explore Python programming fundamentals with clear examples and interactive practice exercises.</p>
+        <a href="pythonbasics.html">Practice</a>
+      </div>
+
+      <div class="card">
+        <h3>Web Development</h3>
+        <p>Learn HTML, CSS, and JavaScript fundamentals for building modern, responsive websites.</p>
+        <a href="webbasics.html">Practice</a>
+      </div>
+
+      <div class="card">
+        <h3>SQL Basics</h3>
+        <p>Master database queries and operations with SQL examples and interactive exercises.</p>
+        <a href="sqlbasics.html">Practice</a>
       </div>
     </div>
   </div>
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
-</html> 
+</html>
 
 

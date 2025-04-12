@@ -12,6 +12,7 @@
   <script src="external-link-handler.js"></script>
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
+  <script src="navigation.js"></script>
 </head>
 <body>
   <header>
@@ -26,6 +27,8 @@
           <a href="hashmap.html">HashMap</a>
           <a href="hashset.html">HashSet</a>
           <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
           <a href="streams.html">Streams & Lambdas</a>
           <a href="random.html">Random</a>
         </div>
@@ -49,30 +52,30 @@
         K key;
         V value;
         Entry&lt;K, V&gt; next;
-        
+
         public Entry(K key, V value, Entry&lt;K, V&gt; next) {
             this.key = key;
             this.value = value;
             this.next = next;
         }
     }
-    
+
     // Default capacity and load factor
     private static final int DEFAULT_CAPACITY = 16;
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-    
+
     // Array of buckets (array of linked lists of entries)
     private Entry&lt;K, V&gt;[] buckets;
-    
+
     // Number of key-value pairs in the map
     private int size;
-    
+
     // Load factor to determine when to resize
     private float loadFactor;
-    
+
     // Threshold for when to resize (capacity * loadFactor)
     private int threshold;
-    
+
     @SuppressWarnings("unchecked")
     public MyHashMap(int initialCapacity, float loadFactor) {
         if (initialCapacity <= 0) {
@@ -81,18 +84,18 @@
         if (loadFactor <= 0 || Float.isNaN(loadFactor)) {
             throw new IllegalArgumentException("Load factor must be positive");
         }
-        
+
         // Find power of 2 >= initialCapacity
         int capacity = 1;
         while (capacity < initialCapacity) {
             capacity <<= 1;
         }
-        
+
         this.buckets = (Entry&lt;K, V&gt;[]) new Entry[capacity];
         this.loadFactor = loadFactor;
         this.threshold = (int) (capacity * loadFactor);
     }
-    
+
     public MyHashMap() {
         this(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
@@ -125,10 +128,10 @@ private int indexFor(int hash, int length) {
       <pre id="hashmap-put-solution"><code>public V put(K key, V value) {
     int hash = hash(key);
     int index = indexFor(hash, buckets.length);
-    
+
     // Look for existing entry with the same key
     for (Entry&lt;K, V&gt; entry = buckets[index]; entry != null; entry = entry.next) {
-        if ((key == null && entry.key == null) || 
+        if ((key == null && entry.key == null) ||
             (key != null && key.equals(entry.key))) {
             // Replace existing value
             V oldValue = entry.value;
@@ -136,7 +139,7 @@ private int indexFor(int hash, int length) {
             return oldValue;
         }
     }
-    
+
     // Key not found - add new entry at the beginning of the list
     addEntry(key, value, index);
     return null;
@@ -147,7 +150,7 @@ private void addEntry(K key, V value, int bucketIndex) {
     Entry&lt;K, V&gt; entry = new Entry&lt;&gt;(key, value, buckets[bucketIndex]);
     buckets[bucketIndex] = entry; // The new entry becomes the head
     size++;
-    
+
     // Check if we need to resize
     if (size > threshold) {
         resize(2 * buckets.length);
@@ -164,29 +167,29 @@ private void addEntry(K key, V value, int bucketIndex) {
       <pre id="hashmap-resize-solution"><code>@SuppressWarnings("unchecked")
 private void resize(int newCapacity) {
     Entry&lt;K, V&gt;[] oldBuckets = buckets;
-    
+
     // Create a new array of buckets
     Entry&lt;K, V&gt;[] newBuckets = (Entry&lt;K, V&gt;[]) new Entry[newCapacity];
-    
+
     // Rehash all existing entries into the new array
     for (int i = 0; i < oldBuckets.length; i++) {
         Entry&lt;K, V&gt; entry = oldBuckets[i];
-        
+
         while (entry != null) {
             Entry&lt;K, V&gt; next = entry.next;
-            
+
             // Calculate new index
             int hash = hash(entry.key);
             int newIndex = indexFor(hash, newCapacity);
-            
+
             // Insert at the beginning of the new bucket
             entry.next = newBuckets[newIndex];
             newBuckets[newIndex] = entry;
-            
+
             entry = next;
         }
     }
-    
+
     buckets = newBuckets;
     threshold = (int) (newCapacity * loadFactor);
 }</code></pre>
@@ -201,15 +204,15 @@ private void resize(int newCapacity) {
       <pre id="hashmap-get-solution"><code>public V get(K key) {
     int hash = hash(key);
     int index = indexFor(hash, buckets.length);
-    
+
     // Traverse the linked list at the bucket
     for (Entry&lt;K, V&gt; entry = buckets[index]; entry != null; entry = entry.next) {
-        if ((key == null && entry.key == null) || 
+        if ((key == null && entry.key == null) ||
             (key != null && key.equals(entry.key))) {
             return entry.value;
         }
     }
-    
+
     return null; // Key not found
 }</code></pre>
     </div>
@@ -223,16 +226,16 @@ private void resize(int newCapacity) {
       <pre id="hashmap-remove-solution"><code>public V remove(K key) {
     int hash = hash(key);
     int index = indexFor(hash, buckets.length);
-    
+
     Entry&lt;K, V&gt; prev = null;
     Entry&lt;K, V&gt; entry = buckets[index];
-    
+
     // Find the entry to remove
     while (entry != null) {
-        if ((key == null && entry.key == null) || 
+        if ((key == null && entry.key == null) ||
             (key != null && key.equals(entry.key))) {
             // Found the entry to remove
-            
+
             // If not the first entry in the bucket
             if (prev != null) {
                 prev.next = entry.next;
@@ -240,15 +243,15 @@ private void resize(int newCapacity) {
                 // It's the first entry in the bucket
                 buckets[index] = entry.next;
             }
-            
+
             size--;
             return entry.value;
         }
-        
+
         prev = entry;
         entry = entry.next;
     }
-    
+
     return null; // Key not found
 }</code></pre>
     </div>
@@ -262,14 +265,14 @@ private void resize(int newCapacity) {
       <pre id="hashmap-contains-key-solution"><code>public boolean containsKey(K key) {
     int hash = hash(key);
     int index = indexFor(hash, buckets.length);
-    
+
     for (Entry&lt;K, V&gt; entry = buckets[index]; entry != null; entry = entry.next) {
-        if ((key == null && entry.key == null) || 
+        if ((key == null && entry.key == null) ||
             (key != null && key.equals(entry.key))) {
             return true;
         }
     }
-    
+
     return false;
 }</code></pre>
     </div>
@@ -301,10 +304,10 @@ public String toString() {
     if (isEmpty()) {
         return "{}";
     }
-    
+
     StringBuilder sb = new StringBuilder("{");
     boolean first = true;
-    
+
     for (Entry&lt;K, V&gt; bucket : buckets) {
         for (Entry&lt;K, V&gt; entry = bucket; entry != null; entry = entry.next) {
             if (!first) {
@@ -314,7 +317,7 @@ public String toString() {
             first = false;
         }
     }
-    
+
     sb.append("}");
     return sb.toString();
 }</code></pre>
@@ -331,7 +334,7 @@ public String toString() {
   <!-- AdSense Integration -->
   <script src="adsense.js"></script>
 </body>
-</html> 
+</html>
 
 
 

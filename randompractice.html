@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Practice - Coding Challenges</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="external-link-handler.js"></script>
+  <style>
+    .language-selector {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      gap: 10px;
+    }
+    
+    .language-btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .language-btn:hover {
+      background-color: #555;
+    }
+    
+    .language-btn.active {
+      background-color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    .placeholder-content {
+      background-color: #1a1a1a;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    .placeholder-content ul {
+      margin-left: 20px;
+    }
+  </style>
+  <script src="navigation.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          
+          <!-- Java Data Structures -->
+          <div class="nav-category">Java Data Structures</div>
+          <a href="singly.html">Singly Linked List</a>
+          <a href="doubly.html">Doubly Linked List</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">Binary Search Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          
+          <!-- Language Fundamentals -->
+          <div class="nav-category">Language Fundamentals</div>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          
+          <!-- Other -->
+          <div class="nav-category">Practice</div>
+          <a href="random.html">Java Random Practice</a>
+          <a href="randompractice.html">Multi-Language Practice</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="content">
+    <h1>Random Practice Challenges</h1>
+    <p>Test your programming skills with these randomly generated code challenges across different languages.</p>
+    
+    <div class="language-selector">
+      <button class="language-btn active" onclick="selectLanguage('java')">Java</button>
+      <button class="language-btn" onclick="selectLanguage('python')">Python</button>
+      <button class="language-btn" onclick="selectLanguage('sql')">SQL</button>
+      <button class="language-btn" onclick="selectLanguage('web')">HTML/CSS/JS</button>
+    </div>
+    
+    <!-- Java Random Practice Section (Original Content) -->
+    <div id="java-practice" class="language-section">
+      <h2>Java Random Practice</h2>
+      <p>Click the button below to get a random Java coding challenge. Try to solve it before revealing the solution.</p>
+      
+      <button id="randomSnippetButton" onclick="handleRandomSnippet()">Get Random Java Challenge</button>
+      
+      <div id="snippetContainer" style="display: none;">
+        <h3 id="snippetTitle">Challenge Title</h3>
+        <p id="snippetDescription">Description of the challenge.</p>
+        
+        <div class="code-container">
+          <pre id="snippetCode" class="code-area"></pre>
+        </div>
+        
+        <button id="toggleAnswerButton" onclick="toggleRandomAnswer()">Show Solution</button>
+        
+        <div id="solutionContainer" style="display: none; position: relative; z-index: 999;">
+          <h3>Solution:</h3>
+          <div class="code-container">
+            <pre id="solutionCode" class="code-area"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Python Random Practice Section (Placeholder) -->
+    <div id="python-practice" class="language-section" style="display: none;">
+      <h2>Python Random Practice</h2>
+      <p>Click the button below to get a random Python coding challenge. Try to solve it before revealing the solution.</p>
+      
+      <button onclick="alert('Python challenges will be available soon!')">Get Random Python Challenge</button>
+      
+      <div class="placeholder-content">
+        <h3>Coming Soon</h3>
+        <p>Python random practice challenges are currently in development. Check back soon for:</p>
+        <ul>
+          <li>Data manipulation challenges</li>
+          <li>Algorithm implementations</li>
+          <li>Object-oriented Python challenges</li>
+          <li>File processing tasks</li>
+          <li>Data science mini-projects</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- SQL Random Practice Section (Placeholder) -->
+    <div id="sql-practice" class="language-section" style="display: none;">
+      <h2>SQL Random Practice</h2>
+      <p>Click the button below to get a random SQL challenge. Try to solve it before revealing the solution.</p>
+      
+      <button onclick="alert('SQL challenges will be available soon!')">Get Random SQL Challenge</button>
+      
+      <div class="placeholder-content">
+        <h3>Coming Soon</h3>
+        <p>SQL random practice challenges are currently in development. Check back soon for:</p>
+        <ul>
+          <li>Query challenges with complex JOINs</li>
+          <li>Data aggregation problems</li>
+          <li>Database schema design</li>
+          <li>Performance optimization tasks</li>
+          <li>Data analysis scenarios</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Web Development Random Practice Section (Placeholder) -->
+    <div id="web-practice" class="language-section" style="display: none;">
+      <h2>Web Development Random Practice</h2>
+      <p>Click the button below to get a random web development challenge. Try to solve it before revealing the solution.</p>
+      
+      <button onclick="alert('Web development challenges will be available soon!')">Get Random Web Challenge</button>
+      
+      <div class="placeholder-content">
+        <h3>Coming Soon</h3>
+        <p>Web development random practice challenges are currently in development. Check back soon for:</p>
+        <ul>
+          <li>Responsive design challenges</li>
+          <li>JavaScript DOM manipulation tasks</li>
+          <li>CSS layout problems</li>
+          <li>Form validation exercises</li>
+          <li>Interactive UI components</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Java code snippets and solutions (original content)
+    const javaSnippets = [
+      {
+        title: "Reverse a String",
+        description: "Implement a function to reverse a string without using built-in reverse methods.",
+        code: "public class StringReversal {\n  public static String reverse(String str) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(reverse(\"Hello World\"));\n  }\n}",
+        solution: "public class StringReversal {\n  public static String reverse(String str) {\n    char[] characters = str.toCharArray();\n    int left = 0;\n    int right = str.length() - 1;\n    \n    while (left < right) {\n      char temp = characters[left];\n      characters[left] = characters[right];\n      characters[right] = temp;\n      left++;\n      right--;\n    }\n    \n    return new String(characters);\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(reverse(\"Hello World\"));\n  }\n}"
+      },
+      {
+        title: "Find Maximum in Array",
+        description: "Write a method to find the maximum value in an integer array.",
+        code: "public class MaxFinder {\n  public static int findMax(int[] arr) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    int[] numbers = {5, 9, 2, 6, 3, 8};\n    System.out.println(findMax(numbers));\n  }\n}",
+        solution: "public class MaxFinder {\n  public static int findMax(int[] arr) {\n    if (arr == null || arr.length == 0) {\n      throw new IllegalArgumentException(\"Array cannot be empty or null\");\n    }\n    \n    int max = arr[0];\n    for (int i = 1; i < arr.length; i++) {\n      if (arr[i] > max) {\n        max = arr[i];\n      }\n    }\n    \n    return max;\n  }\n  \n  public static void main(String[] args) {\n    int[] numbers = {5, 9, 2, 6, 3, 8};\n    System.out.println(findMax(numbers));\n  }\n}"
+      },
+      {
+        title: "Check for Palindrome",
+        description: "Create a method that checks if a string is a palindrome (reads the same forward and backward).",
+        code: "public class PalindromeChecker {\n  public static boolean isPalindrome(String str) {\n    // Your code here\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(isPalindrome(\"racecar\"));\n    System.out.println(isPalindrome(\"hello\"));\n  }\n}",
+        solution: "public class PalindromeChecker {\n  public static boolean isPalindrome(String str) {\n    if (str == null) {\n      return false;\n    }\n    \n    str = str.toLowerCase().replaceAll(\"[^a-z0-9]\", \"\");\n    int left = 0;\n    int right = str.length() - 1;\n    \n    while (left < right) {\n      if (str.charAt(left) != str.charAt(right)) {\n        return false;\n      }\n      left++;\n      right--;\n    }\n    \n    return true;\n  }\n  \n  public static void main(String[] args) {\n    System.out.println(isPalindrome(\"racecar\"));\n    System.out.println(isPalindrome(\"hello\"));\n  }\n}"
+      }
+    ];
+    
+    let currentSnippetIndex = -1;
+    
+    // Language selection handling
+    function selectLanguage(language) {
+      // Hide all language sections
+      const sections = document.querySelectorAll('.language-section');
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Show the selected language section
+      document.getElementById(language + '-practice').style.display = 'block';
+      
+      // Update active button styling
+      const buttons = document.querySelectorAll('.language-btn');
+      buttons.forEach(button => {
+        button.classList.remove('active');
+      });
+      const activeButton = document.querySelector(`.language-btn[onclick*="${language}"]`);
+      if (activeButton) {
+        activeButton.classList.add('active');
+      }
+      
+      // Reset snippet display if changing language
+      document.getElementById('snippetContainer').style.display = 'none';
+    }
+
+    // Handle random snippet button for Java (original functionality)
+    function handleRandomSnippet() {
+      // Get a random index (different from current)
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * javaSnippets.length);
+      } while (randomIndex === currentSnippetIndex && javaSnippets.length > 1);
+      
+      currentSnippetIndex = randomIndex;
+      const snippet = javaSnippets[currentSnippetIndex];
+      
+      // Update the DOM
+      document.getElementById('snippetTitle').textContent = snippet.title;
+      document.getElementById('snippetDescription').textContent = snippet.description;
+      document.getElementById('snippetCode').textContent = snippet.code;
+      document.getElementById('solutionCode').textContent = snippet.solution;
+      
+      // Show snippet, hide solution
+      document.getElementById('snippetContainer').style.display = 'block';
+      document.getElementById('solutionContainer').style.display = 'none';
+      document.getElementById('toggleAnswerButton').textContent = 'Show Solution';
+      
+      // Scroll to snippet
+      document.getElementById('snippetContainer').scrollIntoView({
+        behavior: 'smooth', 
+        block: 'start'
+      });
+    }
+
+    // Toggle the solution visibility
+    function toggleRandomAnswer() {
+      const solutionContainer = document.getElementById('solutionContainer');
+      const toggleButton = document.getElementById('toggleAnswerButton');
+      
+      // Remove any existing orange solution buttons
+      const orangeButtons = document.querySelectorAll('.orange-solution');
+      orangeButtons.forEach(btn => btn.remove());
+      
+      if (solutionContainer.style.display === 'none') {
+        solutionContainer.style.display = 'block';
+        toggleButton.textContent = 'Hide Solution';
+      } else {
+        solutionContainer.style.display = 'none';
+        toggleButton.textContent = 'Show Solution';
+      }
+    }
+    
+    // Initialize with Java practice selected
+    window.onload = function() {
+      selectLanguage('java');
+    };
+  </script>
+</body>
+</html> 

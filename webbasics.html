@@ -1,0 +1,2683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Basics - Learning Guide</title>
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8347349621527130" crossorigin="anonymous"></script>
+  <!-- Fire/Lava Mouse Trail Effect -->
+  <script src="mouse-trail.js"></script>
+  <script src="solution-fix.js"></script>
+  <script src="diagnostic.js"></script>
+  <script src="external-link-handler.js"></script>
+  <script src="navigation.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">Navigation ▼</button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="singly.html">Singly</a>
+          <a href="doubly.html">Doubly</a>
+          <a href="arraylist.html">ArrayList</a>
+          <a href="hashmap.html">HashMap</a>
+          <a href="hashset.html">HashSet</a>
+          <a href="bst.html">BST</a>
+          <a href="lazybst.html">LazyBST</a>
+          <a href="redblacktree.html">Red-Black Tree</a>
+          <a href="streams.html">Streams & Lambdas</a>
+          <a href="random.html">Random</a>
+          <a href="javabasics.html">Java Basics</a>
+          <a href="pythonbasics.html">Python Basics</a>
+          <a href="webbasics.html">HTML/CSS/JS Basics</a>
+          <a href="sqlbasics.html">SQL Basics</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div id="content">
+    <h1>Web Development Basics</h1>
+    <p>Learn the fundamental technologies that power the web: HTML, CSS, and JavaScript.</p>
+
+    <div class="section-navigation">
+      <button onclick="toggleSection('html-basics')">HTML Basics</button>
+      <button onclick="toggleSection('css-basics')">CSS Styling</button>
+      <button onclick="toggleSection('js-basics')">JavaScript Fundamentals</button>
+      <button onclick="toggleSection('responsive-design')">Responsive Design</button>
+      <button onclick="toggleSection('web-projects')">Simple Projects</button>
+    </div>
+
+    <!-- Section placeholders - will be filled with content later -->
+    <div id="html-basics" class="web-section">
+      <h2>HTML Basics</h2>
+      <p>HTML (HyperText Markup Language) is the standard markup language for documents designed to be displayed in a web browser. It defines the structure and content of web pages.</p>
+
+      <h3>HTML Document Structure</h3>
+      <p>Every HTML document follows a basic structure:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="16" readonly>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My First Webpage</title>
+  <!-- Additional metadata, CSS links, scripts go here -->
+</head>
+<body>
+  <!-- Visible content goes here -->
+  <h1>Hello, World!</h1>
+  <p>This is my first webpage.</p>
+</body>
+</html>
+        </textarea>
+      </div>
+
+      <h3>Key HTML Elements</h3>
+      <p>HTML uses elements (tags) to mark up content:</p>
+
+      <h4>Headings</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="8" readonly>
+<h1>This is a Level 1 Heading (Most Important)</h1>
+<h2>This is a Level 2 Heading</h2>
+<h3>This is a Level 3 Heading</h3>
+<h4>This is a Level 4 Heading</h4>
+<h5>This is a Level 5 Heading</h5>
+<h6>This is a Level 6 Heading (Least Important)</h6>
+        </textarea>
+      </div>
+
+      <h4>Text Elements</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="16" readonly>
+<!-- Paragraph -->
+<p>This is a paragraph of text. It can contain multiple sentences and will automatically wrap to the next line when needed.</p>
+
+<!-- Text formatting -->
+<p>This is <strong>bold text</strong> and this is <em>italic text</em>.</p>
+<p>This is <mark>highlighted text</mark> and this is <del>deleted text</del>.</p>
+<p>This is <sub>subscript</sub> and this is <sup>superscript</sup>.</p>
+
+<!-- Line break -->
+<p>This line will break<br>right here</p>
+
+<!-- Horizontal rule (line) -->
+<hr>
+        </textarea>
+      </div>
+
+      <h4>Links and Anchors</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="18" readonly>
+<!-- Basic link -->
+<a href="https://www.example.com">Visit Example.com</a>
+
+<!-- Open link in new tab -->
+<a href="https://www.example.com" target="_blank">Open in New Tab</a>
+
+<!-- Email link -->
+<a href="mailto:contact@example.com">Email Us</a>
+
+<!-- Phone link (mobile friendly) -->
+<a href="tel:+1234567890">Call Us</a>
+
+<!-- Link to a section on the same page -->
+<a href="#section-id">Jump to Section</a>
+
+<!-- The section to jump to -->
+<h2 id="section-id">This Section</h2>
+        </textarea>
+      </div>
+
+      <h4>Lists</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="20" readonly>
+<!-- Unordered list (bullet points) -->
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+
+<!-- Ordered list (numbered) -->
+<ol>
+  <li>First step</li>
+  <li>Second step</li>
+  <li>Third step</li>
+</ol>
+
+<!-- Definition list -->
+<dl>
+  <dt>HTML</dt>
+  <dd>HyperText Markup Language</dd>
+  <dt>CSS</dt>
+  <dd>Cascading Style Sheets</dd>
+</dl>
+        </textarea>
+      </div>
+
+      <h4>Images</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="12" readonly>
+<!-- Basic image -->
+<img src="image.jpg" alt="Description of the image">
+
+<!-- Image with size attributes -->
+<img src="image.jpg" alt="Description" width="300" height="200">
+
+<!-- Image with a link -->
+<a href="page.html">
+  <img src="button.jpg" alt="Click here">
+</a>
+        </textarea>
+      </div>
+
+      <h4>Tables</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="22" readonly>
+<table>
+  <!-- Table caption (optional) -->
+  <caption>Monthly Savings</caption>
+
+  <!-- Table header -->
+  <thead>
+    <tr>
+      <th>Month</th>
+      <th>Savings</th>
+    </tr>
+  </thead>
+
+  <!-- Table body -->
+  <tbody>
+    <tr>
+      <td>January</td>
+      <td>$100</td>
+    </tr>
+    <tr>
+      <td>February</td>
+      <td>$150</td>
+    </tr>
+  </tbody>
+</table>
+        </textarea>
+      </div>
+
+      <h4>Forms</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="35" readonly>
+<form action="/submit-form" method="post">
+  <!-- Text input -->
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" placeholder="Enter your name">
+
+  <!-- Email input -->
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required>
+
+  <!-- Password input -->
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password">
+
+  <!-- Radio buttons -->
+  <p>Gender:</p>
+  <input type="radio" id="male" name="gender" value="male">
+  <label for="male">Male</label>
+  <input type="radio" id="female" name="gender" value="female">
+  <label for="female">Female</label>
+
+  <!-- Checkboxes -->
+  <p>Interests:</p>
+  <input type="checkbox" id="coding" name="interests" value="coding">
+  <label for="coding">Coding</label>
+  <input type="checkbox" id="music" name="interests" value="music">
+  <label for="music">Music</label>
+
+  <!-- Dropdown select -->
+  <label for="country">Country:</label>
+  <select id="country" name="country">
+    <option value="usa">USA</option>
+    <option value="canada">Canada</option>
+    <option value="uk">UK</option>
+  </select>
+
+  <!-- Text area -->
+  <label for="message">Message:</label>
+  <textarea id="message" name="message" rows="4" cols="50"></textarea>
+
+  <!-- Submit button -->
+  <input type="submit" value="Submit">
+</form>
+        </textarea>
+      </div>
+
+      <h4>Semantic Elements</h4>
+      <p>HTML5 introduced semantic elements that clearly describe their meaning to both the browser and the developer:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+<header>
+  <!-- Website header with logo, navigation, etc. -->
+  <h1>Website Title</h1>
+  <nav>
+    <!-- Navigation menu -->
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <!-- Main content of the page -->
+  <article>
+    <!-- A self-contained composition -->
+    <h2>Article Title</h2>
+    <p>Article content...</p>
+  </article>
+
+  <aside>
+    <!-- Sidebar content, related but not main content -->
+    <h3>Related Links</h3>
+    <!-- Sidebar content -->
+  </aside>
+</main>
+
+<footer>
+  <!-- Website footer with copyright, contact info, etc. -->
+  <p>&copy; 2023 My Website</p>
+</footer>
+        </textarea>
+      </div>
+
+      <h3>HTML Comments</h3>
+      <p>Comments are not displayed by the browser but are useful for documentation:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="4" readonly>
+<!-- This is a comment in HTML -->
+<!-- Comments can span
+     multiple lines -->
+        </textarea>
+      </div>
+
+      <h3>HTML Best Practices</h3>
+      <ul>
+        <li>Always use lowercase for HTML tags and attributes</li>
+        <li>Close all HTML elements, even self-closing ones (e.g., <code>&lt;img /&gt;</code>)</li>
+        <li>Use semantic HTML elements whenever possible</li>
+        <li>Add proper indentation for better readability</li>
+        <li>Always include the doctype declaration</li>
+        <li>Always include alt attributes for images</li>
+        <li>Use meaningful title elements</li>
+        <li>Validate your HTML code using validator services</li>
+      </ul>
+
+      <div class="practice-container">
+        <h3>Practice: HTML Structure</h3>
+        <p>Create a simple HTML page with a heading, a paragraph, an unordered list with three items, and an image with an alt attribute.</p>
+        <textarea id="html-practice" class="practice-area" rows="12" placeholder="Write your HTML code here..."></textarea>
+        <button onclick="checkAnswer('html-practice')">Check Answer</button>
+        <div id="html-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+
+    <div id="css-basics" class="web-section" style="display: none;">
+      <h2>CSS Styling</h2>
+      <p>CSS (Cascading Style Sheets) is a stylesheet language used to describe the presentation of a document written in HTML. CSS controls the layout, colors, fonts, and visual appearance of web pages.</p>
+
+      <h3>CSS Syntax</h3>
+      <p>CSS rules consist of a selector and a declaration block:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="10" readonly>
+/* Syntax: selector { property: value; property: value; } */
+
+h1 {
+  color: blue;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+        </textarea>
+      </div>
+
+      <h3>CSS Selectors</h3>
+      <p>Selectors determine which HTML elements the styles apply to:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="30" readonly>
+/* Element selector - selects all <p> elements */
+p {
+  color: gray;
+  line-height: 1.6;
+}
+
+/* Class selector - selects elements with class="intro" */
+.intro {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* ID selector - selects the element with id="header" */
+#header {
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+/* Descendant selector - selects all <p> inside <div> */
+div p {
+  margin-left: 20px;
+}
+
+/* Child selector - selects all <li> that are direct children of <ul> */
+ul > li {
+  list-style-type: square;
+}
+
+/* Adjacent sibling selector - selects <p> that directly follows <h2> */
+h2 + p {
+  font-style: italic;
+}
+
+/* Attribute selector - selects elements with specific attributes */
+input[type="text"] {
+  border: 1px solid gray;
+  padding: 5px;
+}
+        </textarea>
+      </div>
+
+      <h3>CSS Box Model</h3>
+      <p>All HTML elements can be considered as boxes with content, padding, border, and margin areas:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="18" readonly>
+/* Box model components */
+.box {
+  /* Content area */
+  width: 300px;
+  height: 200px;
+
+  /* Padding - space between content and border */
+  padding: 20px;
+
+  /* Border - surrounds the padding */
+  border: 2px solid black;
+
+  /* Margin - space outside the border */
+  margin: 30px;
+
+  /* Set box-sizing to include padding and border in element's total width/height */
+  box-sizing: border-box;
+}
+        </textarea>
+      </div>
+
+      <h3>CSS Colors and Backgrounds</h3>
+      <p>CSS provides various ways to specify colors and background properties:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+/* Different ways to specify colors */
+.color-examples {
+  color: red;                     /* Color name */
+  color: #ff0000;                 /* Hex value */
+  color: rgb(255, 0, 0);          /* RGB value */
+  color: rgba(255, 0, 0, 0.5);    /* RGBA (with alpha/transparency) */
+  color: hsl(0, 100%, 50%);       /* HSL (hue, saturation, lightness) */
+  color: hsla(0, 100%, 50%, 0.5); /* HSLA (with alpha) */
+}
+
+/* Background properties */
+.background-examples {
+  background-color: #f0f0f0;
+  background-image: url('image.jpg');
+  background-repeat: no-repeat;   /* Options: repeat, repeat-x, repeat-y, no-repeat */
+  background-position: center;    /* Position background image */
+  background-size: cover;         /* Options: auto, cover, contain, specific values */
+
+  /* Shorthand property */
+  background: #f0f0f0 url('image.jpg') no-repeat center/cover;
+}
+        </textarea>
+      </div>
+
+      <h3>CSS Text and Typography</h3>
+      <p>CSS provides properties for styling text content:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+/* Font properties */
+.text-styling {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  font-weight: bold;         /* Options: normal, bold, 100-900 */
+  font-style: italic;        /* Options: normal, italic, oblique */
+
+  /* Shorthand font property */
+  font: italic bold 16px/1.5 'Arial', sans-serif;
+}
+
+/* Text properties */
+.text-properties {
+  color: #333;
+  text-align: center;        /* Options: left, right, center, justify */
+  text-decoration: underline; /* Options: none, underline, overline, line-through */
+  text-transform: uppercase;  /* Options: none, uppercase, lowercase, capitalize */
+  text-indent: 20px;
+  letter-spacing: 2px;
+  word-spacing: 5px;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+        </textarea>
+      </div>
+
+      <h3>CSS Layout and Positioning</h3>
+      <p>CSS offers various ways to control element positioning and layout:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="35" readonly>
+/* Display property */
+.display-examples {
+  display: block;         /* Starts on a new line, takes full width */
+  display: inline;        /* Stays in line with text, only takes needed width */
+  display: inline-block;  /* Inline but can set width/height */
+  display: flex;          /* Flexible box layout */
+  display: grid;          /* Grid layout */
+  display: none;          /* Removes element from document flow */
+}
+
+/* Position properties */
+.position-examples {
+  position: static;       /* Default - follows normal document flow */
+
+  position: relative;     /* Positioned relative to normal position */
+  top: 10px;              /* Move down 10px from normal position */
+  left: 20px;             /* Move right 20px from normal position */
+
+  position: absolute;     /* Positioned relative to nearest positioned ancestor */
+  top: 0;                 /* Distance from top edge of positioned ancestor */
+  right: 0;               /* Distance from right edge of positioned ancestor */
+
+  position: fixed;        /* Positioned relative to viewport (stays on screen) */
+  bottom: 20px;           /* Distance from bottom of viewport */
+  right: 20px;            /* Distance from right of viewport */
+
+  position: sticky;       /* Hybrid of relative and fixed */
+  top: 0;                 /* Sticks to top when scrolled to that position */
+}
+
+/* Float and clear properties */
+.float-examples {
+  float: left;            /* Element floats to the left */
+  float: right;           /* Element floats to the right */
+  float: none;            /* Default behavior */
+}
+
+/* Clear floats */
+.clear-examples {
+  clear: left;            /* No floating elements allowed on left side */
+  clear: right;           /* No floating elements allowed on right side */
+  clear: both;            /* No floating elements allowed on either side */
+}
+        </textarea>
+      </div>
+
+      <h3>CSS Flexbox</h3>
+      <p>Flexbox is a layout model designed for one-dimensional layouts:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="30" readonly>
+/* Container (parent) properties */
+.flex-container {
+  display: flex;
+
+  /* Main axis direction */
+  flex-direction: row;          /* Default: left to right */
+  /* flex-direction: row-reverse; */  /* right to left */
+  /* flex-direction: column; */       /* top to bottom */
+  /* flex-direction: column-reverse; */ /* bottom to top */
+
+  /* Wrapping behavior */
+  flex-wrap: wrap;              /* Items wrap to new lines when needed */
+
+  /* Shorthand for direction and wrap */
+  flex-flow: row wrap;
+
+  /* Alignment along main axis */
+  justify-content: space-between; /* Options: flex-start, flex-end, center, space-around, space-evenly */
+
+  /* Alignment along cross axis */
+  align-items: center;         /* Options: flex-start, flex-end, center, stretch, baseline */
+
+  /* Alignment of multiple lines (when wrapped) */
+  align-content: space-around;  /* Similar options to justify-content */
+}
+
+/* Item (child) properties */
+.flex-item {
+  order: 2;                   /* Controls item order, default is 0 */
+  flex-grow: 1;               /* Growth factor, default is 0 */
+  flex-shrink: 0;             /* Shrink factor, default is 1 */
+  flex-basis: 200px;          /* Initial main size, default is auto */
+
+  /* Shorthand for grow, shrink, and basis */
+  flex: 1 0 200px;
+
+  /* Individual alignment (overrides container's align-items) */
+  align-self: flex-end;
+}
+        </textarea>
+      </div>
+
+      <h3>CSS Grid</h3>
+      <p>CSS Grid is a layout system designed for two-dimensional layouts:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="30" readonly>
+/* Container (parent) properties */
+.grid-container {
+  display: grid;
+
+  /* Define columns and rows */
+  grid-template-columns: 1fr 2fr 1fr;      /* Three columns with proportional widths */
+  grid-template-rows: 100px auto 100px;    /* Three rows with specific heights */
+
+  /* Alternative with repeat() function */
+  /* grid-template-columns: repeat(3, 1fr); */
+
+  /* Gap between grid items */
+  gap: 20px;                    /* Space between rows and columns */
+  row-gap: 10px;                /* Space between rows only */
+  column-gap: 20px;             /* Space between columns only */
+
+  /* Alignment of all items within their areas */
+  justify-items: center;        /* Horizontal alignment (start, end, center, stretch) */
+  align-items: center;          /* Vertical alignment (start, end, center, stretch) */
+
+  /* Alignment of entire grid within container */
+  justify-content: space-evenly; /* Horizontal alignment */
+  align-content: center;         /* Vertical alignment */
+}
+
+/* Item (child) properties */
+.grid-item {
+  /* Placement by specific grid line numbers */
+  grid-column-start: 1;
+  grid-column-end: 3;           /* or grid-column-end: span 2; to span 2 columns */
+  grid-row-start: 1;
+  grid-row-end: 2;
+
+  /* Shorthand properties */
+  grid-column: 1 / 3;           /* or grid-column: 1 / span 2; */
+  grid-row: 1 / 2;
+
+  /* Ultra shorthand for both row and column */
+  grid-area: 1 / 1 / 2 / 3;     /* row-start / column-start / row-end / column-end */
+
+  /* Individual alignment within cell */
+  justify-self: start;          /* Horizontal alignment */
+  align-self: end;              /* Vertical alignment */
+}
+        </textarea>
+      </div>
+
+      <h3>CSS Responsive Design</h3>
+      <p>Media queries and responsive units enable designs that adapt to different screen sizes:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="32" readonly>
+/* Responsive units */
+.responsive-units {
+  /* Relative to font-size */
+  font-size: 1.2em;             /* Relative to parent's font-size */
+  margin-bottom: 2rem;          /* Relative to root element's font-size */
+
+  /* Relative to viewport */
+  width: 80vw;                  /* 80% of viewport width */
+  height: 50vh;                 /* 50% of viewport height */
+
+  /* Min/max constraints */
+  width: 80%;
+  max-width: 1200px;
+  min-width: 320px;
+}
+
+/* Media queries */
+/* Base styles for mobile devices */
+.responsive-example {
+  width: 100%;
+  font-size: 16px;
+}
+
+/* Tablets and larger */
+@media screen and (min-width: 768px) {
+  .responsive-example {
+    width: 80%;
+    font-size: 18px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+  .responsive-example {
+    width: 70%;
+    max-width: 1200px;
+    font-size: 20px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+        </textarea>
+      </div>
+
+      <div class="practice-container">
+        <h3>Practice: CSS Styling</h3>
+        <p>Create CSS rules to style a navigation menu with the following requirements:</p>
+        <ul>
+          <li>The menu should be horizontal with items spaced evenly</li>
+          <li>Menu items should have padding, a background color, and rounded corners</li>
+          <li>When hovered, menu items should change color smoothly (use a transition)</li>
+          <li>The menu should be responsive (stack vertically on small screens using a media query)</li>
+        </ul>
+        <textarea id="css-practice" class="practice-area" rows="15" placeholder="Write your CSS code here..."></textarea>
+        <button onclick="checkAnswer('css-practice')">Check Answer</button>
+        <div id="css-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+
+    <div id="js-basics" class="web-section" style="display: none;">
+      <h2>JavaScript Fundamentals</h2>
+      <p>JavaScript is a programming language that allows you to implement complex features on web pages. It enables interactive web applications, dynamic content updates, and much more.</p>
+
+      <h3>Adding JavaScript to HTML</h3>
+      <p>There are three ways to include JavaScript in an HTML document:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="20" readonly>
+<!-- 1. Inline JavaScript -->
+<button onclick="alert('Hello, World!')">Click Me</button>
+
+<!-- 2. Internal JavaScript using <script> tags -->
+<script>
+  function greet() {
+    alert('Hello from internal script!');
+  }
+</script>
+<button onclick="greet()">Greet</button>
+
+<!-- 3. External JavaScript file -->
+<script src="script.js"></script>
+
+<!-- External JavaScript with defer (loads after HTML parsing) -->
+<script src="script.js" defer></script>
+
+<!-- External JavaScript with async (loads asynchronously) -->
+<script src="script.js" async></script>
+        </textarea>
+      </div>
+
+      <h3>Variables and Data Types</h3>
+      <p>JavaScript provides different ways to declare variables and supports various data types:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="35" readonly>
+// Variable declarations
+let name = 'John';         // Block-scoped variable (preferred)
+const age = 30;            // Block-scoped constant (cannot be reassigned)
+var score = 100;           // Function-scoped variable (older style)
+
+// Primitive data types
+let string = 'Hello';      // String - text
+let number = 42;           // Number - integers and floats
+let decimal = 3.14;        // Also a Number
+let boolean = true;        // Boolean - true or false
+let undefinedVar;          // undefined - declared but not assigned
+let nullVar = null;        // null - explicitly set to no value
+let bigInt = 9007199254740991n; // BigInt - for very large integers
+let symbol = Symbol('id'); // Symbol - unique identifier
+
+// Type checking
+console.log(typeof string);  // "string"
+console.log(typeof number);  // "number"
+console.log(typeof boolean); // "boolean"
+
+// Type conversion
+let numStr = "42";
+let num = Number(numStr);  // Convert string to number
+let str = String(num);     // Convert number to string
+let bool = Boolean(num);   // Convert to boolean (0, "", null, undefined, NaN convert to false)
+
+// Complex data types
+// Arrays - ordered collections
+let fruits = ['apple', 'banana', 'orange'];
+console.log(fruits[0]);    // Access by index: "apple"
+fruits.push('mango');      // Add to the end
+fruits.pop();              // Remove from the end
+console.log(fruits.length); // Array length: 3
+
+// Objects - key-value pairs
+let person = {
+  firstName: 'John',
+  lastName: 'Doe',
+  age: 30,
+  greet: function() {
+    return `Hello, my name is ${this.firstName}`;
+  }
+};
+console.log(person.firstName);  // Dot notation: "John"
+console.log(person['lastName']); // Bracket notation: "Doe"
+console.log(person.greet());    // Method call: "Hello, my name is John"
+        </textarea>
+      </div>
+
+      <h3>Operators and Control Flow</h3>
+      <p>JavaScript includes various operators for arithmetic, comparison, logical operations, and control flow:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="40" readonly>
+// Arithmetic operators
+let sum = 5 + 3;           // Addition: 8
+let difference = 10 - 5;   // Subtraction: 5
+let product = 4 * 3;       // Multiplication: 12
+let quotient = 20 / 4;     // Division: 5
+let remainder = 10 % 3;    // Modulus (remainder): 1
+let power = 2 ** 3;        // Exponentiation: 8
+
+// Comparison operators
+console.log(5 == 5);       // Equal to: true
+console.log(5 === '5');    // Strict equal (value and type): false
+console.log(5 != 8);       // Not equal to: true
+console.log(10 > 5);       // Greater than: true
+console.log(5 >= 5);       // Greater than or equal to: true
+
+// Logical operators
+console.log(true && true); // Logical AND: true
+console.log(true || false); // Logical OR: true
+console.log(!true);        // Logical NOT: false
+
+// Conditional statements
+let userAge = 20;
+if (userAge >= 18) {
+  console.log('You are an adult');
+} else {
+  console.log('You are a minor');
+}
+
+// Switch statement
+let day = 2;
+switch (day) {
+  case 1:
+    console.log('Monday');
+    break;
+  case 2:
+    console.log('Tuesday');
+    break;
+  case 3:
+    console.log('Wednesday');
+    break;
+  default:
+    console.log('Other day');
+}
+
+// Loops
+// for loop
+for (let i = 0; i < 5; i++) {
+  console.log(`Iteration ${i}`);
+}
+
+// while loop
+let count = 0;
+while (count < 5) {
+  console.log(`Count: ${count}`);
+  count++;
+}
+
+// for...of loop (iterating over arrays)
+let colors = ['red', 'green', 'blue'];
+for (let color of colors) {
+  console.log(color);
+}
+        </textarea>
+      </div>
+
+      <h3>Functions</h3>
+      <p>Functions allow you to group code into reusable blocks:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+// Function declaration
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+console.log(greet('John')); // "Hello, John!"
+
+// Function expression
+const sayHello = function(name) {
+  return `Hello, ${name}!`;
+};
+console.log(sayHello('Jane')); // "Hello, Jane!"
+
+// Arrow function (ES6+)
+const welcome = (name) => `Welcome, ${name}!`;
+console.log(welcome('Alice')); // "Welcome, Alice!"
+
+// Functions with default parameters
+function multiply(a, b = 1) {
+  return a * b;
+}
+console.log(multiply(5));    // 5 (b defaults to 1)
+console.log(multiply(5, 3)); // 15
+
+// Rest parameters
+function sum(...numbers) {
+  return numbers.reduce((total, num) => total + num, 0);
+}
+console.log(sum(1, 2, 3, 4)); // 10
+        </textarea>
+      </div>
+
+      <h3>DOM Manipulation Basics</h3>
+      <p>The Document Object Model (DOM) represents the HTML document as a tree of objects that JavaScript can manipulate:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+// Selecting elements
+// By ID
+const header = document.getElementById('header');
+
+// By class name
+const items = document.getElementsByClassName('item');
+
+// Using CSS selectors (returns first match)
+const container = document.querySelector('.container');
+
+// Using CSS selectors (returns all matches)
+const buttons = document.querySelectorAll('button');
+
+// Modifying content
+const title = document.querySelector('h1');
+title.textContent = 'New Title'; // Change text content
+title.innerHTML = 'New <span>Title</span>'; // Change HTML content
+
+// Changing styles
+const element = document.querySelector('.my-element');
+element.style.color = 'red';
+element.style.backgroundColor = 'black';
+element.style.fontSize = '20px';
+
+// Adding and removing classes
+element.classList.add('highlight');
+element.classList.remove('old-class');
+element.classList.toggle('active'); // Add if missing, remove if present
+        </textarea>
+      </div>
+
+      <h3>Events</h3>
+      <p>JavaScript can respond to various events that occur on a webpage:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+// Adding event listeners
+const button = document.querySelector('button');
+
+// Using addEventListener
+button.addEventListener('click', function() {
+  alert('Button clicked!');
+});
+
+// Using event object
+button.addEventListener('click', function(event) {
+  console.log('Target element:', event.target);
+  console.log('Mouse position:', event.clientX, event.clientY);
+
+  // Prevent default behavior
+  event.preventDefault();
+});
+
+// Common events
+// Mouse events
+element.addEventListener('click', handleClick);      // Click
+element.addEventListener('mouseover', handleMouseOver); // Mouse enters element
+element.addEventListener('mouseout', handleMouseOut);   // Mouse leaves element
+
+// Keyboard events
+document.addEventListener('keydown', handleKeyDown);  // Key pressed
+document.addEventListener('keyup', handleKeyUp);      // Key released
+
+// Form events
+form.addEventListener('submit', handleSubmit);        // Form submission
+input.addEventListener('change', handleChange);       // Input value changes
+        </textarea>
+      </div>
+
+      <div class="practice-container">
+        <h3>Practice: JavaScript Basics</h3>
+        <p>Write a JavaScript function that takes an array of numbers and returns a new array containing only the even numbers. Test your function with the array [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].</p>
+        <textarea id="js-practice" class="practice-area" rows="15" placeholder="Write your JavaScript code here..."></textarea>
+        <button onclick="checkAnswer('js-practice')">Check Answer</button>
+        <div id="js-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+
+    <div id="responsive-design" class="web-section" style="display: none;">
+      <h2>Responsive Design</h2>
+      <p>Responsive web design makes your web page look good on all devices (desktops, tablets, and phones) by using CSS media queries and flexible layouts.</p>
+
+      <h3>Responsive Design Principles</h3>
+      <p>Key principles that make responsive design effective:</p>
+
+      <ul>
+        <li><strong>Fluid Grids:</strong> Using relative units (%, em, rem) instead of fixed units (px)</li>
+        <li><strong>Flexible Images:</strong> Images that scale with their container</li>
+        <li><strong>Media Queries:</strong> CSS rules that apply based on device characteristics</li>
+        <li><strong>Mobile-First Approach:</strong> Designing for mobile devices first, then progressively enhancing for larger screens</li>
+      </ul>
+
+      <h3>Viewport Setup</h3>
+      <p>The viewport meta tag ensures proper scaling on all devices:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="5" readonly>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </textarea>
+      </div>
+
+      <p>This tag tells the browser to:</p>
+      <ul>
+        <li>Set the width of the viewport to the device width</li>
+        <li>Set the initial zoom level to 1.0 (no zoom)</li>
+      </ul>
+
+      <h3>Responsive Units</h3>
+      <p>Using relative units creates more flexible layouts:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+/* Fixed units */
+.fixed-width {
+  width: 300px;        /* Always 300 pixels wide regardless of screen size */
+}
+
+/* Relative units */
+.fluid-width {
+  width: 80%;          /* 80% of parent element's width */
+}
+
+/* Font-relative units */
+.text-container {
+  font-size: 16px;     /* Base font size */
+  padding: 1em;        /* 16px (relative to the element's font-size) */
+  margin-bottom: 1.5rem; /* 24px (relative to root element's font-size) */
+  line-height: 1.5;    /* 1.5 times the element's font size */
+}
+
+/* Viewport-relative units */
+.hero-section {
+  height: 50vh;        /* 50% of viewport height */
+  width: 100vw;        /* 100% of viewport width */
+  padding: 5vmin;      /* 5% of viewport's smaller dimension */
+}
+
+/* Using min/max properties for constraints */
+.container {
+  width: 90%;          /* Fluid width */
+  max-width: 1200px;   /* But never wider than 1200px */
+  min-width: 320px;    /* And never narrower than 320px */
+}
+        </textarea>
+      </div>
+
+      <h3>Media Queries</h3>
+      <p>Media queries allow you to apply different CSS styles based on device characteristics:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="40" readonly>
+/* Media query syntax */
+@media mediatype and (expression) {
+  /* CSS rules to apply when conditions match */
+}
+
+/* Common mediatypes: screen, print, all */
+/* Common expressions: width, height, orientation, resolution */
+
+/* Basic responsive layout (Mobile-first approach) */
+
+/* Base styles for mobile devices (small screens) */
+.container {
+  width: 100%;
+  padding: 10px;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styles for tablets (medium screens) */
+@media screen and (min-width: 768px) {
+  .container {
+    width: 750px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .nav-menu {
+    flex-direction: row;
+  }
+
+  .column {
+    width: 50%;
+    float: left;
+  }
+}
+
+/* Styles for desktops (large screens) */
+@media screen and (min-width: 1024px) {
+  .container {
+    width: 970px;
+  }
+
+  .column {
+    width: 33.33%;
+  }
+}
+
+/* Portrait vs. Landscape */
+@media screen and (orientation: portrait) {
+  /* Applied when height > width (portrait mode) */
+  .sidebar {
+    display: none;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  /* Applied when width > height (landscape mode) */
+  .sidebar {
+    display: block;
+    width: 250px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+
+  body {
+    font-size: 12pt;
+    color: black;
+    background-color: white;
+  }
+
+  a::after {
+    content: " (" attr(href) ")";
+  }
+}
+        </textarea>
+      </div>
+
+      <h3>Responsive Images</h3>
+      <p>Images need special consideration to make them responsive:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="35" readonly>
+/* Basic responsive image */
+.responsive-img {
+  max-width: 100%;     /* Never wider than container */
+  height: auto;        /* Maintain aspect ratio */
+}
+
+/* Using HTML attributes */
+<img src="image.jpg" style="max-width:100%;height:auto;" alt="Description">
+
+/* Using the picture element for art direction */
+<picture>
+  <!-- Small screens/mobile -->
+  <source media="(max-width: 600px)" srcset="small-image.jpg">
+
+  <!-- Medium screens/tablets -->
+  <source media="(max-width: 1024px)" srcset="medium-image.jpg">
+
+  <!-- Default/large screens -->
+  <img src="large-image.jpg" alt="Description">
+</picture>
+
+/* Using srcset for resolution switching */
+<img src="default.jpg"
+     srcset="small.jpg 500w,
+             medium.jpg 1000w,
+             large.jpg 2000w"
+     sizes="(max-width: 600px) 100vw,
+            (max-width: 1200px) 50vw,
+            33vw"
+     alt="Description">
+<!-- Explanation:
+     - srcset provides image options with their widths
+     - sizes tells browser what size the image will be shown at
+     - Browser chooses the best image based on screen size and resolution
+-->
+
+/* Background images in CSS */
+.hero {
+  background-image: url('large-bg.jpg');
+  background-size: cover;  /* Cover entire container */
+  background-position: center;  /* Center the image */
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    background-image: url('small-bg.jpg');  /* Smaller image for mobile */
+  }
+}
+        </textarea>
+      </div>
+
+      <h3>Responsive Typography</h3>
+      <p>Text should be readable on all devices without requiring zooming:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="30" readonly>
+/* Base font size on the body */
+body {
+  font-size: 16px;  /* Good baseline for readability */
+  line-height: 1.5; /* Comfortable line spacing */
+}
+
+/* Responsive headings */
+h1 {
+  font-size: 2rem;      /* 32px if body is 16px */
+  margin-bottom: 0.5em; /* Margin relative to h1's font size */
+}
+
+@media screen and (min-width: 768px) {
+  h1 {
+    font-size: 2.5rem;  /* Larger on bigger screens */
+  }
+}
+
+/* Using fluid typography (scales smoothly) */
+h2 {
+  /* Starts at 1.5rem, scales up to 2rem as viewport increases */
+  font-size: calc(1.5rem + 0.5vw);
+}
+
+/* Fluid typography with clamp() (modern approach) */
+h3 {
+  /* Min: 1.2rem, Preferred: 4vw, Max: 2rem */
+  font-size: clamp(1.2rem, 4vw, 2rem);
+}
+
+/* Consider line length for readability */
+p {
+  max-width: 70ch;  /* Limits line length to about 70 characters */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Font size adjustment for different devices */
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 14px;  /* Slightly smaller for very small screens */
+  }
+}
+        </textarea>
+      </div>
+
+      <h3>Responsive Layouts with Flexbox</h3>
+      <p>Flexbox makes creating responsive layouts much easier:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="40" readonly>
+/* Basic responsive flexbox container */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;  /* Key for responsive - allows items to wrap */
+}
+
+/* Flex items */
+.flex-item {
+  flex: 1 1 300px;  /* Grow, shrink, basis */
+  /* This means: grow proportionally, shrink if needed, start at 300px */
+  margin: 10px;
+}
+
+/* Mobile-first responsive navigation */
+.nav {
+  display: flex;
+  flex-direction: column;  /* Stack vertically on mobile */
+  width: 100%;
+}
+
+.nav-item {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Switch to horizontal layout on larger screens */
+@media screen and (min-width: 768px) {
+  .nav {
+    flex-direction: row;  /* Horizontal on desktop */
+    justify-content: space-around;
+  }
+}
+
+/* Responsive card layout */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  flex: 0 1 100%;  /* Full width on mobile */
+  max-width: 100%;
+  margin: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Adjust cards for tablets */
+@media screen and (min-width: 600px) {
+  .card {
+    flex: 0 1 calc(50% - 20px);  /* Two cards per row, accounting for margin */
+    max-width: calc(50% - 20px);
+  }
+}
+
+/* Adjust cards for desktop */
+@media screen and (min-width: 1024px) {
+  .card {
+    flex: 0 1 calc(33.33% - 20px);  /* Three cards per row */
+    max-width: calc(33.33% - 20px);
+  }
+}
+        </textarea>
+      </div>
+
+      <h3>Responsive Grid Layouts</h3>
+      <p>CSS Grid provides powerful capabilities for responsive layouts:</p>
+
+      <div class="code-container">
+        <textarea class="code-area" rows="40" readonly>
+/* Basic responsive grid container */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* Creates columns that:
+     - Fill available space (auto-fill)
+     - Each column is minimum 250px wide
+     - Columns share available space (1fr each)
+  */
+  gap: 20px;  /* Space between items */
+}
+
+/* Each grid item will automatically fit */
+.grid-item {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+/* Complex responsive grid layout */
+.page-layout {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "sidebar"
+    "footer";
+  /* Mobile layout: stacked vertically */
+}
+
+/* Grid area assignments */
+.header { grid-area: header; }
+.nav { grid-area: nav; }
+.main { grid-area: main; }
+.sidebar { grid-area: sidebar; }
+.footer { grid-area: footer; }
+
+/* Tablet layout */
+@media screen and (min-width: 768px) {
+  .page-layout {
+    grid-template-columns: 3fr 1fr;  /* Main content takes 3/4, sidebar 1/4 */
+    grid-template-areas:
+      "header header"
+      "nav nav"
+      "main sidebar"
+      "footer footer";
+  }
+}
+
+/* Desktop layout */
+@media screen and (min-width: 1024px) {
+  .page-layout {
+    grid-template-columns: 1fr 3fr 1fr;  /* nav | main | sidebar */
+    grid-template-areas:
+      "header header header"
+      "nav main sidebar"
+      "footer footer footer";
+  }
+
+  /* Make nav sticky for desktop */
+  .nav {
+    position: sticky;
+    top: 0;
+    height: 100vh;  /* Full height */
+  }
+}
+        </textarea>
+      </div>
+
+      <h3>Responsive Design Testing</h3>
+      <p>To ensure your responsive design works properly, test your site using:</p>
+
+      <ul>
+        <li><strong>Browser Developer Tools:</strong> Most browsers have device emulation tools</li>
+        <li><strong>Actual Devices:</strong> Test on real smartphones, tablets, and desktops</li>
+        <li><strong>Responsive Testing Services:</strong> Online tools that show your site on multiple screen sizes</li>
+        <li><strong>Testing Across Browsers:</strong> Ensure compatibility with Chrome, Firefox, Safari, Edge</li>
+      </ul>
+
+      <div class="practice-container">
+        <h3>Practice: Responsive Design</h3>
+        <p>Create a responsive navigation menu that displays as a horizontal menu on desktop screens and converts to a stacked vertical menu on mobile screens (below 768px). Include hover effects and a background color change at different breakpoints.</p>
+        <textarea id="responsive-practice" class="practice-area" rows="15" placeholder="Write your CSS code here..."></textarea>
+        <button onclick="checkAnswer('responsive-practice')">Check Answer</button>
+        <div id="responsive-practice-feedback" class="feedback"></div>
+      </div>
+    </div>
+
+    <div id="web-projects" class="web-section" style="display: none;">
+      <h2>Simple Web Projects</h2>
+      <p>Apply your HTML, CSS, and JavaScript knowledge to create simple yet effective web applications. These projects will help you practice and combine all the skills you've learned so far.</p>
+
+      <h3>Project 1: Interactive To-Do List</h3>
+      <p>Create a simple to-do list application that allows users to add, check off, and delete tasks.</p>
+
+      <h4>Learning Goals:</h4>
+      <ul>
+        <li>DOM manipulation</li>
+        <li>Event handling</li>
+        <li>Form input processing</li>
+        <li>Local storage for data persistence</li>
+      </ul>
+
+      <h4>HTML Structure:</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="20" readonly>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List App</title>
+  <link rel="stylesheet" href="todo-style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>My To-Do List</h1>
+
+    <form id="task-form">
+      <input type="text" id="task-input" placeholder="Add a new task..." required>
+      <button type="submit" id="add-button">Add Task</button>
+    </form>
+
+    <ul id="task-list">
+      <!-- Tasks will be added here dynamically with JavaScript -->
+    </ul>
+
+    <div class="controls">
+      <button id="clear-completed">Clear Completed</button>
+      <button id="clear-all">Clear All</button>
+    </div>
+  </div>
+
+  <script src="todo-script.js"></script>
+</body>
+</html>
+        </textarea>
+      </div>
+
+      <h4>CSS Styling:</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+/* Basic styles for the To-Do List app */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+#task-form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#task-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  font-size: 16px;
+}
+
+#add-button {
+  padding: 12px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#add-button:hover {
+  background-color: #45a049;
+}
+
+#task-list {
+  list-style-type: none;
+  margin-bottom: 20px;
+}
+
+.task-item {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task-complete {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.task-text {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.controls button {
+  padding: 8px 12px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #333;
+}
+
+.controls button:hover {
+  background-color: #ddd;
+}
+        </textarea>
+      </div>
+
+      <h4>JavaScript Implementation:</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="35" readonly>
+// DOM Elements
+const taskForm = document.getElementById('task-form');
+const taskInput = document.getElementById('task-input');
+const taskList = document.getElementById('task-list');
+const clearCompletedBtn = document.getElementById('clear-completed');
+const clearAllBtn = document.getElementById('clear-all');
+
+// Load tasks from local storage
+document.addEventListener('DOMContentLoaded', loadTasks);
+
+// Event Listeners
+taskForm.addEventListener('submit', addTask);
+clearCompletedBtn.addEventListener('click', clearCompleted);
+clearAllBtn.addEventListener('click', clearAll);
+
+// Add a new task
+function addTask(e) {
+  e.preventDefault();
+
+  if (taskInput.value.trim() === '') return;
+
+  // Create task item
+  const taskItem = document.createElement('li');
+  taskItem.className = 'task-item';
+
+  // Create checkbox
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.addEventListener('change', toggleComplete);
+
+  // Create task text
+  const taskText = document.createElement('span');
+  taskText.className = 'task-text';
+  taskText.textContent = taskInput.value;
+
+  // Create delete button
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'delete-btn';
+  deleteBtn.textContent = 'Delete';
+  deleteBtn.addEventListener('click', deleteTask);
+
+  // Append to task item
+  taskItem.appendChild(checkbox);
+  taskItem.appendChild(taskText);
+  taskItem.appendChild(deleteBtn);
+
+  // Add to task list
+  taskList.appendChild(taskItem);
+
+  // Save to local storage
+  saveTasks();
+
+  // Clear input
+  taskInput.value = '';
+}
+
+// Toggle task complete
+function toggleComplete(e) {
+  const taskText = e.target.nextElementSibling;
+
+  if (e.target.checked) {
+    taskText.classList.add('task-complete');
+  } else {
+    taskText.classList.remove('task-complete');
+  }
+
+  saveTasks();
+}
+
+// Delete task
+function deleteTask(e) {
+  const taskItem = e.target.parentElement;
+  taskList.removeChild(taskItem);
+  saveTasks();
+}
+
+// Clear completed tasks
+function clearCompleted() {
+  const completedTasks = document.querySelectorAll('input[type="checkbox"]:checked');
+
+  completedTasks.forEach(task => {
+    taskList.removeChild(task.parentElement);
+  });
+
+  saveTasks();
+}
+
+// Clear all tasks
+function clearAll() {
+  taskList.innerHTML = '';
+  saveTasks();
+}
+
+// Save tasks to local storage
+function saveTasks() {
+  const tasks = [];
+
+  document.querySelectorAll('.task-item').forEach(taskItem => {
+    const taskText = taskItem.querySelector('.task-text').textContent;
+    const isComplete = taskItem.querySelector('input[type="checkbox"]').checked;
+
+    tasks.push({
+      text: taskText,
+      completed: isComplete
+    });
+  });
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// Load tasks from local storage
+function loadTasks() {
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+  tasks.forEach(task => {
+    // Create task item
+    const taskItem = document.createElement('li');
+    taskItem.className = 'task-item';
+
+    // Create checkbox
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = task.completed;
+    checkbox.addEventListener('change', toggleComplete);
+
+    // Create task text
+    const taskText = document.createElement('span');
+    taskText.className = 'task-text';
+    if (task.completed) {
+      taskText.classList.add('task-complete');
+    }
+    taskText.textContent = task.text;
+
+    // Create delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', deleteTask);
+
+    // Append to task item
+    taskItem.appendChild(checkbox);
+    taskItem.appendChild(taskText);
+    taskItem.appendChild(deleteBtn);
+
+    // Add to task list
+    taskList.appendChild(taskItem);
+  });
+}
+        </textarea>
+      </div>
+
+      <h4>Implementation Steps:</h4>
+      <ol>
+        <li>Create three files: <code>index.html</code>, <code>todo-style.css</code>, and <code>todo-script.js</code></li>
+        <li>Copy the HTML, CSS, and JavaScript code into their respective files</li>
+        <li>Open the HTML file in a browser to test your application</li>
+        <li>Try adding, checking off, and deleting tasks</li>
+        <li>Close and reopen the browser to verify that your tasks persist (local storage)</li>
+      </ol>
+
+      <h3>Project 2: Image Gallery with Lightbox</h3>
+      <p>Create an image gallery with a lightbox feature that expands images when clicked and allows navigation between them.</p>
+
+      <h4>Learning Goals:</h4>
+      <ul>
+        <li>DOM manipulation for creating and updating elements</li>
+        <li>Event delegation for handling multiple elements</li>
+        <li>CSS transitions and animations</li>
+        <li>Responsive design principles</li>
+      </ul>
+
+      <h4>HTML Structure:</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery with Lightbox</title>
+  <link rel="stylesheet" href="gallery-style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Image Gallery</h1>
+
+    <div class="gallery">
+      <!-- Replace these with your own images -->
+      <div class="gallery-item">
+        <img src="https://source.unsplash.com/random/300x200?1" alt="Gallery Image 1">
+      </div>
+      <div class="gallery-item">
+        <img src="https://source.unsplash.com/random/300x200?2" alt="Gallery Image 2">
+      </div>
+      <div class="gallery-item">
+        <img src="https://source.unsplash.com/random/300x200?3" alt="Gallery Image 3">
+      </div>
+      <div class="gallery-item">
+        <img src="https://source.unsplash.com/random/300x200?4" alt="Gallery Image 4">
+      </div>
+      <div class="gallery-item">
+        <img src="https://source.unsplash.com/random/300x200?5" alt="Gallery Image 5">
+      </div>
+      <div class="gallery-item">
+        <img src="https://source.unsplash.com/random/300x200?6" alt="Gallery Image 6">
+      </div>
+    </div>
+
+    <!-- Lightbox container (initially hidden) -->
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-content">
+        <span class="close">&times;</span>
+        <img id="lightbox-img" src="" alt="Lightbox Image">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+        <div class="lightbox-controls">
+          <button id="prev-btn">&lt; Previous</button>
+          <button id="next-btn">Next &gt;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="gallery-script.js"></script>
+</body>
+</html>
+        </textarea>
+      </div>
+
+      <h4>CSS Styling:</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="35" readonly>
+/* Basic styles for the Image Gallery */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Gallery styles */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.03);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+/* Lightbox styles */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+}
+
+.close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+#lightbox-img {
+  max-width: 100%;
+  max-height: 80vh;
+  display: block;
+  object-fit: contain;
+}
+
+.lightbox-caption {
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.lightbox-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.lightbox-controls button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.lightbox-controls button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+
+  .gallery-item img {
+    height: 150px;
+  }
+
+  .lightbox-controls button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+        </textarea>
+      </div>
+
+      <h4>JavaScript Implementation:</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="35" readonly>
+// DOM Elements
+const gallery = document.querySelector('.gallery');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCaption = document.getElementById('lightbox-caption');
+const closeBtn = document.querySelector('.close');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+
+// Gallery Items
+const galleryItems = document.querySelectorAll('.gallery-item img');
+let currentIndex = 0;
+
+// Event Listeners
+gallery.addEventListener('click', openLightbox);
+closeBtn.addEventListener('click', closeLightbox);
+prevBtn.addEventListener('click', showPrevImage);
+nextBtn.addEventListener('click', showNextImage);
+document.addEventListener('keydown', handleKeyboardInput);
+
+// Functions
+function openLightbox(e) {
+  // Check if the clicked element is an image
+  if (e.target.tagName === 'IMG') {
+    lightbox.classList.add('active');
+
+    // Get the clicked image
+    const clickedImg = e.target;
+
+    // Set current image and caption
+    lightboxImg.src = clickedImg.src;
+    lightboxCaption.textContent = clickedImg.alt;
+
+    // Find index of current image
+    galleryItems.forEach((item, index) => {
+      if (item === clickedImg) {
+        currentIndex = index;
+      }
+    });
+
+    // Disable scrolling on body
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+
+  // Re-enable scrolling
+  document.body.style.overflow = 'auto';
+}
+
+function showPrevImage() {
+  currentIndex--;
+  if (currentIndex < 0) {
+    currentIndex = galleryItems.length - 1;
+  }
+  updateLightboxImage();
+}
+
+function showNextImage() {
+  currentIndex++;
+  if (currentIndex >= galleryItems.length) {
+    currentIndex = 0;
+  }
+  updateLightboxImage();
+}
+
+function updateLightboxImage() {
+  // Add a fade-out effect
+  lightboxImg.style.opacity = 0;
+
+  setTimeout(() => {
+    // Update image and caption
+    lightboxImg.src = galleryItems[currentIndex].src;
+    lightboxCaption.textContent = galleryItems[currentIndex].alt;
+
+    // Fade back in
+    lightboxImg.style.opacity = 1;
+  }, 300);
+}
+
+function handleKeyboardInput(e) {
+  if (!lightbox.classList.contains('active')) return;
+
+  if (e.key === 'Escape') {
+    closeLightbox();
+  } else if (e.key === 'ArrowLeft') {
+    showPrevImage();
+  } else if (e.key === 'ArrowRight') {
+    showNextImage();
+  }
+}
+
+// Add a click event on the lightbox background to close it
+lightbox.addEventListener('click', function(e) {
+  // Close only if the click is on the black background (not on the image)
+  if (e.target === lightbox) {
+    closeLightbox();
+  }
+});
+
+// Add fade transition for the lightbox image
+lightboxImg.style.transition = 'opacity 0.3s ease';
+        </textarea>
+      </div>
+
+      <h4>Implementation Steps:</h4>
+      <ol>
+        <li>Create three files: <code>index.html</code>, <code>gallery-style.css</code>, and <code>gallery-script.js</code></li>
+        <li>Copy the HTML, CSS, and JavaScript code into their respective files</li>
+        <li>Replace the placeholder image URLs with your own images or keep the Unsplash random image URLs</li>
+        <li>Open the HTML file in a browser to test your gallery</li>
+        <li>Click on images to open the lightbox and use the navigation controls to browse the gallery</li>
+      </ol>
+
+      <h3>Project 3: Weather Dashboard App</h3>
+      <p>Create a weather dashboard that fetches and displays current weather data from a public API.</p>
+
+      <h4>Learning Goals:</h4>
+      <ul>
+        <li>Working with APIs and fetch requests</li>
+        <li>Handling asynchronous JavaScript (promises/async-await)</li>
+        <li>Processing and displaying JSON data</li>
+        <li>Dynamic UI updates based on data</li>
+      </ul>
+
+      <h4>HTML Structure:</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="25" readonly>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="weather-style.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Weather Dashboard</h1>
+
+    <div class="search-container">
+      <form id="weather-form">
+        <input type="text" id="city-input" placeholder="Enter city name..." required>
+        <button type="submit">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </form>
+    </div>
+
+    <div class="weather-container" id="weather-container">
+      <!-- Weather data will be displayed here -->
+      <div class="placeholder-text">
+        Enter a city name to see weather information
+      </div>
+    </div>
+
+    <div class="history-container">
+      <h3>Search History</h3>
+      <ul id="search-history">
+        <!-- Search history will be displayed here -->
+      </ul>
+      <button id="clear-history">Clear History</button>
+    </div>
+  </div>
+
+  <script src="weather-script.js"></script>
+</body>
+</html>
+        </textarea>
+      </div>
+
+      <h4>CSS Styling:</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="35" readonly>
+/* Basic styles for the Weather Dashboard */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background: linear-gradient(to right, #83a4d4, #b6fbff);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+button {
+  padding: 12px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.weather-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.placeholder-text {
+  text-align: center;
+  color: #777;
+  font-size: 18px;
+}
+
+.weather-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.weather-info {
+  flex: 1;
+}
+
+.city-name {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.date {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.temp {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail i {
+  color: #4361ee;
+  font-size: 18px;
+}
+
+.weather-icon img {
+  width: 100px;
+  height: 100px;
+}
+
+.history-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.history-container h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+#search-history {
+  list-style-type: none;
+  margin-bottom: 15px;
+}
+
+#search-history li {
+  padding: 10px;
+  background-color: #f1f1f1;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#search-history li:hover {
+  background-color: #e1e1e1;
+}
+
+#clear-history {
+  width: 100%;
+  background-color: #f44336;
+}
+
+#clear-history:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .weather-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .weather-details {
+    grid-template-columns: 1fr;
+  }
+}
+        </textarea>
+      </div>
+
+      <h4>JavaScript Implementation:</h4>
+      <div class="code-container">
+        <textarea class="code-area" rows="50" readonly>
+// API key for OpenWeatherMap (get your own key by signing up at openweathermap.org)
+const apiKey = 'YOUR_API_KEY_HERE';
+
+// DOM Elements
+const weatherForm = document.getElementById('weather-form');
+const cityInput = document.getElementById('city-input');
+const weatherContainer = document.getElementById('weather-container');
+const searchHistory = document.getElementById('search-history');
+const clearHistoryBtn = document.getElementById('clear-history');
+
+// Load search history from local storage
+let searchHistoryArray = JSON.parse(localStorage.getItem('weatherSearchHistory')) || [];
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize the search history list
+  updateSearchHistoryList();
+
+  // If there's history, show the last searched city's weather
+  if (searchHistoryArray.length > 0) {
+    getWeatherData(searchHistoryArray[0]);
+  }
+});
+
+weatherForm.addEventListener('submit', handleFormSubmit);
+clearHistoryBtn.addEventListener('click', clearSearchHistory);
+searchHistory.addEventListener('click', handleHistoryClick);
+
+// Functions
+function handleFormSubmit(e) {
+  e.preventDefault();
+
+  const city = cityInput.value.trim();
+  if (!city) return;
+
+  getWeatherData(city);
+  cityInput.value = '';
+}
+
+function handleHistoryClick(e) {
+  if (e.target.tagName === 'LI') {
+    const city = e.target.textContent;
+    getWeatherData(city);
+  }
+}
+
+async function getWeatherData(city) {
+  try {
+    // Show loading state
+    weatherContainer.innerHTML = `<div class="placeholder-text">Loading weather data for ${city}...</div>`;
+
+    // Fetch weather data
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+    );
+
+    if (!response.ok) {
+      throw new Error('City not found or API error');
+    }
+
+    const data = await response.json();
+
+    // Update the UI with weather data
+    displayWeatherData(data);
+
+    // Update search history
+    updateSearchHistory(city);
+
+  } catch (error) {
+    weatherContainer.innerHTML = `
+      <div class="placeholder-text">
+        <p>Error: ${error.message}</p>
+        <p>Please try again with a valid city name.</p>
+      </div>
+    `;
+  }
+}
+
+function displayWeatherData(data) {
+  // Format date
+  const date = new Date();
+  const formattedDate = date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  // Get weather icon
+  const iconCode = data.weather[0].icon;
+  const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+  // Create HTML for weather card
+  const html = `
+    <div class="weather-card">
+      <div class="weather-info">
+        <h2 class="city-name">${data.name}, ${data.sys.country}</h2>
+        <p class="date">${formattedDate}</p>
+        <p class="temp">${Math.round(data.main.temp)}°C</p>
+        <p class="weather-description">${data.weather[0].description}</p>
+      </div>
+      <div class="weather-icon">
+        <img src="${iconUrl}" alt="${data.weather[0].description}">
+      </div>
+    </div>
+
+    <div class="weather-details">
+      <div class="detail">
+        <i class="fas fa-temperature-high"></i>
+        <div>
+          <p>Feels Like</p>
+          <p>${Math.round(data.main.feels_like)}°C</p>
+        </div>
+      </div>
+      <div class="detail">
+        <i class="fas fa-tint"></i>
+        <div>
+          <p>Humidity</p>
+          <p>${data.main.humidity}%</p>
+        </div>
+      </div>
+      <div class="detail">
+        <i class="fas fa-wind"></i>
+        <div>
+          <p>Wind Speed</p>
+          <p>${data.wind.speed} m/s</p>
+        </div>
+      </div>
+      <div class="detail">
+        <i class="fas fa-compress-arrows-alt"></i>
+        <div>
+          <p>Pressure</p>
+          <p>${data.main.pressure} hPa</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  weatherContainer.innerHTML = html;
+}
+
+function updateSearchHistory(city) {
+  // Remove city if it already exists in history
+  searchHistoryArray = searchHistoryArray.filter(item => item.toLowerCase() !== city.toLowerCase());
+
+  // Add to beginning of array
+  searchHistoryArray.unshift(city);
+
+  // Keep only last 5 searches
+  if (searchHistoryArray.length > 5) {
+    searchHistoryArray.pop();
+  }
+
+  // Save to local storage
+  localStorage.setItem('weatherSearchHistory', JSON.stringify(searchHistoryArray));
+
+  // Update UI
+  updateSearchHistoryList();
+}
+
+function updateSearchHistoryList() {
+  searchHistory.innerHTML = '';
+
+  searchHistoryArray.forEach(city => {
+    const listItem = document.createElement('li');
+    listItem.textContent = city;
+    searchHistory.appendChild(listItem);
+  });
+
+  // Show/hide clear button based on history existence
+  clearHistoryBtn.style.display = searchHistoryArray.length ? 'block' : 'none';
+}
+
+function clearSearchHistory() {
+  searchHistoryArray = [];
+  localStorage.removeItem('weatherSearchHistory');
+  updateSearchHistoryList();
+}
+        </textarea>
+      </div>
+
+      <h4>Implementation Steps:</h4>
+      <ol>
+        <li>Create three files: <code>index.html</code>, <code>weather-style.css</code>, and <code>weather-script.js</code></li>
+        <li>Copy the HTML, CSS, and JavaScript code into their respective files</li>
+        <li>Sign up for a free API key at <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a> and replace <code>YOUR_API_KEY_HERE</code> in the JavaScript file</li>
+        <li>Open the HTML file in a browser to test your weather dashboard</li>
+        <li>Search for different cities to see their weather information</li>
+        <li>Check if your search history persists when you close and reopen the page</li>
+      </ol>
+
+      <h3>Next Steps and Project Extensions</h3>
+      <p>Once you've completed these basic projects, you can extend them with additional features:</p>
+
+      <h4>To-Do List Extensions:</h4>
+      <ul>
+        <li>Add due dates to tasks</li>
+        <li>Implement task categories or tags</li>
+        <li>Add task priority levels</li>
+        <li>Create multiple lists (e.g., work, personal, shopping)</li>
+        <li>Add drag-and-drop reordering</li>
+      </ul>
+
+      <h4>Image Gallery Extensions:</h4>
+      <ul>
+        <li>Add image filtering by categories</li>
+        <li>Implement search functionality</li>
+        <li>Add lazy loading for better performance</li>
+        <li>Implement touch swipe gestures for mobile</li>
+        <li>Create an upload feature for adding new images</li>
+      </ul>
+
+      <h4>Weather Dashboard Extensions:</h4>
+      <ul>
+        <li>Add a 5-day forecast section</li>
+        <li>Implement geolocation to get local weather</li>
+        <li>Add charts for temperature trends</li>
+        <li>Include a map view of the weather</li>
+        <li>Add unit conversion (Celsius/Fahrenheit)</li>
+      </ul>
+
+      <p>Remember to commit your projects to GitHub to build your portfolio and showcase your skills to potential employers or clients!</p>
+    </div>
+  </div>
+
+  <script>
+    // Initialize the page by showing HTML section and setting up event handlers
+    window.onload = function() {
+      // Make HTML tab active by default
+      document.getElementById('web-html').style.display = 'block';
+
+      // Show the html practice category by default in the practice section
+      document.getElementById('html-practice').style.display = 'block';
+
+      // Prevent clicking on coming soon links
+      document.querySelectorAll('.coming-soon').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Optionally show a message
+          const feedbackDiv = document.createElement('div');
+          feedbackDiv.className = 'info';
+          feedbackDiv.innerHTML = '<p>This practice problem will be available soon!</p>';
+
+          // Find the closest practice category and append the message
+          const category = this.closest('.practice-category');
+
+          // Remove any existing messages
+          const existingMessages = category.querySelectorAll('.info');
+          existingMessages.forEach(msg => msg.remove());
+
+          // Add the new message
+          category.appendChild(feedbackDiv);
+
+          // Remove the message after 3 seconds
+          setTimeout(() => {
+            feedbackDiv.remove();
+          }, 3000);
+        });
+      });
+    };
+
+    // Function to toggle between web content sections
+    function toggleSection(sectionId) {
+      // Hide all sections first
+      const sections = document.querySelectorAll('.web-section');
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+
+      // Show selected section
+      document.getElementById(sectionId).style.display = 'block';
+    }
+  </script>
+
+  <style>
+    /* Add styles for the web practice section */
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Fix text color for better visibility */
+    #content p, #content ul, #content ol, #content li {
+      color: #eee;
+    }
+
+    /* Practice Section Styles */
+    .practice-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .practice-navigation button {
+      padding: 8px 16px;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .practice-navigation button:hover,
+    .practice-navigation button.active {
+      background-color: #555;
+    }
+
+    .practice-category {
+      margin-bottom: 30px;
+      padding: 15px;
+      background-color: #222;
+      border-radius: 5px;
+      border: 1px solid #333;
+    }
+
+    .practice-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .practice-list li {
+      margin: 10px 0;
+    }
+
+    .practice-list a {
+      color: #4d94ff;
+      text-decoration: none;
+      padding: 5px 0;
+      display: block;
+    }
+
+    .practice-list a:hover {
+      color: #80b3ff;
+      text-decoration: underline;
+    }
+
+    /* Style for coming soon links */
+    .coming-soon {
+      color: #666 !important;
+      cursor: default;
+      position: relative;
+      opacity: 0.7;
+      text-decoration: none !important;
+    }
+
+    .coming-soon:hover {
+      color: #666 !important;
+    }
+
+    .coming-soon::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      width: 8px;
+      height: 8px;
+      background-color: #555;
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+
+    .info {
+      padding: 15px;
+      background-color: #1a2a3a;
+      border-left: 4px solid #2196f3;
+      border-radius: 0 5px 5px 0;
+      margin: 15px 0;
+    }
+  </style>
+</body>
+</html>
