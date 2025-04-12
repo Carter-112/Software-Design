@@ -13,6 +13,7 @@
   <script src="solution-fix.js"></script>
   <script src="diagnostic.js"></script>
   <script src="navigation.js"></script>
+  <script src="mobile-nav.js"></script>
 </head>
 <body>
   <header>
@@ -39,7 +40,7 @@
   <!-- Page Content -->
   <div id="content">
     <h1>Red-Black Tree – Full Class</h1>
-    
+
     <!-- Block 1: Class Declaration, Fields & Constructor -->
     <div class="method">
       <h3>Class Declaration, Fields & Constructor</h3>
@@ -88,7 +89,7 @@ public class RedBlackTree&lt;E extends Comparable&lt;E&gt;&gt; implements Iterab
 		}
 	}</code></pre>
     </div>
-    
+
     <!-- Block 2: Insert Method -->
     <div class="method">
       <h3>Insert Method</h3>
@@ -97,7 +98,7 @@ public class RedBlackTree&lt;E extends Comparable&lt;E&gt;&gt; implements Iterab
       <button class="check-btn" onclick="toggleSolution('rbt-insert-solution')">Check Answer</button>
       <pre id="rbt-insert-solution"><code>/**
  * Inserts the specified element to this tree if it is not already present.
- * 
+ *
  * @param e Element to add
  * @return true if the element was added
  */
@@ -126,7 +127,7 @@ private TreeNode&lt;E&gt; insert(TreeNode&lt;E&gt; h, E e) {
 	return h;
 }</code></pre>
     </div>
-    
+
     <!-- Block 3: Contains Method -->
     <div class="method">
       <h3>Contains Method</h3>
@@ -135,7 +136,7 @@ private TreeNode&lt;E&gt; insert(TreeNode&lt;E&gt; h, E e) {
       <button class="check-btn" onclick="toggleSolution('rbt-contains-solution')">Check Answer</button>
       <pre id="rbt-contains-solution"><code>/**
  * Returns true if this tree contains the specified element.
- * 
+ *
  * @param e Element to test for presence
  * @return true if the element exists
  */
@@ -149,7 +150,7 @@ public boolean contains(E e) {
 	return false;
 }</code></pre>
     </div>
-    
+
     <!-- Block 4: Remove Method -->
     <div class="method">
       <h3>Remove Method</h3>
@@ -158,7 +159,7 @@ public boolean contains(E e) {
       <button class="check-btn" onclick="toggleSolution('rbt-remove-solution')">Check Answer</button>
       <pre id="rbt-remove-solution"><code>/**
  * Removes the specified element if it exists in the tree.
- * 
+ *
  * @param e Element to remove
  * @return true if the element was removed
  */
@@ -199,7 +200,7 @@ private TreeNode&lt;E&gt; deleteMin(TreeNode&lt;E&gt; h) {
 	return fixUp(h);
 }</code></pre>
     </div>
-    
+
     <!-- Block 5: Find Min Method -->
     <div class="method">
       <h3>Find Min Method</h3>
@@ -208,7 +209,7 @@ private TreeNode&lt;E&gt; deleteMin(TreeNode&lt;E&gt; h) {
       <button class="check-btn" onclick="toggleSolution('rbt-findmin-solution')">Check Answer</button>
       <pre id="rbt-findmin-solution"><code>/**
  * Returns the minimum element in the tree.
- * 
+ *
  * @return Minimum element
  */
 public E findMin() {
@@ -221,7 +222,7 @@ private TreeNode&lt;E&gt; min(TreeNode&lt;E&gt; node) {
 	return node;
 }</code></pre>
     </div>
-    
+
     <!-- Block 6: Traversal Methods -->
     <div class="method">
       <h3>Traversal Methods</h3>
@@ -257,7 +258,7 @@ public void levelOrderTraversal() {
 	}
 }</code></pre>
     </div>
-    
+
     <!-- Block 7: Iterator Implementation -->
     <div class="method">
       <h3>Iterator Implementation</h3>
@@ -300,7 +301,7 @@ private class RBTIterator implements Iterator&lt;E&gt; {
 	}
 }</code></pre>
     </div>
-    
+
     <!-- Block 8: Red-Black Tree Helper Methods -->
     <div class="method">
       <h3>Red-Black Tree Helper Methods</h3>
@@ -363,7 +364,7 @@ private TreeNode&lt;E&gt; fixUp(TreeNode&lt;E&gt; h) {
 	return h;
 }</code></pre>
     </div>
-    
+
     <!-- Block 9: ToString Method -->
     <div class="method">
       <h3>ToString Method</h3>
@@ -377,7 +378,7 @@ public String toString() {
 	return "[ " + (root != null ? root.toString() : "") + " ]";
 }</code></pre>
     </div>
-    
+
     <!-- Block 10: Main Method -->
     <div class="method">
       <h3>Main Method</h3>
@@ -390,36 +391,36 @@ public String toString() {
 public static void main(String[] args) {
 	// Create a new Red-Black Tree
 	RedBlackTree&lt;Integer&gt; rbt = new RedBlackTree&lt;&gt;();
-	
+
 	// Add some values
 	int[] values = {50, 30, 70, 20, 40, 60, 80};
 	for (int value : values) {
 		rbt.insert(value);
 		System.out.println("After inserting " + value + ": " + rbt);
 	}
-	
+
 	// Test traversals
 	System.out.println("\nInorder traversal:");
 	rbt.inorderTraversal();
-	
+
 	System.out.println("\nLevel order traversal:");
 	rbt.levelOrderTraversal();
-	
+
 	// Test iterator
 	System.out.println("\nUsing iterator:");
 	for (Integer i : rbt) {
 		System.out.print(i + " ");
 	}
 	System.out.println();
-	
+
 	// Test contains and remove
 	System.out.println("\nContains 40: " + rbt.contains(40));
 	System.out.println("Contains 100: " + rbt.contains(100));
-	
+
 	System.out.println("\nBefore removing 30: " + rbt);
 	rbt.remove(30);
 	System.out.println("After removing 30: " + rbt);
-	
+
 	// Test findMin
 	System.out.println("\nMinimum value: " + rbt.findMin());
 }</code></pre>
