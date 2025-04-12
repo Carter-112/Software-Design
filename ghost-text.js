@@ -43,24 +43,21 @@ document.addEventListener('DOMContentLoaded', function() {
     hintText.textContent = 'Type to practice, ghost text will guide you';
     container.appendChild(hintText);
 
-    // Extract code from solution block
+    // Extract code from solution block - use the exact code without processing
     const solutionCode = solutionBlock.querySelector('code').innerText;
 
-    // Process the solution code to create appropriate ghost text
-    const processedCode = processCodeForGhost(solutionCode);
-
     // Set initial ghost text
-    updateGhostText(textarea, ghostText, processedCode);
+    updateGhostText(textarea, ghostText, solutionCode);
 
     // Update ghost text when user types and handle auto-scrolling
     textarea.addEventListener('input', function() {
-      updateGhostText(textarea, ghostText, processedCode);
+      updateGhostText(textarea, ghostText, solutionCode);
       autoScrollIfNeeded(textarea);
     });
 
     // Update ghost text when user clicks or focuses
     textarea.addEventListener('focus', function() {
-      updateGhostText(textarea, ghostText, processedCode);
+      updateGhostText(textarea, ghostText, solutionCode);
     });
 
     // Update ghost text on scroll to keep alignment
@@ -121,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         this.selectionStart = this.selectionEnd = start + 2;
 
         // Update ghost text
-        updateGhostText(textarea, ghostText, processedCode);
+        updateGhostText(textarea, ghostText, solutionCode);
         autoScrollIfNeeded(textarea);
       }
     });
@@ -243,9 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
       // If user is way off track, don't show ghost text
       ghostElement.innerHTML = '';
     } else {
-      // Use a non-breaking space for empty lines to maintain line height
+      // Show the exact remaining code from the solution
       let formattedRemainingCode = escapeHTML(remainingCode);
-      formattedRemainingCode = formattedRemainingCode.replace(/\n/g, '\n&nbsp;').replace(/\n&nbsp;([^\s])/g, '\n$1');
 
       // Add the invisible matched text followed by the visible remaining code
       ghostElement.innerHTML = matchedText + formattedRemainingCode;
@@ -301,42 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
 
-  /**
-   * Processes code to create appropriate ghost text
-   * - Removes comments
-   * - Simplifies complex expressions
-   * - Adds structural hints
-   */
-  function processCodeForGhost(code) {
-    // Process the code to make it more helpful as ghost text
 
-    // Remove multi-line comments
-    let processedCode = code.replace(/\/\*[\s\S]*?\*\//g, '');
-
-    // Remove single-line comments
-    processedCode = processedCode.replace(/\/\/.*$/gm, '');
-
-    // Replace complex expressions with simpler placeholders
-    // For example, replace complex lambda expressions with simpler ones
-    processedCode = processedCode.replace(/\(\s*[^\)]+\s*\)\s*->\s*\{[\s\S]*?\}/g, '() -> { /* code */ }');
-
-    // Replace complex method bodies with placeholders while keeping structure
-    processedCode = processedCode.replace(/\{([\s\S]*?)\}/g, function(match, body) {
-      // If the body is more than 5 lines, simplify it
-      if ((body.match(/\n/g) || []).length > 5) {
-        // Keep the first line and last line, replace middle with a comment
-        const lines = body.split('\n');
-        if (lines.length > 2) {
-          const firstLine = lines[0];
-          const lastLine = lines[lines.length - 1];
-          return '{ ' + firstLine + '\n  // ... more code ...\n' + lastLine + ' }';
-        }
-      }
-      return match; // Keep shorter method bodies as is
-    });
-
-    return processedCode;
-  }
 });
 
 // Add CSS for ghost text
