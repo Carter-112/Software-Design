@@ -1026,6 +1026,19 @@ code {
     max-width: 100vw;
     font-size: 14px;
     line-height: 1.4;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Prevent horizontal overflow */
+  #content, .method, pre, code, textarea {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
   }
 
   * {
@@ -1219,6 +1232,19 @@ code {
     margin-bottom: 8px;
     background-color: #222;
     border: 1px solid #333;
+    box-sizing: border-box;
+  }
+
+  /* Adjust code display for small screens */
+  pre, code {
+    font-size: 12px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
   }
 
   #content {
@@ -1227,6 +1253,9 @@ code {
     background-color: #1a1a1a;
     border: none;
     width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   /* Typography */
@@ -1244,6 +1273,41 @@ code {
     border: none;
     border-left: 2px solid var(--highlight-color);
     overflow-x: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ensure code doesn't overflow */
+  pre code {
+    max-width: 100%;
+    display: inline-block;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* Mobile-specific solution classes */
+  .mobile-solution {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+
+  .mobile-code {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    max-width: 100% !important;
+    word-break: break-word !important;
+  }
+
+  /* Shrink long type declarations */
+  .mobile-code .generic-type {
+    display: inline-block;
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
   }
 
   pre::before {
@@ -1323,6 +1387,17 @@ code {
     padding: 15px;
     width: 100% !important;
     max-width: 100% !important;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  /* Ensure code blocks fit in landscape */
+  pre, code {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 12px;
   }
 
   h1 {
