@@ -87,39 +87,110 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateGhostText(textarea, ghostElement, fullCode) {
     const userText = textarea.value;
 
-    // Find the common prefix between user text and full code
+    // Create a non-visible span to measure text width
+    const measureSpan = document.createElement('span');
+    measureSpan.style.visibility = 'hidden';
+    measureSpan.style.position = 'absolute';
+    measureSpan.style.whiteSpace = 'pre';
+    measureSpan.style.font = getComputedStyle(textarea).font;
+    document.body.appendChild(measureSpan);
+
+    // Find the common prefix between user text and full code (case-insensitive)
     let commonLength = 0;
-    while (commonLength < userText.length &&
-           commonLength < fullCode.length &&
-           userText[commonLength] === fullCode[commonLength]) {
-      commonLength++;
+    while (commonLength < userText.length && commonLength < fullCode.length) {
+      // Case-insensitive comparison
+      if (userText[commonLength].toLowerCase() === fullCode[commonLength].toLowerCase()) {
+        commonLength++;
+      } else {
+        // Check for whitespace differences (space vs tab)
+        if (isWhitespace(userText[commonLength]) && isWhitespace(fullCode[commonLength])) {
+          commonLength++;
+        } else {
+          break;
+        }
+      }
     }
 
     // Get the remaining code to show as ghost text
     let remainingCode = fullCode.substring(commonLength);
 
-    // If user has typed something that doesn't match, don't show ghost text
-    if (userText.length > 0 && commonLength < userText.length) {
-      remainingCode = '';
+    // Create a placeholder for the matched text (to maintain alignment)
+    let matchedText = '';
+    if (commonLength > 0) {
+      // Use invisible text that takes up space to maintain alignment
+      matchedText = '<span style="color: transparent;">' +
+                    escapeHTML(userText.substring(0, commonLength)) +
+                    '</span>';
     }
 
-    // Update ghost text content
-    ghostElement.textContent = remainingCode;
+    // Only hide ghost text if user is typing something completely different
+    // Allow for small differences like capitalization
+    let isWayOff = false;
+    if (userText.length > 0 && commonLength < userText.length) {
+      // Check if the user is just typing with different capitalization
+      const lowerUserText = userText.toLowerCase();
+      const lowerFullCode = fullCode.toLowerCase();
 
-    // Calculate cursor position for alignment
-    const cursorPosition = getCursorPosition(textarea);
+      let lowerCommonLength = 0;
+      while (lowerCommonLength < lowerUserText.length &&
+             lowerCommonLength < lowerFullCode.length &&
+             lowerUserText[lowerCommonLength] === lowerFullCode[lowerCommonLength]) {
+        lowerCommonLength++;
+      }
 
-    // Position ghost text to align with textarea and cursor
+      // If the lowercase comparison is significantly better, user is just using different case
+      // Otherwise, they're typing something completely different
+      if (lowerCommonLength <= commonLength + 3 && lowerCommonLength < userText.length) {
+        // The user is way off track - they're typing something completely different
+        isWayOff = true;
+      }
+    }
+
+    // Update ghost text content with proper alignment
+    if (isWayOff) {
+      // If user is way off track, don't show ghost text
+      ghostElement.innerHTML = '';
+    } else {
+      // Use a non-breaking space for empty lines to maintain line height
+      let formattedRemainingCode = escapeHTML(remainingCode);
+      formattedRemainingCode = formattedRemainingCode.replace(/\n/g, '\n&nbsp;').replace(/\n&nbsp;([^\s])/g, '\n$1');
+
+      // Add the invisible matched text followed by the visible remaining code
+      ghostElement.innerHTML = matchedText + formattedRemainingCode;
+    }
+
+    // Position ghost text to align with textarea
     ghostElement.style.top = textarea.offsetTop + 'px';
     ghostElement.style.left = textarea.offsetLeft + 'px';
     ghostElement.style.width = textarea.offsetWidth + 'px';
     ghostElement.style.height = textarea.offsetHeight + 'px';
-    ghostElement.style.paddingLeft = textarea.style.paddingLeft;
-    ghostElement.style.paddingTop = textarea.style.paddingTop;
+    ghostElement.style.padding = getComputedStyle(textarea).padding;
 
     // Scroll ghost text to match textarea scroll position
     ghostElement.scrollTop = textarea.scrollTop;
     ghostElement.scrollLeft = textarea.scrollLeft;
+
+    // Clean up measurement span
+    document.body.removeChild(measureSpan);
+  }
+
+  /**
+   * Checks if a character is whitespace (space, tab, newline)
+   */
+  function isWhitespace(char) {
+    return char === ' ' || char === '\t' || char === '\n' || char === '\r';
+  }
+
+  /**
+   * Escapes HTML special characters
+   */
+  function escapeHTML(text) {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
   /**
@@ -197,6 +268,10 @@ textarea {
   line-height: 1.5;
   resize: both;
   overflow: auto;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+  tab-size: 2;
+  -moz-tab-size: 2;
 }
 
 .ghost-text {
@@ -216,6 +291,8 @@ textarea {
   box-sizing: border-box;
   line-height: 1.5;
   background-color: rgba(0, 0, 0, 0.2);
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
 }
 
 /* Make scrollbars visible and usable */
