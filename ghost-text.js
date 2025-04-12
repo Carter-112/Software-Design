@@ -9,7 +9,19 @@ document.addEventListener('DOMContentLoaded', function() {
   // Find all method blocks with textareas and solution code blocks
   const methodBlocks = document.querySelectorAll('.method');
 
+  // Add a style to ensure method blocks don't restrict scrolling
+  const methodStyle = document.createElement('style');
+  methodStyle.textContent = `
+    .method {
+      overflow: visible !important;
+    }
+  `;
+  document.head.appendChild(methodStyle);
+
   methodBlocks.forEach(block => {
+    // Ensure the method block doesn't restrict scrolling
+    block.style.overflow = 'visible';
+
     const textarea = block.querySelector('textarea');
     const solutionId = block.querySelector('.check-btn').getAttribute('onclick').match(/toggleSolution\('(.+?)'\)/)[1];
     const solutionBlock = document.getElementById(solutionId);
@@ -81,28 +93,59 @@ document.addEventListener('DOMContentLoaded', function() {
     let touchStartX = 0;
     let scrollTopStart = 0;
     let scrollLeftStart = 0;
+    let isScrolling = false;
 
-    ghostText.addEventListener('touchstart', function(e) {
-      touchStartY = e.touches[0].clientY;
-      touchStartX = e.touches[0].clientX;
-      scrollTopStart = ghostText.scrollTop;
-      scrollLeftStart = ghostText.scrollLeft;
-      e.preventDefault(); // Prevent text selection
-    });
+    // Prevent default touchmove behavior on the container to avoid page scrolling
+    container.addEventListener('touchmove', function(e) {
+      if (isScrolling) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, { passive: false });
 
-    ghostText.addEventListener('touchmove', function(e) {
-      const touchY = e.touches[0].clientY;
-      const touchX = e.touches[0].clientX;
-      const deltaY = touchStartY - touchY;
-      const deltaX = touchStartX - touchX;
+    // Handle touch events on both textarea and ghost text
+    const setupTouchScrolling = function(element) {
+      element.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+        scrollTopStart = textarea.scrollTop;
+        scrollLeftStart = textarea.scrollLeft;
+        isScrolling = true;
 
-      ghostText.scrollTop = scrollTopStart + deltaY;
-      ghostText.scrollLeft = scrollLeftStart + deltaX;
-      textarea.scrollTop = ghostText.scrollTop;
-      textarea.scrollLeft = ghostText.scrollLeft;
+        // Don't prevent default here to allow focus
+      });
 
-      e.preventDefault(); // Prevent page scrolling
-    });
+      element.addEventListener('touchmove', function(e) {
+        if (!isScrolling) return;
+
+        const touchY = e.touches[0].clientY;
+        const touchX = e.touches[0].clientX;
+        const deltaY = touchStartY - touchY;
+        const deltaX = touchStartX - touchX;
+
+        // Apply scrolling to both elements
+        textarea.scrollTop = scrollTopStart + deltaY;
+        textarea.scrollLeft = scrollLeftStart + deltaX;
+        ghostText.scrollTop = textarea.scrollTop;
+        ghostText.scrollLeft = textarea.scrollLeft;
+
+        // Prevent default to avoid page scrolling
+        e.preventDefault();
+        e.stopPropagation();
+      }, { passive: false });
+
+      element.addEventListener('touchend', function() {
+        isScrolling = false;
+      });
+
+      element.addEventListener('touchcancel', function() {
+        isScrolling = false;
+      });
+    };
+
+    // Setup touch scrolling for both elements
+    setupTouchScrolling(textarea);
+    setupTouchScrolling(ghostText);
 
     // Handle tab key for indentation
     textarea.addEventListener('keydown', function(e) {
@@ -307,7 +350,8 @@ style.textContent = `
   position: relative;
   width: 100%;
   margin-bottom: 10px;
-  overflow: hidden;
+  overflow: visible; /* Allow scrollbars to be visible */
+  min-height: 200px; /* Ensure container has enough height */
 }
 
 textarea {
@@ -325,6 +369,12 @@ textarea {
   word-spacing: normal !important;
   tab-size: 2;
   -moz-tab-size: 2;
+  white-space: pre !important; /* Prevent wrapping */
+  overflow-wrap: normal !important;
+  word-wrap: normal !important;
+  min-width: 500px; /* Ensure minimum width to prevent wrapping */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ghost-text {
@@ -337,7 +387,7 @@ textarea {
   font-family: monospace;
   font-size: 14px;
   color: rgba(120, 120, 120, 0.5);
-  white-space: pre;
+  white-space: pre !important;
   overflow: auto;
   pointer-events: auto; /* Enable interaction for scrolling */
   z-index: 1;
@@ -348,6 +398,9 @@ textarea {
   word-spacing: normal !important;
   touch-action: pan-x pan-y; /* Enable touch scrolling */
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  overflow-wrap: normal !important;
+  word-wrap: normal !important;
+  min-width: 500px; /* Ensure minimum width to prevent wrapping */
 }
 
 /* Make scrollbars visible and usable */
@@ -448,6 +501,15 @@ textarea::-webkit-scrollbar-corner,
   /* Make the ghost text container taller on mobile for better scrolling */
   .ghost-text-container {
     min-height: 150px;
+    overflow: visible;
+  }
+
+  /* Ensure no wrapping on mobile */
+  textarea, .ghost-text {
+    min-width: 800px; /* Wider minimum width on mobile to ensure horizontal scrolling */
+    white-space: pre !important;
+    overflow-wrap: normal !important;
+    word-wrap: normal !important;
   }
 
   /* Add scroll indicators that are more visible on mobile */
