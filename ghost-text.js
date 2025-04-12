@@ -227,19 +227,27 @@ document.addEventListener('DOMContentLoaded', function() {
     measureSpan.style.font = getComputedStyle(textarea).font;
     document.body.appendChild(measureSpan);
 
-    // Find the common prefix between user text and full code (case-insensitive)
+    // Normalize the texts by removing extra spaces and converting to lowercase
+    const normalizedUserText = userText.replace(/\s+/g, ' ').toLowerCase();
+    const normalizedFullCode = fullCode.replace(/\s+/g, ' ').toLowerCase();
+
+    // Find the common prefix between normalized texts
     let commonLength = 0;
-    while (commonLength < userText.length && commonLength < fullCode.length) {
-      // Case-insensitive comparison
-      if (userText[commonLength].toLowerCase() === fullCode[commonLength].toLowerCase()) {
-        commonLength++;
+    let normalizedCommonLength = 0;
+
+    // Map positions from normalized text back to original text
+    const userTextMap = createPositionMap(userText);
+    const fullCodeMap = createPositionMap(fullCode);
+
+    while (normalizedCommonLength < normalizedUserText.length &&
+           normalizedCommonLength < normalizedFullCode.length) {
+      // Compare normalized characters
+      if (normalizedUserText[normalizedCommonLength] === normalizedFullCode[normalizedCommonLength]) {
+        normalizedCommonLength++;
+        // Map back to original position
+        commonLength = userTextMap[normalizedCommonLength] || commonLength;
       } else {
-        // Check for whitespace differences (space vs tab)
-        if (isWhitespace(userText[commonLength]) && isWhitespace(fullCode[commonLength])) {
-          commonLength++;
-        } else {
-          break;
-        }
+        break;
       }
     }
 
@@ -306,6 +314,28 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   /**
+   * Creates a mapping from normalized text positions to original text positions
+   */
+  function createPositionMap(text) {
+    const normalized = text.replace(/\s+/g, ' ').toLowerCase();
+    const map = {};
+    let normalizedPos = 0;
+
+    for (let i = 0; i < text.length; i++) {
+      // Skip extra whitespace in original text
+      if (i > 0 && isWhitespace(text[i]) && isWhitespace(text[i-1])) {
+        continue;
+      }
+
+      // Map this normalized position to the original position
+      map[normalizedPos] = i;
+      normalizedPos++;
+    }
+
+    return map;
+  }
+
+  /**
    * Checks if a character is whitespace (space, tab, newline)
    */
   function isWhitespace(char) {
@@ -369,10 +399,9 @@ textarea {
   word-spacing: normal !important;
   tab-size: 2;
   -moz-tab-size: 2;
-  white-space: pre !important; /* Prevent wrapping */
-  overflow-wrap: normal !important;
-  word-wrap: normal !important;
-  min-width: 500px; /* Ensure minimum width to prevent wrapping */
+  white-space: pre-wrap !important; /* Allow wrapping */
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
   width: 100%;
   box-sizing: border-box;
 }
@@ -387,7 +416,7 @@ textarea {
   font-family: monospace;
   font-size: 14px;
   color: rgba(120, 120, 120, 0.5);
-  white-space: pre !important;
+  white-space: pre-wrap !important; /* Allow wrapping */
   overflow: auto;
   pointer-events: auto; /* Enable interaction for scrolling */
   z-index: 1;
@@ -398,9 +427,8 @@ textarea {
   word-spacing: normal !important;
   touch-action: pan-x pan-y; /* Enable touch scrolling */
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  overflow-wrap: normal !important;
-  word-wrap: normal !important;
-  min-width: 500px; /* Ensure minimum width to prevent wrapping */
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
 }
 
 /* Make scrollbars visible and usable */
@@ -504,12 +532,11 @@ textarea::-webkit-scrollbar-corner,
     overflow: visible;
   }
 
-  /* Ensure no wrapping on mobile */
+  /* Ensure wrapping on mobile */
   textarea, .ghost-text {
-    min-width: 800px; /* Wider minimum width on mobile to ensure horizontal scrolling */
-    white-space: pre !important;
-    overflow-wrap: normal !important;
-    word-wrap: normal !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
   }
 
   /* Add scroll indicators that are more visible on mobile */
