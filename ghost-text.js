@@ -252,15 +252,63 @@ document.addEventListener('DOMContentLoaded', function() {
       ghostElement.style.opacity = '0.5'; // Normal opacity
     }
 
+    // Add the full solution text in a hidden div to ensure proper scrolling space
+    // This ensures you can scroll to see all the content even if you haven't typed it yet
+    const fullTextDiv = ghostElement.querySelector('.full-text-spacer') || document.createElement('div');
+    fullTextDiv.className = 'full-text-spacer';
+    fullTextDiv.style.visibility = 'hidden';
+    fullTextDiv.style.position = 'absolute';
+    fullTextDiv.style.top = '0';
+    fullTextDiv.style.left = '0';
+    fullTextDiv.style.width = '100%';
+    fullTextDiv.style.height = 'auto';
+    fullTextDiv.style.pointerEvents = 'none';
+    fullTextDiv.style.whiteSpace = 'pre-wrap';
+    fullTextDiv.style.wordWrap = 'break-word';
+    fullTextDiv.style.overflow = 'visible';
+    fullTextDiv.innerHTML = escapeHTML(fullCode);
+
+    // Add or update the full text spacer
+    if (!ghostElement.querySelector('.full-text-spacer')) {
+      ghostElement.appendChild(fullTextDiv);
+    }
+
     // Position ghost text to align with textarea
     ghostElement.style.top = '0px';
     ghostElement.style.left = '0px';
     ghostElement.style.width = '100%';
-    ghostElement.style.height = '100%';
+    ghostElement.style.height = 'auto'; // Allow height to grow based on content
+    ghostElement.style.minHeight = '100%'; // At minimum, take up the full height of the container
     ghostElement.style.padding = getComputedStyle(textarea).padding;
 
     // Make sure the ghost text is clickable for scrolling
     ghostElement.style.pointerEvents = 'auto';
+
+    // Calculate the height needed to show all content
+    const lineCount = (remainingCode.match(/\n/g) || []).length + 1;
+    const lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
+    const neededHeight = lineCount * lineHeight + 40; // Add some extra padding
+
+    // If the content is taller than the textarea, set a minimum height
+    if (neededHeight > textarea.offsetHeight) {
+      // Create a hidden div to measure the actual text height
+      const measureDiv = document.createElement('div');
+      measureDiv.style.position = 'absolute';
+      measureDiv.style.visibility = 'hidden';
+      measureDiv.style.whiteSpace = 'pre-wrap';
+      measureDiv.style.font = getComputedStyle(textarea).font;
+      measureDiv.style.padding = getComputedStyle(textarea).padding;
+      measureDiv.style.width = textarea.offsetWidth + 'px';
+      measureDiv.innerHTML = escapeHTML(remainingCode);
+      document.body.appendChild(measureDiv);
+
+      // Set the minimum height based on the actual content height
+      const actualHeight = measureDiv.offsetHeight;
+      ghostElement.style.minHeight = Math.max(textarea.offsetHeight, actualHeight) + 'px';
+
+      // Clean up
+      document.body.removeChild(measureDiv);
+    }
 
     // Scroll ghost text to match textarea scroll position
     ghostElement.scrollTop = textarea.scrollTop;
@@ -378,6 +426,8 @@ style.textContent = `
   min-height: 200px; /* Ensure container has enough height */
   display: block;
   clear: both;
+  /* Ensure the container can grow to fit content */
+  height: auto;
 }
 
 textarea {
@@ -427,6 +477,19 @@ textarea {
   word-wrap: break-word !important;
   touch-action: pan-x pan-y; /* Enable touch scrolling */
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  min-height: 100%; /* Ensure it takes up at least the full height */
+}
+
+/* Style for the full text spacer that ensures proper scrolling */
+.full-text-spacer {
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 /* Make scrollbars visible and usable */
