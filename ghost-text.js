@@ -44,6 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
     textarea.parentNode.insertBefore(container, textarea);
     container.appendChild(textarea);
 
+    // Set the container's dimensions to match the textarea
+    container.style.width = getComputedStyle(textarea).width;
+    container.style.minHeight = getComputedStyle(textarea).height;
+
     // Create the ghost text element
     const ghostText = document.createElement('div');
     ghostText.className = 'ghost-text';
@@ -252,26 +256,25 @@ document.addEventListener('DOMContentLoaded', function() {
       ghostElement.style.opacity = '0.5'; // Normal opacity
     }
 
-    // Add the full solution text in a hidden div to ensure proper scrolling space
-    // This ensures you can scroll to see all the content even if you haven't typed it yet
-    const fullTextDiv = ghostElement.querySelector('.full-text-spacer') || document.createElement('div');
-    fullTextDiv.className = 'full-text-spacer';
-    fullTextDiv.style.visibility = 'hidden';
-    fullTextDiv.style.position = 'absolute';
-    fullTextDiv.style.top = '0';
-    fullTextDiv.style.left = '0';
-    fullTextDiv.style.width = '100%';
-    fullTextDiv.style.height = 'auto';
-    fullTextDiv.style.pointerEvents = 'none';
-    fullTextDiv.style.whiteSpace = 'pre-wrap';
-    fullTextDiv.style.wordWrap = 'break-word';
-    fullTextDiv.style.overflow = 'visible';
-    fullTextDiv.innerHTML = escapeHTML(fullCode);
+    // Instead of a separate spacer, we'll use the ghost text's scrollHeight
+    // to determine how much scrolling space is needed
 
-    // Add or update the full text spacer
-    if (!ghostElement.querySelector('.full-text-spacer')) {
-      ghostElement.appendChild(fullTextDiv);
-    }
+    // First, temporarily make the ghost text have the full content
+    const originalContent = ghostElement.innerHTML;
+    ghostElement.innerHTML = escapeHTML(fullCode);
+
+    // Get the scrollHeight of the ghost text with full content
+    const fullScrollHeight = ghostElement.scrollHeight;
+
+    // Restore the original content
+    ghostElement.innerHTML = originalContent;
+
+    // Set the minimum height of the textarea to match the full content height
+    // This ensures you can scroll to see all content
+    textarea.style.minHeight = fullScrollHeight + 'px';
+
+    // Also update the ghost text's min-height
+    ghostElement.style.minHeight = fullScrollHeight + 'px';
 
     // Position ghost text to align with textarea
     ghostElement.style.top = '0px';
@@ -422,12 +425,14 @@ style.textContent = `
   position: relative;
   width: 100%;
   margin-bottom: 10px;
-  overflow: visible; /* Allow scrollbars to be visible */
+  overflow: hidden; /* Hide overflow outside the container */
   min-height: 200px; /* Ensure container has enough height */
   display: block;
   clear: both;
   /* Ensure the container can grow to fit content */
   height: auto;
+  /* Ensure proper containment */
+  contain: layout paint;
 }
 
 textarea {
@@ -478,18 +483,8 @@ textarea {
   touch-action: pan-x pan-y; /* Enable touch scrolling */
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
   min-height: 100%; /* Ensure it takes up at least the full height */
-}
-
-/* Style for the full text spacer that ensures proper scrolling */
-.full-text-spacer {
-  font-family: monospace;
-  font-size: 14px;
-  line-height: 1.5;
-  white-space: pre-wrap !important;
-  overflow-wrap: break-word !important;
-  word-wrap: break-word !important;
-  padding: 10px;
-  box-sizing: border-box;
+  max-height: 100%; /* Ensure it doesn't exceed the container */
+  max-width: 100%; /* Ensure it doesn't exceed the container width */
 }
 
 /* Make scrollbars visible and usable */
