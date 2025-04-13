@@ -78,74 +78,28 @@ document.addEventListener('DOMContentLoaded', function() {
       ghostText.scrollLeft = textarea.scrollLeft;
     });
 
-    // Sync scrolling when ghost text is scrolled (for touch devices)
+    // Enable scrolling on both elements
+    ghostText.style.pointerEvents = 'auto';
+
+    // Make sure the textarea is visible and on top for typing
+    textarea.style.position = 'relative';
+    textarea.style.zIndex = '2';
+
+    // Sync scrolling between textarea and ghost text
     ghostText.addEventListener('scroll', function() {
       textarea.scrollTop = ghostText.scrollTop;
       textarea.scrollLeft = ghostText.scrollLeft;
     });
 
-    // Enable touch scrolling on the ghost text
-    ghostText.style.pointerEvents = 'auto';
-    ghostText.style.touchAction = 'auto';
+    // Handle touch events for scrolling the ghost text
+    ghostText.addEventListener('touchmove', function(e) {
+      // Allow the event to propagate for natural scrolling
+      // The browser will handle the scrolling of the ghost text
 
-    // Add touch event listeners for manual scrolling
-    let touchStartY = 0;
-    let touchStartX = 0;
-    let scrollTopStart = 0;
-    let scrollLeftStart = 0;
-    let isScrolling = false;
-
-    // Prevent default touchmove behavior on the container to avoid page scrolling
-    container.addEventListener('touchmove', function(e) {
-      if (isScrolling) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    }, { passive: false });
-
-    // Handle touch events on both textarea and ghost text
-    const setupTouchScrolling = function(element) {
-      element.addEventListener('touchstart', function(e) {
-        touchStartY = e.touches[0].clientY;
-        touchStartX = e.touches[0].clientX;
-        scrollTopStart = textarea.scrollTop;
-        scrollLeftStart = textarea.scrollLeft;
-        isScrolling = true;
-
-        // Don't prevent default here to allow focus
-      });
-
-      element.addEventListener('touchmove', function(e) {
-        if (!isScrolling) return;
-
-        const touchY = e.touches[0].clientY;
-        const touchX = e.touches[0].clientX;
-        const deltaY = touchStartY - touchY;
-        const deltaX = touchStartX - touchX;
-
-        // Apply scrolling to both elements
-        textarea.scrollTop = scrollTopStart + deltaY;
-        textarea.scrollLeft = scrollLeftStart + deltaX;
-        ghostText.scrollTop = textarea.scrollTop;
-        ghostText.scrollLeft = textarea.scrollLeft;
-
-        // Prevent default to avoid page scrolling
-        e.preventDefault();
-        e.stopPropagation();
-      }, { passive: false });
-
-      element.addEventListener('touchend', function() {
-        isScrolling = false;
-      });
-
-      element.addEventListener('touchcancel', function() {
-        isScrolling = false;
-      });
-    };
-
-    // Setup touch scrolling for both elements
-    setupTouchScrolling(textarea);
-    setupTouchScrolling(ghostText);
+      // Sync the textarea scroll position
+      textarea.scrollTop = ghostText.scrollTop;
+      textarea.scrollLeft = ghostText.scrollLeft;
+    });
 
     // Handle tab key for indentation
     textarea.addEventListener('keydown', function(e) {
@@ -298,18 +252,15 @@ document.addEventListener('DOMContentLoaded', function() {
       ghostElement.style.opacity = '0.5'; // Normal opacity
     }
 
-    // Ensure the ghost text takes up space by adding a minimum height
-    // This helps with scrolling to see all the content
-    const lineCount = (ghostElement.innerHTML.match(/\n/g) || []).length + 1;
-    const lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
-    ghostElement.style.minHeight = (lineCount * lineHeight) + 'px';
-
     // Position ghost text to align with textarea
-    ghostElement.style.top = textarea.offsetTop + 'px';
-    ghostElement.style.left = textarea.offsetLeft + 'px';
-    ghostElement.style.width = textarea.offsetWidth + 'px';
-    ghostElement.style.height = textarea.offsetHeight + 'px';
+    ghostElement.style.top = '0px';
+    ghostElement.style.left = '0px';
+    ghostElement.style.width = '100%';
+    ghostElement.style.height = '100%';
     ghostElement.style.padding = getComputedStyle(textarea).padding;
+
+    // Make sure the ghost text is clickable for scrolling
+    ghostElement.style.pointerEvents = 'auto';
 
     // Scroll ghost text to match textarea scroll position
     ghostElement.scrollTop = textarea.scrollTop;
@@ -425,6 +376,8 @@ style.textContent = `
   margin-bottom: 10px;
   overflow: visible; /* Allow scrollbars to be visible */
   min-height: 200px; /* Ensure container has enough height */
+  display: block;
+  clear: both;
 }
 
 textarea {
@@ -447,6 +400,8 @@ textarea {
   word-wrap: break-word !important;
   width: 100%;
   box-sizing: border-box;
+  min-height: 200px;
+  display: block;
 }
 
 .ghost-text {
@@ -454,8 +409,7 @@ textarea {
   top: 0;
   left: 0;
   width: 100%;
-  height: auto; /* Allow height to grow based on content */
-  min-height: 100%; /* At minimum, take up the full height of the container */
+  height: 100%; /* Match the textarea height */
   padding: 10px;
   font-family: monospace;
   font-size: 14px;
@@ -466,13 +420,13 @@ textarea {
   z-index: 1;
   box-sizing: border-box;
   line-height: 1.5;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: transparent; /* Make background transparent */
   letter-spacing: normal !important;
   word-spacing: normal !important;
-  touch-action: pan-x pan-y; /* Enable touch scrolling */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
   overflow-wrap: break-word !important;
   word-wrap: break-word !important;
+  touch-action: pan-x pan-y; /* Enable touch scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 /* Make scrollbars visible and usable */
@@ -559,13 +513,21 @@ textarea::-webkit-scrollbar-corner,
   }
 
   /* Ensure wrapping on mobile */
-  textarea, .ghost-text {
+  textarea {
     white-space: pre-wrap !important;
     overflow-wrap: break-word !important;
     word-wrap: break-word !important;
+    min-height: 150px;
   }
 
-  /* Remove mobile scroll indicators */
+  /* Remove ALL mobile scroll indicators */
+  .ghost-text-container::after,
+  .ghost-text-container::before {
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
 }
 `;
 document.head.appendChild(style);
