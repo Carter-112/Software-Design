@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const methodStyle = document.createElement('style');
   methodStyle.textContent = `
     .method {
-      overflow: visible !important;
+      overflow: hidden !important;
     }
   `;
   document.head.appendChild(methodStyle);
 
   methodBlocks.forEach(block => {
-    // Ensure the method block doesn't restrict scrolling
-    block.style.overflow = 'visible';
+    // Ensure the method block contains its content
+    block.style.overflow = 'hidden';
 
     const textarea = block.querySelector('textarea');
     const solutionId = block.querySelector('.check-btn').getAttribute('onclick').match(/toggleSolution\('(.+?)'\)/)[1];
@@ -440,7 +440,7 @@ textarea {
   position: relative;
   z-index: 2;
   color: white;
-  caret-color: #ff9800; /* Make cursor more visible */
+  caret-color: #4a90e2; /* Make cursor more visible with blue color */
   font-family: monospace;
   padding: 10px;
   line-height: 1.5;
@@ -528,8 +528,8 @@ textarea::-webkit-scrollbar-corner,
   top: -20px;
   left: 0;
   font-size: 12px;
-  color: #ff9800;
-  opacity: 0.8;
+  color: #555;
+  opacity: 0.6;
   z-index: 3;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -567,7 +567,7 @@ textarea::-webkit-scrollbar-corner,
   /* Make the ghost text container taller on mobile for better scrolling */
   .ghost-text-container {
     min-height: 150px;
-    overflow: visible;
+    overflow: hidden; /* Hide overflow outside the container */
   }
 
   /* Ensure wrapping on mobile */
